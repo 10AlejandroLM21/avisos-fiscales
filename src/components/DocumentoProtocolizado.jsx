@@ -2,14 +2,22 @@ import { ScrollText } from "lucide-react";
 import CampoInput from "./CampoInput";
 import CampoSelect from "./CampoSelect";
 import CampoArchivo from "./CampoArchivo";
-
+import { useEffect } from "react";
 
 export default function DocumentoProtocolizado({
     tipoDocumento,
     setTipoDocumento,
     documento,
     setDocumento,
+    descripcion,
+    resetKey
 }) {
+    useEffect(() => {
+        if (resetKey) {
+            setTipoDocumento("");
+        }
+    }, [resetKey, setTipoDocumento]);
+
     return (
         <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
 
@@ -33,7 +41,7 @@ export default function DocumentoProtocolizado({
                         </h3>
 
                         <p className="text-sm text-slate-500">
-                            Capture la información correspondiente al documento que acredita al representante legal.
+                            {descripcion || "-"}
                         </p>
 
                     </div>
@@ -66,7 +74,11 @@ export default function DocumentoProtocolizado({
                         },
                     ]}
                 /> */}
-                <div className="grid md:grid-cols-2 gap-4">
+                <b className="font-semibold text-md text-slate-800 ">
+                    Tipo de Documento que lo acredita
+                </b>
+
+                <div className="grid md:grid-cols-2 gap-4 mt-2">
 
                     <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer hover:border-sky-500 transition">
 

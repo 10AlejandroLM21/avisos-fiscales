@@ -450,7 +450,6 @@ export default function DomicilioFiscal({
                             <button type="button"
                                 className="px-6 py-2 bg-gray-500 hover:bg-gray-700 text-white rounded-lg"
                                 onClick={() => {
-                                    onCancelar();
                                     setMostrarFormularioDomicilio(false);
                                 }}>
                                 Cancelar
