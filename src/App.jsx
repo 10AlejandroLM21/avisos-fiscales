@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import './App.css';
 import RepresentanteLegalForm from "./components/RepresentanteLegal";
 import DomicilioFiscal from "./components/DomicilioFiscal";
+import DatosRepresentante from "./components/DatosRepresentante";
+import DocumentoProtocolizado from "./components/DocumentoProtocolizado";
 import { CampoConsulta } from "./components/CampoConsulta";
 
 import {
@@ -27,7 +29,10 @@ import {
   UserRound,
   FileBadge,
   ScrollText,
-  Upload
+  Upload,
+  UserPlus,
+  X,
+  Save
 } from "lucide-react";
 
 export default function AvisosFiscales() {
@@ -267,7 +272,14 @@ export default function AvisosFiscales() {
   const [modalConfirmacion, setModalConfirmacion] = useState(false);
   const [representantePendiente, setRepresentantePendiente] = useState(null);
   const [representantesVigentes, setRepresentantesVigentes] = useState([1, 2]);
+  const [tipoDocumento, setTipoDocumento] = useState("");
 
+  const [documento, setDocumento] = useState({
+    fecha: "",
+    numeroActa: "",
+    numeroInstrumento: "",
+    numeroFojas: "",
+  });
   // Tabla de establecimientos
   const [establecimientos, setEstablecimientos] =
     useState([
@@ -2407,7 +2419,7 @@ export default function AvisosFiscales() {
                           </div>
 
                         </div>
-                        <div class="flex justify-end">
+                        <div className="flex justify-end">
                           <button
                             type="button"
                             onClick={(e) => {
@@ -2668,116 +2680,107 @@ export default function AvisosFiscales() {
                 <div className="p-6 space-y-4">
                   {mostrarFormularioRepresentante && (
 
-                    <div className="border rounded-xl p-5 mt-4 bg-slate-50">
+                    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
 
-                      <h4 className="font-semibold text-slate-800 mb-4">
-                        Nuevo Representante Legal
-                      </h4>
+                      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden">
 
-                      <div className="grid md:grid-cols-2 gap-4">
+                        {/* HEADER */}
 
-                        <div>
-                          <label>RFC</label>
+                        <div className="border-b px-8 py-6 bg-gradient-to-r from-sky-700 to-sky-600">
 
-                          <input
-                            value={nuevoRepresentante.rfc}
-                            onChange={(e) =>
-                              setNuevoRepresentante({
-                                ...nuevoRepresentante,
-                                rfc: e.target.value,
-                              })
-                            }
-                            className="w-full border rounded-lg px-3 py-2"
-                          />
+                          <div className="flex justify-between items-center">
+
+                            <div className="flex items-center gap-4">
+
+                              <div className="h-14 w-14 rounded-xl bg-white/20 flex items-center justify-center">
+
+                                <UserPlus
+                                  className="text-white"
+                                  size={28}
+                                />
+
+                              </div>
+
+                              <div>
+
+                                <h2 className="text-2xl font-semibold text-white">
+                                  Datos del Nuevo Representante Legal
+                                </h2>
+
+                                <p className="text-sky-100 mt-1">
+                                  Capture la información correspondiente al representante legal que será incorporado al contribuyente.
+                                </p>
+
+                              </div>
+
+                            </div>
+
+                            <button
+                              onClick={() => setMostrarFormularioRepresentante(false)}
+                              className="text-white hover:bg-white/20 rounded-lg p-2 transition"
+                            >
+
+                              <X size={24} />
+
+                            </button>
+
+                          </div>
+
                         </div>
 
-                        <div>
-                          <label>CURP</label>
+                        {/* BODY */}
 
-                          <input
-                            value={nuevoRepresentante.curp}
-                            onChange={(e) =>
-                              setNuevoRepresentante({
-                                ...nuevoRepresentante,
-                                curp: e.target.value,
-                              })
-                            }
-                            className="w-full border rounded-lg px-3 py-2"
+                        <div className="p-8 overflow-y-auto max-h-[65vh]">
+
+                          <DatosRepresentante
+                            nuevoRepresentante={nuevoRepresentante}
+                            setNuevoRepresentante={setNuevoRepresentante}
                           />
+
+                          <DocumentoProtocolizado
+                            tipoDocumento={tipoDocumento}
+                            setTipoDocumento={setTipoDocumento}
+                            documento={documento}
+                            setDocumento={setDocumento}
+                          />
+
+                          {/*  <DomicilioFiscal /> */}
+
                         </div>
 
-                        <div>
-                          <label>Primer Apellido</label>
+                        {/* FOOTER */}
 
-                          <input
-                            value={nuevoRepresentante.apellidoPaterno}
-                            onChange={(e) =>
-                              setNuevoRepresentante({
-                                ...nuevoRepresentante,
-                                apellidoPaterno: e.target.value,
-                              })
-                            }
-                            className="w-full border rounded-lg px-3 py-2"
-                          />
-                        </div>
+                        <div className="border-t bg-slate-50 px-8 py-5 flex justify-end gap-3">
 
-                        <div>
-                          <label>Segundo Apellido</label>
-
-                          <input
-                            value={nuevoRepresentante.apellidoMaterno}
-                            onChange={(e) =>
-                              setNuevoRepresentante({
-                                ...nuevoRepresentante,
-                                apellidoMaterno: e.target.value,
-                              })
-                            }
-                            className="w-full border rounded-lg px-3 py-2"
-                          />
-                        </div>
-
-                        <div className="md:col-span-2">
-                          <label>Nombre(s)</label>
-
-                          <input
-                            value={nuevoRepresentante.nombres}
-                            onChange={(e) =>
-                              setNuevoRepresentante({
-                                ...nuevoRepresentante,
-                                nombres: e.target.value,
-                              })
-                            }
-                            className="w-full border rounded-lg px-3 py-2"
-                          />
-                        </div>
-
-                      </div>
-
-                      <div className="flex justify-end gap-3 mt-6">
-
-                        {!mostrarFormularioRepresentante && (
                           <button
                             type="button"
-                            onClick={() =>
-                              setMostrarFormularioRepresentante(true)
+                            onClick={() => {setMostrarFormularioRepresentante(false)
+                              setTipoDocumento("null")
                             }
-                            className="px-4 py-2 bg-sky-700 text-white rounded-lg"
+                          }
+                            className="px-5 py-2.5 rounded-lg border hover:bg-slate-100 transition"
                           >
-                            + Agregar Representante Legal
+                            Cancelar
                           </button>
-                        )}
 
-                        <button
-                          type="button"
-                          onClick={agregarRepresentante}
-                          className="px-4 py-2 bg-green-700 text-white rounded-lg"
-                        >
-                          Agregar
-                        </button>
+                          <button
+                            type="button"
+                            onClick={agregarRepresentante}
+                            className="px-5 py-2.5 rounded-lg bg-sky-700 hover:bg-sky-800 text-white transition flex items-center gap-2"
+                          >
+
+                            <Save size={18} />
+
+                            Registrar
+
+                          </button>
+
+                        </div>
 
                       </div>
 
                     </div>
+
 
                   )}
                   {/* REPRESENTANTES A INCORPORAR */}
@@ -2894,57 +2897,6 @@ export default function AvisosFiscales() {
 
               </div>
 
-              {/* RESUMEN */}
-              {/* <div className="bg-white rounded-xl border shadow-sm">
-
-                <div className="border-b px-6 py-5">
-                  <h3 className="text-lg font-semibold text-slate-800">
-                    Resumen del Aviso
-                  </h3>
-                </div>
-
-                <div className="p-6">
-
-                  <div className="grid md:grid-cols-3 gap-4">
-
-                    <div className="border rounded-xl p-4 bg-green-50">
-                      <p className="text-sm text-green-700">
-                        Permanecen Vigentes
-                      </p>
-
-                      <p className="text-3xl font-bold text-green-800">
-                        {representantesVigentes.length}
-                      </p>
-                    </div>
-
-                    <div className="border rounded-xl p-4 bg-red-50">
-                      <p className="text-sm text-red-700">
-                        Pierden Vigencia
-                      </p>
-
-                      <p className="text-3xl font-bold text-red-800">
-                        {
-                          representantesActuales.length -
-                          representantesVigentes.length
-                        }
-                      </p>
-                    </div>
-
-                    <div className="border rounded-xl p-4 bg-sky-50">
-                      <p className="text-sm text-sky-700">
-                        Nuevos Representantes
-                      </p>
-
-                      <p className="text-3xl font-bold text-sky-800">
-                        {nuevosRepresentantes.length}
-                      </p>
-                    </div>
-
-                  </div>
-
-                </div>
-
-              </div> */}
 
               {/* FOOTER */}
               <div className="flex justify-between">
@@ -3259,9 +3211,7 @@ export default function AvisosFiscales() {
                       <div className="grid md:grid-cols-2 gap-5">
 
                         {/* RFC */}
-
                         <div>
-
                           <label className="block text-sm font-medium text-slate-700 mb-2">
                             RFC
                           </label>
