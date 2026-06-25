@@ -21,7 +21,13 @@ import {
   Home,
   MapPin,
   Copy,
-  ArrowRight
+  ArrowRight,
+  FilePenLine,
+  ClipboardList,
+  UserRound,
+  FileBadge,
+  ScrollText,
+  Upload
 } from "lucide-react";
 
 export default function AvisosFiscales() {
@@ -58,7 +64,7 @@ export default function AvisosFiscales() {
     useState(false);
   const [mostrarObligaciones, setMostrarObligaciones] =
     useState(false);
-
+  const [documentoAcreditador, setDocumentoAcreditador] = useState(null);
   const [modalDetalleDomicilio, setModalDetalleDomicilio] = useState(false);
   const toggleRepresentanteBaja = (id) => {
     setRepresentantesBaja((prev) =>
@@ -2962,6 +2968,700 @@ export default function AvisosFiscales() {
             </div>
           )
         }
+        {/* Cambio de Nombre, Denominación o Razón Social */}
+
+        {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
+          activeStep === 5 && (
+            <div>
+
+              {tipoPersona === "fisica" && (
+                <div className="flex flex-col gap-4">
+                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+
+                    {/* Header */}
+
+                    <div className="border-b px-6 py-5 bg-slate-50">
+
+                      <div className="flex items-center gap-3">
+
+                        <div className="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
+
+                          <UserRound className="text-sky-700" size={24} />
+
+                        </div>
+
+                        <div>
+
+                          <h3 className="text-lg font-semibold text-slate-800">
+                            Nuevo Nombre
+                          </h3>
+
+                          <p className="text-sm text-slate-500">
+                            Capture la nueva información del contribuyente.
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+
+                      <div className="grid md:grid-cols-2 gap-5">
+
+                        {/* RFC */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium mb-2">
+                            RFC
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                            defaultValue=""
+                          />
+
+                        </div>
+
+                        {/* CURP */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium mb-2">
+                            CURP Nueva
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                            defaultValue=""
+                          />
+
+                        </div>
+
+                        {/* Nombre Comercial */}
+
+                        <div className="md:col-span-2">
+
+                          <label className="block text-sm font-medium mb-2">
+                            Nombre Comercial
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+
+                        </div>
+
+                        {/* Primer apellido */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium mb-2">
+                            Primer Apellido
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+
+                        </div>
+
+                        {/* Segundo apellido */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium mb-2">
+                            Segundo Apellido
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+
+                        </div>
+
+                        {/* Nombre */}
+
+                        <div className="md:col-span-2">
+
+                          <label className="block text-sm font-medium mb-2">
+                            Nombre(s)
+                          </label>
+
+                          <input
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                  {/* DATOS DEL ACTA DE NACIMIENTO */}
+
+                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
+
+                    {/* Header */}
+
+                    <div className="border-b bg-slate-50 px-6 py-5">
+
+                      <div className="flex items-center gap-4">
+
+                        <div className="w-14 h-14 rounded-xl bg-emerald-100 flex items-center justify-center">
+
+                          <FileBadge className="text-emerald-700" size={28} />
+
+                        </div>
+
+                        <div>
+
+                          <h3 className="text-lg font-semibold text-slate-800">
+                            Datos del Acta de Nacimiento
+                          </h3>
+
+                          <p className="text-sm text-slate-500 mt-1">
+                            Capture la información correspondiente al acta de nacimiento que
+                            acredita la modificación del nombre del contribuyente.
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+
+                      <div className="grid md:grid-cols-2 gap-5">
+
+                        {/* Fecha Corrección */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Fecha de Corrección de Acta
+                          </label>
+
+                          <input
+                            type="date"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                        {/* Fecha Nacimiento */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Fecha de Nacimiento
+                          </label>
+
+                          <input
+                            type="date"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                        {/* Número Acta */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Número de Acta
+                          </label>
+
+                          <input
+                            type="text"
+                            maxLength={5}
+                            placeholder="00000"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                        {/* Número Foja */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Número de Foja
+                          </label>
+
+                          <input
+                            type="text"
+                            maxLength={5}
+                            placeholder="00000"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              )
+              }
+
+              {/* NUEVA DENOMINACIÓN O RAZÓN SOCIAL */}
+              {tipoPersona === "moral" && (
+                <div className="flex flex-col gap-5">
+                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+
+                    {/* Header */}
+
+                    <div className="border-b bg-slate-50 px-6 py-5">
+
+                      <div className="flex items-center gap-4">
+
+                        <div className="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center">
+
+                          <Building2
+                            className="text-indigo-700"
+                            size={28}
+                          />
+
+                        </div>
+
+                        <div>
+
+                          <h3 className="text-lg font-semibold text-slate-800">
+                            Nueva Denominación o Razón Social
+                          </h3>
+
+                          <p className="text-sm text-slate-500 mt-1">
+                            Capture la nueva información del contribuyente conforme a los
+                            datos registrados en el trámite.
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+
+                      <div className="grid md:grid-cols-2 gap-5">
+
+                        {/* RFC */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            RFC
+                          </label>
+
+                          <input
+                            type="text"
+                            defaultValue="ABC010203AA1"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                        {/* Régimen */}
+
+                        <div>
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Régimen Capital
+                          </label>
+
+                          <select
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          >
+
+                            <option>S.A. de C.V.</option>
+
+                            <option>S. de R.L.</option>
+
+                            <option>S.C.</option>
+
+                            <option>A.C.</option>
+
+                          </select>
+
+                        </div>
+
+                        {/* Razón Social */}
+
+                        <div className="md:col-span-2">
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Denominación o Razón Social
+                          </label>
+
+                          <input
+                            type="text"
+                            placeholder="Ingrese la nueva denominación o razón social"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                        {/* Nombre Comercial */}
+
+                        <div className="md:col-span-2">
+
+                          <label className="block text-sm font-medium text-slate-700 mb-2">
+                            Nombre Comercial
+                          </label>
+
+                          <input
+                            type="text"
+                            placeholder="Ingrese el nombre comercial"
+                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                          />
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  </div>
+
+                  {/* DATOS DE PROTOCOLIZACIÓN DEL DOCUMENTO */}
+                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+
+                    {/* Header */}
+
+                    <div className="border-b bg-slate-50 px-6 py-5">
+
+                      <div className="flex items-center gap-4">
+
+                        <div className="w-14 h-14 rounded-xl bg-violet-100 flex items-center justify-center">
+
+                          <ScrollText
+                            className="text-violet-700"
+                            size={28}
+                          />
+                        </div>
+
+                        <div>
+                          <h3 className="text-lg font-semibold text-slate-800">
+                            Datos de Protocolización del Documento
+                          </h3>
+
+                          <p className="text-sm text-slate-500 mt-1">
+                            Capture la información del documento que acredita el cambio de
+                            denominación o razón social del contribuyente.
+                          </p>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+
+                      {/* Tipo Documento */}
+
+                      <div className="mb-6">
+
+                        <label className="block text-sm font-medium text-slate-700 mb-3">
+                          Tipo de Documento que lo acredita
+                        </label>
+
+                        <div className="grid md:grid-cols-2 gap-4">
+
+                          <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer hover:border-sky-500 transition">
+
+                            <input
+                              type="radio"
+                              name="tipoDocumento"
+                              onClick={() => setDocumentoAcreditador("carta poder")}
+                            />
+
+                            <div>
+
+                              <p className="font-medium text-slate-800">
+                                Carta Poder con Ratificación de Firmas ante Notario
+                              </p>
+
+                              <span className="text-sm text-slate-500">
+                                Acta protocolizada mediante carta poder.
+                              </span>
+
+                            </div>
+
+                          </label>
+
+                          <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer hover:border-sky-500 transition">
+
+                            <input
+                              type="radio"
+                              name="tipoDocumento"
+                              onClick={() => setDocumentoAcreditador("poder notarial")}
+                            />
+
+                            <div>
+
+                              <p className="font-medium text-slate-800">
+                                Poder Notarial del Apoderado Legal
+                              </p>
+
+                              <span className="text-sm text-slate-500">
+                                Instrumento notarial vigente.
+                              </span>
+
+                            </div>
+
+                          </label>
+
+                        </div>
+
+                        {documentoAcreditador === "carta poder" && (
+                          <div className="mt-6 rounded-xl border border-sky-200 bg-sky-50/40">
+
+                            <div className="border-b px-6 py-4 flex gap-2 bg-white">
+                              <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+
+                                <ScrollText
+                                  className="text-indigo-700"
+                                  size={24}
+                                />
+
+                              </div>
+                              <div className="flex flex-col">
+                                <h4 className="font-semibold text-slate-800">
+                                  Carta Poder con Ratificación de Firmas ante Notario
+                                </h4>
+
+                                <p className="text-sm text-slate-500 mt-1">
+                                  Capture la información correspondiente al documento seleccionado.
+                                </p>
+                              </div>
+
+                            </div>
+
+                            <div className="p-6">
+
+                              <div className="grid md:grid-cols-2 gap-5">
+
+                                {/* Archivo */}
+
+                                <div className="md:col-span-2">
+
+                                  <label className="block text-sm font-medium mb-2">
+                                    Archivo PDF
+                                  </label>
+
+                                  <div className="border-2 border-dashed rounded-xl p-8 text-center hover:border-sky-500 transition cursor-pointer">
+
+                                    <Upload className="mx-auto text-slate-400 mb-3" size={28} />
+
+                                    <p className="font-medium">
+                                      Seleccionar archivo PDF
+                                    </p>
+
+                                    <span className="text-sm text-slate-500">
+                                      Tamaño máximo permitido: 10 MB
+                                    </span>
+
+                                  </div>
+
+                                </div>
+
+                                {/* Fecha */}
+
+                                <div>
+
+                                  <label className="block text-sm font-medium mb-2">
+                                    Fecha
+                                  </label>
+
+                                  <input
+                                    type="date"
+                                    className="w-full border rounded-lg px-4 py-3"
+                                  />
+
+                                </div>
+
+                                {/* Acta */}
+
+                                <div>
+
+                                  <label className="block text-sm font-medium mb-2">
+                                    Número del Acta
+                                  </label>
+
+                                  <input
+                                    maxLength={5}
+                                    className="w-full border rounded-lg px-4 py-3"
+                                  />
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+                        )
+                        }
+                        {documentoAcreditador === "poder notarial" && (
+
+                          <div className="mt-6 rounded-xl border border-indigo-200 bg-indigo-50/30 shadow-sm overflow-hidden">
+
+                            {/* Encabezado */}
+
+                            <div className="border-b bg-white px-6 py-5">
+
+                              <div className="flex items-center gap-4">
+
+                                <div className="w-12 h-12 rounded-xl bg-indigo-100 flex items-center justify-center">
+
+                                  <ScrollText
+                                    className="text-indigo-700"
+                                    size={24}
+                                  />
+
+                                </div>
+
+                                <div>
+
+                                  <h4 className="text-lg font-semibold text-slate-800">
+                                    Poder Notarial del Apoderado Legal
+                                  </h4>
+
+                                  <p className="text-sm text-slate-500 mt-1">
+                                    Capture la información correspondiente al poder notarial que acredita la representación legal.
+                                  </p>
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                            {/* Contenido */}
+
+                            <div className="p-6">
+
+                              <div className="grid md:grid-cols-2 gap-5">
+
+                                {/* Archivo */}
+
+                                <div className="md:col-span-2">
+
+                                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Documento (PDF)
+                                  </label>
+
+                                  <label className="border-2 border-dashed border-slate-300 rounded-xl p-8 flex flex-col items-center justify-center cursor-pointer hover:border-sky-500 hover:bg-sky-50 transition">
+
+                                    <Upload
+                                      className="text-slate-400 mb-3"
+                                      size={30}
+                                    />
+
+                                    <span className="font-medium text-slate-700">
+                                      Seleccionar archivo
+                                    </span>
+
+                                    <span className="text-sm text-slate-500">
+                                      Formato PDF
+                                    </span>
+
+                                    <input
+                                      type="file"
+                                      accept=".pdf"
+                                      className="hidden"
+                                    />
+
+                                  </label>
+
+                                </div>
+
+                                {/* Fecha */}
+
+                                <div>
+
+                                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Fecha
+                                  </label>
+
+                                  <input
+                                    type="date"
+                                    className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                                  />
+
+                                </div>
+
+                                {/* Número Escritura */}
+
+                                <div>
+
+                                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Número de Instrumento o Escritura
+                                  </label>
+
+                                  <input
+                                    type="text"
+                                    maxLength={5}
+                                    placeholder="00000"
+                                    className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                                  />
+
+                                </div>
+
+                                {/* Número de Fojas */}
+
+                                <div>
+
+                                  <label className="block text-sm font-medium text-slate-700 mb-2">
+                                    Número de Fojas Útiles
+                                    <span className="text-slate-400 text-xs ml-2">
+                                      (Opcional)
+                                    </span>
+                                  </label>
+
+                                  <input
+                                    type="text"
+                                    maxLength={5}
+                                    placeholder="00000"
+                                    className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                                  />
+
+                                </div>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+                        )
+                        }
+
+                      </div>
+
+                    </div>
+
+                  </div>
+                </div>
+              )
+              }
+            </div>
+          )}
 
         {/*suspensión de actividades*/}
         {selectedRow === "Suspensión de Actividades" && activeStep === 5 && (
