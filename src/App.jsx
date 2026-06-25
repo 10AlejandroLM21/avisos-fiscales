@@ -2029,12 +2029,12 @@ export default function AvisosFiscales() {
                             />
 
                             <CampoConsulta
-                              etiqueta="Número Exterior"
+                              etiqueta="Número Exterior y/o Letra"
                               valor={domicilioConsulta.numeroExterior}
                             />
 
                             <CampoConsulta
-                              etiqueta="Número Interior"
+                              etiqueta="Número Interior y/o Letra"
                               valor={domicilioConsulta.numeroInterior}
                             />
 
