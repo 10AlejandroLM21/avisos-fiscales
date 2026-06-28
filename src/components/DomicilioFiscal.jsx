@@ -1,6 +1,35 @@
 import React, { useState } from "react";
 import Input from "../components/Input";
-
+import CampoSelect from "../components/CampoSelect";
+import CampoInput from "../components/CampoInput";
+import {
+    Search,
+    Users,
+    User,
+    FileText,
+    Briefcase,
+    CheckCircle,
+    Building2,
+    Smartphone,
+    BookUser,
+    ChevronDown,
+    Pencil,
+    Trash2,
+    AlertTriangle,
+    Home,
+    MapPin,
+    Copy,
+    ArrowRight,
+    FilePenLine,
+    ClipboardList,
+    UserRound,
+    FileBadge,
+    ScrollText,
+    Upload,
+    UserPlus,
+    X,
+    Save
+} from "lucide-react";
 export default function DomicilioFiscal({
     titulo = "Domicilio fiscal del representante legal",
     onGuardar,
@@ -10,7 +39,6 @@ export default function DomicilioFiscal({
 }) {
     const [domicilioSeleccionado, setDomicilioSeleccionado] = useState(null);
     const [mostrarFormularioDomicilio, setMostrarFormularioDomicilio] = useState(false);
-    const [pasoModal, setPasoModal] = useState(1);
     const [ambito, setAmbito] = useState("");
     const [domicilios] = useState([
         {
@@ -41,19 +69,35 @@ export default function DomicilioFiscal({
 
 
                     {!domicilioSeleccionado && (
-                        <div>
-                            <div className="border-b px-6 py-5 flex justify-between items-center">
+                        <div className="rounded-xl border border-sky-200 bg-sky-50/30 overflow-hidden">
+                            {/* Header */}
 
-                                <div>
-                                    <h3 className="text-xl font-semibold text-slate-800">
-                                        Domicilios del Contribuyente
-                                    </h3>
+                            <div className="border-b bg-white px-6 py-5 flex justify-between items-center">
 
-                                    <p className="text-slate-500 mt-1">
-                                        Seleccione un domicilio fiscal o registre uno nuevo.
-                                    </p>
+                                <div className="flex items-center gap-4">
+
+                                    <div className="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
+
+                                        <Building2
+                                            className="text-sky-700"
+                                            size={24}
+                                        />
+
+                                    </div>
+
+                                    <div>
+
+                                        <h3 className="font-semibold text-slate-800">
+                                            Datos Generales del Domicilio
+                                        </h3>
+
+                                        <p className="text-sm text-slate-500">
+                                            Capture o verifique la información general correspondiente al domicilio fiscal.
+                                        </p>
+
+                                    </div>
+
                                 </div>
-
                                 <button
                                     type="button"
                                     onClick={() => setMostrarFormularioDomicilio(true)}
@@ -61,8 +105,8 @@ export default function DomicilioFiscal({
                                 >
                                     + Agregar Domicilio Fiscal
                                 </button>
-
                             </div>
+
                             <div className="overflow-x-auto p/2">
 
                                 <table className="w-full text-sm">
@@ -177,313 +221,239 @@ export default function DomicilioFiscal({
             )}
 
             {mostrarFormularioDomicilio && (
-                <div>
-                    <div className="flex items-center justify-center mt-4">
 
-                        {[1, 2, 3].map((step, index) => (
-                            <React.Fragment key={step}>
+                <div className="bg-white rounded-xl border shadow-sm overflow-hidden mt-6">
 
-                                <div
-                                    className={`w-10 h-10 rounded-full flex items-center justify-center font-semibold
-                              ${pasoModal >= step
-                                            ? "bg-green-900 text-white"
-                                            : "bg-slate-200 text-slate-500"
-                                        }`}
-                                >
-                                    {step}
+                    <div className="border-b bg-sky-50 px-6 py-4 flex items-center justify-between">
+
+                        <div>
+
+                            <h2 className="font-semibold text-slate-800">
+                                Nuevo Domicilio Fiscal
+                            </h2>
+
+                            <p className="text-sm text-slate-500 mt-1">
+                                Capture la información correspondiente al domicilio fiscal.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+                    <div className="p-6 space-y-8">
+
+                        {/* Aquí van todas las secciones */}
+
+                        <div className="p-6 space-y-8">
+
+                            {/* BÚSQUEDA POR CÓDIGO POSTAL */}
+
+                            <section>
+
+                                <h3 className="font-medium text-slate-700 mb-4">
+                                    Búsqueda por Código Postal
+                                </h3>
+
+                                <div className="grid md:grid-cols-3 gap-4">
+
+                                    <CampoInput
+                                        etiqueta="Código Postal *"
+                                        placeholder="68000"
+                                    />
+
                                 </div>
 
-                                {index < 2 && (
-                                    <div
-                                        className={`w-24 h-1
-                                ${pasoModal > step
-                                                ? "bg-sky-700"
-                                                : "bg-slate-200"
-                                            }`}
+                            </section>
+
+                            {/* DATOS GENERALES */}
+
+                            <section>
+
+                                <h3 className="font-medium text-slate-700 mb-4">
+                                    Datos Generales del Domicilio
+                                </h3>
+
+                                <div className="grid md:grid-cols-2 gap-4">
+
+                                    <CampoSelect
+                                        etiqueta="Tipo de Ámbito"
+                                        obligatorio
+                                        value={ambito}
+                                        onChange={(e) => setAmbito(e.target.value)}
+                                        opciones={[
+                                            {
+                                                value: "",
+                                                label: "Seleccione..."
+                                            },
+                                            {
+                                                value: "URBANO",
+                                                label: "Urbano"
+                                            },
+                                            {
+                                                value: "RURAL",
+                                                label: "Rural"
+                                            }
+                                        ]}
                                     />
-                                )}
 
-                            </React.Fragment>
-                        ))}
+                                    <CampoInput etiqueta="Región *" />
+
+                                    <CampoInput etiqueta="Distrito *" />
+
+                                    <CampoInput etiqueta="Municipio / Delegación *" />
+
+                                    <CampoInput etiqueta="Localidad *" />
+
+                                    <CampoInput etiqueta="Tipo de Asentamiento *" />
+
+                                    <CampoInput etiqueta="Nombre del Asentamiento *" />
+
+                                    <CampoInput etiqueta="Tipo de Inmueble *" />
+
+                                </div>
+
+                            </section>
+
+                            {/* UBICACIÓN */}
+
+                            <section>
+
+                                <h3 className="font-medium text-slate-700 mb-4">
+                                    Ubicación del Domicilio
+                                </h3>
+
+                                {
+                                    ambito === "URBANO" ? (
+
+                                        <div className="grid md:grid-cols-2 gap-4">
+
+                                            <CampoInput etiqueta="Tipo de Vialidad *" />
+
+                                            <CampoInput etiqueta="Nombre de Vialidad *" />
+
+                                            <CampoInput etiqueta="Número Exterior y/o Letra *" />
+
+                                            <CampoInput etiqueta="Número Interior y/o Letra" />
+
+                                            <CampoInput etiqueta="Entre Vialidad *" />
+
+                                            <CampoInput etiqueta="Y Vialidad *" />
+
+                                            <CampoInput etiqueta="Ubicación del Inmueble dentro de la Manzana" />
+
+                                        </div>
+
+                                    ) : (
+
+                                        <div className="grid md:grid-cols-2 gap-4">
+
+                                            <CampoInput etiqueta="Tipo de Vía de Comunicación *" />
+
+                                            <CampoInput etiqueta="Nombre de Vía de Comunicación *" />
+
+                                            <CampoInput etiqueta="Tramo *" />
+
+                                        </div>
+
+                                    )
+                                }
+
+                            </section>
+
+                            {/* INFORMACIÓN COMPLEMENTARIA */}
+
+                            <section>
+
+                                <h3 className="font-medium text-slate-700 mb-4">
+                                    Información Complementaria
+                                </h3>
+
+                                <div className="space-y-4">
+
+                                    <div>
+
+                                        <label className="block text-sm font-medium mb-2">
+                                            Características del Domicilio
+                                        </label>
+
+                                        <textarea
+                                            rows="3"
+                                            className="w-full border rounded-lg p-3"
+                                            placeholder="Capture las características del domicilio"
+                                        />
+
+                                    </div>
+
+                                    <div>
+
+                                        <label className="block text-sm font-medium mb-2">
+                                            Referencias Adicionales
+                                        </label>
+
+                                        <textarea
+                                            rows="3"
+                                            className="w-full border rounded-lg p-3"
+                                            placeholder="Capture referencias adicionales"
+                                        />
+
+                                    </div>
+
+                                </div>
+
+                            </section>
+
+                            {/* GEOLOCALIZACIÓN */}
+
+                            <section>
+
+                                <div className="flex items-center gap-2 mb-4">
+
+                                    <MapPin
+                                        size={18}
+                                        className="text-sky-700"
+                                    />
+
+                                    <h3 className="font-medium text-slate-700">
+                                        Geolocalización
+                                    </h3>
+
+                                </div>
+
+                                <div className="h-80 rounded-xl border bg-slate-100 flex items-center justify-center text-slate-500">
+
+                                    Área de Google Maps
+
+                                </div>
+
+                            </section>
+
+                        </div>
 
                     </div>
-                    <div className="flex justify-center gap-16 mt-3 text-xs font-medium">
 
-                        <span>Datos Generales</span>
-
-                        <span>
-                            {ambito === "RURAL"
-                                ? "Ubicación Rural"
-                                : "Ubicación Urbana"}
-                        </span>
-
-                        <span>Referencias</span>
-
-                    </div>
-
-                    {pasoModal === 1 && (
-
-                        <div className="grid md:grid-cols-2 gap-4 m-4">
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Código Postal *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Ámbito *
-                                </label>
-
-                                <select
-                                    value={ambito}
-                                    onChange={(e) => setAmbito(e.target.value)}
-                                    className="w-full border rounded-lg px-3 py-2"
-                                >
-                                    <option value="">
-                                        Seleccione
-                                    </option>
-
-                                    <option value="URBANO">
-                                        Urbano
-                                    </option>
-
-                                    <option value="RURAL">
-                                        Rural
-                                    </option>
-
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Región *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Distrito *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Municipio / Delegación *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Localidad *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Tipo de Asentamiento *
-                                </label>
-
-                                <select className="w-full border rounded-lg px-3 py-2">
-                                    <option>Seleccione</option>
-                                </select>
-                            </div>
-
-                            <div>
-                                <label className="block text-sm font-medium mb-1">
-                                    Nombre de Asentamiento *
-                                </label>
-
-                                <input
-                                    type="text"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-                            </div>
-
-                        </div>
-
-                    )}
-                    {pasoModal === 2 && ambito === "URBANO" && (
-
-                        <div className="grid md:grid-cols-2 gap-4 m-4">
-
-                            <Input label="Tipo de Vialidad *" />
-
-                            <Input label="Nombre de Calle *" />
-
-                            <Input label="Número Exterior y/o Letra *" />
-
-                            <Input label="Número Interior y/o Letra" />
-
-                            <Input label="Ubicación del Inmueble dentro de la Manzana" />
-
-                            <Input label="Entre Vialidad *" />
-
-                            <Input label="Y Vialidad *" />
-
-                        </div>
-
-                    )}
-                    {pasoModal === 2 && ambito === "RURAL" && (
-
-                        <div className="grid md:grid-cols-2 gap-4 m-4">
-
-                            <Input label="Vía de Comunicación *" />
-
-                            <Input label="Nombre de Terracería *" />
-
-                            <Input label="Tramo *" />
-
-                        </div>
-
-                    )}
-                    {pasoModal === 3 && (
-
-                        <div className="space-y-5 p-4">
-
-                            <div>
-
-                                <label className="block text-sm font-medium mb-1">
-                                    Tipo de Inmueble *
-                                </label>
-
-                                <select className="w-full border rounded-lg px-3 py-2">
-                                    <option>Seleccione</option>
-                                </select>
-
-                            </div>
-
-                            <div>
-
-                                <label className="block text-sm font-medium mb-1">
-                                    Geolocalización
-                                </label>
-
-                                <input
-                                    type="text"
-                                    placeholder={
-                                        ambito === "URBANO"
-                                            ? "PIN de Google Maps"
-                                            : "Interfaz de Google Maps"
-                                    }
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-
-                            </div>
-
-                            <div>
-
-                                <label className="block text-sm font-medium mb-1">
-                                    Características del Domicilio
-                                </label>
-
-                                <textarea
-                                    rows="3"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-
-                            </div>
-
-                            <div>
-
-                                <label className="block text-sm font-medium mb-1">
-                                    Referencias del Domicilio
-                                </label>
-
-                                <textarea
-                                    rows="3"
-                                    className="w-full border rounded-lg px-3 py-2"
-                                />
-
-                            </div>
-
-                        </div>
-
-                    )}
-                    {/* FOOTER */}
-                    <div className="flex justify-between mt-8 pt-6 p-4">
+                    <div className="border-t bg-slate-50 px-6 py-5 flex justify-end gap-3">
 
                         <button
-                            type="button"
-                            onClick={() => {
-                                if (pasoModal > 1) {
-                                    setPasoModal(pasoModal - 1);
-                                }
-                            }}
-                            disabled={pasoModal === 1}
-                            className={`px-5 py-2 rounded-lg border
-                           
-                                ${pasoModal === 1
-                                    ? "bg-slate-100 text-slate-400 cursor-not-allowed"
-                                    : "hover:bg-slate-50"
-                                }`}
+                            onClick={() => setMostrarFormularioDomicilio(false)}
+                            className="px-5 py-2 rounded-lg border"
                         >
-                            Anterior
+                            Cancelar
                         </button>
-                        <div className="flex gap-2">
-                            <button type="button"
-                                className="px-6 py-2 bg-gray-500 hover:bg-gray-700 text-white rounded-lg"
-                                onClick={() => {
-                                    setMostrarFormularioDomicilio(false);
-                                }}>
-                                Cancelar
-                            </button>
-                            {pasoModal < 3 ? (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        setPasoModal(pasoModal + 1);
 
-                                    }
-                                    }
-                                    className="px-6 py-2 bg-green-900 hover:bg-sky-800 text-white rounded-lg"
-                                >
-                                    Siguiente
-                                </button>
-                            ) : (
-                                <button
-                                    type="button"
-                                    onClick={() => {
-                                        onGuardar();
-                                        setMostrarFormularioDomicilio(false);
-                                    }}
-                                    className="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
-                                >
-                                    Guardar Registro
-                                </button>
-                            )}
-                        </div>
-
+                        <button
+                            onClick={() => {
+                                onGuardar();
+                                setMostrarFormularioDomicilio(false);
+                            }}
+                            className="px-5 py-2 rounded-lg bg-green-700 text-white"
+                        >
+                            Guardar Domicilio
+                        </button>
 
                     </div>
 
                 </div>
+
             )}
 
         </div>

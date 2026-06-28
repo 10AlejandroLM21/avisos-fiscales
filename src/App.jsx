@@ -5,6 +5,7 @@ import DomicilioFiscal from "./components/DomicilioFiscal";
 import DatosRepresentante from "./components/DatosRepresentante";
 import DocumentoProtocolizado from "./components/DocumentoProtocolizado";
 import { CampoConsulta } from "./components/CampoConsulta";
+import FormularioRepresentanteLegal from "./components/FormularioRepresentanteLegal";
 
 import {
   Search,
@@ -1603,16 +1604,26 @@ export default function AvisosFiscales() {
                   )}
 
                   {mostrarFormularioRepresentante && (
-                    <RepresentanteLegalForm className="mt-5"
-                      titulo="Nuevo Representante Legal"
-                      onGuardar={() => {
-                        setMostrarFormularioRepresentante(false);
-                      }}
-                      onCancelar={() => {
-                        setMostrarFormularioRepresentante(false);
-                      }}
+                    // <RepresentanteLegalForm className="mt-5"
+                    //   titulo="Nuevo Representante Legal"
+                    //   onGuardar={() => {
+                    //     setMostrarFormularioRepresentante(false);
+                    //   }}
+                    //   onCancelar={() => {
+                    //     setMostrarFormularioRepresentante(false);
+                    //   }}
+                    // />
+                    <FormularioRepresentanteLegal
+                      abierto={mostrarFormularioRepresentante}
+                      onClose={() => setMostrarFormularioRepresentante(false)}
+                      onGuardar={agregarRepresentante}
+                      nuevoRepresentante={nuevoRepresentante}
+                      setNuevoRepresentante={setNuevoRepresentante}
+                      tipoDocumento={tipoDocumento}
+                      setTipoDocumento={setTipoDocumento}
+                      documento={documento}
+                      setDocumento={setDocumento}
                     />
-
                   )}
 
                 </section>
@@ -2679,110 +2690,17 @@ export default function AvisosFiscales() {
 
                 <div className="p-6 space-y-4">
                   {mostrarFormularioRepresentante && (
-
-                    <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
-
-                      <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden">
-
-                        {/* HEADER */}
-
-                        <div className="border-b px-8 py-6 bg-gradient-to-r from-sky-700 to-sky-600">
-
-                          <div className="flex justify-between items-center">
-
-                            <div className="flex items-center gap-4">
-
-                              <div className="h-14 w-14 rounded-xl bg-white/20 flex items-center justify-center">
-
-                                <UserPlus
-                                  className="text-white"
-                                  size={28}
-                                />
-
-                              </div>
-
-                              <div>
-
-                                <h2 className="text-2xl font-semibold text-white">
-                                  Datos del Nuevo Representante Legal
-                                </h2>
-
-                                <p className="text-sky-100 mt-1">
-                                  Capture la información correspondiente al representante legal que será incorporado al contribuyente.
-                                </p>
-
-                              </div>
-
-                            </div>
-
-                            <button
-                              onClick={() => setMostrarFormularioRepresentante(false)}
-                              className="text-white hover:bg-white/20 rounded-lg p-2 transition"
-                            >
-
-                              <X size={24} />
-
-                            </button>
-
-                          </div>
-
-                        </div>
-
-                        {/* BODY */}
-
-                        <div className="p-8 overflow-y-auto max-h-[65vh]">
-
-                          <DatosRepresentante
-                            nuevoRepresentante={nuevoRepresentante}
-                            setNuevoRepresentante={setNuevoRepresentante}
-                          />
-
-                          <DocumentoProtocolizado
-                            tipoDocumento={tipoDocumento}
-                            setTipoDocumento={setTipoDocumento}
-                            documento={documento}
-                            setDocumento={setDocumento}
-                            descripcion="Capture la información correspondiente al documento que acredita al representante legal."
-                            resetKey={true}
-                          />
-
-                          <DomicilioFiscal />
-
-                        </div>
-
-                        {/* FOOTER */}
-
-                        <div className="border-t bg-slate-50 px-8 py-5 flex justify-end gap-3">
-
-                          <button
-                            type="button"
-                            onClick={() => {
-                              setMostrarFormularioRepresentante(false)
-
-                            }
-                            }
-                            className="px-5 py-2.5 rounded-lg border hover:bg-slate-100 transition"
-                          >
-                            Cancelar
-                          </button>
-
-                          <button
-                            type="button"
-                            onClick={agregarRepresentante}
-                            className="px-5 py-2.5 rounded-lg bg-sky-700 hover:bg-sky-800 text-white transition flex items-center gap-2"
-                          >
-
-                            <Save size={18} />
-
-                            Registrar
-
-                          </button>
-
-                        </div>
-
-                      </div>
-
-                    </div>
+                    <FormularioRepresentanteLegal
+                      abierto={mostrarFormularioRepresentante}
+                      onClose={() => setMostrarFormularioRepresentante(false)}
+                      onGuardar={agregarRepresentante}
+                      nuevoRepresentante={nuevoRepresentante}
+                      setNuevoRepresentante={setNuevoRepresentante}
+                      tipoDocumento={tipoDocumento}
+                      setTipoDocumento={setTipoDocumento}
+                      documento={documento}
+                      setDocumento={setDocumento}
+                    />
 
 
                   )}

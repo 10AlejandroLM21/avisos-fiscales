@@ -19,7 +19,7 @@ export default function DocumentoProtocolizado({
     }, [resetKey, setTipoDocumento]);
 
     return (
-        <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
+        <div className="bg-white rounded-xl border border-sky-200 shadow-sm overflow-hidden mb-6">
 
             {/* Header */}
 
