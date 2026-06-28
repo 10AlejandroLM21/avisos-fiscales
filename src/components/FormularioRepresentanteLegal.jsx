@@ -122,14 +122,13 @@ export default function ModalFormulario({
 
                                 <div>
 
-                                    <p className="font-medium">
+                                    <p className="font-medium text-left">
                                         Documento Protocolizado
                                     </p>
 
-                                    <p className="text-xs text-slate-500">
+                                    <p className="text-xs text-slate-500 text-left">
                                         Documento que acredita
                                     </p>
-
                                 </div>
 
                             </button>
@@ -151,11 +150,11 @@ export default function ModalFormulario({
 
                                 <div>
 
-                                    <p className="font-medium">
+                                    <p className="font-medium text-left">
                                         Domicilio Fiscal
                                     </p>
 
-                                    <p className="text-xs text-slate-500">
+                                    <p className="text-xs text-slate-500 text-left">
                                         Información del domicilio
                                     </p>
 

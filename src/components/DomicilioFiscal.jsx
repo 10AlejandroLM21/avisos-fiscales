@@ -66,8 +66,6 @@ export default function DomicilioFiscal({
 
             {!mostrarFormularioDomicilio && (
                 <div>
-
-
                     {!domicilioSeleccionado && (
                         <div className="rounded-xl border border-sky-200 bg-sky-50/30 overflow-hidden">
                             {/* Header */}
@@ -107,64 +105,37 @@ export default function DomicilioFiscal({
                                 </button>
                             </div>
 
-                            <div className="overflow-x-auto p/2">
+                            <div className="overflow-x-auto p/2 flex flex-col gap-4 p-4 mt-2">
 
-                                <table className="w-full text-sm">
+                                {domicilios.map((domicilio) => (
+                                    <div
+                                        key={domicilio.id}
+                                        onClick={() => setDomicilioSeleccionado(domicilio)}
+                                        className={`border border-slate-300 rounded-xl p-5 cursor-pointer transition
+      ${domicilioSeleccionado?.id === domicilio.id
+                                                ? "border-sky-700 bg-sky-50"
+                                                : "hover:border-sky-500"
+                                            }`}
+                                    >
+                                        <h4 className="font-semibold text-slate-800">
+                                            {domicilio.tipo}
+                                        </h4>
 
-                                    <thead className="bg-slate-100">
+                                        <p className="text-sm text-slate-500 mt-2">
+                                            {domicilio.direccion}
+                                        </p>
 
-                                        <tr>
-                                            <th className="p-3 text-left">ID</th>
-                                            <th className="p-3 text-left">Tipo Domicilio</th>
-                                            <th className="p-3 text-left">Domicilio</th>
-                                            <th className="p-3 text-center">Seleccionar</th>
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody>
-
-                                        {domicilios.map((domicilio) => (
-
-                                            <tr
-                                                key={domicilio.id}
-                                                className="border-t hover:bg-slate-50"
-                                            >
-
-                                                <td className="p-3">
-                                                    {domicilio.id}
-                                                </td>
-
-                                                <td className="p-3">
-                                                    {domicilio.tipo}
-                                                </td>
-
-                                                <td className="p-3">
-                                                    {domicilio.direccion}
-                                                </td>
-
-                                                <td className="p-3 text-center">
-
-                                                    <button
-                                                        type="button"
-                                                        onClick={() =>
-                                                            setDomicilioSeleccionado(domicilio)
-                                                        }
-                                                        className="px-4 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg"
-                                                    >
-                                                        Continuar
-                                                    </button>
-
-                                                </td>
-
-                                            </tr>
-
-                                        ))}
-
-                                    </tbody>
-
-                                </table>
-
+                                        <button
+                                            type="button"
+                                            onClick={() => {
+                                                setDomicilioSeleccionado(domicilio);
+                                            }}
+                                            className="mt-4 text-sky-700 font-medium hover:underline"
+                                        >
+                                            Ver domicilio
+                                        </button>
+                                    </div>
+                                ))}
                             </div>
                         </div>
 
@@ -177,45 +148,66 @@ export default function DomicilioFiscal({
 
             {domicilioSeleccionado && (
 
-                <div className="p-6 bg-sky-50 border-t">
-                    <div class="flex justify-between">
-                        <h4 className="font-semibold text-slate-800 mb-4">
+                <div className="bg-white rounded-xl border border-green-300 shadow-sm mt-6">
+
+                    <div className="border-b px-6 py-5 bg-green-50">
+                        <h3 className="text-lg font-semibold text-green-800">
                             Domicilio Seleccionado
-                        </h4>
-                        <button
-                            type="button"
-                            onClick={() => setDomicilioSeleccionado(null)}
-                            className="px-4 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg transition"
-                        >
-                            Cambiar domicilio
-                        </button>
+                        </h3>
+
+                        <p className="text-sm text-green-700 mt-1">
+                            El siguiente domicilio será utilizado para la conservación de la
+                            contabilidad y notificaciones.
+                        </p>
                     </div>
 
+                    <div className="p-6">
 
-                    <div className="grid md:grid-cols-3 gap-4">
+                        <div className="grid md:grid-cols-2 gap-6">
 
-                        <div>
-                            <label className="text-xs text-slate-500">
-                                Tipo
-                            </label>
+                            <div>
+                                <p className="text-xs uppercase tracking-wide text-slate-500">
+                                    Tipo de Domicilio
+                                </p>
 
-                            <div className="font-medium">
-                                {domicilioSeleccionado.tipo}
+                                <p className="font-medium text-slate-800 mt-1">
+                                    {domicilioSeleccionado.tipo}
+                                </p>
                             </div>
+
+                            <div>
+                                <p className="text-xs uppercase tracking-wide text-slate-500">
+                                    Tipo de Ámbito
+                                </p>
+
+                                <p className="font-medium text-slate-800 mt-1">
+                                    {domicilioSeleccionado.ambito}
+                                </p>
+                            </div>
+
                         </div>
 
-                        <div className="md:col-span-2">
-                            <label className="text-xs text-slate-500">
+                        <div className="mt-6">
+                            <p className="text-xs uppercase tracking-wide text-slate-500">
                                 Domicilio
-                            </label>
+                            </p>
 
-                            <div className="font-medium">
+                            <p className="mt-2 text-slate-800 leading-relaxed">
                                 {domicilioSeleccionado.direccion}
-                            </div>
+                            </p>
+                        </div>
+
+                        <div className="mt-6 flex justify-end">
+                            <button
+                                type="button"
+                                onClick={() => setDomicilioSeleccionado(null)}
+                                className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
+                            >
+                                Cambiar Domicilio
+                            </button>
                         </div>
 
                     </div>
-
                 </div>
 
             )}

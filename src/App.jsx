@@ -1441,26 +1441,124 @@ export default function AvisosFiscales() {
                     Seleccione la persona que llevará a cabo el trámite.
                   </p>
 
-                  <div className="space-y-3">
-                    <label className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="representacion"
-                        checked={representacion === "propio"}
-                        onChange={() => setRepresentacion("propio")}
-                      />
-                      El contribuyente realizará el trámite.
-                    </label>
+                  <div className="grid md:grid-cols-2 gap-5">
 
-                    <label className="flex items-center gap-3">
-                      <input
-                        type="radio"
-                        name="representacion"
-                        checked={representacion === "tercero"}
-                        onChange={() => setRepresentacion("tercero")}
-                      />
-                      El trámite será realizado por una tercera persona con facultades de representación.
-                    </label>
+                    {/* El contribuyente realiza el trámite */}
+
+                    <div
+                      onClick={() => setRepresentacion("propio")}
+                      className={`
+            cursor-pointer
+            rounded-xl
+            border
+            p-5
+            transition-all
+            ${representacion === "propio"
+                          ? "border-sky-600 bg-sky-50 shadow-md"
+                          : "border-slate-200 hover:border-sky-300 hover:shadow"
+                        }
+        `}
+                    >
+
+                      <div className="flex justify-between items-start">
+
+                        <div className="flex gap-4">
+
+                          <div
+                            className={`
+                        h-12 w-12 rounded-full flex items-center justify-center
+                        ${representacion === "propio"
+                                ? "bg-sky-600 text-white"
+                                : "bg-slate-100 text-slate-600"
+                              }
+                    `}
+                          >
+                            <UserRound size={22} />
+                          </div>
+
+                          <div>
+
+                            <h3 className="font-semibold text-slate-800">
+                              El Contribuyente
+                            </h3>
+
+                            <p className="text-sm text-slate-500 mt-1">
+                              El propio contribuyente realizará el trámite.
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                        <input
+                          type="radio"
+                          checked={representacion === "propio"}
+                          readOnly
+                          className="accent-sky-700 h-5 w-5"
+                        />
+
+                      </div>
+
+                    </div>
+
+                    {/* Representante */}
+
+                    <div
+                      onClick={() => setRepresentacion("tercero")}
+                      className={`
+            cursor-pointer
+            rounded-xl
+            border
+            p-5
+            transition-all
+            ${representacion === "tercero"
+                          ? "border-sky-600 bg-sky-50 shadow-md"
+                          : "border-slate-200 hover:border-sky-300 hover:shadow"
+                        }
+        `}
+                    >
+
+                      <div className="flex justify-between items-start">
+
+                        <div className="flex gap-4">
+
+                          <div
+                            className={`
+                        h-12 w-12 rounded-full flex items-center justify-center
+                        ${representacion === "tercero"
+                                ? "bg-sky-600 text-white"
+                                : "bg-slate-100 text-slate-600"
+                              }
+                    `}
+                          >
+                            <UserPlus size={22} />
+                          </div>
+
+                          <div>
+
+                            <h3 className="font-semibold text-slate-800">
+                              Tercera Persona
+                            </h3>
+
+                            <p className="text-sm text-slate-500 mt-1">
+                              El trámite será realizado por una persona con facultades de representación.
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                        <input
+                          type="radio"
+                          checked={representacion === "tercero"}
+                          readOnly
+                          className="accent-sky-700 h-5 w-5"
+                        />
+
+                      </div>
+
+                    </div>
+
                   </div>
                 </div>
               </section>
@@ -1490,39 +1588,94 @@ export default function AvisosFiscales() {
                           </div>
 
                           {/* Tabla de datos representantes */}
-                          <div className="overflow-x-auto">
+                          <div className="grid md:grid-cols-2 gap-4">
 
-                            <table className="w-full text-sm">
-                              <thead className="bg-slate-100">
-                                <tr>
-                                  <th className="p-3">Seleccionar</th>
-                                  <th className="p-3">RFC</th>
-                                  <th className="p-3">Nombre</th>
-                                  <th className="p-3">Tipo</th>
-                                </tr>
-                              </thead>
+                            {representantes.map((rep) => {
 
-                              <tbody>
-                                {representantes.map((rep) => (
-                                  <tr key={rep.id}>
-                                    <td className="p-3 text-center">
+                              const seleccionado = representanteSeleccionado?.id === rep.id;
+
+                              return (
+
+                                <div
+                                  key={rep.id}
+                                  onClick={() => setRepresentanteSeleccionado(rep)}
+                                  className={`
+                    cursor-pointer
+                    rounded-xl
+                    border
+                    transition-all
+                    duration-200
+                    ${seleccionado
+                                      ? "border-sky-600 bg-sky-50 shadow-md"
+                                      : "border-slate-200 bg-white hover:border-sky-300 hover:shadow"
+                                    }
+                `}
+                                >
+
+                                  <div className="p-5">
+
+                                    <div className="flex justify-between items-start">
+
+                                      <div className="flex items-center gap-4">
+
+                                        <div
+                                          className={`
+                                    h-12 w-12 rounded-full flex items-center justify-center
+                                    ${seleccionado
+                                              ? "bg-sky-600 text-white"
+                                              : "bg-slate-100 text-slate-600"
+                                            }
+                                `}
+                                        >
+                                          <UserRound size={22} />
+                                        </div>
+
+                                        <div>
+
+                                          <h3 className="font-semibold text-slate-800">
+                                            {rep.nombre}
+                                          </h3>
+
+                                          <p className="text-sm text-slate-500">
+                                            {rep.rfc}
+                                          </p>
+
+                                        </div>
+
+                                      </div>
+
                                       <input
                                         type="radio"
-                                        name="representante"
-                                        onChange={() =>
-                                          setRepresentanteSeleccionado(rep)
-                                        }
+                                        checked={seleccionado}
+                                        readOnly
+                                        className="h-5 w-5 accent-sky-700"
                                       />
-                                    </td>
 
-                                    <td className="p-3">{rep.rfc}</td>
-                                    <td className="p-3">{rep.nombre}</td>
-                                    <td className="p-3">{rep.tipo}</td>
-                                  </tr>
-                                ))}
-                              </tbody>
+                                    </div>
 
-                            </table>
+                                    <div className="mt-5 pt-4 border-t">
+
+                                      <div className="flex items-center justify-between">
+
+                                        <span className="text-sm text-slate-500">
+                                          Tipo de Representante
+                                        </span>
+
+                                        <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
+                                          {rep.tipo}
+                                        </span>
+
+                                      </div>
+
+                                    </div>
+
+                                  </div>
+
+                                </div>
+
+                              );
+
+                            })}
 
                           </div>
                         </div>
