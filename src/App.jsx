@@ -2048,7 +2048,7 @@ export default function AvisosFiscales() {
 
                         <div>
                           <p className="font-medium text-slate-800">
-                            Domicilio Fiscal Vigente
+                            Datos del domicilio
                           </p>
 
                           <p className="text-sm text-slate-500">
@@ -2495,11 +2495,14 @@ export default function AvisosFiscales() {
                   </p>
                 </div>
 
-                <div className="p-6 grid md:grid-cols-2 gap-4">
+                <div className="grid md:grid-cols-2  gap-5 p-5">
 
                   {representantesActuales.map((representante) => {
+
                     const seleccionado = representantesBaja.includes(representante.id);
+
                     return (
+
                       <div
                         key={representante.id}
                         onClick={() => {
@@ -2511,97 +2514,154 @@ export default function AvisosFiscales() {
 
                           setRepresentantePendiente(representante);
                           setModalConfirmacion(true);
+
                         }}
                         className={`
-    relative border-2 rounded-xl p-5 cursor-pointer transition-all
-    ${seleccionado
-                            ? "border-red-500 bg-red-50 shadow-sm"
-                            : "border-slate-200 hover:border-slate-400 hover:shadow-sm"
+          relative cursor-pointer rounded-2xl border transition-all duration-200 overflow-hidden
+          ${seleccionado
+                            ? "border-red-500 bg-red-50 shadow-lg"
+                            : "border-slate-200 bg-white hover:border-sky-300 hover:shadow-md"
                           }
-  `}
+        `}
                       >
 
-                        {/* Indicador de selección */}
+                        {/* Barra superior */}
 
-                        <div className="absolute top-4 right-4">
-                          <input
-                            type="checkbox"
-                            checked={seleccionado}
-                            onChange={() => toggleRepresentanteBaja(representante.id)}
-                            onClick={(e) => e.stopPropagation()}
-                            className="w-4 h-4"
-                          />
-                        </div>
+                        <div
+                          className={`h-2 ${seleccionado ? "bg-red-500" : "bg-emerald-500"
+                            }`}
+                        />
 
-                        {/* Encabezado */}
+                        <div className="p-5">
 
-                        <div className="flex items-start justify-between pr-8">
-                          <div>
-                            <h4 className="font-semibold text-slate-800">
-                              {representante.nombre}
-                            </h4>
+                          {/* Encabezado */}
 
-                            <span
-                              className={`
-                  inline-flex items-center px-2 py-1 mt-2 rounded-full text-xs font-medium
+                          <div className="flex justify-between items-start">
+
+                            <div className="flex gap-4">
+
+                              <div
+                                className={`
+                  h-14 w-14 rounded-full flex items-center justify-center
                   ${seleccionado
-                                  ? "bg-red-100 text-red-700"
-                                  : "bg-emerald-100 text-emerald-700"
-                                }
+                                    ? "bg-red-100 text-red-700"
+                                    : "bg-sky-100 text-sky-700"
+                                  }
                 `}
+                              >
+                                <UserRound size={26} />
+                              </div>
+
+                              <div>
+
+                                <h4 className="font-semibold text-slate-800 text-base">
+                                  {representante.nombre}
+                                </h4>
+
+                                <p className="text-sm text-slate-500">
+                                  Representante Legal
+                                </p>
+
+                              </div>
+
+                            </div>
+
+                            {seleccionado ? (
+
+                              <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">
+                                Baja
+                              </span>
+
+                            ) : (
+
+                              <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">
+                                Vigente
+                              </span>
+
+                            )}
+
+                          </div>
+
+                          {/* Información */}
+
+                          <div className="mt-6 space-y-3 text-sm">
+
+                            <div className="flex justify-between">
+
+                              <span className="text-slate-500">
+                                RFC
+                              </span>
+
+                              <span className="font-medium text-slate-800">
+                                {representante.rfc}
+                              </span>
+
+                            </div>
+
+                            <div className="flex justify-between">
+
+                              <span className="text-slate-500">
+                                CURP
+                              </span>
+
+                              <span className="font-medium text-slate-800">
+                                {representante.curp}
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                          {/* Footer */}
+
+                          <div className="mt-6 pt-4 border-t flex justify-between items-center">
+
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                setRepresentanteSeleccionado(representante);
+                                setModalRepresentante(true);
+                              }}
+                              className="text-sky-700 hover:text-sky-900 text-sm font-medium"
                             >
-                              {seleccionado
-                                ? "Marcado para baja"
-                                : "Permanecerá vigente"}
-                            </span>
-                          </div>
-                        </div>
+                              Ver información
+                            </button>
 
-                        {/* Información */}
+                            <button
+                              type="button"
+                              onClick={(e) => {
+                                e.stopPropagation();
 
-                        <div className="mt-4 space-y-2 text-sm text-slate-600 mb-4">
+                                if (seleccionado) {
+                                  toggleRepresentanteBaja(representante.id);
+                                } else {
+                                  setRepresentantePendiente(representante);
+                                  setModalConfirmacion(true);
+                                }
+                              }}
+                              className={`
+                px-4 py-2 rounded-lg text-sm font-medium transition
+                ${seleccionado
+                                  ? "bg-red-600 hover:bg-red-700 text-white"
+                                  : "bg-slate-100 hover:bg-slate-200 text-slate-700"
+                                }
+              `}
+                            >
+                              {seleccionado ? "Quitar baja" : "Dar de baja"}
+                            </button>
 
-                          <div>
-                            <span className="font-medium text-slate-700">
-                              RFC:
-                            </span>{" "}
-                            {representante.rfc}
-                          </div>
-
-                          <div>
-                            <span className="font-medium text-slate-700">
-                              CURP:
-                            </span>{" "}
-                            {representante.curp}
-                          </div>
-
-                          <div>
-                            <span className="font-medium text-slate-700">
-                              Estatus:
-                            </span>{" "}
-                            Vigente
                           </div>
 
                         </div>
-                        <div className="flex justify-end">
-                          <button
-                            type="button"
-                            onClick={(e) => {
-                              e.stopPropagation();
-                              setRepresentanteSeleccionado(representante);
-                              setModalRepresentante(true);
-                            }}
-                            className="px-3 py-2 text-sm border rounded-lg hover:bg-slate-100"
-                          >
-                            Ver información
-                          </button>
-                        </div>
+
                       </div>
+
                     );
+
                   })}
 
                 </div>
-
                 {/* Resumen */}
 
                 <div className="border-t bg-slate-50 px-6 py-4 flex items-center justify-between">
@@ -2731,10 +2791,19 @@ export default function AvisosFiscales() {
                     {/* Body */}
 
                     <div className="p-6">
+                      <div className=" rounded-lg px-3 mb-4">
 
-                      <p className="text-slate-700 mb-5">
-                        ¿Está seguro de que desea dar de baja al siguiente representante legal?
-                      </p>
+                        <p className="text-sm text-amber-800 font-bold">
+                          ¿Desea continuar con la baja de este representante legal?”</p>
+                      </div>
+                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+
+                        <p className="text-sm text-amber-800">
+                          Está a punto de marcar para baja al siguiente representante legal.
+
+                          Esta acción se aplicará al concluir el trámite</p>
+
+                      </div>
 
                       <div className="border rounded-xl bg-slate-50 p-4">
 
@@ -2771,14 +2840,6 @@ export default function AvisosFiscales() {
                           </div>
 
                         </div>
-
-                      </div>
-
-                      <div className="mt-5 bg-amber-50 border border-amber-200 rounded-lg p-3">
-
-                        <p className="text-sm text-amber-800">
-                          El representante permanecerá vigente hasta que el trámite sea concluido y autorizado.
-                        </p>
 
                       </div>
 
@@ -3019,7 +3080,7 @@ export default function AvisosFiscales() {
                         <div>
 
                           <h3 className="text-lg font-semibold text-slate-800">
-                            Nuevo Nombre
+                            Datos del Nuevo Nombre
                           </h3>
 
                           <p className="text-sm text-slate-500">
@@ -3152,8 +3213,7 @@ export default function AvisosFiscales() {
                           </h3>
 
                           <p className="text-sm text-slate-500 mt-1">
-                            Capture la información correspondiente al acta de nacimiento que
-                            acredita la modificación del nombre del contribuyente.
+                            Capture la información correspondiente al acta de nacimiento
                           </p>
 
                         </div>
@@ -3269,8 +3329,7 @@ export default function AvisosFiscales() {
                           </h3>
 
                           <p className="text-sm text-slate-500 mt-1">
-                            Capture la nueva información del contribuyente conforme a los
-                            datos registrados en el trámite.
+                            Capture la nueva información del contribuyente
                           </p>
 
                         </div>
