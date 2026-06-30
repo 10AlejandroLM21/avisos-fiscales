@@ -2,10 +2,15 @@ import React, { useState } from "react";
 import './App.css';
 import RepresentanteLegalForm from "./components/RepresentanteLegal";
 import DomicilioFiscal from "./components/DomicilioFiscal";
+import DomicilioFiscalForm from "./components/DomicilioFiscalForm";
 import DatosRepresentante from "./components/DatosRepresentante";
 import DocumentoProtocolizado from "./components/DocumentoProtocolizado";
 import { CampoConsulta } from "./components/CampoConsulta";
 import FormularioRepresentanteLegal from "./components/FormularioRepresentanteLegal";
+import CampoInput from "./components/CampoInput";
+import CampoArchivo from "./components/CampoArchivo";
+import CampoSelect from "./components/CampoSelect";
+import DocumentoConsulta from "./components/DocumentoConsulta";
 
 import {
   Search,
@@ -2684,70 +2689,560 @@ export default function AvisosFiscales() {
               </div>
 
               {modalRepresentante && representanteSeleccionado && (
-                <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
+                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
 
-                  <div className="bg-white rounded-xl shadow-xl w-full max-w-2xl">
+                  <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
 
-                    <div className="border-b px-6 py-4 flex justify-between items-center">
-                      <h3 className="text-lg font-semibold">
-                        Información del Representante Legal
-                      </h3>
+                    {/* HEADER */}
 
-                      <button
-                        onClick={() => setModalRepresentante(false)}
-                        className="text-slate-500 hover:text-slate-700"
-                      >
-                        ✕
-                      </button>
-                    </div>
+                    <div className="bg-gradient-to-r from-sky-700 to-sky-600 px-8 py-6">
 
-                    <div className="p-6 grid md:grid-cols-2 gap-4">
+                      <div className="flex justify-between items-center">
 
-                      <div>
-                        <label className="text-xs text-slate-500">
-                          Nombre
-                        </label>
-                        <p className="font-medium">
-                          {representanteSeleccionado.nombre}
-                        </p>
-                      </div>
+                        <div className="flex items-center gap-4">
 
-                      <div>
-                        <label className="text-xs text-slate-500">
-                          RFC
-                        </label>
-                        <p className="font-medium">
-                          {representanteSeleccionado.rfc}
-                        </p>
-                      </div>
+                          <div className="h-14 w-14 rounded-xl bg-white/20 flex items-center justify-center">
 
-                      <div>
-                        <label className="text-xs text-slate-500">
-                          CURP
-                        </label>
-                        <p className="font-medium">
-                          {representanteSeleccionado.curp}
-                        </p>
-                      </div>
+                            <UserRound
+                              className="text-white"
+                              size={28}
+                            />
 
-                      <div>
-                        <label className="text-xs text-slate-500">
-                          Estatus
-                        </label>
-                        <p className="font-medium">
-                          Vigente
-                        </p>
+                          </div>
+
+                          <div>
+
+                            <h2 className="text-2xl font-semibold text-white">
+                              Datos del Representante Legal
+                            </h2>
+
+                            <p className="text-sky-100 mt-1">
+                              Consulte la información registrada del representante legal.
+                            </p>
+
+                          </div>
+
+                        </div>
+
+                        <button
+                          onClick={() => setModalRepresentante(false)}
+                          className="text-white hover:bg-white/20 rounded-lg p-2 transition"
+                        >
+
+                          <X size={24} />
+
+                        </button>
+
                       </div>
 
                     </div>
 
-                    <div className="border-t px-6 py-4 flex justify-end">
+                    {/* BODY */}
+
+                    <div className="flex-1 overflow-y-auto p-8">
+
+                      <div className="bg-white border rounded-xl shadow-sm overflow-hidden">
+
+                        {/* ==========================
+                             DATOS DE IDENTIFICACIÓN
+                           =========================== */}
+
+                        {/* ==========================================
+    DATOS DE IDENTIFICACIÓN
+========================================== */}
+
+                        <div className="border-b">
+
+                          <div className="px-6 py-5 bg-slate-50">
+
+                            <div className="flex items-center gap-3">
+
+                              <div className="h-10 w-10 rounded-lg bg-sky-100 flex items-center justify-center">
+
+                                <UserRound
+                                  className="text-sky-700"
+                                  size={20}
+                                />
+
+                              </div>
+
+                              <div>
+
+                                <h3 className="font-semibold text-slate-800">
+                                  Datos de Identificación
+                                </h3>
+
+                                <p className="text-sm text-slate-500">
+                                  Información general registrada del representante legal.
+                                </p>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          <div className="p-6">
+
+                            <div className="grid md:grid-cols-2 gap-5">
+
+                              <CampoInput
+                                etiqueta="RFC"
+                                value={representanteSeleccionado.rfc}
+                                disabled
+                              />
+
+                              <CampoInput
+                                etiqueta="CURP"
+                                value={representanteSeleccionado.curp}
+                                disabled
+                              />
+
+                              <CampoInput
+                                etiqueta="Primer Apellido"
+                                value={representanteSeleccionado.apellidoPaterno}
+                                disabled
+                              />
+
+                              <CampoInput
+                                etiqueta="Segundo Apellido"
+                                value={representanteSeleccionado.apellidoMaterno}
+                                disabled
+                              />
+
+                              <div className="md:col-span-2">
+
+                                <CampoInput
+                                  etiqueta="Nombre(s)"
+                                  value={representanteSeleccionado.nombre}
+                                  disabled
+                                />
+
+                              </div>
+
+                              <CampoInput
+                                etiqueta="Fecha de Nacimiento"
+                                type="date"
+                                value={representanteSeleccionado.fechaNacimiento}
+                                disabled
+                              />
+
+                              <CampoInput
+                                etiqueta="Género"
+                                value={representanteSeleccionado.genero}
+                                disabled
+                              />
+
+                              <div className="md:col-span-2">
+
+                                <CampoInput
+                                  etiqueta="Correo Electrónico"
+                                  value={representanteSeleccionado.correoElectronico}
+                                  disabled
+                                />
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        {/* Aquí continuará Documento Protocolizado */}
+
+                        {/* ===========================================================
+    DOCUMENTO PROTOCOLIZADO
+=========================================================== */}
+
+                        {/* ==========================================
+    DOCUMENTO PROTOCOLIZADO
+========================================== */}
+
+                        <div className="border-b">
+
+                          <div className="px-6 py-5 bg-slate-50">
+
+                            <div className="flex items-center gap-3">
+
+                              <div className="h-10 w-10 rounded-lg bg-violet-100 flex items-center justify-center">
+
+                                <ScrollText
+                                  className="text-violet-700"
+                                  size={20}
+                                />
+
+                              </div>
+
+                              <div>
+
+                                <h3 className="font-semibold text-slate-800">
+                                  Documento Protocolizado
+                                </h3>
+
+                                <p className="text-sm text-slate-500">
+                                  Información del documento que acredita la representación legal.
+                                </p>
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          <div className="p-6">
+
+                            <div className="grid md:grid-cols-2 gap-5">
+
+                              <CampoSelect
+                                etiqueta="Tipo de Documento que lo acredita"
+                                value={representanteSeleccionado.tipoDocumento}
+                                opciones={[
+                                  {
+                                    value: "CARTA_PODER",
+                                    label: "Carta Poder con Ratificación de Firmas ante Notario",
+                                  },
+                                  {
+                                    value: "PODER_NOTARIAL",
+                                    label: "Poder Notarial del Apoderado Legal",
+                                  },
+                                ]}
+                                disabled
+                              />
+
+                              <CampoInput
+                                etiqueta="Fecha"
+                                type="date"
+                                value={representanteSeleccionado.fechaDocumento}
+                                disabled
+                              />
+
+                              {/* Carta Poder */}
+
+                              {representanteSeleccionado.tipoDocumento === "CARTA_PODER" && (
+
+                                <CampoInput
+                                  etiqueta="Número del Acta"
+                                  value={representanteSeleccionado.numeroActa}
+                                  disabled
+                                />
+
+                              )}
+
+                              {/* Poder Notarial */}
+
+                              {representanteSeleccionado.tipoDocumento === "PODER_NOTARIAL" && (
+
+                                <>
+
+                                  <CampoInput
+                                    etiqueta="Número de Instrumento o Escritura"
+                                    value={representanteSeleccionado.numeroInstrumento}
+                                    disabled
+                                  />
+
+                                  <CampoInput
+                                    etiqueta="Número de Fojas Útiles"
+                                    value={representanteSeleccionado.numeroFojas}
+                                    disabled
+                                  />
+
+                                </>
+
+                              )}
+
+                              <div className="md:col-span-2">
+
+                                <DocumentoConsulta
+
+                                  etiqueta="Documento Protocolizado"
+
+                                  nombreArchivo={representanteSeleccionado.documento}
+
+                                  descripcion="Documento mediante el cual se acredita la representación legal."
+
+                                  onVer={() => {
+
+                                    console.log("Abrir documento");
+
+                                  }}
+
+                                />
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        {/* Aquí continuará Domicilio Fiscal */}
+
+                        {/*DOMICILIO FISCAL*/}
+                        <div>
+
+
+                          <div  >
+
+                            <div className="px-6 py-5 bg-slate-50 flex items-center gap-3 ">
+                              <div className="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center">
+
+                                <Home
+                                  className="text-emerald-700"
+                                  size={20}
+                                />
+
+                              </div>
+                              <div>
+                                <h3 className="font-semibold text-slate-800">
+                                  Datos Generales del Domicilio
+                                </h3>
+
+                                <p className="text-sm text-slate-500 mt-1">
+                                  Información general del domicilio fiscal registrado.
+                                </p>
+                              </div>
+                            </div>
+
+                            <div className="p-6">
+                              <div className="grid md:grid-cols-2 gap-5 mb-6">
+
+                                <CampoInput
+                                  etiqueta="Código Postal"
+                                  value={representanteSeleccionado.codigoPostal}
+                                  disabled
+                                />
+
+                              </div>
+                              <div className="grid md:grid-cols-2 gap-5">
+                                <CampoInput
+                                  etiqueta="Tipo de Ámbito"
+                                  value={representanteSeleccionado.ambito}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Región"
+                                  value={representanteSeleccionado.region}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Distrito"
+                                  value={representanteSeleccionado.distrito}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Municipio / Delegación"
+                                  value={representanteSeleccionado.municipio}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Localidad"
+                                  value={representanteSeleccionado.localidad}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Tipo de Asentamiento"
+                                  value={representanteSeleccionado.tipoAsentamiento}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Nombre del Asentamiento"
+                                  value={representanteSeleccionado.nombreAsentamiento}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Tipo de Inmueble"
+                                  value={representanteSeleccionado.tipoInmueble}
+                                  disabled
+                                />
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          <div >
+
+                            <div className="px-6 py-5 bg-slate-50">
+
+                              <h3 className="font-semibold text-slate-800">
+                                Ubicación del Domicilio
+                              </h3>
+
+                              <p className="text-sm text-slate-500 mt-1">
+                                Información de ubicación conforme al tipo de ámbito.
+                              </p>
+
+                            </div>
+
+                            <div className="p-6">
+
+                              <div className="grid md:grid-cols-2 gap-5">
+
+                                {representanteSeleccionado.ambito === "URBANO" ? (
+
+                                  <>
+
+                                    <CampoInput
+                                      etiqueta="Tipo de Vialidad"
+                                      value={representanteSeleccionado.tipoVialidad}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Nombre de Vialidad"
+                                      value={representanteSeleccionado.nombreVialidad}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Número Exterior y/o Letra"
+                                      value={representanteSeleccionado.numeroExterior}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Número Interior y/o Letra"
+                                      value={representanteSeleccionado.numeroInterior}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Entre Vialidad"
+                                      value={representanteSeleccionado.entreVialidad}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Y Vialidad"
+                                      value={representanteSeleccionado.yVialidad}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Ubicación del Inmueble dentro de la Manzana"
+                                      value={representanteSeleccionado.ubicacionManzana}
+                                      disabled
+                                    />
+
+                                  </>
+
+                                ) : (
+
+                                  <>
+
+                                    <CampoInput
+                                      etiqueta="Tipo de Vía de Comunicación"
+                                      value={representanteSeleccionado.tipoVia}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Nombre de Vía de Comunicación"
+                                      value={representanteSeleccionado.nombreVia}
+                                      disabled
+                                    />
+
+                                    <CampoInput
+                                      etiqueta="Tramo"
+                                      value={representanteSeleccionado.tramo}
+                                      disabled
+                                    />
+
+                                  </>
+
+                                )}
+
+                              </div>
+
+                            </div>
+
+                          </div>
+
+                          <div >
+
+                            <div className="px-6 py-5 bg-slate-50">
+
+                              <h3 className="font-semibold text-slate-800">
+                                Información Complementaria
+                              </h3>
+
+                            </div>
+
+                            <div className="p-6">
+
+                              <div className="grid gap-5">
+
+                                <CampoInput
+                                  etiqueta="Características del Domicilio"
+                                  value={representanteSeleccionado.caracteristicas}
+                                  disabled
+                                />
+
+                                <CampoInput
+                                  etiqueta="Referencias Adicionales"
+                                  value={representanteSeleccionado.referencias}
+                                  disabled
+                                />
+
+                              </div>
+
+                            </div>
+
+                          </div>
+                        </div>
+
+
+                        <div>
+
+                          <div className="px-6 py-5 bg-slate-50">
+
+                            <h3 className="font-semibold text-slate-800">
+                              Geolocalización
+                            </h3>
+
+                            <p className="text-sm text-slate-500">
+                              Ubicación registrada del domicilio fiscal.
+                            </p>
+
+                          </div>
+
+                          <div className="p-6">
+
+                            <div className="h-72 rounded-xl border bg-slate-100 flex items-center justify-center">
+
+                              Google Maps
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* FOOTER */}
+
+                    <div className="border-t bg-slate-50 px-8 py-5 flex justify-end">
+
                       <button
                         onClick={() => setModalRepresentante(false)}
-                        className="px-4 py-2 bg-slate-800 text-white rounded-lg"
+                        className="px-5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white transition"
                       >
                         Cerrar
                       </button>
+
                     </div>
 
                   </div>
@@ -3447,9 +3942,9 @@ export default function AvisosFiscales() {
                 Aviso de Suspensión de Actividades
               </h3>
 
-              <p className="text-slate-500 mt-2">
+              {/* <p className="text-slate-500 mt-2">
                 Consulte el historial de cumplimiento de las obligaciones fiscales asociadas al contribuyente.
-              </p>
+              </p> */}
 
               <div className="space-y-5 mt-4">
 
@@ -3491,75 +3986,114 @@ export default function AvisosFiscales() {
                 </div>
 
                 {/* OBLIGACIONES */}
-                <div className="rounded-2xl border border-gray-300 shadow-sm">
-                  <div className="divide-y divide-gray-300">
-                    {obligaciones.map((item) => (
+                <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
 
-                      <div
-                        key={item.id}
-                        className="border-b border-gray-300"
-                      >
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setObligacionAbierta(
-                              obligacionAbierta === item.id ? null : item.id
-                            );
-                            setEjercicioSeleccionado(null);
-                          }
-                          }
-                          className="w-full p-5 text-left hover:bg-slate-50 transition"
-                        >
+                  {/* Header */}
 
-                          <div className="flex justify-between items-start">
+                  <div className="bg-slate-50 border-b px-6 py-5">
 
-                            <div>
+                    <div className="flex items-center gap-4">
 
-                              <h5 className="font-semibold text-slate-800">
-                                {item.nombre}
-                              </h5>
+                      <div className="h-12 w-12 rounded-xl bg-amber-100 flex items-center justify-center">
 
-                              <p className="text-sm text-slate-500 mt-1">
-                                {item.actividad}
-                              </p>
+                        <ClipboardList
+                          className="text-amber-700"
+                          size={24}
+                        />
 
-                            </div>
+                      </div>
 
-                            <div className="flex items-center gap-3">
+                      <div>
 
-                              <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                                ACTIVA
-                              </span>
+                        <h3 className="font-semibold text-lg text-slate-800">
+                          Obligaciones Fiscales
+                        </h3>
 
-                              <ChevronDown
-                                size={18}
-                                className={`transition-transform ${obligacionAbierta === 1
-                                  ? "rotate-180"
-                                  : ""
-                                  }`}
-                              />
+                        <p className="text-sm text-slate-500">
+                          Consulte las obligaciones fiscales registradas, así como las declaraciones pendientes por cada actividad económica.
+                        </p>
 
-                            </div>
+                      </div>
 
-                          </div>
+                    </div>
 
-                          {obligacionAbierta === item.id && (
-                            <div >
-                              {/* Barra de cumplimiento 1*/}
+                  </div>
 
-                              <div className="grid md:grid-cols-2 gap-4">
+                  {/* Body */}
+
+                  <div className="p-6">
+
+                    <div className="rounded-xl border border-slate-200 overflow-hidden">
+
+                      <div className="divide-y divide-slate-200">
+
+                        {obligaciones.map((item) => (
+
+                          <div
+                            key={item.id}
+                            className="border-b border-gray-300"
+                          >
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setObligacionAbierta(
+                                  obligacionAbierta === item.id ? null : item.id
+                                );
+                                setEjercicioSeleccionado(null);
+                              }
+                              }
+                              className="w-full p-5 text-left hover:bg-slate-50 transition"
+                            >
+
+                              <div className="flex justify-between items-start">
 
                                 <div>
-                                  <span className="text-xs text-slate-500">
-                                    Porcentaje de la actividad económica.
-                                  </span>
 
-                                  <div className="font-medium text-slate-800">
-                                    70%
-                                  </div>
+                                  <h5 className="font-semibold text-slate-800">
+                                    {item.nombre}
+                                  </h5>
+
+                                  <p className="text-sm text-slate-500 mt-1">
+                                    {item.actividad}
+                                  </p>
+
                                 </div>
 
-                                {/* <div>
+                                <div className="flex items-center gap-3">
+
+                                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
+                                    ACTIVA
+                                  </span>
+
+                                  <ChevronDown
+                                    size={18}
+                                    className={`transition-transform ${obligacionAbierta === 1
+                                      ? "rotate-180"
+                                      : ""
+                                      }`}
+                                  />
+
+                                </div>
+
+                              </div>
+
+                              {obligacionAbierta === item.id && (
+                                <div >
+                                  {/* Barra de cumplimiento 1*/}
+
+                                  <div className="grid md:grid-cols-2 gap-4">
+
+                                    <div>
+                                      <span className="text-xs text-slate-500">
+                                        Porcentaje de la actividad económica.
+                                      </span>
+
+                                      <div className="font-medium text-slate-800">
+                                        70%
+                                      </div>
+                                    </div>
+
+                                    {/* <div>
                                   <span className="text-xs text-slate-500">
                                     Cumplidas
                                   </span>
@@ -3569,145 +4103,151 @@ export default function AvisosFiscales() {
                                   </div>
                                 </div> */}
 
-                                <div>
-                                  <span className="text-xs text-slate-500">
-                                    Pendientes
-                                  </span>
+                                    <div>
+                                      <span className="text-xs text-slate-500">
+                                        Pendientes
+                                      </span>
 
-                                  <div className="font-medium text-red-600">
-                                    2 Declaraciones
-                                  </div>
-                                </div>
-
-                              </div>
-
-                            </div>
-                          )
-                          }
-                        </button>
-
-                        {/* DECLARACIONES */}
-
-                        {obligacionAbierta === item.id && (
-
-                          <div className="border-t bg-slate-50 p-4">
-
-                            <div className="space-y-2 p-5">
-                              <h6 className="font-medium text-slate-700 mb-4 ">
-                                Declaraciones pendientes
-                              </h6>
-
-                              <div className="space-y-4">
-
-                                {/* EJERCICIOS */}
-                                <div>
-                                  <h6 className="font-medium text-slate-700 mb-3">
-                                    Ejercicios con Declaraciones Pendientes
-                                  </h6>
-
-                                  <div className="flex gap-2 flex-wrap">
-
-                                    <button
-                                      type="button"
-                                      onClick={() => setEjercicioSeleccionado(2026)}
-                                      className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2026
-                                        ? "bg-sky-700 text-white border-sky-700"
-                                        : "bg-white"
-                                        }`}
-                                    >
-                                      Ejercicio 2026
-                                    </button>
-
-                                    <button
-                                      type="button"
-                                      onClick={() => setEjercicioSeleccionado(2025)}
-                                      className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2025
-                                        ? "bg-sky-700 text-white border-sky-700"
-                                        : "bg-white"
-                                        }`}
-                                    >
-                                      Ejercicio 2025
-                                    </button>
-
-                                  </div>
-                                </div>
-
-                                {/* PERIODOS */}
-                                {ejercicioSeleccionado && (
-                                  <div>
-
-                                    <h6 className="font-medium text-slate-700 mb-3">
-                                      Periodos Pendientes
-                                    </h6>
-
-                                    <div className="space-y-2 max-h-[250px] overflow-y-auto pr-2">
-
-                                      <div className="flex justify-between bg-white border rounded-lg p-3">
-                                        <div>
-                                          <div className="font-medium">
-                                            ENERO - FEBRERO
-                                          </div>
-
-                                          <div className="text-xs text-slate-500">
-                                            Bimestre 1 · Ejercicio {ejercicioSeleccionado}
-                                          </div>
-                                        </div>
-
-                                        <span className="text-red-600 font-medium">
-                                          No Cumplido
-                                        </span>
+                                      <div className="font-medium text-red-600">
+                                        2 Declaraciones
                                       </div>
-
-                                      <div className="flex justify-between bg-white border rounded-lg p-3">
-                                        <div>
-                                          <div className="font-medium">
-                                            MARZO - ABRIL
-                                          </div>
-
-                                          <div className="text-xs text-slate-500">
-                                            Bimestre 2 · Ejercicio {ejercicioSeleccionado}
-                                          </div>
-                                        </div>
-
-                                        <span className="text-red-600 font-medium">
-                                          No Cumplido
-                                        </span>
-                                      </div>
-
-                                      <div className="flex justify-between bg-white border rounded-lg p-3">
-                                        <div>
-                                          <div className="font-medium">
-                                            MAYO - JUNIO
-                                          </div>
-
-                                          <div className="text-xs text-slate-500">
-                                            Bimestre 3 · Ejercicio {ejercicioSeleccionado}
-                                          </div>
-                                        </div>
-
-                                        <span className="text-red-600 font-medium">
-                                          No Cumplido
-                                        </span>
-                                      </div>
-
                                     </div>
 
                                   </div>
-                                )}
+
+                                </div>
+                              )
+                              }
+                            </button>
+
+                            {/* DECLARACIONES */}
+
+                            {obligacionAbierta === item.id && (
+
+                              <div className="border-t bg-slate-50 p-4">
+
+                                <div className="space-y-2 p-5">
+                                  <h6 className="font-medium text-slate-700 mb-4 ">
+                                    Declaraciones pendientes
+                                  </h6>
+
+                                  <div className="space-y-4">
+
+                                    {/* EJERCICIOS */}
+                                    <div>
+                                      <h6 className="font-medium text-slate-700 mb-3">
+                                        Ejercicios con Declaraciones Pendientes
+                                      </h6>
+
+                                      <div className="flex gap-2 flex-wrap">
+
+                                        <button
+                                          type="button"
+                                          onClick={() => setEjercicioSeleccionado(2026)}
+                                          className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2026
+                                            ? "bg-sky-700 text-white border-sky-700"
+                                            : "bg-white"
+                                            }`}
+                                        >
+                                          Ejercicio 2026
+                                        </button>
+
+                                        <button
+                                          type="button"
+                                          onClick={() => setEjercicioSeleccionado(2025)}
+                                          className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2025
+                                            ? "bg-sky-700 text-white border-sky-700"
+                                            : "bg-white"
+                                            }`}
+                                        >
+                                          Ejercicio 2025
+                                        </button>
+
+                                      </div>
+                                    </div>
+
+                                    {/* PERIODOS */}
+                                    {ejercicioSeleccionado && (
+                                      <div>
+
+                                        <h6 className="font-medium text-slate-700 mb-3">
+                                          Periodos Pendientes
+                                        </h6>
+
+                                        <div className="space-y-2 max-h-[250px] overflow-y-auto pr-2">
+
+                                          <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div>
+                                              <div className="font-medium">
+                                                ENERO - FEBRERO
+                                              </div>
+
+                                              <div className="text-xs text-slate-500">
+                                                Bimestre 1 · Ejercicio {ejercicioSeleccionado}
+                                              </div>
+                                            </div>
+
+                                            <span className="text-red-600 font-medium">
+                                              No Cumplido
+                                            </span>
+                                          </div>
+
+                                          <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div>
+                                              <div className="font-medium">
+                                                MARZO - ABRIL
+                                              </div>
+
+                                              <div className="text-xs text-slate-500">
+                                                Bimestre 2 · Ejercicio {ejercicioSeleccionado}
+                                              </div>
+                                            </div>
+
+                                            <span className="text-red-600 font-medium">
+                                              No Cumplido
+                                            </span>
+                                          </div>
+
+                                          <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div>
+                                              <div className="font-medium">
+                                                MAYO - JUNIO
+                                              </div>
+
+                                              <div className="text-xs text-slate-500">
+                                                Bimestre 3 · Ejercicio {ejercicioSeleccionado}
+                                              </div>
+                                            </div>
+
+                                            <span className="text-red-600 font-medium">
+                                              No Cumplido
+                                            </span>
+                                          </div>
+
+                                        </div>
+
+                                      </div>
+                                    )}
+
+                                  </div>
+
+                                </div>
 
                               </div>
 
-                            </div>
+                            )}
 
                           </div>
 
-                        )}
-
+                        ))}
                       </div>
 
-                    ))}
+                    </div>
+
                   </div>
+
                 </div>
+
 
                 {mostrarFormularioDomicilio && (
                   <DomicilioFiscal
@@ -3748,54 +4288,6 @@ export default function AvisosFiscales() {
           selectedRow === "Reanudación de Actividades" &&
           activeStep === 5 && (
             <div>
-
-              {/* <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
-
-                <h3 className="text-lg font-semibold text-slate-800 mb-4">
-                  Seleccionar Obligación para Reanudar
-                </h3>
-
-                <div className="grid md:grid-cols-[1fr_auto] gap-4 items-end">
-
-                  <div>
-                    <label className="block mb-2 font-medium text-slate-700">
-                      Obligación
-                    </label>
-
-                    <select
-                      value={obligacionSeleccionada}
-                      onChange={(e) =>
-                        setObligacionSeleccionada(e.target.value)
-                      }
-                      className="w-full border rounded-lg px-4 py-3"
-                    >
-                      <option value="">
-                        Seleccione una obligación
-                      </option>
-
-                      <option>
-                        Impuesto Sobre Nóminas
-                      </option>
-
-                      <option>
-                        Impuesto Sobre Hospedaje
-                      </option>
-
-                    </select>
-                  </div> 
-
-                  <button
-                    type="button"
-                    disabled={!obligacionSeleccionada}
-                    className="px-5 py-3 bg-sky-700 text-white rounded-lg disabled:bg-slate-400"
-                  >
-                    + Reanudar Actividad
-                  </button>
-
-                </div>
-
-              </div> */}
-
 
               <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
 
@@ -3907,8 +4399,7 @@ export default function AvisosFiscales() {
                   </div>
 
                 </div>
-                {
-                  obligacionSeleccionada ===
+                {obligacionSeleccionada ===
                   "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
 
                     <>
@@ -3948,269 +4439,273 @@ export default function AvisosFiscales() {
                   )
                 }
               </div>
+              {actividadesAgregadas.length > 0 && (
+                <div className="bg-white rounded-xl border shadow-sm p-6">
 
-              <div className="bg-white rounded-xl border shadow-sm p-6">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-5">
+                    Obligaciones del Contribuyente
+                  </h3>
 
-                <h3 className="text-lg font-semibold text-slate-800 mb-5">
-                  Obligaciones del Contribuyente
-                </h3>
-                <div className="bg-sky-50 border rounded-xl p-6 my-6 ">
+                  <div className="bg-sky-50 border rounded-xl p-6 my-6 ">
 
-                  <div className="flex justify-between items-center mb-3">
+                    <div className="flex justify-between items-center mb-3">
 
-                    <span className="font-semibold text-slate-700">
-                      Total de Participación
-                    </span>
+                      <span className="font-semibold text-slate-700">
+                        Total de Participación
+                      </span>
 
-                    <span className="text-xl font-bold text-sky-700">
-                      100%
-                    </span>
-
-                  </div>
-
-                  <div className="w-full bg-slate-200 rounded-full h-3">
-
-                    <div
-                      className="bg-green-600 h-3 rounded-full"
-                      style={{ width: "100%" }}
-                    />
-
-                  </div>
-
-                  <p className="text-sm text-green-700 mt-2">
-                    ✓ El porcentaje total capturado es válido.
-                  </p>
-
-                </div>
-                <div className="space-y-5">
-
-                  {actividadesAgregadas.map((item, index) => (
-
-                    <div
-                      key={index}
-                      className="bg-white border rounded-xl shadow-sm overflow-hidden"
-                    >
-
-                      {/* HEADER */}
-
-                      <div className="bg-slate-50 border-b px-6 py-4 flex justify-between items-center">
-
-                        <div>
-
-                          <h4 className="font-semibold text-slate-800">
-                            {item.obligacion}
-                          </h4>
-
-                          <p className="text-sm text-slate-500">
-                            {item.actividad}
-                          </p>
-
-                        </div>
-
-                        <button
-                          type="button"
-                          onClick={() =>
-                            setActividadesAgregadas(
-                              actividadesAgregadas.filter(
-                                (_, i) => i !== index
-                              )
-                            )
-                          }
-                          className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg"
-                        >
-                          🗑 Eliminar
-                        </button>
-
-                      </div>
-
-                      {/* CONTENIDO */}
-
-                      <div className="p-6">
-
-                        {/* DATOS GENERALES */}
-
-                        <div className="mb-6">
-
-                          <h5 className="font-medium text-slate-700 mb-4">
-                            Datos Generales
-                          </h5>
-
-                          <div className="grid md:grid-cols-3 gap-5">
-
-                            <div>
-                              <label className="block mb-2 text-sm font-medium">
-                                Actividad Económica
-                              </label>
-
-                              <select
-                                className="w-full border rounded-lg px-4 py-3"
-                                defaultValue={item.actividad}
-                              >
-                                <option>
-                                  Prestación de Servicios
-                                </option>
-
-                                <option>
-                                  Comercialización
-                                </option>
-
-                              </select>
-                            </div>
-
-                            <div>
-                              <label className="block mb-2 text-sm font-medium">
-                                Porcentaje
-                              </label>
-
-                              <div className="relative">
-
-                                <input
-                                  type="number"
-                                  defaultValue={item.porcentaje}
-                                  className="w-full border rounded-lg px-4 py-3"
-                                />
-
-                                <span className="absolute right-4 top-3 text-slate-500">
-                                  %
-                                </span>
-
-                              </div>
-
-                            </div>
-
-                            <div>
-                              <label className="block mb-2 text-sm font-medium">
-                                Fecha Inicio Operación
-                              </label>
-
-                              <input
-                                type="date"
-                                className="w-full border rounded-lg px-4 py-3"
-                                defaultValue="2026-01-01"
-                              />
-                            </div>
-
-                          </div>
-                          {item.obligacion === "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
-
-                            <div className="mt-5 border-t pt-5">
-
-                              <h5 className="font-medium text-slate-700 mb-4">
-                                Información Laboral
-                              </h5>
-
-                              <div className="grid md:grid-cols-2 gap-5">
-
-                                <div>
-                                  <label className="block mb-2 text-sm font-medium">
-                                    Trabajadores Temporales
-                                  </label>
-
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    value={item.trabajadoresTemporales}
-                                    onChange={(e) => {
-
-                                      const nuevas = [...actividadesAgregadas];
-
-                                      nuevas[index].trabajadoresTemporales =
-                                        e.target.value;
-
-                                      setActividadesAgregadas(nuevas);
-
-                                    }}
-                                    className="w-full border rounded-lg px-4 py-3"
-                                  />
-                                </div>
-
-                                <div>
-                                  <label className="block mb-2 text-sm font-medium">
-                                    Trabajadores Permanentes
-                                  </label>
-
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    value={item.trabajadoresPermanentes}
-                                    onChange={(e) => {
-
-                                      const nuevas = [...actividadesAgregadas];
-
-                                      nuevas[index].trabajadoresPermanentes =
-                                        e.target.value;
-
-                                      setActividadesAgregadas(nuevas);
-
-                                    }}
-                                    className="w-full border rounded-lg px-4 py-3"
-                                  />
-                                </div>
-
-                              </div>
-
-                            </div>
-
-                          )}
-                        </div>
-
-                        {/* CAMPOS EXCLUSIVOS EROGACIONES */}
-
-                        {item.obligacion ===
-                          "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
-
-                            <div className="border-t pt-6">
-
-                              <h5 className="font-medium text-slate-700 mb-4">
-                                Información Laboral
-                              </h5>
-
-                              <div className="grid md:grid-cols-2 gap-5">
-
-                                <div>
-
-                                  <label className="block mb-2 text-sm font-medium">
-                                    Trabajadores Temporales
-                                  </label>
-
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    className="w-full border rounded-lg px-4 py-3"
-                                  />
-
-                                </div>
-
-                                <div>
-
-                                  <label className="block mb-2 text-sm font-medium">
-                                    Trabajadores Permanentes
-                                  </label>
-
-                                  <input
-                                    type="number"
-                                    min="0"
-                                    className="w-full border rounded-lg px-4 py-3"
-                                  />
-
-                                </div>
-
-                              </div>
-
-                            </div>
-
-                          )}
-
-                      </div>
+                      <span className="text-xl font-bold text-sky-700">
+                        100%
+                      </span>
 
                     </div>
 
-                  ))}
+
+
+                    <div className="w-full bg-slate-200 rounded-full h-3">
+
+                      <div
+                        className="bg-green-600 h-3 rounded-full"
+                        style={{ width: "100%" }}
+                      />
+
+                    </div>
+
+                    <p className="text-sm text-green-700 mt-2">
+                      ✓ El porcentaje total capturado es válido.
+                    </p>
+
+                  </div>
+
+                  <div className="space-y-5">
+
+                    {actividadesAgregadas.map((item, index) => (
+
+                      <div
+                        key={index}
+                        className="bg-white border rounded-xl shadow-sm overflow-hidden"
+                      >
+
+                        {/* HEADER */}
+
+                        <div className="bg-slate-50 border-b px-6 py-4 flex justify-between items-center">
+
+                          <div>
+
+                            <h4 className="font-semibold text-slate-800">
+                              {item.obligacion}
+                            </h4>
+
+                            <p className="text-sm text-slate-500">
+                              {item.actividad}
+                            </p>
+
+                          </div>
+
+                          <button
+                            type="button"
+                            onClick={() =>
+                              setActividadesAgregadas(
+                                actividadesAgregadas.filter(
+                                  (_, i) => i !== index
+                                )
+                              )
+                            }
+                            className="px-3 py-2 text-red-600 hover:bg-red-50 rounded-lg"
+                          >
+                            🗑 Eliminar
+                          </button>
+
+                        </div>
+
+                        {/* CONTENIDO */}
+
+                        <div className="p-6">
+
+                          {/* DATOS GENERALES */}
+
+                          <div className="mb-6">
+
+                            <h5 className="font-medium text-slate-700 mb-4">
+                              Datos Generales
+                            </h5>
+
+                            <div className="grid md:grid-cols-3 gap-5">
+
+                              <div>
+                                <label className="block mb-2 text-sm font-medium">
+                                  Actividad Económica
+                                </label>
+
+                                <select
+                                  className="w-full border rounded-lg px-4 py-3"
+                                  defaultValue={item.actividad}
+                                >
+                                  <option>
+                                    Prestación de Servicios
+                                  </option>
+
+                                  <option>
+                                    Comercialización
+                                  </option>
+
+                                </select>
+                              </div>
+
+                              <div>
+                                <label className="block mb-2 text-sm font-medium">
+                                  Porcentaje
+                                </label>
+
+                                <div className="relative">
+
+                                  <input
+                                    type="number"
+                                    defaultValue={item.porcentaje}
+                                    className="w-full border rounded-lg px-4 py-3"
+                                  />
+
+                                  <span className="absolute right-4 top-3 text-slate-500">
+                                    %
+                                  </span>
+
+                                </div>
+
+                              </div>
+
+                              <div>
+                                <label className="block mb-2 text-sm font-medium">
+                                  Fecha Inicio Operación
+                                </label>
+
+                                <input
+                                  type="date"
+                                  className="w-full border rounded-lg px-4 py-3"
+                                  defaultValue="2026-01-01"
+                                />
+                              </div>
+
+                            </div>
+                            {item.obligacion === "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
+
+                              <div className="mt-5 border-t pt-5">
+
+                                <h5 className="font-medium text-slate-700 mb-4">
+                                  Información Laboral
+                                </h5>
+
+                                <div className="grid md:grid-cols-2 gap-5">
+
+                                  <div>
+                                    <label className="block mb-2 text-sm font-medium">
+                                      Trabajadores Temporales
+                                    </label>
+
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      value={item.trabajadoresTemporales}
+                                      onChange={(e) => {
+
+                                        const nuevas = [...actividadesAgregadas];
+
+                                        nuevas[index].trabajadoresTemporales =
+                                          e.target.value;
+
+                                        setActividadesAgregadas(nuevas);
+
+                                      }}
+                                      className="w-full border rounded-lg px-4 py-3"
+                                    />
+                                  </div>
+
+                                  <div>
+                                    <label className="block mb-2 text-sm font-medium">
+                                      Trabajadores Permanentes
+                                    </label>
+
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      value={item.trabajadoresPermanentes}
+                                      onChange={(e) => {
+
+                                        const nuevas = [...actividadesAgregadas];
+
+                                        nuevas[index].trabajadoresPermanentes =
+                                          e.target.value;
+
+                                        setActividadesAgregadas(nuevas);
+
+                                      }}
+                                      className="w-full border rounded-lg px-4 py-3"
+                                    />
+                                  </div>
+
+                                </div>
+
+                              </div>
+
+                            )}
+                          </div>
+
+                          {/* CAMPOS EXCLUSIVOS EROGACIONES */}
+
+                          {item.obligacion ===
+                            "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
+
+                              <div className="border-t pt-6">
+
+                                <h5 className="font-medium text-slate-700 mb-4">
+                                  Información Laboral
+                                </h5>
+
+                                <div className="grid md:grid-cols-2 gap-5">
+
+                                  <div>
+
+                                    <label className="block mb-2 text-sm font-medium">
+                                      Trabajadores Temporales
+                                    </label>
+
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      className="w-full border rounded-lg px-4 py-3"
+                                    />
+
+                                  </div>
+
+                                  <div>
+
+                                    <label className="block mb-2 text-sm font-medium">
+                                      Trabajadores Permanentes
+                                    </label>
+
+                                    <input
+                                      type="number"
+                                      min="0"
+                                      className="w-full border rounded-lg px-4 py-3"
+                                    />
+
+                                  </div>
+
+                                </div>
+
+                              </div>
+
+                            )}
+
+                        </div>
+
+                      </div>
+
+                    ))}
+
+                  </div>
 
                 </div>
-
-              </div>
-
+              )}
             </div>
           )
         }
@@ -4224,13 +4719,17 @@ export default function AvisosFiscales() {
 
               {/* OBLIGACION */}
 
-              <div className="bg-white rounded-xl border shadow-sm p-6">
+              <div className="bg-white rounded-xl border shadow-sm">
 
-                <h3 className="text-lg font-semibold text-slate-800 mb-5">
-                  Selección de Obligación Fiscal
-                </h3>
-
-                <div className="grid md:grid-cols-3 gap-4">
+                <div className=" border-b border-slate-500 p-5">
+                  <h3 className="text-lg font-semibold text-slate-800 mb-2">
+                    Selección de Obligación Fiscal
+                  </h3>
+                  <p className="text-sm text-slate-500">
+                    Seleccione la obligación fiscal a la que se asociará la apertura del establecimiento.
+                  </p>
+                </div>
+                <div className="grid md:grid-cols-3 gap-4 p-5">
 
                   {[
                     "Impuesto Sobre Nóminas",
@@ -4281,14 +4780,23 @@ export default function AvisosFiscales() {
 
                   </div>
 
-                  <div className="p-6 space-y-8">
+                  <div className="">
 
                     {/* DATOS ESTABLECIMIENTO */}
 
-                    <section>
-                      <h4 className="font-semibold text-slate-700 mb-4">
-                        Datos del Establecimiento
-                      </h4>
+                    <section className="border-b px-6 py-5">
+                      <div className="flex items-center gap-2 mb-4">
+
+                        <Building2
+                          size={20}
+                          className="text-sky-700"
+                        />
+
+                        <h4 className="font-semibold text-slate-700">
+                          Datos del Establecimiento
+                        </h4>
+
+                      </div>
 
                       <div className="grid md:grid-cols-2 gap-6">
 
@@ -4303,90 +4811,22 @@ export default function AvisosFiscales() {
                           />
                         </div>
 
-                        <div>
-                          <label className="block mb-2 font-medium">
-                            Código Postal *
-                          </label>
-
-                          <select className="w-full border rounded-lg px-4 py-3"
-                            value={codigoPostal}
-                            onChange={(e) => setCodigoPostal(e.target.value)}
-                          >
-                            <option>Seleccione</option>
-                            <option value="68030">68030</option>
-                          </select>
-                        </div>
-
                       </div>
                     </section>
 
                     {/* DATOS GENERALES */}
 
-                    {codigoPostal && (
+                    <DomicilioFiscalForm
+                      onGuardar={() => { }}
+                      onCancelar={() => { }}
+                    />
 
-                      <section>
-
-                        <h4 className="font-semibold text-slate-700 mb-4">
-                          Datos Generales del Domicilio
-                        </h4>
-
-                        <div className="grid md:grid-cols-3 gap-6">
-
-                          <div>
-                            <label>Ámbito</label>
-                            <input disabled className="w-full border rounded-lg px-4 py-3 bg-slate-50" />
-                          </div>
-
-                          <div>
-                            <label>Región</label>
-                            <input disabled className="w-full border rounded-lg px-4 py-3 bg-slate-50" />
-                          </div>
-
-                          <div>
-                            <label>Distrito</label>
-                            <input disabled className="w-full border rounded-lg px-4 py-3 bg-slate-50" />
-                          </div>
-
-                          <div>
-                            <label>Municipio / Delegación</label>
-                            <input disabled className="w-full border rounded-lg px-4 py-3 bg-slate-50" />
-                          </div>
-
-                          <div>
-                            <label>Localidad</label>
-
-                            <select className="w-full border rounded-lg px-4 py-3">
-                              <option>Seleccione</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label>Tipo de Asentamiento</label>
-
-                            <select className="w-full border rounded-lg px-4 py-3">
-                              <option>Seleccione</option>
-                            </select>
-                          </div>
-
-                          <div>
-                            <label>Nombre de Asentamiento</label>
-
-                            <select className="w-full border rounded-lg px-4 py-3">
-                              <option>Seleccione</option>
-                            </select>
-                          </div>
-
-                        </div>
-
-                      </section>
-
-                    )}
 
                     {/* UBICACION */}
 
                     {ambito === "urbano" && (
 
-                      <section>
+                      <section className="border-b px-6 py-5">
 
                         <h4 className="font-semibold text-slate-700 mb-4">
                           Ubicación del Domicilio

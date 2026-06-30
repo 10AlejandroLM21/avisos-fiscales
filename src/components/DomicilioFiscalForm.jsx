@@ -62,15 +62,14 @@ export default function DomicilioFiscal({
     ]);
 
     return (
-        <div className={`"bg-white rounded-xl ${className}"`}>
-
+        <div className="p-6">
             {!mostrarFormularioDomicilio && (
                 <div>
                     {!domicilioSeleccionado && (
-                        <div className="rounded-xl border border-sky-200 bg-sky-50/30 overflow-hidden">
+                        <div className="rounded-xl overflow-hidden">
                             {/* Header */}
 
-                            <div className="border-b bg-white px-6 py-5 flex justify-between items-center">
+                            <div className=" bg-white flex justify-between items-center">
 
                                 <div className="flex items-center gap-4">
 
@@ -105,7 +104,7 @@ export default function DomicilioFiscal({
                                 </button>
                             </div>
 
-                            <div className="overflow-x-auto p/2 flex flex-col gap-4 p-4 mt-2">
+                            <div className="overflow-x-auto p/2 flex flex-col gap-4 mt-2">
 
                                 {domicilios.map((domicilio) => (
                                     <div
@@ -140,7 +139,6 @@ export default function DomicilioFiscal({
                         </div>
 
                     )}
-
                 </div>
 
 
@@ -214,212 +212,189 @@ export default function DomicilioFiscal({
 
             {mostrarFormularioDomicilio && (
 
-                <div className="bg-white rounded-xl border shadow-sm overflow-hidden mt-6">
-
-                    <div className="border-b bg-sky-50 px-6 py-4 flex items-center justify-between">
-
-                        <div>
-
-                            <h2 className="font-semibold text-slate-800">
-                                Nuevo Domicilio Fiscal
-                            </h2>
-
-                            <p className="text-sm text-slate-500 mt-1">
-                                Capture la información correspondiente al domicilio fiscal.
-                            </p>
-
-                        </div>
-
-                    </div>
-
+                <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-6">
                     <div className="p-6 space-y-8">
 
-                        {/* Aquí van todas las secciones */}
+                        {/* BÚSQUEDA POR CÓDIGO POSTAL */}
 
-                        <div className="p-6 space-y-8">
+                        <section>
 
-                            {/* BÚSQUEDA POR CÓDIGO POSTAL */}
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Búsqueda por Código Postal
+                            </h3>
 
-                            <section>
+                            <div className="grid md:grid-cols-3 gap-4">
 
-                                <h3 className="font-medium text-slate-700 mb-4">
-                                    Búsqueda por Código Postal
-                                </h3>
+                                <CampoInput
+                                    etiqueta="Código Postal *"
+                                    placeholder="68000"
+                                />
 
-                                <div className="grid md:grid-cols-3 gap-4">
+                            </div>
 
-                                    <CampoInput
-                                        etiqueta="Código Postal *"
-                                        placeholder="68000"
-                                    />
+                        </section>
 
-                                </div>
+                        {/* DATOS GENERALES */}
 
-                            </section>
+                        <section>
 
-                            {/* DATOS GENERALES */}
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Datos Generales del Domicilio
+                            </h3>
 
-                            <section>
+                            <div className="grid md:grid-cols-2 gap-4">
 
-                                <h3 className="font-medium text-slate-700 mb-4">
-                                    Datos Generales del Domicilio
-                                </h3>
+                                <CampoSelect
+                                    etiqueta="Tipo de Ámbito"
+                                    obligatorio
+                                    value={ambito}
+                                    onChange={(e) => setAmbito(e.target.value)}
+                                    opciones={[
+                                        {
+                                            value: "",
+                                            label: "Seleccione..."
+                                        },
+                                        {
+                                            value: "URBANO",
+                                            label: "Urbano"
+                                        },
+                                        {
+                                            value: "RURAL",
+                                            label: "Rural"
+                                        }
+                                    ]}
+                                />
 
-                                <div className="grid md:grid-cols-2 gap-4">
+                                <CampoInput etiqueta="Región *" />
 
-                                    <CampoSelect
-                                        etiqueta="Tipo de Ámbito"
-                                        obligatorio
-                                        value={ambito}
-                                        onChange={(e) => setAmbito(e.target.value)}
-                                        opciones={[
-                                            {
-                                                value: "",
-                                                label: "Seleccione..."
-                                            },
-                                            {
-                                                value: "URBANO",
-                                                label: "Urbano"
-                                            },
-                                            {
-                                                value: "RURAL",
-                                                label: "Rural"
-                                            }
-                                        ]}
-                                    />
+                                <CampoInput etiqueta="Distrito *" />
 
-                                    <CampoInput etiqueta="Región *" />
+                                <CampoInput etiqueta="Municipio / Delegación *" />
 
-                                    <CampoInput etiqueta="Distrito *" />
+                                <CampoInput etiqueta="Localidad *" />
 
-                                    <CampoInput etiqueta="Municipio / Delegación *" />
+                                <CampoInput etiqueta="Tipo de Asentamiento *" />
 
-                                    <CampoInput etiqueta="Localidad *" />
+                                <CampoInput etiqueta="Nombre del Asentamiento *" />
 
-                                    <CampoInput etiqueta="Tipo de Asentamiento *" />
+                                <CampoInput etiqueta="Tipo de Inmueble *" />
 
-                                    <CampoInput etiqueta="Nombre del Asentamiento *" />
+                            </div>
 
-                                    <CampoInput etiqueta="Tipo de Inmueble *" />
+                        </section>
 
-                                </div>
+                        {/* UBICACIÓN */}
 
-                            </section>
+                        <section>
 
-                            {/* UBICACIÓN */}
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Ubicación del Domicilio
+                            </h3>
 
-                            <section>
+                            {
+                                ambito === "URBANO" ? (
 
-                                <h3 className="font-medium text-slate-700 mb-4">
-                                    Ubicación del Domicilio
-                                </h3>
+                                    <div className="grid md:grid-cols-2 gap-4">
 
-                                {
-                                    ambito === "URBANO" ? (
+                                        <CampoInput etiqueta="Tipo de Vialidad *" />
 
-                                        <div className="grid md:grid-cols-2 gap-4">
+                                        <CampoInput etiqueta="Nombre de Vialidad *" />
 
-                                            <CampoInput etiqueta="Tipo de Vialidad *" />
+                                        <CampoInput etiqueta="Número Exterior y/o Letra *" />
 
-                                            <CampoInput etiqueta="Nombre de Vialidad *" />
+                                        <CampoInput etiqueta="Número Interior y/o Letra" />
 
-                                            <CampoInput etiqueta="Número Exterior y/o Letra *" />
+                                        <CampoInput etiqueta="Entre Vialidad *" />
 
-                                            <CampoInput etiqueta="Número Interior y/o Letra" />
+                                        <CampoInput etiqueta="Y Vialidad *" />
 
-                                            <CampoInput etiqueta="Entre Vialidad *" />
-
-                                            <CampoInput etiqueta="Y Vialidad *" />
-
-                                            <CampoInput etiqueta="Ubicación del Inmueble dentro de la Manzana" />
-
-                                        </div>
-
-                                    ) : (
-
-                                        <div className="grid md:grid-cols-2 gap-4">
-
-                                            <CampoInput etiqueta="Tipo de Vía de Comunicación *" />
-
-                                            <CampoInput etiqueta="Nombre de Vía de Comunicación *" />
-
-                                            <CampoInput etiqueta="Tramo *" />
-
-                                        </div>
-
-                                    )
-                                }
-
-                            </section>
-
-                            {/* INFORMACIÓN COMPLEMENTARIA */}
-
-                            <section>
-
-                                <h3 className="font-medium text-slate-700 mb-4">
-                                    Información Complementaria
-                                </h3>
-
-                                <div className="space-y-4">
-
-                                    <div>
-
-                                        <label className="block text-sm font-medium mb-2">
-                                            Características del Domicilio
-                                        </label>
-
-                                        <textarea
-                                            rows="3"
-                                            className="w-full border rounded-lg p-3"
-                                            placeholder="Capture las características del domicilio"
-                                        />
+                                        <CampoInput etiqueta="Ubicación del Inmueble dentro de la Manzana" />
 
                                     </div>
 
-                                    <div>
+                                ) : (
 
-                                        <label className="block text-sm font-medium mb-2">
-                                            Referencias Adicionales
-                                        </label>
+                                    <div className="grid md:grid-cols-2 gap-4">
 
-                                        <textarea
-                                            rows="3"
-                                            className="w-full border rounded-lg p-3"
-                                            placeholder="Capture referencias adicionales"
-                                        />
+                                        <CampoInput etiqueta="Tipo de Vía de Comunicación *" />
+
+                                        <CampoInput etiqueta="Nombre de Vía de Comunicación *" />
+
+                                        <CampoInput etiqueta="Tramo *" />
 
                                     </div>
 
-                                </div>
+                                )
+                            }
 
-                            </section>
+                        </section>
 
-                            {/* GEOLOCALIZACIÓN */}
+                        {/* INFORMACIÓN COMPLEMENTARIA */}
 
-                            <section>
+                        <section>
 
-                                <div className="flex items-center gap-2 mb-4">
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Información Complementaria
+                            </h3>
 
-                                    <MapPin
-                                        size={18}
-                                        className="text-sky-700"
+                            <div className="space-y-4">
+
+                                <div>
+
+                                    <label className="block text-sm font-medium mb-2">
+                                        Características del Domicilio
+                                    </label>
+
+                                    <textarea
+                                        rows="3"
+                                        className="w-full border rounded-lg p-3"
+                                        placeholder="Capture las características del domicilio"
                                     />
 
-                                    <h3 className="font-medium text-slate-700">
-                                        Geolocalización
-                                    </h3>
+                                </div>
+
+                                <div>
+
+                                    <label className="block text-sm font-medium mb-2">
+                                        Referencias Adicionales
+                                    </label>
+
+                                    <textarea
+                                        rows="3"
+                                        className="w-full border rounded-lg p-3"
+                                        placeholder="Capture referencias adicionales"
+                                    />
 
                                 </div>
 
-                                <div className="h-80 rounded-xl border bg-slate-100 flex items-center justify-center text-slate-500">
+                            </div>
 
-                                    Área de Google Maps
+                        </section>
 
-                                </div>
+                        {/* GEOLOCALIZACIÓN */}
 
-                            </section>
+                        <section>
 
-                        </div>
+                            <div className="flex items-center gap-2 mb-4">
+
+                                <MapPin
+                                    size={18}
+                                    className="text-sky-700"
+                                />
+
+                                <h3 className="font-medium text-slate-700">
+                                    Geolocalización
+                                </h3>
+
+                            </div>
+
+                            <div className="h-80 rounded-xl border bg-slate-100 flex items-center justify-center text-slate-500">
+
+                                Área de Google Maps
+
+                            </div>
+
+                        </section>
 
                     </div>
 

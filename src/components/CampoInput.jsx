@@ -5,8 +5,8 @@ export default function CampoInput({
     value,
     onChange,
     type = "text",
-    placeholder = ""
-
+    placeholder = "",
+    disabled = false
 }) {
 
     return (
@@ -28,7 +28,11 @@ export default function CampoInput({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder}
-                className="w-full border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
+                disabled={disabled}
+                className={`w-full border rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 ${disabled
+                        ? "bg-gray-100 cursor-not-allowed text-slate-500 border-slate-200"
+                        : "bg-white"
+                    }`}
             />
 
         </div>

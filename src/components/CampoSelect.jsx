@@ -4,6 +4,7 @@ export default function CampoSelect({
   value,
   onChange,
   opciones = [],
+  disabled = false
 }) {
   return (
     <div>
@@ -19,8 +20,13 @@ export default function CampoSelect({
       <select
         value={value}
         onChange={onChange}
-        className="w-full rounded-lg border border-slate-300 bg-white px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition"
-      >
+        disabled={disabled}
+        className={`w-full rounded-lg border border-slate-300 bg-white px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition
+        ${disabled
+            ? 'bg-gray-100 cursor-not-allowed text-slate-500 border-slate-200'
+            : 'bg-white'
+          }`
+      }>
 
         {opciones.map((opcion) => (
           <option
