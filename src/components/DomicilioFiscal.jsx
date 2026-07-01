@@ -28,7 +28,9 @@ import {
     Upload,
     UserPlus,
     X,
-    Save
+    Save,
+    Repeat,
+    Eye
 } from "lucide-react";
 export default function DomicilioFiscal({
     titulo = "Domicilio fiscal del representante legal",
@@ -111,29 +113,111 @@ export default function DomicilioFiscal({
                                     <div
                                         key={domicilio.id}
                                         onClick={() => setDomicilioSeleccionado(domicilio)}
-                                        className={`border border-red-300 rounded-xl p-5 cursor-pointer transition
-      ${domicilioSeleccionado?.id === domicilio.id
-                                                ? "border-sky-700 bg-sky-50"
-                                                : "hover:border-sky-500"
-                                            }`}
+                                        className={`
+            relative
+            flex
+            overflow-hidden
+            rounded-xl
+            border
+            cursor-pointer
+            transition-all
+            hover:shadow-md
+            ${domicilioSeleccionado?.id === domicilio.id
+                                                ? "border-sky-600 bg-sky-50 shadow-sm"
+                                                : "border-slate-200 hover:border-sky-400 bg-white"
+                                            }
+        `}
                                     >
-                                        <h4 className="font-semibold text-slate-800">
-                                            {domicilio.tipo}
-                                        </h4>
 
-                                        <p className="text-sm text-slate-500 mt-2">
-                                            {domicilio.direccion}
-                                        </p>
+                                        {/* Barra lateral */}
 
-                                        <button
-                                            type="button"
-                                            onClick={() => {
-                                                setDomicilioSeleccionado(domicilio);
-                                            }}
-                                            className="mt-4 text-sky-700 font-medium hover:underline"
-                                        >
-                                            Ver domicilio
-                                        </button>
+                                        <div
+                                            className={`
+                w-2
+                ${domicilioSeleccionado?.id === domicilio.id
+                                                    ? "bg-sky-700"
+                                                    : "bg-slate-300"
+                                                }
+            `}
+                                        />
+
+                                        {/* Contenido */}
+
+                                        <div className="flex-1 p-5">
+
+                                            <div className="flex justify-between items-start gap-6">
+
+                                                <div className="flex-1">
+
+                                                    {/* Tipo */}
+
+                                                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mb-2">
+                                                        Tipo de Domicilio
+                                                    </p>
+
+                                                    <span
+                                                        className={`
+                            inline-flex
+                            px-3
+                            py-1
+                            rounded-full
+                            text-xs
+                            font-medium
+                            ${domicilioSeleccionado?.id === domicilio.id
+                                                                ? "bg-sky-100 text-sky-700"
+                                                                : "bg-slate-100 text-slate-600"
+                                                            }
+                        `}
+                                                    >
+                                                        {domicilio.tipo}
+                                                    </span>
+
+                                                    {/* Dirección */}
+
+                                                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mt-5 mb-2">
+                                                        Domicilio
+                                                    </p>
+
+                                                    <p className="text-slate-700 leading-6">
+                                                        {domicilio.direccion}
+                                                    </p>
+
+                                                </div>
+
+                                                <div className="flex items-end">
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={(e) => {
+                                                            e.stopPropagation();
+                                                            setDomicilioSeleccionado(domicilio);
+                                                        }}
+                                                        className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            px-4
+                            py-2
+                            rounded-lg
+                            border
+                            hover:bg-slate-50
+                            text-sm
+                            font-medium
+                            flex 
+                            items-center 
+                            gap-2
+                        "
+                                                    >
+                                                        <Eye size={18} />
+                                                        Ver domicilio
+                                                    </button>
+
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+
                                     </div>
                                 ))}
                             </div>
@@ -203,8 +287,8 @@ export default function DomicilioFiscal({
                                 onClick={() => setDomicilioSeleccionado(null)}
                                 className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
                             >
-                                Cambiar Domicilio
-                            </button>
+                                <Repeat size={18} />
+                                Seleccionar otro domicilio                            </button>
                         </div>
 
                     </div>
@@ -437,9 +521,10 @@ export default function DomicilioFiscal({
                                 onGuardar();
                                 setMostrarFormularioDomicilio(false);
                             }}
-                            className="px-5 py-2 rounded-lg bg-green-700 text-white"
+                            className="px-5 py-2 rounded-lg bg-green-700 text-white flex items-center gap-2"
                         >
-                            Guardar Domicilio
+                            <Repeat size={18} />
+                            Modificar selección
                         </button>
 
                     </div>

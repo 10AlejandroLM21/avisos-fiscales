@@ -11,6 +11,9 @@ import CampoInput from "./components/CampoInput";
 import CampoArchivo from "./components/CampoArchivo";
 import CampoSelect from "./components/CampoSelect";
 import DocumentoConsulta from "./components/DocumentoConsulta";
+import DetalleDomicilio from "./components/DetalleDomicilio";
+import ModalFormulario from "./components/ModalFormulario";
+import CardEstablecimiento from "./components/CardEstablecimiento";
 
 import {
   Search,
@@ -89,7 +92,8 @@ export default function AvisosFiscales() {
     establecimientoSeleccionado,
     setEstablecimientoSeleccionado
   ] = useState(null);
-
+  const [modalConfirmacion, setModalConfirmacion] = useState(false);
+  const [establecimientoPendiente, setEstablecimientoPendiente] = useState(null);
   // Modal de detalle
   const [openDetalle, setOpenDetalle] =
     useState(false);
@@ -275,7 +279,6 @@ export default function AvisosFiscales() {
     setModalConfirmacion(false);
     setRepresentantePendiente(null);
   };
-  const [modalConfirmacion, setModalConfirmacion] = useState(false);
   const [representantePendiente, setRepresentantePendiente] = useState(null);
   const [representantesVigentes, setRepresentantesVigentes] = useState([1, 2]);
   const [tipoDocumento, setTipoDocumento] = useState("");
@@ -5011,9 +5014,8 @@ export default function AvisosFiscales() {
                 </div>
 
               </div>
-
               {
-                obligacionSeleccionada && !establecimientoSeleccionado && (
+                obligacionSeleccionada && (
 
                   <div className="bg-white rounded-xl border shadow-sm p-6">
 
@@ -5028,129 +5030,172 @@ export default function AvisosFiscales() {
                       </p>
 
                     </div>
+                    {establecimientoSeleccionado ? (
 
-                    <div className="space-y-3">
+                      <CardEstablecimiento
+                        establecimiento={establecimientoSeleccionado}
+                        seleccionado
+                        onCambiar={() => setEstablecimientoSeleccionado(null)}
+                        onVer={() => {
+                          setEstablecimientoDetalle(establecimientoSeleccionado);
+                          setOpenDetalle(true);
+                        }}
+                      />
 
-                      {establecimientos.map((item) => (
+                    ) : (
 
-                        <button
-                          key={item.id}
-                          type="button"
-                          onClick={() => setEstablecimientoSeleccionado(item)}
-                          className={`w-full text-left border rounded-xl p-4 transition-all
-        ${establecimientoSeleccionado?.id === item.id
-                              ? "border-red-600 bg-red-50"
-                              : "border-slate-200 hover:border-sky-500 hover:bg-slate-50"
-                            }`}
-                        >
+                      <div className="space-y-4">
 
-                          <div className="flex items-start justify-between">
+                        {establecimientos.map((item) => (
 
-                            <div className="flex gap-4">
+                          <CardEstablecimiento
+                            key={item.id}
+                            establecimiento={item}
+                            onSeleccionar={() => {
+                              setEstablecimientoPendiente(item);
+                              setModalConfirmacion(true);
+                            }}
+                            onVer={() => {
+                              setEstablecimientoDetalle(item);
+                              setOpenDetalle(true);
+                            }}
+                          />
 
-                              <div className="mt-1">
+                        ))}
 
-                                <div
-                                  className={`w-5 h-5 rounded-full border-2 flex items-center justify-center
-                ${establecimientoSeleccionado?.id === item.id
-                                      ? "border-red-600"
-                                      : "border-slate-400"
-                                    }`}
-                                >
+                      </div>
 
-                                  {establecimientoSeleccionado?.id === item.id && (
-                                    <div className="w-2.5 h-2.5 rounded-full bg-red-600" />
-                                  )}
+                    )}
+                    {openDetalle && (
 
-                                </div>
+                      <ModalFormulario
+                        abierto={openDetalle}
+                        onClose={() => setOpenDetalle(false)}
+                        titulo="Domicilio del Establecimiento"
+                        descripcion="Consulte la información correspondiente al domicilio del establecimiento seleccionado."
+                        icono={<Home className="text-white" size={28} />}
+                        textoBoton="Cerrar"
+                      >
 
-                              </div>
+                        <DetalleDomicilio
+                          domicilio={establecimientoDetalle}
+                        />
 
-                              <div>
+                      </ModalFormulario>
 
-                                <h4 className="font-semibold text-slate-800">
-                                  {item.nombre}
-                                </h4>
+                    )
+                    }
+                    {modalConfirmacion && (
 
-                                <p className="text-sm text-slate-500 mt-1">
-                                  {item.domicilio}
-                                </p>
+                      <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
 
-                                <div className="mt-2">
+                        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
 
-                                  <span className="inline-flex px-3 py-1 rounded-full text-xs font-medium bg-sky-100 text-sky-700">
-                                    {item.obligacion}
-                                  </span>
+                          {/* Header */}
 
-                                </div>
+                          <div className="px-6 py-5 border-b bg-red-50 flex items-center gap-3">
 
-                              </div>
+                            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+
+                              <Building2
+                                className="text-red-600"
+                                size={24}
+                              />
 
                             </div>
 
-                            <button
-                              type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
-                                setEstablecimientoDetalle(item);
-                                setOpenDetalle(true);
-                              }}
-                              className="text-sky-700 hover:text-sky-900 text-sm font-medium"
-                            >
-                              Ver domicilio
-                            </button>
+                            <div>
+
+                              <h3 className="font-semibold text-slate-800">
+                                Confirmar selección
+                              </h3>
+
+                              <p className="text-sm text-slate-500">
+                                Verifique la información antes de continuar.
+                              </p>
+
+                            </div>
 
                           </div>
 
-                        </button>
+                          {/* Contenido */}
 
-                      ))}
+                          <div className="px-6 py-6">
 
-                    </div>
+                            <p className="text-slate-700 text-center text-lg font-medium">
 
-                  </div>
+                              ¿DESEA SELECCIONAR ESTE ESTABLECIMIENTO?
 
-                )}
-              {
-                establecimientoSeleccionado && (
+                            </p>
 
-                  <div className="bg-red-50 border border-red-200 rounded-xl p-5 mt-6">
+                            {establecimientoPendiente && (
 
-                    <div className="flex items-center justify-between">
+                              <div className="mt-6 rounded-xl border bg-slate-50 p-4">
 
-                      <div className="flex items-center gap-3">
+                                <p className="text-xs uppercase text-slate-500">
+                                  Nombre del Establecimiento
+                                </p>
 
-                        <div className="w-10 h-10 rounded-full bg-red-100 flex items-center justify-center">
-                          🏢
-                        </div>
+                                <p className="font-semibold text-slate-800">
+                                  {establecimientoPendiente.nombre}
+                                </p>
 
-                        <div>
+                                <p className="text-xs uppercase text-slate-500 mt-4">
+                                  Domicilio
+                                </p>
 
-                          <h4 className="font-semibold text-red-800">
-                            Establecimiento Seleccionado para Cierre
-                          </h4>
+                                <p className="text-slate-700">
+                                  {establecimientoPendiente.domicilio}
+                                </p>
 
-                          <p className="text-red-700">
-                            {establecimientoSeleccionado.nombre}
-                          </p>
+                              </div>
+
+                            )}
+
+                          </div>
+
+                          {/* Footer */}
+
+                          <div className="border-t bg-slate-50 px-6 py-4 flex justify-end gap-3">
+
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setModalConfirmacion(false);
+                                setEstablecimientoPendiente(null);
+                              }}
+                              className="px-5 py-2.5 rounded-lg border hover:bg-slate-100"
+                            >
+                              No
+                            </button>
+
+                            <button
+                              type="button"
+                              onClick={() => {
+
+                                setEstablecimientoSeleccionado(establecimientoPendiente);
+
+                                setModalConfirmacion(false);
+
+                                setEstablecimientoPendiente(null);
+
+                              }}
+                              className="px-5 py-2.5 rounded-lg bg-red-700 hover:bg-red-800 text-white"
+                            >
+                              Sí
+                            </button>
+
+                          </div>
 
                         </div>
 
                       </div>
 
-                      <button
-                        type="button"
-                        onClick={() => setEstablecimientoSeleccionado(null)}
-                        className="px-4 py-2 border border-slate-300 rounded-lg hover:bg-white text-slate-700"
-                      >
-                        Cambiar establecimiento
-                      </button>
-
-                    </div>
-
+                    )}
                   </div>
 
                 )}
+
               <div className="border-t mt-6 px-6 py-4 flex justify-between">
 
                 <button
