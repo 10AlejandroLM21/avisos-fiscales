@@ -43,7 +43,7 @@ import {
   X,
   Save
 } from "lucide-react";
-
+import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
 
   const [activeStep, setActiveStep] = useState(0);
@@ -4096,16 +4096,6 @@ export default function AvisosFiscales() {
                                       </div>
                                     </div>
 
-                                    {/* <div>
-                                  <span className="text-xs text-slate-500">
-                                    Cumplidas
-                                  </span>
-
-                                  <div className="font-medium text-green-600">
-                                    10 Declaraciones
-                                  </div>
-                                </div> */}
-
                                     <div>
                                       <span className="text-xs text-slate-500">
                                         Pendientes
@@ -4257,6 +4247,8 @@ export default function AvisosFiscales() {
                     onGuardar={() => { }}
                     onCancelar={() => { }}
                     className="border border-gray-300 shadow-sm"
+                    titulo="Datos generales del domicilio"
+                    descripcion="Capture o verifique la información general correspondiente al domicilio fiscal"
                   />
                 )}
 
@@ -5078,7 +5070,7 @@ export default function AvisosFiscales() {
                       >
 
                         <DetalleDomicilio
-                          domicilio={establecimientoDetalle}
+                          domicilio={establecimientoSeleccionado}
                         />
 
                       </ModalFormulario>
@@ -5845,117 +5837,16 @@ export default function AvisosFiscales() {
                   </div>
                 </div>
               )}
-              {datosValidados && !domicilioSeleccionado && (
-                <div className="bg-white rounded-xl border border-slate-300 shadow-sm mt-6">
-                  <div className="border-b px-6 py-5">
-                    <h3 className="text-lg font-semibold text-slate-800">
-                      Domicilios del contribuyente
-                    </h3>
-                    <p className="text-sm text-slate-500 mt-1">
-                      Seleccione un domicilio para recibir notificaciones
-                    </p>
-                  </div>
-                  <div className="grid md:grid-cols-2 gap-4 p-4">
-
-                    {domicilios.map((domicilio) => (
-                      <div
-                        key={domicilio.id}
-                        onClick={() => setDomicilioSeleccionado(domicilio)}
-                        className={`border border-slate-300 rounded-xl p-5 cursor-pointer transition
-      ${domicilioSeleccionado?.id === domicilio.id
-                            ? "border-sky-700 bg-sky-50"
-                            : "hover:border-sky-500"
-                          }`}
-                      >
-                        <h4 className="font-semibold text-slate-800">
-                          {domicilio.tipo}
-                        </h4>
-
-                        <p className="text-sm text-slate-500 mt-2">
-                          {domicilio.direccion}
-                        </p>
-
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setDomicilioConsulta(domicilio);
-                            setMostrarModalDomicilio(true);
-                          }}
-                          className="mt-4 text-sky-700 font-medium hover:underline"
-                        >
-                          Ver domicilio
-                        </button>
-                      </div>
-                    ))}
-
-                  </div>
-
-
-                </div>
+              {datosValidados && (
+                <DomicilioFiscal
+                  onGuardar={() => { }}
+                  onCancelar={() => { }}
+                  className="border border-gray-300 shadow-sm"
+                  titulo="Domicilio para notificaciones"
+                  descripcion="Seleccione Un Domicilio Para Recibir Notificaciones"
+                />
               )}
-              {domicilioSeleccionado && (
-                <div className="bg-white rounded-xl border border-green-300 shadow-sm mt-6">
 
-                  <div className="border-b px-6 py-5 bg-green-50">
-                    <h3 className="text-lg font-semibold text-green-800">
-                      Domicilio Seleccionado
-                    </h3>
-
-                    <p className="text-sm text-green-700 mt-1">
-                      El siguiente domicilio será utilizado para la conservación de la
-                      contabilidad y notificaciones.
-                    </p>
-                  </div>
-
-                  <div className="p-6">
-
-                    <div className="grid md:grid-cols-2 gap-6">
-
-                      <div>
-                        <p className="text-xs uppercase tracking-wide text-slate-500">
-                          Tipo de Domicilio
-                        </p>
-
-                        <p className="font-medium text-slate-800 mt-1">
-                          {domicilioSeleccionado.tipo}
-                        </p>
-                      </div>
-
-                      <div>
-                        <p className="text-xs uppercase tracking-wide text-slate-500">
-                          Tipo de Ámbito
-                        </p>
-
-                        <p className="font-medium text-slate-800 mt-1">
-                          {domicilioSeleccionado.ambito}
-                        </p>
-                      </div>
-
-                    </div>
-
-                    <div className="mt-6">
-                      <p className="text-xs uppercase tracking-wide text-slate-500">
-                        Domicilio
-                      </p>
-
-                      <p className="mt-2 text-slate-800 leading-relaxed">
-                        {domicilioSeleccionado.direccion}
-                      </p>
-                    </div>
-
-                    <div className="mt-6 flex justify-end">
-                      <button
-                        type="button"
-                        onClick={() => setDomicilioSeleccionado(null)}
-                        className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-                      >
-                        Cambiar Domicilio
-                      </button>
-                    </div>
-
-                  </div>
-                </div>
-              )}
               {/* MODAL */}
               {mostrarModalDomicilio && domicilioConsulta && (
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
@@ -6168,6 +6059,13 @@ export default function AvisosFiscales() {
 
           )
         }
+        {/*Aumento de obligaciones*/}
+        {
+          selectedRow === "Aumento de Obligaciones" &&
+          activeStep === 5 && (
+            <AumentoObligaciones />
+          )}
+
       </main >
 
       {/* FOOTER */}

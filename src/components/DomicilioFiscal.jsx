@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Input from "../components/Input";
 import CampoSelect from "../components/CampoSelect";
 import CampoInput from "../components/CampoInput";
+import ModalFormulario from "../components/ModalFormulario";
+import DetalleDomicilio from "../components/DetalleDomicilio";
 import {
     Search,
     Users,
@@ -30,17 +32,20 @@ import {
     X,
     Save,
     Repeat,
-    Eye
+    Eye,
+    Check
 } from "lucide-react";
 export default function DomicilioFiscal({
-    titulo = "Domicilio fiscal del representante legal",
     onGuardar,
     onCancelar,
-    className = ""
-
+    className = "",
+    titulo = "",
+    descripcion = ""
 }) {
     const [domicilioSeleccionado, setDomicilioSeleccionado] = useState(null);
     const [mostrarFormularioDomicilio, setMostrarFormularioDomicilio] = useState(false);
+    const [openDetalle, setOpenDetalle] = useState(false);
+    const [establecimientoDetalle, setEstablecimientoDetalle] = useState(null);
     const [ambito, setAmbito] = useState("");
     const [domicilios] = useState([
         {
@@ -62,17 +67,16 @@ export default function DomicilioFiscal({
                 "Blvd. Eduardo Vasconcelos No. 500, Oaxaca de Juárez, Oaxaca"
         }
     ]);
-
     return (
-        <div className={`"bg-white rounded-xl ${className}"`}>
+        <div className={`"bg-white rounded-xl ${className}" mt-6`}>
 
             {!mostrarFormularioDomicilio && (
                 <div>
                     {!domicilioSeleccionado && (
                         <div className="rounded-xl border border-sky-200 bg-sky-50/30 overflow-hidden">
+                          
                             {/* Header */}
-
-                            <div className="border-b bg-white px-6 py-5 flex justify-between items-center">
+                            <div className="bg-white border-b border-sky-200 px-6 py-5 flex justify-between items-center">
 
                                 <div className="flex items-center gap-4">
 
@@ -88,95 +92,139 @@ export default function DomicilioFiscal({
                                     <div>
 
                                         <h3 className="font-semibold text-slate-800">
-                                            Datos Generales del Domicilio
+                                            {titulo}
                                         </h3>
 
                                         <p className="text-sm text-slate-500">
-                                            Capture o verifique la información general correspondiente al domicilio fiscal.
+                                            {descripcion}
                                         </p>
 
                                     </div>
 
                                 </div>
+
                                 <button
                                     type="button"
                                     onClick={() => setMostrarFormularioDomicilio(true)}
                                     className="px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800"
                                 >
-                                    + Agregar Domicilio Fiscal
+                                    + Agregar Domicilio fiscal
                                 </button>
+
                             </div>
 
                             <div className="overflow-x-auto p/2 flex flex-col gap-4 p-4 mt-2">
 
                                 {domicilios.map((domicilio) => (
+
                                     <div
                                         key={domicilio.id}
-                                        onClick={() => setDomicilioSeleccionado(domicilio)}
                                         className={`
             relative
             flex
             overflow-hidden
             rounded-xl
             border
-            cursor-pointer
             transition-all
             hover:shadow-md
             ${domicilioSeleccionado?.id === domicilio.id
-                                                ? "border-sky-600 bg-sky-50 shadow-sm"
-                                                : "border-slate-200 hover:border-sky-400 bg-white"
+                                                ? "border-emerald-500 bg-emerald-50 shadow-sm"
+                                                : "border-slate-200 bg-white hover:border-sky-500"
                                             }
         `}
                                     >
 
-                                        {/* Barra lateral */}
+                                        {/* Indicador */}
 
                                         <div
-                                            className={`
-                w-2
-                ${domicilioSeleccionado?.id === domicilio.id
-                                                    ? "bg-sky-700"
-                                                    : "bg-slate-300"
-                                                }
-            `}
+                                            className={`w-2 ${domicilioSeleccionado?.id === domicilio.id
+                                                ? "bg-emerald-600"
+                                                : "bg-slate-300"
+                                                }`}
                                         />
-
-                                        {/* Contenido */}
 
                                         <div className="flex-1 p-5">
 
-                                            <div className="flex justify-between items-start gap-6">
+                                            {domicilioSeleccionado?.id === domicilio.id && (
 
-                                                <div className="flex-1">
+                                                <div className="mb-5">
 
-                                                    {/* Tipo */}
+                                                    <span className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-medium">
 
-                                                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mb-2">
+                                                        <CheckCircle size={14} />
+
+                                                        Domicilio Seleccionado
+
+                                                    </span>
+
+                                                </div>
+
+                                            )}
+
+                                            <div className="grid md:grid-cols-2 gap-5">
+
+                                                {/* Tipo */}
+
+                                                <div>
+
+                                                    <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
                                                         Tipo de Domicilio
                                                     </p>
 
-                                                    <span
-                                                        className={`
-                            inline-flex
-                            px-3
-                            py-1
-                            rounded-full
-                            text-xs
-                            font-medium
-                            ${domicilioSeleccionado?.id === domicilio.id
-                                                                ? "bg-sky-100 text-sky-700"
-                                                                : "bg-slate-100 text-slate-600"
-                                                            }
-                        `}
-                                                    >
-                                                        {domicilio.tipo}
-                                                    </span>
+                                                    <div className="flex items-center gap-2">
 
-                                                    {/* Dirección */}
+                                                        <Home
+                                                            size={18}
+                                                            className="text-sky-700"
+                                                        />
 
-                                                    <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mt-5 mb-2">
-                                                        Domicilio
+                                                        <span className="font-medium text-slate-800">
+                                                            {domicilio.tipo}
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+
+                                                {/* Código Postal */}
+
+                                                <div>
+
+                                                    <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+                                                        Código Postal
                                                     </p>
+
+                                                    <div className="flex items-center gap-2">
+
+                                                        <MapPin
+                                                            size={18}
+                                                            className="text-sky-700"
+                                                        />
+
+                                                        <span className="text-slate-700">
+                                                            {domicilio.codigoPostal}
+                                                        </span>
+
+                                                    </div>
+
+                                                </div>
+
+                                            </div>
+
+                                            {/* Domicilio */}
+
+                                            <div className="mt-5">
+
+                                                <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+                                                    Domicilio
+                                                </p>
+
+                                                <div className="flex gap-2">
+
+                                                    <MapPin
+                                                        size={18}
+                                                        className="text-sky-700 mt-1"
+                                                    />
 
                                                     <p className="text-slate-700 leading-6">
                                                         {domicilio.direccion}
@@ -184,7 +232,37 @@ export default function DomicilioFiscal({
 
                                                 </div>
 
-                                                <div className="flex items-end">
+                                            </div>
+
+                                            {/* Acciones */}
+
+                                            <div className="mt-6 flex justify-end gap-3">
+
+                                                <button
+                                                    type="button"
+                                                    onClick={(e) => {
+                                                        e.stopPropagation();
+                                                        setEstablecimientoDetalle(domicilio);
+                                                        setOpenDetalle(true);
+                                                    }}
+                                                    className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-slate-50"
+                                                >
+                                                    <Eye size={18} />
+                                                    Ver domicilio
+                                                </button>
+
+                                                {domicilioSeleccionado?.id === domicilio.id ? (
+
+                                                    <button
+                                                        type="button"
+                                                        onClick={() => setDomicilioSeleccionado(null)}
+                                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-slate-700 text-white hover:bg-slate-800"
+                                                    >
+                                                        <Repeat size={18} />
+                                                        Seleccionar otro domicilio
+                                                    </button>
+
+                                                ) : (
 
                                                     <button
                                                         type="button"
@@ -192,42 +270,27 @@ export default function DomicilioFiscal({
                                                             e.stopPropagation();
                                                             setDomicilioSeleccionado(domicilio);
                                                         }}
-                                                        className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            px-4
-                            py-2
-                            rounded-lg
-                            border
-                            hover:bg-slate-50
-                            text-sm
-                            font-medium
-                            flex 
-                            items-center 
-                            gap-2
-                        "
+                                                        className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 text-white hover:bg-sky-800"
                                                     >
-                                                        <Eye size={18} />
-                                                        Ver domicilio
+                                                        <Check size={18} />
+                                                        Seleccionar domicilio
                                                     </button>
 
-                                                </div>
+                                                )}
 
                                             </div>
 
                                         </div>
 
                                     </div>
+
                                 ))}
+
                             </div>
                         </div>
 
                     )}
-
                 </div>
-
-
             )}
 
             {domicilioSeleccionado && (
@@ -281,11 +344,36 @@ export default function DomicilioFiscal({
                             </p>
                         </div>
 
-                        <div className="mt-6 flex justify-end">
+                        <div className="mt-6 flex justify-end gap-2 ">
+                            <button
+                                type="button"
+                                onClick={(e) => {
+                                    e.stopPropagation();
+                                    setOpenDetalle(true);
+                                }}
+                                className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            px-4
+                            py-2
+                            rounded-lg
+                            border
+                            hover:bg-slate-50
+                            text-sm
+                            font-medium
+                            flex 
+                            items-center 
+                            gap-2
+                        "
+                            >
+                                <Eye size={18} />
+                                Ver domicilio
+                            </button>
                             <button
                                 type="button"
                                 onClick={() => setDomicilioSeleccionado(null)}
-                                className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
+                                className="px-5 py-2 border border-black-300 rounded-lg hover:bg-slate-50 flex items-center gap-2"
                             >
                                 <Repeat size={18} />
                                 Seleccionar otro domicilio                            </button>
@@ -295,7 +383,6 @@ export default function DomicilioFiscal({
                 </div>
 
             )}
-
             {mostrarFormularioDomicilio && (
 
                 <div className="bg-white rounded-xl border shadow-sm overflow-hidden mt-6">
@@ -532,7 +619,25 @@ export default function DomicilioFiscal({
                 </div>
 
             )}
+            {openDetalle && (
 
+                <ModalFormulario
+                    abierto={openDetalle}
+                    onClose={() => setOpenDetalle(false)}
+                    titulo="Domicilio para notificaciones"
+                    descripcion="Consulte la información correspondiente al domicilio para recibir notificaciones."
+                    icono={<Home className="text-white" size={28} />}
+                    textoBoton="Cerrar"
+                >
+
+                    <DetalleDomicilio
+                        domicilio={establecimientoDetalle}
+                    />
+
+                </ModalFormulario>
+
+            )
+            }
         </div>
     );
 }
