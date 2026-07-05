@@ -14,7 +14,7 @@ import DocumentoConsulta from "./components/DocumentoConsulta";
 import DetalleDomicilio from "./components/DetalleDomicilio";
 import ModalFormulario from "./components/ModalFormulario";
 import CardEstablecimiento from "./components/CardEstablecimiento";
-
+import DisminucionDeObligaciones from "./Views/DisminucionDeObligaciones";
 import {
   Search,
   Users,
@@ -1920,7 +1920,7 @@ export default function AvisosFiscales() {
                     "Cambio de Representante Legal",
                     "Aumento de Obligaciones",
                     "Reanudación de Actividades",
-                    "Disminución de Obligaciones",
+                    "Disminucion de Obligaciones",
                     "Suspensión de Actividades",
                     "Apertura de Establecimientos o Locales",
                     "Cierre de Establecimientos o Locales",
@@ -6065,7 +6065,12 @@ export default function AvisosFiscales() {
           activeStep === 5 && (
             <AumentoObligaciones />
           )}
-
+{/*Disminución de obligaciones*/}
+        {
+          selectedRow === "Disminucion de Obligaciones" &&
+          activeStep === 5 && (
+            <DisminucionDeObligaciones />
+          )}
       </main >
 
       {/* FOOTER */}

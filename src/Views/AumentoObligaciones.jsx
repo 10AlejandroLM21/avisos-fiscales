@@ -1,6 +1,6 @@
 import { useState } from "react";
-import CampoInput from "../Components/CampoInput";
-import CampoSelect from "../Components/CampoSelect";
+import CampoInput from "../components/CampoInput";
+import CampoSelect from "../components/CampoSelect";
 import ModalFormulario from "../components/ModalFormulario";
 import DomicilioFiscal from "../components/DomicilioFiscal";
 import IdentificacionContribuyente from "../components/IdentificacionContribuyente";
