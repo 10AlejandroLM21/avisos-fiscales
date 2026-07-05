@@ -4,7 +4,8 @@ export default function CampoSelect({
   value,
   onChange,
   opciones = [],
-  disabled = false
+  disabled = false,
+  readOnly = false
 }) {
   return (
     <div>
@@ -21,6 +22,7 @@ export default function CampoSelect({
         value={value}
         onChange={onChange}
         disabled={disabled}
+        readOnly={readOnly}
         className={`w-full rounded-lg border border-slate-300 bg-white px-4 py-3 focus:ring-2 focus:ring-sky-500 focus:border-sky-500 outline-none transition
         ${disabled
             ? 'bg-gray-100 cursor-not-allowed text-slate-500 border-slate-200'
