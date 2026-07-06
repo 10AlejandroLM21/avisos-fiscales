@@ -5,7 +5,7 @@ import DomicilioFiscal from "./components/DomicilioFiscal";
 import DomicilioFiscalForm from "./components/DomicilioFiscalForm";
 import DatosRepresentante from "./components/DatosRepresentante";
 import DocumentoProtocolizado from "./components/DocumentoProtocolizado";
-import { CampoConsulta } from "./components/CampoConsulta";
+import CampoConsulta from "./components/CampoConsulta";
 import FormularioRepresentanteLegal from "./components/FormularioRepresentanteLegal";
 import CampoInput from "./components/CampoInput";
 import CampoArchivo from "./components/CampoArchivo";
@@ -15,6 +15,7 @@ import DetalleDomicilio from "./components/DetalleDomicilio";
 import ModalFormulario from "./components/ModalFormulario";
 import CardEstablecimiento from "./components/CardEstablecimiento";
 import DisminucionDeObligaciones from "./Views/DisminucionDeObligaciones";
+import Digitalizacion from "./Views/Digitalizacion";
 import {
   Search,
   Users,
@@ -41,7 +42,9 @@ import {
   Upload,
   UserPlus,
   X,
-  Save
+  Save,
+  CircleCheckBig,
+  CircleX
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
@@ -2012,7 +2015,273 @@ export default function AvisosFiscales() {
             </div>
           )
         }
+        {
+          activeStep === 4 && (
+            <div className="space-y-6">
 
+              {/*======================================================
+        AVISO GENERADO
+    ======================================================*/}
+
+              <div className="bg-white rounded-xl border shadow-sm">
+
+                <div className="px-8 py-8 flex items-center gap-5">
+
+                  <div className="h-16 w-16 rounded-2xl bg-emerald-100 flex items-center justify-center">
+
+                    <CircleCheckBig
+                      size={34}
+                      className="text-emerald-700"
+                    />
+
+                  </div>
+
+                  <div>
+
+                    <h2 className="text-2xl font-bold text-slate-800">
+
+                      Aviso generado correctamente
+
+                    </h2>
+
+                    <p className="text-slate-500 mt-2">
+
+                      Revise la información del aviso antes de continuar con el proceso de digitalización.
+
+                    </p>
+
+                  </div>
+
+                </div>
+
+              </div>
+              <div className="bg-white rounded-xl border shadow-sm">
+
+                <div className="border-b px-6 py-5">
+
+                  <h3 className="font-semibold text-slate-800">
+
+                    Datos del Aviso
+
+                  </h3>
+
+                  <p className="text-sm text-slate-500 mt-1">
+
+                    Información general correspondiente al aviso fiscal generado.
+
+                  </p>
+
+                </div>
+
+                <div className="p-6">
+
+                  <div className="grid lg:grid-cols-2 gap-x-10 gap-y-6">
+
+                    <CampoConsulta
+                      etiqueta="Tipo de Aviso"
+                      valor="Disminución de Obligaciones"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Folio Temporal"
+                      valor="AF-2026-000001"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Fecha del Aviso"
+                      valor="08/07/2026"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Hora"
+                      valor="11:35 hrs"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="RFC"
+                      valor="XAXX010101000"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Nombre / Razón Social"
+                      valor="COMERCIALIZADORA DEL SURESTE S.A. DE C.V."
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Usuario"
+                      valor="Juan Pérez López"
+                    />
+
+                    <CampoConsulta
+                      etiqueta="Estado"
+                      valor="Pendiente de Digitalización"
+                    />
+
+                  </div>
+
+                </div>
+
+              </div>
+              {/*======================================================
+        ACCIONES DISPONIBLES
+    ======================================================*/}
+
+              <div className="bg-white rounded-xl border shadow-sm">
+
+                <div className="border-b px-6 py-5">
+
+                  <h3 className="font-semibold text-slate-800">
+
+                    Acciones Disponibles
+
+                  </h3>
+
+                  <p className="text-sm text-slate-500 mt-1">
+
+                    Seleccione la acción que desea realizar sobre el aviso generado.
+
+                  </p>
+
+                </div>
+
+                <div className="p-6 grid lg:grid-cols-3 gap-5">
+
+                  {/* EDITAR */}
+
+                  <button
+                    className="rounded-xl border hover:border-sky-300 hover:bg-sky-50 transition p-6 text-left"
+                  >
+
+                    <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center mb-4">
+
+                      <Pencil
+                        size={22}
+                        className="text-sky-700"
+                      />
+
+                    </div>
+
+                    <h4 className="font-semibold text-slate-800">
+
+                      Editar Aviso
+
+                    </h4>
+
+                    <p className="text-sm text-slate-500 mt-2">
+
+                      Regrese al formulario para realizar modificaciones antes de continuar.
+
+                    </p>
+
+                  </button>
+
+                  {/* VISTA PREVIA */}
+
+                  <button
+                    className="rounded-xl border hover:border-indigo-300 hover:bg-indigo-50 transition p-6 text-left"
+                  >
+
+                    <div className="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
+
+                      <FileText
+                        size={22}
+                        className="text-indigo-700"
+                      />
+
+                    </div>
+
+                    <h4 className="font-semibold text-slate-800">
+
+                      Vista Previa
+
+                    </h4>
+
+                    <p className="text-sm text-slate-500 mt-2">
+
+                      Consulte el formato del aviso antes de enviarlo a digitalización.
+
+                    </p>
+
+                  </button>
+
+                  {/* CANCELAR */}
+
+                  <button
+                    className="rounded-xl border hover:border-red-300 hover:bg-red-50 transition p-6 text-left"
+                  >
+
+                    <div className="h-12 w-12 rounded-xl bg-red-100 flex items-center justify-center mb-4">
+
+                      <CircleX
+                        size={22}
+                        className="text-red-700"
+                      />
+
+                    </div>
+
+                    <h4 className="font-semibold text-slate-800">
+
+                      Cancelar Aviso
+
+                    </h4>
+
+                    <p className="text-sm text-slate-500 mt-2">
+
+                      Cancela el aviso y descarta la información capturada.
+
+                    </p>
+
+                  </button>
+
+                </div>
+
+              </div>
+
+              {/*======================================================
+        CONTINUAR
+    ======================================================*/}
+
+              <div className="bg-white rounded-xl border shadow-sm">
+
+                <div className="px-6 py-5 flex justify-between items-center">
+
+                  <div>
+
+                    <h4 className="font-semibold text-slate-800">
+
+                      Continuar
+
+                    </h4>
+
+                    <p className="text-sm text-slate-500 mt-1">
+
+                      Continúe con el proceso de digitalización de documentos.
+
+                    </p>
+
+                  </div>
+
+                  <button
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-medium transition"
+                  >
+
+                    Continuar
+
+                    <ArrowRight size={18} />
+
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+          )
+        }
+        {activeStep === 5 && (
+          <Digitalizacion></Digitalizacion>
+        )
+        }
         {/*Cambio de domicilio fiscal */}
         {
           selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 5 && (
@@ -6065,7 +6334,7 @@ export default function AvisosFiscales() {
           activeStep === 5 && (
             <AumentoObligaciones />
           )}
-{/*Disminución de obligaciones*/}
+        {/*Disminución de obligaciones*/}
         {
           selectedRow === "Disminucion de Obligaciones" &&
           activeStep === 5 && (

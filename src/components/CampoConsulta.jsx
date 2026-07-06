@@ -1,12 +1,30 @@
 
-  export const CampoConsulta = ({ etiqueta, valor }) => (
-    <div>
-      <label className="block mb-2 text-sm font-medium text-slate-600">
-        {etiqueta}
-      </label>
+export default function CampoConsulta({
 
-      <div className="w-full border bg-slate-50 rounded-lg px-4 py-3 text-slate-700 min-h-[48px]">
-        {valor || "-"}
-      </div>
-    </div>
-  );
+    etiqueta,
+
+    valor
+
+}) {
+
+    return (
+
+        <div>
+
+            <label className="block text-sm font-medium text-slate-500 mb-2">
+
+                {etiqueta}
+
+            </label>
+
+            <div className="rounded-lg border bg-slate-50 px-4 py-3 font-medium text-slate-800">
+
+                {valor}
+
+            </div>
+
+        </div>
+
+    );
+
+}
