@@ -17,6 +17,8 @@ import CardEstablecimiento from "./components/CardEstablecimiento";
 import DisminucionDeObligaciones from "./Views/DisminucionDeObligaciones";
 import Digitalizacion from "./Views/Digitalizacion";
 import BotonesNavegacion from "./components/BotonesNavegacion";
+import HeaderModulo from "./components/HeaderModulo";
+
 import {
   Search,
   Users,
@@ -2009,6 +2011,8 @@ export default function AvisosFiscales() {
             </div>
           )
         }
+
+
         {/* {
           activeStep === 4 && (
             <div className="space-y-6">
@@ -2705,29 +2709,6 @@ export default function AvisosFiscales() {
                     </div>
 
                   </div>
-
-                </div>
-
-              </div>
-
-              {/* Footer */}
-
-              <div className="bg-white border rounded-xl shadow-sm p-4">
-
-                <div className="flex justify-end">
-
-                  <button
-                    className="
-              inline-flex items-center gap-2
-              px-6 py-3
-              bg-sky-700 text-white
-              rounded-lg
-              hover:bg-sky-800
-            "
-                  >
-                    Continuar
-                    <ArrowRight size={18} />
-                  </button>
 
                 </div>
 
@@ -6324,7 +6305,29 @@ export default function AvisosFiscales() {
           activeStep === 4 && (
             <DisminucionDeObligaciones />
           )}
-    
+        {selectedRow && activeStep === 4 && (
+          <BotonesNavegacion
+            izquierda={[
+              {
+                etiqueta: "Regresar ",
+                icono: "ArrowLeft",
+                className: "bg-blue-600 text-white hover:bg-blue-700",
+                onClick: () => setActiveStep(3)
+              }
+
+            ]}
+            derecha={[
+              {
+                etiqueta: "Siguiente",
+                icono: "ArrowRight",
+                className: "bg-blue-600 text-white hover:bg-blue-700",
+                disabled: !selectedRow,
+                onClick: () => setActiveStep(5)
+              }
+            ]}
+          />
+        )
+        }
       </main >
 
       {/* FOOTER */}
