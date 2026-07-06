@@ -1833,57 +1833,58 @@ export default function AvisosFiscales() {
         {/* TIPOS DE AVISOS */}
         {
           activeStep === 3 && (
-            <div className="bg-white rounded-xl border shadow-sm">
+            <div>
+              <div className="bg-white rounded-xl border shadow-sm">
 
-              <div className="border-b px-6 py-5">
-                <h3 className="text-xl font-semibold text-slate-800">
-                  Tipos de Avisos
-                </h3>
+                <div className="border-b px-6 py-5">
+                  <h3 className="text-xl font-semibold text-slate-800">
+                    Tipos de Avisos
+                  </h3>
 
-                <p className="text-slate-500 mt-2 font-medium">
-                  Seleccione el aviso a presentar
-                </p>
-              </div>
+                  <p className="text-slate-500 mt-2 font-medium">
+                    Seleccione el aviso a presentar
+                  </p>
+                </div>
 
 
-              <div className="mx-4 mb-6 mt-4">
+                <div className="mx-4 mb-6 mt-4">
 
-                <div className="bg-slate-50 border rounded-xl p-5">
+                  <div className="bg-slate-50 border rounded-xl p-5">
 
-                  <div className="grid md:grid-cols-2 gap-6 items-center">
+                    <div className="grid md:grid-cols-2 gap-6 items-center">
 
-                    <div className="flex justify-start">
-                      <div>
-                        <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mb-2">
-                          Estado Actual del Contribuyente
-                        </p>
+                      <div className="flex justify-start">
+                        <div>
+                          <p className="text-xs font-medium uppercase tracking-wide text-slate-500 mb-2">
+                            Estado Actual del Contribuyente
+                          </p>
 
-                        <div className="flex items-center gap-3">
+                          <div className="flex items-center gap-3">
 
-                          <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                            <div className="w-3 h-3 rounded-full bg-green-500"></div>
 
-                          <span className="font-semibold text-slate-800">
-                            ACTIVO
-                          </span>
+                            <span className="font-semibold text-slate-800">
+                              ACTIVO
+                            </span>
+
+                          </div>
 
                         </div>
 
                       </div>
+                      <div>
 
-                    </div>
-                    <div>
+                        <label className="block text-sm font-semibold text-slate-700 mb-2">
+                          Fecha del Aviso ante el SAT
+                          <span className="text-red-600 ml-1">*</span>
+                        </label>
 
-                      <label className="block text-sm font-semibold text-slate-700 mb-2">
-                        Fecha del Aviso ante el SAT
-                        <span className="text-red-600 ml-1">*</span>
-                      </label>
-
-                      <input
-                        type="date"
-                        value={fechaAvisoSAT}
-                        max={new Date().toISOString().split("T")[0]}
-                        onChange={(e) => setFechaAvisoSAT(e.target.value)}
-                        className="
+                        <input
+                          type="date"
+                          value={fechaAvisoSAT}
+                          max={new Date().toISOString().split("T")[0]}
+                          onChange={(e) => setFechaAvisoSAT(e.target.value)}
+                          className="
             w-full
             border
             rounded-xl
@@ -1896,17 +1897,19 @@ export default function AvisosFiscales() {
             outline-none
             transition
           "
-                      />
+                        />
 
-                      <div className="flex items-center gap-2 mt-2">
+                        <div className="flex items-center gap-2 mt-2">
 
-                        <span className="text-amber-500 text-sm">
-                          ℹ
-                        </span>
+                          <span className="text-amber-500 text-sm">
+                            ℹ
+                          </span>
 
-                        <p className="text-xs text-slate-500">
-                          La fecha debe ser menor o igual a la fecha actual.
-                        </p>
+                          <p className="text-xs text-slate-500">
+                            La fecha debe ser menor o igual a la fecha actual.
+                          </p>
+
+                        </div>
 
                       </div>
 
@@ -1916,106 +1919,93 @@ export default function AvisosFiscales() {
 
                 </div>
 
-              </div>
+                {fechaAvisoSAT && (
+                  <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mx-4 mb-4">
 
-              {fechaAvisoSAT && (
-                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-5 mx-4 mb-4">
-
-                  {[
-                    "Cambio de Domicilio Fiscal",
-                    "Cambio de Nombre, Denominación o Razón Social",
-                    "Cambio de Representante Legal",
-                    "Aumento de Obligaciones",
-                    "Reanudación de Actividades",
-                    "Disminucion de Obligaciones",
-                    "Suspensión de Actividades",
-                    "Apertura de Establecimientos o Locales",
-                    "Cierre de Establecimientos o Locales",
-                    "Cancelación en el Registro Estatal de Contribuyentes"
-                  ].map((aviso, index) => (
-                    <label
-                      key={index}
-                      className={`
+                    {[
+                      "Cambio de Domicilio Fiscal",
+                      "Cambio de Nombre, Denominación o Razón Social",
+                      "Cambio de Representante Legal",
+                      "Aumento de Obligaciones",
+                      "Reanudación de Actividades",
+                      "Disminucion de Obligaciones",
+                      "Suspensión de Actividades",
+                      "Apertura de Establecimientos o Locales",
+                      "Cierre de Establecimientos o Locales",
+                      "Cancelación en el Registro Estatal de Contribuyentes"
+                    ].map((aviso, index) => (
+                      <label
+                        key={index}
+                        className={`
                               border-2 rounded-xl p-5 cursor-pointer
                               transition-all duration-200
                               hover:border-sky-600 hover:shadow-md
                               ${selectedRow === aviso
-                          ? "border-sky-700 bg-sky-50"
-                          : "border-slate-200"
-                        }`}
-                    >
-                      <input
-                        type="radio"
-                        name="aviso"
-                        className="hidden"
-                        checked={selectedRow === aviso}
-                        onChange={() => setSelectedRow(aviso)}
-                      />
+                            ? "border-sky-700 bg-sky-50"
+                            : "border-slate-200"
+                          }`}
+                      >
+                        <input
+                          type="radio"
+                          name="aviso"
+                          className="hidden"
+                          checked={selectedRow === aviso}
+                          onChange={() => setSelectedRow(aviso)}
+                        />
 
-                      <div className="flex items-start gap-3">
-                        <div className={`mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center
+                        <div className="flex items-start gap-3">
+                          <div className={`mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center
                               ${selectedRow === aviso
-                            ? "border-sky-700"
-                            : "border-slate-400"
-                          }`}>
+                              ? "border-sky-700"
+                              : "border-slate-400"
+                            }`}>
 
-                          {selectedRow === aviso && (
-                            <div className="w-2.5 h-2.5 rounded-full bg-sky-700"></div>
-                          )}
+                            {selectedRow === aviso && (
+                              <div className="w-2.5 h-2.5 rounded-full bg-sky-700"></div>
+                            )}
+
+                          </div>
+
+                          <div>
+                            <h5 className="font-medium text-slate-800">
+                              {aviso}
+                            </h5>
+                          </div>
 
                         </div>
 
-                        <div>
-                          <h5 className="font-medium text-slate-800">
-                            {aviso}
-                          </h5>
-                        </div>
+                      </label>
 
-                      </div>
+                    ))}
 
-                    </label>
+                  </div>
 
-                  ))}
+                )
+                }
 
-                </div>
-
-              )
-              }
-
-              <div className="border-t px-6 py-4 flex justify-between">
-
-                <button
-                  type="button"
-                  onClick={() => setActiveStep(2)}
-                  className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-                >
-                  Cancelar
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => {
-
-                    if (!selectedRow) {
-                      alert("Debe seleccionar un aviso fiscal.");
-                      return;
-                    }
-
-                    if (!fechaAvisoSAT) {
-                      alert("Debe capturar la Fecha del Aviso ante el SAT.");
-                      return;
-                    }
-
-                    setActiveStep(4);
-
-                  }}
-                  className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg"
-                >
-                  Continuar
-                </button>
 
               </div>
 
+              <BotonesNavegacion
+                izquierda={[
+                  {
+                    etiqueta: "Regresar ",
+                    icono: "ArrowLeft",
+                    className: "bg-blue-600 text-white hover:bg-blue-700",
+                    onClick: () => setActiveStep(2)
+                  }
+
+                ]}
+                derecha={[
+                  {
+                    etiqueta: "Siguiente",
+                    icono: "ArrowRight",
+                    className: "bg-blue-600 text-white hover:bg-blue-700",
+                    disabled: !selectedRow,
+                    onClick: () => setActiveStep(4)
+                  }
+                ]}
+              />
             </div>
           )
         }
@@ -2275,6 +2265,7 @@ export default function AvisosFiscales() {
           <Digitalizacion></Digitalizacion>
         )
         } */}
+
         {/*Cambio de domicilio fiscal */}
         {
           selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && (
@@ -6333,6 +6324,7 @@ export default function AvisosFiscales() {
           activeStep === 4 && (
             <DisminucionDeObligaciones />
           )}
+    
       </main >
 
       {/* FOOTER */}
