@@ -16,6 +16,7 @@ import ModalFormulario from "./components/ModalFormulario";
 import CardEstablecimiento from "./components/CardEstablecimiento";
 import DisminucionDeObligaciones from "./Views/DisminucionDeObligaciones";
 import Digitalizacion from "./Views/Digitalizacion";
+import BotonesNavegacion from "./components/BotonesNavegacion";
 import {
   Search,
   Users,
@@ -581,213 +582,207 @@ export default function AvisosFiscales() {
 
         {/* PESTAÑA BÚSQUEDA */}
         {activeStep === 0 && (
-          <div className="bg-white rounded-xl border shadow-sm">
-            <div className="border-b px-6 py-5">
-              <h3 className="text-lg font-semibold text-slate-800">
-                Búsqueda de Contribuyente
-              </h3>
+          <div>
+            <div className="bg-white rounded-xl border shadow-sm">
+              <div className="border-b px-6 py-5">
+                <h3 className="text-lg font-semibold text-slate-800">
+                  Búsqueda de Contribuyente
+                </h3>
 
-              <p className="text-sm text-slate-500 mt-1">
-                Seleccione el tipo de persona y el método de búsqueda para
-                localizar al contribuyente.
-              </p>
-            </div>
+                <p className="text-sm text-slate-500 mt-1">
+                  Seleccione el tipo de persona y el método de búsqueda para
+                  localizar al contribuyente.
+                </p>
+              </div>
 
-            <div className="p-6 space-y-8">
-              {/* TIPO PERSONA */}
-              <section>
-                <h4 className="font-semibold text-slate-700 mb-4">
-                  Tipo de Persona
-                </h4>
+              <div className="p-6 space-y-8">
+                {/* TIPO PERSONA */}
+                <section>
+                  <h4 className="font-semibold text-slate-700 mb-4">
+                    Tipo de Persona
+                  </h4>
 
-                <div className="grid md:grid-cols-2 gap-4">
-                  <label
-                    className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
+                  <div className="grid md:grid-cols-2 gap-4">
+                    <label
+                      className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
                     ${tipoPersona === "fisica"
-                        ? "border-sky-600 bg-sky-50"
-                        : ""
-                      }`}
-                  >
-                    <input
-                      type="radio"
-                      className="hidden"
-                      value="fisica"
-                      checked={tipoPersona === "fisica"}
-                      onChange={(e) => {
-                        setTipoPersona(e.target.value);
-                        setMetodoBusqueda("");
-                      }}
-                    />
-
-                    <div className="flex items-center gap-3">
-                      <User size={20} />
-                      <span className="font-medium">
-                        Persona Física
-                      </span>
-                    </div>
-                  </label>
-
-                  <label
-                    className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
-                    ${tipoPersona === "moral"
-                        ? "border-sky-600 bg-sky-50"
-                        : ""
-                      }`}
-                  >
-                    <input
-                      type="radio"
-                      className="hidden"
-                      value="moral"
-                      checked={tipoPersona === "moral"}
-                      onChange={(e) => {
-                        setTipoPersona(e.target.value);
-                        setMetodoBusqueda("");
-                      }}
-                    />
-
-                    <div className="flex items-center gap-3">
-                      <Building2 size={20} />
-                      <span className="font-medium">
-                        Persona Moral o Unidad Económica
-                      </span>
-                    </div>
-                  </label>
-                </div>
-              </section>
-
-              {/* METODO BUSQUEDA */}
-              {tipoPersona && (
-                <section>
-                  <h4 className="font-semibold text-slate-700 mb-4">
-                    Método de Búsqueda
-                  </h4>
-
-                  <select
-                    value={metodoBusqueda}
-                    onChange={(e) =>
-                      setMetodoBusqueda(e.target.value)
-                    }
-                    className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
-                  >
-                    <option value="">
-                      Seleccione una opción
-                    </option>
-
-                    <option value="rfc">
-                      Por RFC
-                    </option>
-
-                    <option value="nombre">
-                      Por Nombre o Razón Social
-                    </option>
-                  </select>
-                </section>
-              )}
-
-              {/* RFC */}
-              {metodoBusqueda === "rfc" && (
-                <section>
-                  <h4 className="font-semibold text-slate-700 mb-4">
-                    RFC
-                  </h4>
-
-                  <input
-                    type="text"
-                    maxLength={13}
-                    placeholder="Ingrese RFC"
-                    className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
-                  />
-                </section>
-              )}
-
-              {/* PERSONA FISICA */}
-              {metodoBusqueda === "nombre" &&
-                tipoPersona === "fisica" && (
-                  <section>
-                    <h4 className="font-semibold text-slate-700 mb-4">
-                      Datos de la Persona Física
-                    </h4>
-
-                    <div className="grid grid-cols-3 gap-6">
-                      <div>
-                        <label className="block mb-2 font-medium text-slate-700">
-                          Primer Apellido *
-                        </label>
-
-                        <input
-                          type="text"
-                          className="w-full border rounded-lg px-4 py-3"
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block mb-2 font-medium text-slate-700">
-                          Segundo Apellido
-                        </label>
-
-                        <input
-                          type="text"
-                          className="w-full border rounded-lg px-4 py-3"
-                        />
-                      </div>
-
-                      <div className="col-span-1">
-                        <label className="block mb-2 font-medium text-slate-700">
-                          Nombre(s) *
-                        </label>
-
-                        <input
-                          type="text"
-                          className="w-full border rounded-lg px-4 py-3"
-                        />
-                      </div>
-
-                    </div>
-
-                  </section>
-                )}
-
-              {/* PERSONA MORAL */}
-              {metodoBusqueda === "nombre" &&
-                tipoPersona === "moral" && (
-                  <section>
-                    <h4 className="font-semibold text-slate-700 mb-4">
-                      Datos de la Persona Moral o Unidad Económica
-                    </h4>
-
-                    <div>
-                      <label className="block mb-2 font-medium text-slate-700">
-                        Denominación o Razón Social *
-                      </label>
-
+                          ? "border-sky-600 bg-sky-50"
+                          : ""
+                        }`}
+                    >
                       <input
-                        type="text"
-                        className="w-full border rounded-lg px-4 py-3"
+                        type="radio"
+                        className="hidden"
+                        value="fisica"
+                        checked={tipoPersona === "fisica"}
+                        onChange={(e) => {
+                          setTipoPersona(e.target.value);
+                          setMetodoBusqueda("");
+                        }}
                       />
-                    </div>
+
+                      <div className="flex items-center gap-3">
+                        <User size={20} />
+                        <span className="font-medium">
+                          Persona Física
+                        </span>
+                      </div>
+                    </label>
+
+                    <label
+                      className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
+                    ${tipoPersona === "moral"
+                          ? "border-sky-600 bg-sky-50"
+                          : ""
+                        }`}
+                    >
+                      <input
+                        type="radio"
+                        className="hidden"
+                        value="moral"
+                        checked={tipoPersona === "moral"}
+                        onChange={(e) => {
+                          setTipoPersona(e.target.value);
+                          setMetodoBusqueda("");
+                        }}
+                      />
+
+                      <div className="flex items-center gap-3">
+                        <Building2 size={20} />
+                        <span className="font-medium">
+                          Persona Moral o Unidad Económica
+                        </span>
+                      </div>
+                    </label>
+                  </div>
+                </section>
+
+                {/* METODO BUSQUEDA */}
+                {tipoPersona && (
+                  <section>
+                    <h4 className="font-semibold text-slate-700 mb-4">
+                      Método de Búsqueda
+                    </h4>
+
+                    <select
+                      value={metodoBusqueda}
+                      onChange={(e) =>
+                        setMetodoBusqueda(e.target.value)
+                      }
+                      className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
+                    >
+                      <option value="">
+                        Seleccione una opción
+                      </option>
+
+                      <option value="rfc">
+                        Por RFC
+                      </option>
+
+                      <option value="nombre">
+                        Por Nombre o Razón Social
+                      </option>
+                    </select>
                   </section>
                 )}
-            </div>
 
-            <div className="border-t px-6 py-4 flex justify-between">
-              <button
-                type="button"
-                className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-              >
-                Cancelar
-              </button>
+                {/* RFC */}
+                {metodoBusqueda === "rfc" && (
+                  <section>
+                    <h4 className="font-semibold text-slate-700 mb-4">
+                      RFC
+                    </h4>
 
-              <button
-                type="button"
-                onClick={handleBuscar}
-                className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg flex items-center gap-2"
-              >
-                <Search size={18} />
-                Buscar
-              </button>
+                    <input
+                      type="text"
+                      maxLength={13}
+                      placeholder="Ingrese RFC"
+                      className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
+                    />
+                  </section>
+                )}
+
+                {/* PERSONA FISICA */}
+                {metodoBusqueda === "nombre" &&
+                  tipoPersona === "fisica" && (
+                    <section>
+                      <h4 className="font-semibold text-slate-700 mb-4">
+                        Datos de la Persona Física
+                      </h4>
+
+                      <div className="grid grid-cols-3 gap-6">
+                        <div>
+                          <label className="block mb-2 font-medium text-slate-700">
+                            Primer Apellido *
+                          </label>
+
+                          <input
+                            type="text"
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+                        </div>
+
+                        <div>
+                          <label className="block mb-2 font-medium text-slate-700">
+                            Segundo Apellido
+                          </label>
+
+                          <input
+                            type="text"
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+                        </div>
+
+                        <div className="col-span-1">
+                          <label className="block mb-2 font-medium text-slate-700">
+                            Nombre(s) *
+                          </label>
+
+                          <input
+                            type="text"
+                            className="w-full border rounded-lg px-4 py-3"
+                          />
+                        </div>
+
+                      </div>
+
+                    </section>
+                  )}
+
+                {/* PERSONA MORAL */}
+                {metodoBusqueda === "nombre" &&
+                  tipoPersona === "moral" && (
+                    <section>
+                      <h4 className="font-semibold text-slate-700 mb-4">
+                        Datos de la Persona Moral o Unidad Económica
+                      </h4>
+
+                      <div>
+                        <label className="block mb-2 font-medium text-slate-700">
+                          Denominación o Razón Social *
+                        </label>
+
+                        <input
+                          type="text"
+                          className="w-full border rounded-lg px-4 py-3"
+                        />
+                      </div>
+                    </section>
+                  )}
+              </div>
             </div>
+            <BotonesNavegacion
+              derecha={[
+                {
+                  etiqueta: "Buscar",
+                  icono: "Search",
+                  className: "bg-blue-600 text-white hover:bg-blue-700",
+                  onClick: () => setActiveStep(1)
+                }
+
+              ]}
+            />
           </div>
-
         )}
 
         {/* COINCIDENCIAS */}
@@ -964,729 +959,732 @@ export default function AvisosFiscales() {
               </div>
             </div>
 
-            <div className="sticky bottom-0 bg-white rounded-2xl border shadow-sm mt-4">
+            <BotonesNavegacion
 
-              <div className="px-6 py-5 flex justify-between items-center">
+              izquierda={[
 
-                <button
-                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition"
-                >
+                {
+                  etiqueta: "Regresar",
+                  icono: "ArrowLeft",
+                  className: "border border-slate-300 text-slate-700 hover:bg-slate-50",
+                  onClick: () => setActiveStep(0)
+                }
 
-                  <ArrowLeft size={18} />
+              ]}
 
-                  Regresar
+              derecha={[
 
-                </button>
+                {
+                  etiqueta: "Siguiente",
+                  icono: "ArrowRight",
+                  className: "bg-blue-600 text-white hover:bg-blue-700",
+                  onClick: () => setActiveStep(2)
+                }
 
-                <button
-                  className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-emerald-800 transition shadow-sm"
-                >
-                  Siguiente
-                  <ArrowRight size={18} />
+              ]}
 
-                </button>
-
-              </div>
-
-            </div>
+            />
           </div>
         )}
 
         {/* DATOS DEL CONTRIBUYENTE */}
         {activeStep === 2 && (
-          <div className="bg-white rounded-xl border shadow-sm">
+          <div>
+            <div className="bg-white rounded-xl border shadow-sm">
 
-            {/* ENCABEZADO */}
-            <div className="border-b px-6 py-5">
-              <h3 className="text-xl font-semibold text-slate-800">
-                Datos del Contribuyente
-              </h3>
+              {/* ENCABEZADO */}
+              <div className="border-b px-6 py-5">
+                <h3 className="text-xl font-semibold text-slate-800">
+                  Datos del Contribuyente
+                </h3>
 
-              <p className="text-slate-500 mt-2">
-                Información general del contribuyente seleccionado.
-              </p>
-            </div>
+                <p className="text-slate-500 mt-2">
+                  Información general del contribuyente seleccionado.
+                </p>
+              </div>
 
-            <div className="p-6 space-y-8">
-              <div>
-                {tipoPersona === "fisica" && (
-                  <section>
+              <div className="p-6 space-y-8">
+                <div>
+                  {tipoPersona === "fisica" && (
+                    <section>
 
-                    {/* ============================= */}
-                    {/* DATOS DE IDENTIFICACION */}
-                    {/* ============================= */}
-                    <div className="mb-4">
-                      <div className="flex items-center gap-2 mb-4">
-                        <User size={20} className="text-sky-700" />
-                        <h4 className="text-lg font-semibold text-slate-800">
-                          Datos de Identificación
-                        </h4>
-                      </div>
-
-                      <div className="grid grid-cols-3 gap-5">
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Tipo Registro
-                          </label>
-                          <input
-                            disabled
-                            value="RFC"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            RFC
-                          </label>
-                          <input
-                            disabled
-                            value="MORL900512ABC"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            CURP
-                          </label>
-                          <input
-                            disabled
-                            value="MOLJ900512HTCRPN01"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Primer Apellido
-                          </label>
-                          <input
-                            disabled
-                            value="MORALES"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Segundo Apellido
-                          </label>
-                          <input
-                            disabled
-                            value="LÓPEZ"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Nombre(s)
-                          </label>
-                          <input
-                            disabled
-                            value="JUAN CARLOS"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div className="col-span-3">
-                          <label className="text-sm font-medium text-slate-600">
-                            Nombre Comercial
-                          </label>
-                          <input
-                            disabled
-                            value="ABARROTES JUAN"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div className="col-span-3">
-                          <label className="text-sm font-medium text-slate-600">
-                            Régimen Fiscal
-                          </label>
-                          <input
-                            disabled
-                            value="Régimen Simplificado de Confianza"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Fecha de Nacimiento
-                          </label>
-                          <input
-                            disabled
-                            value="12/05/1990"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Género
-                          </label>
-                          <input
-                            disabled
-                            value="Masculino"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                      </div>
-                    </div>
-
-                    {/* ============================= */}
-                    {/* DATOS DE CONTACTO */}
-                    {/* ============================= */}
-
-                    <div>
-                      <div className="flex items-center gap-2 mb-4">
-                        <Smartphone size={20} className="text-sky-700" />
-                        <h4 className="text-lg font-semibold text-slate-800">
-                          Datos de Contacto
-                        </h4>
-                      </div>
-
-                      <div className="grid md:grid-cols-3 gap-5">
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Correo Electrónico
-                          </label>
-                          <input
-                            disabled
-                            value="juan.morales@email.com"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Correo Electrónico (Alternativo)
-                          </label>
-                          <input
-                            disabled
-                            value="juan.morales@email.com"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Teléfono Móvil
-                          </label>
-                          <input
-                            disabled
-                            value="9511234567"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Teléfono (Alternativo)
-                          </label>
-                          <input
-                            disabled
-                            value="9511234567"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-                )}
-                {tipoPersona === "moral" && (
-                  <section>
-                    <div className="mb-4">
                       {/* ============================= */}
                       {/* DATOS DE IDENTIFICACION */}
                       {/* ============================= */}
-                      <div className="flex items-center gap-2 mb-4">
-                        <User size={20} className="text-sky-700" />
-                        <h4 className="text-lg font-semibold text-slate-800">
-                          Datos de Identificación
-                        </h4>
+                      <div className="mb-4">
+                        <div className="flex items-center gap-2 mb-4">
+                          <User size={20} className="text-sky-700" />
+                          <h4 className="text-lg font-semibold text-slate-800">
+                            Datos de Identificación
+                          </h4>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-5">
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Tipo Registro
+                            </label>
+                            <input
+                              disabled
+                              value="RFC"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              RFC
+                            </label>
+                            <input
+                              disabled
+                              value="MORL900512ABC"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              CURP
+                            </label>
+                            <input
+                              disabled
+                              value="MOLJ900512HTCRPN01"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Primer Apellido
+                            </label>
+                            <input
+                              disabled
+                              value="MORALES"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Segundo Apellido
+                            </label>
+                            <input
+                              disabled
+                              value="LÓPEZ"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Nombre(s)
+                            </label>
+                            <input
+                              disabled
+                              value="JUAN CARLOS"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div className="col-span-3">
+                            <label className="text-sm font-medium text-slate-600">
+                              Nombre Comercial
+                            </label>
+                            <input
+                              disabled
+                              value="ABARROTES JUAN"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div className="col-span-3">
+                            <label className="text-sm font-medium text-slate-600">
+                              Régimen Fiscal
+                            </label>
+                            <input
+                              disabled
+                              value="Régimen Simplificado de Confianza"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Fecha de Nacimiento
+                            </label>
+                            <input
+                              disabled
+                              value="12/05/1990"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Género
+                            </label>
+                            <input
+                              disabled
+                              value="Masculino"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                        </div>
                       </div>
 
-                      <div className="grid grid-cols-3 gap-5">
+                      {/* ============================= */}
+                      {/* DATOS DE CONTACTO */}
+                      {/* ============================= */}
 
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Tipo Registro
-                          </label>
-                          <input
-                            disabled
-                            value="RFC"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
+                      <div>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Smartphone size={20} className="text-sky-700" />
+                          <h4 className="text-lg font-semibold text-slate-800">
+                            Datos de Contacto
+                          </h4>
                         </div>
 
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            RFC
-                          </label>
-                          <input
-                            disabled
-                            value="MORL900512ABC"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Denominación o razón social
-                          </label>
-                          <input
-                            disabled
-                            value="MOLJ900512HTCRPN01"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div className="col-span-3">
-                          <label className="text-sm font-medium text-slate-600">
-                            Régimen Capital
-                          </label>
-                          <input
-                            disabled
-                            value="Régimen Simplificado de Confianza"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
+                        <div className="grid md:grid-cols-3 gap-5">
 
-                        <div className="col-span-3">
-                          <label className="text-sm font-medium text-slate-600">
-                            Régimen Fiscal
-                          </label>
-                          <input
-                            disabled
-                            value="Régimen Simplificado de Confianza"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Correo Electrónico
+                            </label>
+                            <input
+                              disabled
+                              value="juan.morales@email.com"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Correo Electrónico (Alternativo)
+                            </label>
+                            <input
+                              disabled
+                              value="juan.morales@email.com"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Teléfono Móvil
+                            </label>
+                            <input
+                              disabled
+                              value="9511234567"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Teléfono (Alternativo)
+                            </label>
+                            <input
+                              disabled
+                              value="9511234567"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
                         </div>
-
-                        <div className="col-span-3">
-                          <label className="text-sm font-medium text-slate-600">
-                            Nombre Comercial
-                          </label>
-                          <input
-                            disabled
-                            value="ABARROTES JUAN"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Fecha de Acta Constitutiva
-                          </label>
-                          <input
-                            disabled
-                            value="12/05/1990"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-
                       </div>
+                    </section>
+                  )}
+                  {tipoPersona === "moral" && (
+                    <section>
+                      <div className="mb-4">
+                        {/* ============================= */}
+                        {/* DATOS DE IDENTIFICACION */}
+                        {/* ============================= */}
+                        <div className="flex items-center gap-2 mb-4">
+                          <User size={20} className="text-sky-700" />
+                          <h4 className="text-lg font-semibold text-slate-800">
+                            Datos de Identificación
+                          </h4>
+                        </div>
+
+                        <div className="grid grid-cols-3 gap-5">
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Tipo Registro
+                            </label>
+                            <input
+                              disabled
+                              value="RFC"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              RFC
+                            </label>
+                            <input
+                              disabled
+                              value="MORL900512ABC"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Denominación o razón social
+                            </label>
+                            <input
+                              disabled
+                              value="MOLJ900512HTCRPN01"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div className="col-span-3">
+                            <label className="text-sm font-medium text-slate-600">
+                              Régimen Capital
+                            </label>
+                            <input
+                              disabled
+                              value="Régimen Simplificado de Confianza"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div className="col-span-3">
+                            <label className="text-sm font-medium text-slate-600">
+                              Régimen Fiscal
+                            </label>
+                            <input
+                              disabled
+                              value="Régimen Simplificado de Confianza"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div className="col-span-3">
+                            <label className="text-sm font-medium text-slate-600">
+                              Nombre Comercial
+                            </label>
+                            <input
+                              disabled
+                              value="ABARROTES JUAN"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Fecha de Acta Constitutiva
+                            </label>
+                            <input
+                              disabled
+                              value="12/05/1990"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+
+                        </div>
+                      </div>
+                      {/* ============================= */}
+                      {/* DATOS DE CONTACTO */}
+                      {/* ============================= */}
+
+                      <div>
+                        <div className="flex items-center gap-2 mb-4">
+                          <Smartphone size={20} className="text-sky-700" />
+                          <h4 className="text-lg font-semibold text-slate-800">
+                            Datos de Contacto
+                          </h4>
+                        </div>
+
+                        <div className="grid md:grid-cols-3 gap-5">
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Correo Electrónico
+                            </label>
+                            <input
+                              disabled
+                              value="juan.morales@email.com"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Correo Electrónico (Alternativo)
+                            </label>
+                            <input
+                              disabled
+                              value="juan.morales@email.com"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Teléfono Móvil
+                            </label>
+                            <input
+                              disabled
+                              value="9511234567"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Teléfono (Alternativo)
+                            </label>
+                            <input
+                              disabled
+                              value="9511234567"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </section>
+
+
+                  )}
+
+                </div>
+
+                {/* ============================= */}
+                {/* DOMICILIO FISCAL */}
+                {/* ============================= */}
+
+                <section>
+                  <div className="flex items-center gap-2 mb-4">
+                    <Building2 size={20} className="text-sky-700" />
+                    <h4 className="text-lg font-semibold text-slate-800">
+                      Domicilio Fiscal
+                    </h4>
+                  </div>
+
+                  <div className="bg-slate-50 border rounded-xl p-5">
+
+                    <div className="mb-3">
+                      <span className="font-semibold text-slate-700">
+                        Tipo de Ámbito:
+                      </span>
+
+                      <span className="ml-2 px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-sm">
+                        URBANO
+                      </span>
                     </div>
-                    {/* ============================= */}
-                    {/* DATOS DE CONTACTO */}
-                    {/* ============================= */}
 
-                    <div>
-                      <div className="flex items-center gap-2 mb-4">
-                        <Smartphone size={20} className="text-sky-700" />
-                        <h4 className="text-lg font-semibold text-slate-800">
-                          Datos de Contacto
-                        </h4>
-                      </div>
+                    <p className="text-slate-700 leading-relaxed">
+                      Calle Benito Juárez No. 125 Interior 3,
+                      Colonia Centro, Localidad Oaxaca de Juárez,
+                      Municipio Oaxaca de Juárez,
+                      C.P. 68000, Región Valles Centrales.
+                    </p>
 
-                      <div className="grid md:grid-cols-3 gap-5">
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Correo Electrónico
-                          </label>
-                          <input
-                            disabled
-                            value="juan.morales@email.com"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Correo Electrónico (Alternativo)
-                          </label>
-                          <input
-                            disabled
-                            value="juan.morales@email.com"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Teléfono Móvil
-                          </label>
-                          <input
-                            disabled
-                            value="9511234567"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-
-                        <div>
-                          <label className="text-sm font-medium text-slate-600">
-                            Teléfono (Alternativo)
-                          </label>
-                          <input
-                            disabled
-                            value="9511234567"
-                            className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  </section>
-
-
-                )}
-
-              </div>
-
-              {/* ============================= */}
-              {/* DOMICILIO FISCAL */}
-              {/* ============================= */}
-
-              <section>
-                <div className="flex items-center gap-2 mb-4">
-                  <Building2 size={20} className="text-sky-700" />
-                  <h4 className="text-lg font-semibold text-slate-800">
-                    Domicilio Fiscal
-                  </h4>
-                </div>
-
-                <div className="bg-slate-50 border rounded-xl p-5">
-
-                  <div className="mb-3">
-                    <span className="font-semibold text-slate-700">
-                      Tipo de Ámbito:
-                    </span>
-
-                    <span className="ml-2 px-3 py-1 bg-sky-100 text-sky-700 rounded-full text-sm">
-                      URBANO
-                    </span>
                   </div>
+                </section>
 
-                  <p className="text-slate-700 leading-relaxed">
-                    Calle Benito Juárez No. 125 Interior 3,
-                    Colonia Centro, Localidad Oaxaca de Juárez,
-                    Municipio Oaxaca de Juárez,
-                    C.P. 68000, Región Valles Centrales.
-                  </p>
+                {/* ============================= */}
+                {/* OBLIGACIONES FISCALES */}
+                {/* ============================= */}
 
-                </div>
-              </section>
-
-              {/* ============================= */}
-              {/* OBLIGACIONES FISCALES */}
-              {/* ============================= */}
-
-              <section>
-                <div className="flex items-center gap-2 mb-4">
-                  <FileText size={20} className="text-sky-700" />
-                  <h4 className="text-lg font-semibold text-slate-800">
-                    Obligaciones Fiscales Activas
-                  </h4>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-5">
-
-                  <div className="border rounded-xl p-5 bg-slate-50">
-                    <h5 className="font-semibold text-slate-800">
-                      Impuesto Sobre Erogaciones
-                    </h5>
-
-                    <p className="text-sm text-slate-600 mt-2">
-                      Actividad Económica:
-                    </p>
-
-                    <p className="font-medium">
-                      Comercio al por menor de abarrotes
-                    </p>
-
-                    <p className="text-sm text-slate-600 mt-3">
-                      Inicio de operaciones:
-                    </p>
-
-                    <p className="font-medium">
-                      15/01/2020
-                    </p>
+                <section>
+                  <div className="flex items-center gap-2 mb-4">
+                    <FileText size={20} className="text-sky-700" />
+                    <h4 className="text-lg font-semibold text-slate-800">
+                      Obligaciones Fiscales Activas
+                    </h4>
                   </div>
-
-                  <div className="border rounded-xl p-5 bg-slate-50">
-                    <h5 className="font-semibold text-slate-800">
-                      Hospedaje
-                    </h5>
-
-                    <p className="text-sm text-slate-600 mt-2">
-                      Actividad Económica:
-                    </p>
-
-                    <p className="font-medium">
-                      Servicios turísticos
-                    </p>
-
-                    <p className="text-sm text-slate-600 mt-3">
-                      Inicio de operaciones:
-                    </p>
-
-                    <p className="font-medium">
-                      02/03/2021
-                    </p>
-                  </div>
-
-                </div>
-              </section>
-
-              {/* ============================= */}
-              {/* REPRESENTACIÓN DEL TRÁMITE */}
-              {/* ============================= */}
-
-              <section >
-                <div className="flex gap-2">
-                  <BookUser size={20} className="text-sky-700" />
-                  <h4 className="font-semibold text-slate-900 mb-2">
-                    Representación del Trámite
-                  </h4>
-                </div>
-                <div className="border rounded-xl p-6 mb-4">
-
-                  <p className="text-slate-600 mb-4">
-                    Seleccione la persona que llevará a cabo el trámite.
-                  </p>
 
                   <div className="grid md:grid-cols-2 gap-5">
 
-                    {/* El contribuyente realiza el trámite */}
+                    <div className="border rounded-xl p-5 bg-slate-50">
+                      <h5 className="font-semibold text-slate-800">
+                        Impuesto Sobre Erogaciones
+                      </h5>
 
-                    <div
-                      onClick={() => setRepresentacion("propio")}
-                      className={`
+                      <p className="text-sm text-slate-600 mt-2">
+                        Actividad Económica:
+                      </p>
+
+                      <p className="font-medium">
+                        Comercio al por menor de abarrotes
+                      </p>
+
+                      <p className="text-sm text-slate-600 mt-3">
+                        Inicio de operaciones:
+                      </p>
+
+                      <p className="font-medium">
+                        15/01/2020
+                      </p>
+                    </div>
+
+                    <div className="border rounded-xl p-5 bg-slate-50">
+                      <h5 className="font-semibold text-slate-800">
+                        Hospedaje
+                      </h5>
+
+                      <p className="text-sm text-slate-600 mt-2">
+                        Actividad Económica:
+                      </p>
+
+                      <p className="font-medium">
+                        Servicios turísticos
+                      </p>
+
+                      <p className="text-sm text-slate-600 mt-3">
+                        Inicio de operaciones:
+                      </p>
+
+                      <p className="font-medium">
+                        02/03/2021
+                      </p>
+                    </div>
+
+                  </div>
+                </section>
+
+                {/* ============================= */}
+                {/* REPRESENTACIÓN DEL TRÁMITE */}
+                {/* ============================= */}
+
+                <section >
+                  <div className="flex gap-2">
+                    <BookUser size={20} className="text-sky-700" />
+                    <h4 className="font-semibold text-slate-900 mb-2">
+                      Representación del Trámite
+                    </h4>
+                  </div>
+                  <div className="border rounded-xl p-6 mb-4">
+
+                    <p className="text-slate-600 mb-4">
+                      Seleccione la persona que llevará a cabo el trámite.
+                    </p>
+
+                    <div className="grid md:grid-cols-2 gap-5">
+
+                      {/* El contribuyente realiza el trámite */}
+
+                      <div
+                        onClick={() => setRepresentacion("propio")}
+                        className={`
             cursor-pointer
             rounded-xl
             border
             p-5
             transition-all
             ${representacion === "propio"
-                          ? "border-sky-600 bg-sky-50 shadow-md"
-                          : "border-slate-200 hover:border-sky-300 hover:shadow"
-                        }
+                            ? "border-sky-600 bg-sky-50 shadow-md"
+                            : "border-slate-200 hover:border-sky-300 hover:shadow"
+                          }
         `}
-                    >
+                      >
 
-                      <div className="flex justify-between items-start">
+                        <div className="flex justify-between items-start">
 
-                        <div className="flex gap-4">
+                          <div className="flex gap-4">
 
-                          <div
-                            className={`
+                            <div
+                              className={`
                         h-12 w-12 rounded-full flex items-center justify-center
                         ${representacion === "propio"
-                                ? "bg-sky-600 text-white"
-                                : "bg-slate-100 text-slate-600"
-                              }
+                                  ? "bg-sky-600 text-white"
+                                  : "bg-slate-100 text-slate-600"
+                                }
                     `}
-                          >
-                            <UserRound size={22} />
+                            >
+                              <UserRound size={22} />
+                            </div>
+
+                            <div>
+
+                              <h3 className="font-semibold text-slate-800">
+                                El Contribuyente
+                              </h3>
+
+                              <p className="text-sm text-slate-500 mt-1">
+                                El propio contribuyente realizará el trámite.
+                              </p>
+
+                            </div>
+
                           </div>
 
-                          <div>
-
-                            <h3 className="font-semibold text-slate-800">
-                              El Contribuyente
-                            </h3>
-
-                            <p className="text-sm text-slate-500 mt-1">
-                              El propio contribuyente realizará el trámite.
-                            </p>
-
-                          </div>
+                          <input
+                            type="radio"
+                            checked={representacion === "propio"}
+                            readOnly
+                            className="accent-sky-700 h-5 w-5"
+                          />
 
                         </div>
 
-                        <input
-                          type="radio"
-                          checked={representacion === "propio"}
-                          readOnly
-                          className="accent-sky-700 h-5 w-5"
-                        />
-
                       </div>
 
-                    </div>
+                      {/* Representante */}
 
-                    {/* Representante */}
-
-                    <div
-                      onClick={() => setRepresentacion("tercero")}
-                      className={`
+                      <div
+                        onClick={() => setRepresentacion("tercero")}
+                        className={`
             cursor-pointer
             rounded-xl
             border
             p-5
             transition-all
             ${representacion === "tercero"
-                          ? "border-sky-600 bg-sky-50 shadow-md"
-                          : "border-slate-200 hover:border-sky-300 hover:shadow"
-                        }
+                            ? "border-sky-600 bg-sky-50 shadow-md"
+                            : "border-slate-200 hover:border-sky-300 hover:shadow"
+                          }
         `}
-                    >
+                      >
 
-                      <div className="flex justify-between items-start">
+                        <div className="flex justify-between items-start">
 
-                        <div className="flex gap-4">
+                          <div className="flex gap-4">
 
-                          <div
-                            className={`
+                            <div
+                              className={`
                         h-12 w-12 rounded-full flex items-center justify-center
                         ${representacion === "tercero"
-                                ? "bg-sky-600 text-white"
-                                : "bg-slate-100 text-slate-600"
-                              }
+                                  ? "bg-sky-600 text-white"
+                                  : "bg-slate-100 text-slate-600"
+                                }
                     `}
-                          >
-                            <UserPlus size={22} />
+                            >
+                              <UserPlus size={22} />
+                            </div>
+
+                            <div>
+
+                              <h3 className="font-semibold text-slate-800">
+                                Tercera Persona
+                              </h3>
+
+                              <p className="text-sm text-slate-500 mt-1">
+                                El trámite será realizado por una persona con facultades de representación.
+                              </p>
+
+                            </div>
+
                           </div>
 
-                          <div>
-
-                            <h3 className="font-semibold text-slate-800">
-                              Tercera Persona
-                            </h3>
-
-                            <p className="text-sm text-slate-500 mt-1">
-                              El trámite será realizado por una persona con facultades de representación.
-                            </p>
-
-                          </div>
+                          <input
+                            type="radio"
+                            checked={representacion === "tercero"}
+                            readOnly
+                            className="accent-sky-700 h-5 w-5"
+                          />
 
                         </div>
-
-                        <input
-                          type="radio"
-                          checked={representacion === "tercero"}
-                          readOnly
-                          className="accent-sky-700 h-5 w-5"
-                        />
 
                       </div>
 
                     </div>
-
                   </div>
-                </div>
-              </section>
+                </section>
 
-              {representacion === "tercero" && (
-                <section>
-                  {!mostrarFormularioRepresentante && (
-                    <div className="bg-white border rounded-xl p-6 mt-4">
-                      {!representanteSeleccionado && (
-                        <div>
-                          {/*Header */}
-                          <div className="flex justify-between items-center mb-4">
+                {representacion === "tercero" && (
+                  <section>
+                    {!mostrarFormularioRepresentante && (
+                      <div className="bg-white border rounded-xl p-6 mt-4">
+                        {!representanteSeleccionado && (
+                          <div>
+                            {/*Header */}
+                            <div className="flex justify-between items-center mb-4">
 
-                            <h4 className="font-semibold text-slate-800">
-                              Representantes Legales Registrados
-                            </h4>
+                              <h4 className="font-semibold text-slate-800">
+                                Representantes Legales Registrados
+                              </h4>
 
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setMostrarFormularioRepresentante(true);
-                              }}
-                              className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                              + Agregar Representante Legal
-                            </button>
+                              <button
+                                type="button"
+                                onClick={() => {
+                                  setMostrarFormularioRepresentante(true);
+                                }}
+                                className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                                + Agregar Representante Legal
+                              </button>
 
-                          </div>
+                            </div>
 
-                          {/* Tabla de datos representantes */}
-                          <div className="grid md:grid-cols-2 gap-4">
+                            {/* Tabla de datos representantes */}
+                            <div className="grid md:grid-cols-2 gap-4">
 
-                            {representantes.map((rep) => {
+                              {representantes.map((rep) => {
 
-                              const seleccionado = representanteSeleccionado?.id === rep.id;
+                                const seleccionado = representanteSeleccionado?.id === rep.id;
 
-                              return (
+                                return (
 
-                                <div
-                                  key={rep.id}
-                                  onClick={() => setRepresentanteSeleccionado(rep)}
-                                  className={`
+                                  <div
+                                    key={rep.id}
+                                    onClick={() => setRepresentanteSeleccionado(rep)}
+                                    className={`
                     cursor-pointer
                     rounded-xl
                     border
                     transition-all
                     duration-200
                     ${seleccionado
-                                      ? "border-sky-600 bg-sky-50 shadow-md"
-                                      : "border-slate-200 bg-white hover:border-sky-300 hover:shadow"
-                                    }
+                                        ? "border-sky-600 bg-sky-50 shadow-md"
+                                        : "border-slate-200 bg-white hover:border-sky-300 hover:shadow"
+                                      }
                 `}
-                                >
+                                  >
 
-                                  <div className="p-5">
+                                    <div className="p-5">
 
-                                    <div className="flex justify-between items-start">
+                                      <div className="flex justify-between items-start">
 
-                                      <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-4">
 
-                                        <div
-                                          className={`
+                                          <div
+                                            className={`
                                     h-12 w-12 rounded-full flex items-center justify-center
                                     ${seleccionado
-                                              ? "bg-sky-600 text-white"
-                                              : "bg-slate-100 text-slate-600"
-                                            }
+                                                ? "bg-sky-600 text-white"
+                                                : "bg-slate-100 text-slate-600"
+                                              }
                                 `}
-                                        >
-                                          <UserRound size={22} />
+                                          >
+                                            <UserRound size={22} />
+                                          </div>
+
+                                          <div>
+
+                                            <h3 className="font-semibold text-slate-800">
+                                              {rep.nombre}
+                                            </h3>
+
+                                            <p className="text-sm text-slate-500">
+                                              {rep.rfc}
+                                            </p>
+
+                                          </div>
+
                                         </div>
 
-                                        <div>
-
-                                          <h3 className="font-semibold text-slate-800">
-                                            {rep.nombre}
-                                          </h3>
-
-                                          <p className="text-sm text-slate-500">
-                                            {rep.rfc}
-                                          </p>
-
-                                        </div>
+                                        <input
+                                          type="radio"
+                                          checked={seleccionado}
+                                          readOnly
+                                          className="h-5 w-5 accent-sky-700"
+                                        />
 
                                       </div>
 
-                                      <input
-                                        type="radio"
-                                        checked={seleccionado}
-                                        readOnly
-                                        className="h-5 w-5 accent-sky-700"
-                                      />
+                                      <div className="mt-5 pt-4 border-t">
 
-                                    </div>
+                                        <div className="flex items-center justify-between">
 
-                                    <div className="mt-5 pt-4 border-t">
+                                          <span className="text-sm text-slate-500">
+                                            Tipo de Representante
+                                          </span>
 
-                                      <div className="flex items-center justify-between">
+                                          <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
+                                            {rep.tipo}
+                                          </span>
 
-                                        <span className="text-sm text-slate-500">
-                                          Tipo de Representante
-                                        </span>
-
-                                        <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
-                                          {rep.tipo}
-                                        </span>
+                                        </div>
 
                                       </div>
 
@@ -1694,146 +1692,140 @@ export default function AvisosFiscales() {
 
                                   </div>
 
+                                );
+
+                              })}
+
+                            </div>
+                          </div>
+                        )}
+                        {representanteSeleccionado && (
+                          <div className="border rounded-xl bg-sky-50 p-6">
+
+                            <div className="flex justify-between items-center mb-5">
+
+                              <h4 className="font-semibold text-slate-800">
+                                Representante Legal Seleccionado
+                              </h4>
+
+                              <button
+                                type="button"
+                                onClick={() =>
+                                  setRepresentanteSeleccionado(null)
+                                }
+                                className="text-sky-700 font-medium hover:underline"
+                              >
+                                Cambiar representante
+                              </button>
+
+                            </div>
+
+                            <div className="grid md:grid-cols-3 gap-4">
+
+                              <div>
+                                <label className="text-xs text-slate-500">
+                                  RFC
+                                </label>
+                                <div className="font-medium">
+                                  {representanteSeleccionado.rfc}
                                 </div>
-
-                              );
-
-                            })}
-
-                          </div>
-                        </div>
-                      )}
-                      {representanteSeleccionado && (
-                        <div className="border rounded-xl bg-sky-50 p-6">
-
-                          <div className="flex justify-between items-center mb-5">
-
-                            <h4 className="font-semibold text-slate-800">
-                              Representante Legal Seleccionado
-                            </h4>
-
-                            <button
-                              type="button"
-                              onClick={() =>
-                                setRepresentanteSeleccionado(null)
-                              }
-                              className="text-sky-700 font-medium hover:underline"
-                            >
-                              Cambiar representante
-                            </button>
-
-                          </div>
-
-                          <div className="grid md:grid-cols-3 gap-4">
-
-                            <div>
-                              <label className="text-xs text-slate-500">
-                                RFC
-                              </label>
-                              <div className="font-medium">
-                                {representanteSeleccionado.rfc}
                               </div>
-                            </div>
 
-                            <div>
-                              <label className="text-xs text-slate-500">
-                                Nombre
-                              </label>
-                              <div className="font-medium">
-                                {representanteSeleccionado.nombre}
+                              <div>
+                                <label className="text-xs text-slate-500">
+                                  Nombre
+                                </label>
+                                <div className="font-medium">
+                                  {representanteSeleccionado.nombre}
+                                </div>
                               </div>
-                            </div>
 
-                            <div>
-                              <label className="text-xs text-slate-500">
-                                Tipo de Representación
-                              </label>
-                              <div className="font-medium">
-                                {representanteSeleccionado.tipo}
+                              <div>
+                                <label className="text-xs text-slate-500">
+                                  Tipo de Representación
+                                </label>
+                                <div className="font-medium">
+                                  {representanteSeleccionado.tipo}
+                                </div>
                               </div>
-                            </div>
 
-                            <div>
-                              <label className="text-xs text-slate-500">
-                                Correo
-                              </label>
-                              <div className="font-medium">
-                                {representanteSeleccionado.correo}
+                              <div>
+                                <label className="text-xs text-slate-500">
+                                  Correo
+                                </label>
+                                <div className="font-medium">
+                                  {representanteSeleccionado.correo}
+                                </div>
                               </div>
-                            </div>
 
-                            <div>
-                              <label className="text-xs text-slate-500">
-                                Teléfono
-                              </label>
-                              <div className="font-medium">
-                                {representanteSeleccionado.telefono}
+                              <div>
+                                <label className="text-xs text-slate-500">
+                                  Teléfono
+                                </label>
+                                <div className="font-medium">
+                                  {representanteSeleccionado.telefono}
+                                </div>
                               </div>
+
                             </div>
 
                           </div>
 
-                        </div>
+                        )}
+                      </div>
+                    )}
 
-                      )}
-                    </div>
-                  )}
+                    {mostrarFormularioRepresentante && (
+                      // <RepresentanteLegalForm className="mt-5"
+                      //   titulo="Nuevo Representante Legal"
+                      //   onGuardar={() => {
+                      //     setMostrarFormularioRepresentante(false);
+                      //   }}
+                      //   onCancelar={() => {
+                      //     setMostrarFormularioRepresentante(false);
+                      //   }}
+                      // />
+                      <FormularioRepresentanteLegal
+                        abierto={mostrarFormularioRepresentante}
+                        onClose={() => setMostrarFormularioRepresentante(false)}
+                        onGuardar={agregarRepresentante}
+                        nuevoRepresentante={nuevoRepresentante}
+                        setNuevoRepresentante={setNuevoRepresentante}
+                        tipoDocumento={tipoDocumento}
+                        setTipoDocumento={setTipoDocumento}
+                        documento={documento}
+                        setDocumento={setDocumento}
+                      />
+                    )}
 
-                  {mostrarFormularioRepresentante && (
-                    // <RepresentanteLegalForm className="mt-5"
-                    //   titulo="Nuevo Representante Legal"
-                    //   onGuardar={() => {
-                    //     setMostrarFormularioRepresentante(false);
-                    //   }}
-                    //   onCancelar={() => {
-                    //     setMostrarFormularioRepresentante(false);
-                    //   }}
-                    // />
-                    <FormularioRepresentanteLegal
-                      abierto={mostrarFormularioRepresentante}
-                      onClose={() => setMostrarFormularioRepresentante(false)}
-                      onGuardar={agregarRepresentante}
-                      nuevoRepresentante={nuevoRepresentante}
-                      setNuevoRepresentante={setNuevoRepresentante}
-                      tipoDocumento={tipoDocumento}
-                      setTipoDocumento={setTipoDocumento}
-                      documento={documento}
-                      setDocumento={setDocumento}
-                    />
-                  )}
+                  </section>
 
-                </section>
+                )}
 
-              )}
+              </div>
 
             </div>
-
             {/* BOTONES */}
-            <div className="border-t px-6 py-4 flex justify-between">
+            <BotonesNavegacion
+              izquierda={[
+                {
+                  etiqueta: "Regresar ",
+                  icono: "ArrowLeft",
+                  className: "bg-blue-600 text-white hover:bg-blue-700",
+                  onClick: () => setActiveStep(1)
+                }
 
-              <button
-                type="button"
-                onClick={() => setActiveStep(1)}
-                className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-              >
-                Cancelar
-              </button>
+              ]}
+              derecha={[
+                {
+                  etiqueta: "Siguiente",
+                  icono: "ArrowRight",
+                  className: "bg-blue-600 text-white hover:bg-blue-700",
+                  onClick: () => setActiveStep(3)
+                }
 
-              <button
-                disabled={!representacion}
-                onClick={() => setActiveStep(3)}
-                className={`px-6 py-2 rounded-lg text-white
-    ${representacion
-                    ? "bg-sky-700 hover:bg-sky-800"
-                    : "bg-slate-300 cursor-not-allowed"
-                  }
-  `}
-              >
-                Siguiente
-              </button>
-
-            </div>
-
+              ]}
+            />
           </div>
         )
         }
