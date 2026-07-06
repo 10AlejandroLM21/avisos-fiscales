@@ -44,7 +44,9 @@ import {
   X,
   Save,
   CircleCheckBig,
-  CircleX
+  CircleX,
+  ArrowLeft,
+  CheckCircle2
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
@@ -790,192 +792,202 @@ export default function AvisosFiscales() {
 
         {/* COINCIDENCIAS */}
         {activeStep === 1 && (
-          <div className="bg-white rounded-xl border shadow-sm">
+          <div>
+            <div className="bg-white rounded-xl border shadow-sm">
 
-            <div className="border-b px-6 py-5">
-              <h3 className="text-xl font-semibold text-slate-800">
-                Coincidencias
-              </h3>
+              <div className="border-b px-6 py-5">
+                <h3 className="text-xl font-semibold text-slate-800">
+                  Coincidencias
+                </h3>
 
-              <p className="text-slate-500 mt-2">
-                Seleccione al contribuyente para dar inicio a su aviso fiscal.
-              </p>
+                <p className="text-slate-500 mt-2">
+                  Seleccione al contribuyente para dar inicio a su aviso fiscal.
+                </p>
+              </div>
+
+              <div className="p-6">
+
+                {/* PERSONA FISICA */}
+
+                {tipoPersona === "fisica" && (
+                  <div className="overflow-x-auto">
+
+                    <table className="w-full text-sm border border-slate-200">
+                      <thead className="bg-slate-100">
+                        <tr>
+                          <th className="p-3 border">Seleccionar</th>
+                          <th className="p-3 border">Tipo Persona</th>
+                          <th className="p-3 border">RFC</th>
+                          <th className="p-3 border">Nombre</th>
+                          <th className="p-3 border">Primer Apellido</th>
+                          <th className="p-3 border">Segundo Apellido</th>
+                          <th className="p-3 border">Nombre Comercial</th>
+                          <th className="p-3 border">Fecha Nacimiento</th>
+                          <th className="p-3 border">CURP</th>
+                          <th className="p-3 border">Estatus</th>
+                          <th className="p-3 border">Origen</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Física</td>
+                          <td className="border p-3">MORL900512ABC</td>
+                          <td className="border p-3">JUAN</td>
+                          <td className="border p-3">MORALES</td>
+                          <td className="border p-3">LÓPEZ</td>
+                          <td className="border p-3">ABARROTES JUAN</td>
+                          <td className="border p-3">12/05/1990</td>
+                          <td className="border p-3">MOLJ900512HTCRPN01</td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">SIOX</td>
+                        </tr>
+
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Física</td>
+                          <td className="border p-3">PEMG850318XYZ</td>
+                          <td className="border p-3">MARÍA</td>
+                          <td className="border p-3">PÉREZ</td>
+                          <td className="border p-3">GARCÍA</td>
+                          <td className="border p-3">PAPELERÍA DEL SUR</td>
+                          <td className="border p-3">18/03/1985</td>
+                          <td className="border p-3">PEGM850318MTCRRR02</td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">SIOX</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+                {/* PERSONA MORAL */}
+
+                {tipoPersona === "moral" && (
+                  <div className="overflow-x-auto">
+
+                    <table className="w-full text-sm border border-slate-200">
+                      <thead className="bg-slate-100">
+                        <tr>
+                          <th className="p-3 border">Seleccionar</th>
+                          <th className="p-3 border">Tipo Persona</th>
+                          <th className="p-3 border">RFC</th>
+                          <th className="p-3 border">
+                            Denominación o Razón Social
+                          </th>
+                          <th className="p-3 border">
+                            Nombre Comercial
+                          </th>
+                          <th className="p-3 border">
+                            Fecha Acta Constitutiva
+                          </th>
+                          <th className="p-3 border">Estatus</th>
+                          <th className="p-3 border">Origen</th>
+                          <th className="p-3 border">Tipo Entidad</th>
+                        </tr>
+                      </thead>
+
+                      <tbody>
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Moral</td>
+                          <td className="border p-3">CSO210315AA1</td>
+                          <td className="border p-3">
+                            COMERCIALIZADORA DEL SUR S.A. DE C.V.
+                          </td>
+                          <td className="border p-3">
+                            COMSUR
+                          </td>
+                          <td className="border p-3">
+                            15/03/2021
+                          </td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">
+                            REC
+                          </td>
+                          <td className="border p-3">
+                            PRINCIPAL
+                          </td>
+                        </tr>
+
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Unidad Económica</td>
+                          <td className="border p-3">TSO220614B22</td>
+                          <td className="border p-3">
+                            TECNOLOGÍAS DEL SURESTE
+                          </td>
+                          <td className="border p-3">
+                            TDS
+                          </td>
+                          <td className="border p-3">
+                            14/06/2022
+                          </td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">
+                            REC
+                          </td>
+                          <td className="border p-3">
+                            SECUNDARIA
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                )}
+
+              </div>
             </div>
 
-            <div className="p-6">
+            <div className="sticky bottom-0 bg-white rounded-2xl border shadow-sm mt-4">
 
-              {/* PERSONA FISICA */}
+              <div className="px-6 py-5 flex justify-between items-center">
 
-              {tipoPersona === "fisica" && (
-                <div className="overflow-x-auto">
+                <button
+                  className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition"
+                >
 
-                  <table className="w-full text-sm border border-slate-200">
-                    <thead className="bg-slate-100">
-                      <tr>
-                        <th className="p-3 border">Seleccionar</th>
-                        <th className="p-3 border">Tipo Persona</th>
-                        <th className="p-3 border">RFC</th>
-                        <th className="p-3 border">Nombre</th>
-                        <th className="p-3 border">Primer Apellido</th>
-                        <th className="p-3 border">Segundo Apellido</th>
-                        <th className="p-3 border">Nombre Comercial</th>
-                        <th className="p-3 border">Fecha Nacimiento</th>
-                        <th className="p-3 border">CURP</th>
-                        <th className="p-3 border">Estatus</th>
-                        <th className="p-3 border">Origen</th>
-                      </tr>
-                    </thead>
+                  <ArrowLeft size={18} />
 
-                    <tbody>
-                      <tr className="hover:bg-sky-50">
-                        <td className="border p-3 text-center">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="border p-3">Física</td>
-                        <td className="border p-3">MORL900512ABC</td>
-                        <td className="border p-3">JUAN</td>
-                        <td className="border p-3">MORALES</td>
-                        <td className="border p-3">LÓPEZ</td>
-                        <td className="border p-3">ABARROTES JUAN</td>
-                        <td className="border p-3">12/05/1990</td>
-                        <td className="border p-3">MOLJ900512HTCRPN01</td>
-                        <td className="border p-3">
-                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                            ACTIVO
-                          </span>
-                        </td>
-                        <td className="border p-3">SIOX</td>
-                      </tr>
+                  Regresar
 
-                      <tr className="hover:bg-sky-50">
-                        <td className="border p-3 text-center">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="border p-3">Física</td>
-                        <td className="border p-3">PEMG850318XYZ</td>
-                        <td className="border p-3">MARÍA</td>
-                        <td className="border p-3">PÉREZ</td>
-                        <td className="border p-3">GARCÍA</td>
-                        <td className="border p-3">PAPELERÍA DEL SUR</td>
-                        <td className="border p-3">18/03/1985</td>
-                        <td className="border p-3">PEGM850318MTCRRR02</td>
-                        <td className="border p-3">
-                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                            ACTIVO
-                          </span>
-                        </td>
-                        <td className="border p-3">SIOX</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
+                </button>
 
-              {/* PERSONA MORAL */}
+                <button
+                  className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-blue-600 text-white font-semibold hover:bg-emerald-800 transition shadow-sm"
+                >
+                  Siguiente
+                  <ArrowRight size={18} />
 
-              {tipoPersona === "moral" && (
-                <div className="overflow-x-auto">
+                </button>
 
-                  <table className="w-full text-sm border border-slate-200">
-                    <thead className="bg-slate-100">
-                      <tr>
-                        <th className="p-3 border">Seleccionar</th>
-                        <th className="p-3 border">Tipo Persona</th>
-                        <th className="p-3 border">RFC</th>
-                        <th className="p-3 border">
-                          Denominación o Razón Social
-                        </th>
-                        <th className="p-3 border">
-                          Nombre Comercial
-                        </th>
-                        <th className="p-3 border">
-                          Fecha Acta Constitutiva
-                        </th>
-                        <th className="p-3 border">Estatus</th>
-                        <th className="p-3 border">Origen</th>
-                        <th className="p-3 border">Tipo Entidad</th>
-                      </tr>
-                    </thead>
+              </div>
 
-                    <tbody>
-                      <tr className="hover:bg-sky-50">
-                        <td className="border p-3 text-center">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="border p-3">Moral</td>
-                        <td className="border p-3">CSO210315AA1</td>
-                        <td className="border p-3">
-                          COMERCIALIZADORA DEL SUR S.A. DE C.V.
-                        </td>
-                        <td className="border p-3">
-                          COMSUR
-                        </td>
-                        <td className="border p-3">
-                          15/03/2021
-                        </td>
-                        <td className="border p-3">
-                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                            ACTIVO
-                          </span>
-                        </td>
-                        <td className="border p-3">
-                          REC
-                        </td>
-                        <td className="border p-3">
-                          PRINCIPAL
-                        </td>
-                      </tr>
-
-                      <tr className="hover:bg-sky-50">
-                        <td className="border p-3 text-center">
-                          <input type="checkbox" />
-                        </td>
-                        <td className="border p-3">Unidad Económica</td>
-                        <td className="border p-3">TSO220614B22</td>
-                        <td className="border p-3">
-                          TECNOLOGÍAS DEL SURESTE
-                        </td>
-                        <td className="border p-3">
-                          TDS
-                        </td>
-                        <td className="border p-3">
-                          14/06/2022
-                        </td>
-                        <td className="border p-3">
-                          <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
-                            ACTIVO
-                          </span>
-                        </td>
-                        <td className="border p-3">
-                          REC
-                        </td>
-                        <td className="border p-3">
-                          SECUNDARIA
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              )}
-
-            </div>
-
-            <div className="border-t px-6 py-4 flex justify-between">
-              <button
-                type="button"
-                onClick={() => setActiveStep(0)}
-                className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-              >
-                Cancelar
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveStep(2)}
-                className="px-6 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800"
-              >
-                Iniciar Aviso
-              </button>
             </div>
           </div>
         )}
@@ -2002,7 +2014,7 @@ export default function AvisosFiscales() {
                       return;
                     }
 
-                    setActiveStep(5);
+                    setActiveStep(4);
 
                   }}
                   className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg"
@@ -2015,13 +2027,10 @@ export default function AvisosFiscales() {
             </div>
           )
         }
-        {
+        {/* {
           activeStep === 4 && (
             <div className="space-y-6">
 
-              {/*======================================================
-        AVISO GENERADO
-    ======================================================*/}
 
               <div className="bg-white rounded-xl border shadow-sm">
 
@@ -2122,9 +2131,7 @@ export default function AvisosFiscales() {
                 </div>
 
               </div>
-              {/*======================================================
-        ACCIONES DISPONIBLES
-    ======================================================*/}
+        
 
               <div className="bg-white rounded-xl border shadow-sm">
 
@@ -2146,7 +2153,6 @@ export default function AvisosFiscales() {
 
                 <div className="p-6 grid lg:grid-cols-3 gap-5">
 
-                  {/* EDITAR */}
 
                   <button
                     className="rounded-xl border hover:border-sky-300 hover:bg-sky-50 transition p-6 text-left"
@@ -2175,7 +2181,6 @@ export default function AvisosFiscales() {
 
                   </button>
 
-                  {/* VISTA PREVIA */}
 
                   <button
                     className="rounded-xl border hover:border-indigo-300 hover:bg-indigo-50 transition p-6 text-left"
@@ -2204,7 +2209,6 @@ export default function AvisosFiscales() {
 
                   </button>
 
-                  {/* CANCELAR */}
 
                   <button
                     className="rounded-xl border hover:border-red-300 hover:bg-red-50 transition p-6 text-left"
@@ -2237,9 +2241,6 @@ export default function AvisosFiscales() {
 
               </div>
 
-              {/*======================================================
-        CONTINUAR
-    ======================================================*/}
 
               <div className="bg-white rounded-xl border shadow-sm">
 
@@ -2277,14 +2278,14 @@ export default function AvisosFiscales() {
 
             </div>
           )
-        }
-        {activeStep === 5 && (
+        } */}
+        {/* {activeStep === 5 && (
           <Digitalizacion></Digitalizacion>
         )
-        }
+        } */}
         {/*Cambio de domicilio fiscal */}
         {
-          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 5 && (
+          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && (
             <div className="space-y-6">
 
               {/* Header */}
@@ -2755,7 +2756,7 @@ export default function AvisosFiscales() {
 
         {/*Cambio de representante legal*/}
         {
-          selectedRow === "Cambio de Representante Legal" && activeStep === 5 && (
+          selectedRow === "Cambio de Representante Legal" && activeStep === 4 && (
             <div className="space-y-6">
 
               {/* REPRESENTANTES LEGALES ASOCIADOS */}
@@ -3825,7 +3826,7 @@ export default function AvisosFiscales() {
         {/* Cambio de Nombre, Denominación o Razón Social */}
 
         {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <div>
 
               {tipoPersona === "fisica" && (
@@ -4204,7 +4205,7 @@ export default function AvisosFiscales() {
           )}
 
         {/*suspensión de actividades*/}
-        {selectedRow === "Suspensión de Actividades" && activeStep === 5 && (
+        {selectedRow === "Suspensión de Actividades" && activeStep === 4 && (
 
           <div className="bg-white rounded-xl border shadow-sm">
 
@@ -4550,7 +4551,7 @@ export default function AvisosFiscales() {
         {/*Reanudación de actividades*/}
         {
           selectedRow === "Reanudación de Actividades" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <div>
 
               <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
@@ -4977,7 +4978,7 @@ export default function AvisosFiscales() {
         {/*Apertura de Establecimientos o Locales*/}
         {
           selectedRow === "Apertura de Establecimientos o Locales" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
 
             <div className="space-y-6">
 
@@ -5229,7 +5230,7 @@ export default function AvisosFiscales() {
         {/*Cierre de Establecimientos o Locales*/}
         {
           selectedRow === "Cierre de Establecimientos o Locales" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <div>
               <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
 
@@ -5484,7 +5485,7 @@ export default function AvisosFiscales() {
         {/*Cancelación del REC*/}
         {
           selectedRow === "Cancelación en el Registro Estatal de Contribuyentes" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <div className="bg-white p-4 rounded rounded-md border">
               <div className="bg-white rounded-xl border border-slate-300 shadow-sm mb-6">
                 <button
@@ -6331,13 +6332,13 @@ export default function AvisosFiscales() {
         {/*Aumento de obligaciones*/}
         {
           selectedRow === "Aumento de Obligaciones" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <AumentoObligaciones />
           )}
         {/*Disminución de obligaciones*/}
         {
           selectedRow === "Disminucion de Obligaciones" &&
-          activeStep === 5 && (
+          activeStep === 4 && (
             <DisminucionDeObligaciones />
           )}
       </main >
