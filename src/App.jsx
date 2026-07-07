@@ -66,12 +66,14 @@ export default function AvisosFiscales() {
   const [representanteConsulta, setRepresentanteConsulta] = useState(null); // Para el modal
   const [representanteSeleccionado, setRepresentanteSeleccionado] =
     useState(null);
+
+  const [avisoPrev, setAvisoPrev] = useState("");
   const [modalRepresentante, setModalRepresentante] = useState(false);
   const [representacion, setRepresentacion] = useState("");
   const [mostrarFormularioRepresentante, setMostrarFormularioRepresentante] = useState(false);
   const [pasoModal, setPasoModal] = useState(1);
   const [avisoSeleccionado, setAvisoSeleccionado] = useState("");
-
+  const [vistaPrevia, setVistaPrevia] = useState(false);
   const [obligacionAbierta, setObligacionAbierta] = useState(null);
   const [mostrarFormularioDomicilio, setMostrarFormularioDomicilio] = useState(true);
   const [ejercicioSeleccionado, setEjercicioSeleccionado] = useState(null);
@@ -111,7 +113,46 @@ export default function AvisosFiscales() {
   // Modal de detalle
   const [openDetalle, setOpenDetalle] =
     useState(false);
+  const obtenerEtiquetaBoton = () => {
 
+    switch (selectedRow) {
+
+      case "Cambio de Domicilio Fiscal":
+        return "Ejecutar Cambio de Domicilio";
+
+      case "Cambio de Nombre, Denominación o Razón Social":
+        return "Ejecutar Cambio de Nombre";
+
+      case "Cambio de Representante Legal":
+        return "Ejecutar Cambio de Representante";
+
+      case "Aumento de Obligaciones":
+        return "Ejecutar Aumento de Obligaciones";
+
+      case "Reanudación de Actividades":
+        return "Ejecutar Reanudación de Actividades";
+
+      case "Disminucion de Obligaciones":
+        return "Ejecutar Disminución de Obligaciones";
+
+      case "Suspensión de Actividades":
+        return "Ejecutar Suspensión de Actividades";
+
+      case "Apertura de Establecimientos o Locales":
+        return "Ejecutar Apertura de Establecimiento";
+
+      case "Cierre de Establecimientos o Locales":
+        return "Ejecutar Cierre de Establecimiento";
+
+      case "Cancelación en el Registro Estatal de Contribuyentes":
+        return "Ejecutar Cancelación del Registro";
+
+      default:
+        return "Siguiente";
+
+    }
+
+  };
   // Información del establecimiento a visualizar
   const [
     establecimientoDetalle,
@@ -573,6 +614,48 @@ export default function AvisosFiscales() {
     // Domicilio concatenado
     domicilioCompleto:
       "Calle Morelos No. 125 Int. A, Col. Centro, Oaxaca de Juárez, Oaxaca, C.P. 68000, Región Valles Centrales."
+  };
+  const obtenerBotonDerecha = () => {
+
+    // Paso 4 - Generar aviso
+    if (activeStep === 4 && !vistaPrevia) {
+      return {
+        etiqueta: obtenerEtiquetaBoton(),
+        icono: "FileCheck2",
+        className: "bg-blue-600 text-white hover:bg-blue-700",
+        disabled: !selectedRow,
+        onClick: () => {
+          setVistaPrevia(true);
+        }
+      };
+    }
+
+    // Paso 4 - Vista previa
+    if (activeStep === 4 && vistaPrevia) {
+      return {
+        etiqueta: "Siguiente",
+        icono: "ArrowRight",
+        className: "bg-blue-600 text-white hover:bg-blue-700",
+        onClick: () => {
+          setVistaPrevia(false);
+          setActiveStep(5);
+        }
+      };
+    }
+
+    // Paso 5 - Digitalización
+    if (activeStep === 5) {
+      return {
+        etiqueta: "Finalizar Aviso",
+        icono: "CheckCircle2",
+        className: "bg-emerald-600 text-white hover:bg-emerald-700",
+        onClick: () => {
+          // TODO: Finalizar trámite
+        }
+      };
+    }
+
+    return null;
   };
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
@@ -2300,8 +2383,8 @@ export default function AvisosFiscales() {
         }
 
 
-        {/* {
-          activeStep === 4 && (
+        {
+          activeStep === 4 && vistaPrevia && (
             <div className="space-y-6">
 
 
@@ -2404,7 +2487,7 @@ export default function AvisosFiscales() {
                 </div>
 
               </div>
-        
+
 
               <div className="bg-white rounded-xl border shadow-sm">
 
@@ -2515,51 +2598,19 @@ export default function AvisosFiscales() {
               </div>
 
 
-              <div className="bg-white rounded-xl border shadow-sm">
-
-                <div className="px-6 py-5 flex justify-between items-center">
-
-                  <div>
-
-                    <h4 className="font-semibold text-slate-800">
-
-                      Continuar
-
-                    </h4>
-
-                    <p className="text-sm text-slate-500 mt-1">
-
-                      Continúe con el proceso de digitalización de documentos.
-
-                    </p>
-
-                  </div>
-
-                  <button
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-xl bg-sky-700 hover:bg-sky-800 text-white font-medium transition"
-                  >
-
-                    Continuar
-
-                    <ArrowRight size={18} />
-
-                  </button>
-
-                </div>
-
-              </div>
 
             </div>
           )
-        } */}
-        {/* {activeStep === 5 && (
+        }
+
+        {activeStep === 5 && (
           <Digitalizacion></Digitalizacion>
         )
-        } */}
+        }
 
         {/*Cambio de domicilio fiscal */}
         {
-          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && (
+          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && !vistaPrevia && (
             <div className="space-y-6">
 
               {/* Header */}
@@ -3005,7 +3056,7 @@ export default function AvisosFiscales() {
 
         {/*Cambio de representante legal*/}
         {
-          selectedRow === "Cambio de Representante Legal" && activeStep === 4 && (
+          selectedRow === "Cambio de Representante Legal" && activeStep === 4 && !vistaPrevia && (
             <div className="space-y-6">
               <HeaderModulo
 
@@ -3510,7 +3561,7 @@ export default function AvisosFiscales() {
               </div>
 
 
-        
+
 
             </div>
           )
@@ -3518,7 +3569,7 @@ export default function AvisosFiscales() {
         {/* Cambio de Nombre, Denominación o Razón Social */}
 
         {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <div>
 
               {tipoPersona === "fisica" && (
@@ -3854,7 +3905,7 @@ export default function AvisosFiscales() {
           )}
 
         {/*suspensión de actividades*/}
-        {selectedRow === "Suspensión de Actividades" && activeStep === 4 && (
+        {selectedRow === "Suspensión de Actividades" && activeStep === 4 && !vistaPrevia && (
 
           <div >
             <HeaderModulo
@@ -4169,7 +4220,7 @@ export default function AvisosFiscales() {
         {/*Reanudación de actividades*/}
         {
           selectedRow === "Reanudación de Actividades" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <div>
               <HeaderModulo
 
@@ -4606,7 +4657,7 @@ export default function AvisosFiscales() {
         {/*Apertura de Establecimientos o Locales*/}
         {
           selectedRow === "Apertura de Establecimientos o Locales" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
 
             <div className="space-y-6">
               <HeaderModulo
@@ -4848,7 +4899,7 @@ export default function AvisosFiscales() {
         {/*Cierre de Establecimientos o Locales*/}
         {
           selectedRow === "Cierre de Establecimientos o Locales" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <div>
               <HeaderModulo
 
@@ -5093,7 +5144,7 @@ export default function AvisosFiscales() {
         {/*Cancelación del REC*/}
         {
           selectedRow === "Cancelación en el Registro Estatal de Contribuyentes" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <div className="">
               <HeaderModulo
 
@@ -5909,38 +5960,50 @@ export default function AvisosFiscales() {
         {/*Aumento de obligaciones*/}
         {
           selectedRow === "Aumento de Obligaciones" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <AumentoObligaciones />
           )}
         {/*Disminución de obligaciones*/}
         {
           selectedRow === "Disminucion de Obligaciones" &&
-          activeStep === 4 && (
+          activeStep === 4 && !vistaPrevia && (
             <DisminucionDeObligaciones />
           )}
-        {selectedRow && activeStep === 4 && (
+        {selectedRow && (activeStep === 4 || activeStep === 5) && (
+
           <BotonesNavegacion
+
             izquierda={[
               {
-                etiqueta: "Regresar ",
+                etiqueta: "Regresar",
                 icono: "ArrowLeft",
-                className: "bg-blue-600 text-white hover:bg-blue-700",
-                onClick: () => setActiveStep(3)
-              }
+                className: "bg-slate-600 text-white hover:bg-slate-700",
+                onClick: () => {
 
-            ]}
-            derecha={[
-              {
-                etiqueta: "Siguiente",
-                icono: "ArrowRight",
-                className: "bg-blue-600 text-white hover:bg-blue-700",
-                disabled: !selectedRow,
-                onClick: () => setActiveStep(5)
+                  if (activeStep === 5) {
+                    setActiveStep(4);
+                    setVistaPrevia(false);
+                    return;
+                  }
+                  if (activeStep === 4) {
+                    setActiveStep(3);
+                    return;
+                  }
+                  if (vistaPrevia) {
+                    setVistaPrevia(false);
+                  }
+
+                }
               }
             ]}
+
+            derecha={[
+              obtenerBotonDerecha()
+            ]}
+
           />
-        )
-        }
+
+        )}
       </main >
 
       {/* FOOTER */}

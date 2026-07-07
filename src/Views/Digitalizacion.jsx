@@ -862,37 +862,6 @@ export default function Digitalizacion() {
 
                 </div></div>
 
-            {/*======================================================
-    BOTONES
-======================================================*/}
-
-            <div className="sticky bottom-0 bg-white rounded-2xl border shadow-sm">
-
-                <div className="px-6 py-5 flex justify-between items-center">
-
-                    <button
-                        className="inline-flex items-center gap-2 px-6 py-3 rounded-xl border border-slate-300 text-slate-700 font-medium hover:bg-slate-50 transition"
-                    >
-
-                        <ArrowLeft size={18} />
-
-                        Regresar
-
-                    </button>
-
-                    <button
-                        className="inline-flex items-center gap-2 px-8 py-3 rounded-xl bg-emerald-700 text-white font-semibold hover:bg-emerald-800 transition shadow-sm"
-                    >
-
-                        <CheckCircle2 size={18} />
-
-                        Finalizar Aviso
-
-                    </button>
-
-                </div>
-
-            </div>
         </div>
     )
 }

@@ -5,7 +5,8 @@ import {
     Eye,
     Pencil,
     X,
-    Search
+    Search,
+    FileCheck2
 } from "lucide-react";
 
 const iconos = {
@@ -15,7 +16,8 @@ const iconos = {
     Eye,
     Pencil,
     X,
-    Search
+    Search,
+    FileCheck2
 };
 
 export default function BotonesNavegacion({
