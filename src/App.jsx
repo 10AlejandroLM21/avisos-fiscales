@@ -18,7 +18,8 @@ import DisminucionDeObligaciones from "./Views/DisminucionDeObligaciones";
 import Digitalizacion from "./Views/Digitalizacion";
 import BotonesNavegacion from "./components/BotonesNavegacion";
 import HeaderModulo from "./components/HeaderModulo";
-
+import CarouselTarjetas from "./components/CarouselTarjetas";
+import ModalRepresentanteLegal from "./components/ModalRepresentanteLegal";
 import {
   Search,
   Users,
@@ -49,7 +50,11 @@ import {
   CircleCheckBig,
   CircleX,
   ArrowLeft,
-  CheckCircle2
+  CheckCircle2,
+  Eye,
+  BadgeCheck,
+  Check,
+  MapPinned
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
@@ -58,6 +63,7 @@ export default function AvisosFiscales() {
   const [tipoPersona, setTipoPersona] = useState("");
   const [metodoBusqueda, setMetodoBusqueda] = useState("");
   const [selectedRow, setSelectedRow] = useState(null);
+  const [representanteConsulta, setRepresentanteConsulta] = useState(null); // Para el modal
   const [representanteSeleccionado, setRepresentanteSeleccionado] =
     useState(null);
   const [modalRepresentante, setModalRepresentante] = useState(false);
@@ -330,10 +336,11 @@ export default function AvisosFiscales() {
     0
   );
   const obligaciones = [
+
     {
       id: 1,
       nombre: "Impuesto Sobre Nóminas",
-      actividad: "Prestación de Servicios",
+      actividad: "Prestación de Servicios Profesionales",
       cumplidas: 10,
       pendientes: 2,
       declaraciones: [
@@ -343,6 +350,7 @@ export default function AvisosFiscales() {
         { periodo: "Abril 2026", estatus: "No Cumplido" }
       ]
     },
+
     {
       id: 2,
       nombre: "Impuesto Sobre Hospedaje",
@@ -354,21 +362,37 @@ export default function AvisosFiscales() {
         { periodo: "Febrero 2026", estatus: "Cumplido" }
       ]
     },
+
     {
       id: 3,
-      nombre: "Impuesto Sobre Hospedaje",
-      actividad: "Servicios Turísticos",
-      cumplidas: 12,
-      pendientes: 0,
+      nombre: "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal",
+      actividad: "Comercio al por Menor de Abarrotes",
+      cumplidas: 8,
+      pendientes: 4,
       declaraciones: [
         { periodo: "Enero 2026", estatus: "Cumplido" },
-        { periodo: "Febrero 2026", estatus: "Cumplido" }
+        { periodo: "Febrero 2026", estatus: "Cumplido" },
+        { periodo: "Marzo 2026", estatus: "Cumplido" },
+        { periodo: "Abril 2026", estatus: "No Cumplido" }
       ]
     },
+
     {
       id: 4,
-      nombre: "Impuesto Sobre Hospedaje",
-      actividad: "Servicios Turísticos",
+      nombre: "Impuesto Cedular por Arrendamiento de Bienes Inmuebles",
+      actividad: "Arrendamiento de Locales Comerciales",
+      cumplidas: 9,
+      pendientes: 3,
+      declaraciones: [
+        { periodo: "Enero 2026", estatus: "Cumplido" },
+        { periodo: "Febrero 2026", estatus: "No Cumplido" }
+      ]
+    },
+
+    {
+      id: 5,
+      nombre: "Impuesto Cedular por Prestación de Servicios Profesionales",
+      actividad: "Consultoría en Tecnologías de la Información",
       cumplidas: 12,
       pendientes: 0,
       declaraciones: [
@@ -376,21 +400,47 @@ export default function AvisosFiscales() {
         { periodo: "Febrero 2026", estatus: "Cumplido" }
       ]
     },
+
     {
       id: 6,
-      nombre: "Impuesto Sobre Hospedaje",
-      actividad: "Servicios Turísticos",
-      cumplidas: 12,
-      pendientes: 0,
+      nombre: "Impuesto Sobre Diversiones y Espectáculos Públicos",
+      actividad: "Organización de Eventos",
+      cumplidas: 6,
+      pendientes: 6,
+      declaraciones: [
+        { periodo: "Enero 2026", estatus: "No Cumplido" },
+        { periodo: "Febrero 2026", estatus: "Cumplido" }
+      ]
+    },
+
+    {
+      id: 7,
+      nombre: "Impuesto Sobre Juegos con Apuestas y Sorteos",
+      actividad: "Sorteos Promocionales",
+      cumplidas: 11,
+      pendientes: 1,
       declaraciones: [
         { periodo: "Enero 2026", estatus: "Cumplido" },
         { periodo: "Febrero 2026", estatus: "Cumplido" }
       ]
     },
+
     {
-      id: 7,
-      nombre: "Impuesto Sobre Hospedaje",
-      actividad: "Servicios Turísticos",
+      id: 8,
+      nombre: "Impuesto Sobre Enajenación de Vehículos Usados",
+      actividad: "Compraventa de Vehículos",
+      cumplidas: 7,
+      pendientes: 5,
+      declaraciones: [
+        { periodo: "Enero 2026", estatus: "Cumplido" },
+        { periodo: "Febrero 2026", estatus: "No Cumplido" }
+      ]
+    },
+
+    {
+      id: 9,
+      nombre: "Impuesto Sobre Loterías, Rifas, Sorteos y Concursos",
+      actividad: "Rifas Comerciales",
       cumplidas: 12,
       pendientes: 0,
       declaraciones: [
@@ -398,6 +448,7 @@ export default function AvisosFiscales() {
         { periodo: "Febrero 2026", estatus: "Cumplido" }
       ]
     }
+
   ];
   const newRepresentante = {
     id: Date.now(),
@@ -415,26 +466,58 @@ export default function AvisosFiscales() {
     { label: "AVISO", icon: FileText },
     { label: "FINALIZADO", icon: CheckCircle },
   ];
-  const representantes = [
+  const [representantes, setRepresentantes] = useState([
+
     {
       id: 1,
-      rfc: "ROMJ800510ABC",
-      nombre: "ROMÁN ORTIZ SOSA",
-      curp: "ROSR800510HTCRMN01",
-      correo: "roman@email.com",
+      nombre: "Juan Pérez Hernández",
+      rfc: "PEHJ900101ABC",
+      curp: "PEHJ900101HOCRNN09",
+
+      tipoAcreditacion: "Carta Poder con Ratificación de Firmas ante Notario",
+
+      correo: "juan@correo.com",
       telefono: "9511234567",
-      tipo: "Administrador Único",
+
+      ambito: "URBANO",
+
+      calle: "Av. Universidad",
+      numeroExterior: "120",
+      numeroInterior: "3-B",
+      colonia: "Reforma",
+      codigoPostal: "68050",
+      municipio: "Oaxaca de Juárez",
+      entidad: "Oaxaca",
+
+      domicilioFiscal:
+        "Av. Universidad No. 120 Int. 3-B, Col. Reforma, C.P. 68050, Oaxaca de Juárez, Oaxaca"
+
     },
+
     {
       id: 2,
-      rfc: "PELG790321XYZ",
-      nombre: "PEDRO LÓPEZ GARCÍA",
-      curp: "PEGP790321HTCRRD02",
-      correo: "pedro@email.com",
-      telefono: "9519998877",
-      tipo: "Apoderado Legal",
-    },
-  ];
+      nombre: "María López Ruiz",
+      rfc: "LORM920215AAA",
+      curp: "LORM920215MOCRZZ01",
+
+      tipoAcreditacion: "Acta Protocolizada mediante Carta Poder",
+
+      correo: "maria@correo.com",
+      telefono: "9519876543",
+
+      ambito: "RURAL",
+
+      localidad: "San Pedro Ixtlahuaca",
+      municipio: "San Pedro Ixtlahuaca",
+      entidad: "Oaxaca",
+      codigoPostal: "71224",
+
+      domicilioFiscal:
+        "Localidad San Pedro Ixtlahuaca, C.P. 71224, San Pedro Ixtlahuaca, Oaxaca"
+
+    }
+
+  ]);
   const movimientos = [
     {
       id: "cambio",
@@ -1396,51 +1479,111 @@ export default function AvisosFiscales() {
                     </h4>
                   </div>
 
-                  <div className="grid md:grid-cols-2 gap-5">
+                  <div className="overflow-x-auto pb-3">
 
-                    <div className="border rounded-xl p-5 bg-slate-50">
-                      <h5 className="font-semibold text-slate-800">
-                        Impuesto Sobre Erogaciones
-                      </h5>
+                    <CarouselTarjetas
 
-                      <p className="text-sm text-slate-600 mt-2">
-                        Actividad Económica:
-                      </p>
+                      elementos={obligaciones}
 
-                      <p className="font-medium">
-                        Comercio al por menor de abarrotes
-                      </p>
+                      tarjetasPorPagina={3}
 
-                      <p className="text-sm text-slate-600 mt-3">
-                        Inicio de operaciones:
-                      </p>
+                      renderItem={(item) => (
 
-                      <p className="font-medium">
-                        15/01/2020
-                      </p>
-                    </div>
+                        <div className="w-full h-full rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
 
-                    <div className="border rounded-xl p-5 bg-slate-50">
-                      <h5 className="font-semibold text-slate-800">
-                        Hospedaje
-                      </h5>
+                          {/* Header */}
 
-                      <p className="text-sm text-slate-600 mt-2">
-                        Actividad Económica:
-                      </p>
+                          <div className="px-5 py-4 border-b bg-gradient-to-r from-sky-50 to-white">
 
-                      <p className="font-medium">
-                        Servicios turísticos
-                      </p>
+                            <div className="flex items-center justify-between">
 
-                      <p className="text-sm text-slate-600 mt-3">
-                        Inicio de operaciones:
-                      </p>
+                              <span className="inline-flex items-center px-3 py-1 rounded-full bg-sky-100 text-sky-700 text-xs font-semibold">
 
-                      <p className="font-medium">
-                        02/03/2021
-                      </p>
-                    </div>
+                                Obligación Fiscal
+
+                              </span>
+
+                              <span className="text-xs text-slate-400">
+
+                                #{item.id}
+
+                              </span>
+
+                            </div>
+
+                            <h4 className="font-semibold text-slate-800 mt-4 leading-6 min-h-[48px]">
+
+                              {item.nombre}
+
+                            </h4>
+
+                          </div>
+
+                          {/* Body */}
+
+                          <div className="flex-1 p-5 flex flex-col justify-between">
+
+                            <div className="space-y-4">
+
+                              <div className="rounded-xl bg-slate-50 p-4">
+
+                                <p className="text-xs uppercase tracking-wider text-slate-500">
+
+                                  Actividad Económica
+
+                                </p>
+
+                                <p className="font-semibold text-slate-800 mt-2">
+
+                                  {item.actividad}
+
+                                </p>
+
+                              </div>
+
+                              <div className="rounded-xl bg-slate-50 p-4">
+
+                                <p className="text-xs uppercase tracking-wider text-slate-500">
+
+                                  Inicio de Operaciones
+
+                                </p>
+
+                                <p className="font-semibold text-slate-800 mt-2">
+
+                                  {item.inicio}
+
+                                </p>
+
+                              </div>
+
+                            </div>
+
+                            {/* Footer */}
+
+                            <div className="mt-5 pt-4 border-t flex justify-between items-center">
+
+                              <span className="text-xs text-slate-500">
+
+                                Estado
+
+                              </span>
+
+                              <span className="inline-flex items-center px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">
+
+                                Vigente
+
+                              </span>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                      )}
+
+                    />
 
                   </div>
                 </section>
@@ -1588,102 +1731,211 @@ export default function AvisosFiscales() {
                   <section>
                     {!mostrarFormularioRepresentante && (
                       <div className="bg-white border rounded-xl p-6 mt-4">
-                        {!representanteSeleccionado && (
-                          <div>
-                            {/*Header */}
-                            <div className="flex justify-between items-center mb-4">
+                        <div>
+                          {/*Header */}
+                          <div className="flex justify-between items-center mb-4">
 
-                              <h4 className="font-semibold text-slate-800">
-                                Representantes Legales Registrados
-                              </h4>
+                            <h4 className="font-semibold text-slate-800">
+                              Representantes Legales Registrados
+                            </h4>
 
-                              <button
-                                type="button"
-                                onClick={() => {
-                                  setMostrarFormularioRepresentante(true);
-                                }}
-                                className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-lg text-sm font-medium">
-                                + Agregar Representante Legal
-                              </button>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setMostrarFormularioRepresentante(true);
+                              }}
+                              className="bg-sky-700 hover:bg-sky-800 text-white px-4 py-2 rounded-lg text-sm font-medium">
+                              + Agregar Representante Legal
+                            </button>
 
-                            </div>
+                          </div>
 
-                            {/* Tabla de datos representantes */}
-                            <div className="grid md:grid-cols-2 gap-4">
+                          {/* Representantes */}
 
-                              {representantes.map((rep) => {
+                          <div className="grid gap-5">
 
-                                const seleccionado = representanteSeleccionado?.id === rep.id;
+                            {representantes.map((rep) => {
 
-                                return (
+                              const seleccionado =
+                                representanteSeleccionado?.id === rep.id;
+
+                              return (
+
+                                <div
+                                  key={rep.id}
+                                  className={`
+                    group
+                    relative
+                    overflow-hidden
+                    rounded-2xl
+                    border
+                    bg-white
+                    transition-all
+                    duration-300
+
+                    ${seleccionado
+                                      ? "border-sky-500 shadow-lg ring-2 ring-sky-100"
+                                      : "border-slate-200 hover:border-sky-300 hover:shadow-lg"
+                                    }
+                `}
+                                >
+                                  {seleccionado && (
+
+                                    <div
+                                      className="
+            bg-gradient-to-r
+            from-sky-600
+            to-blue-600
+            text-white
+            px-6
+            py-2
+            text-sm
+            font-semibold
+            flex
+            items-center
+            gap-2
+        "
+                                    >
+
+                                      <BadgeCheck size={18} />
+                                      REPRESENTANTE SELECCIONADO
+                                    </div>
+
+                                  )}
 
                                   <div
-                                    key={rep.id}
-                                    onClick={() => setRepresentanteSeleccionado(rep)}
                                     className={`
-                    cursor-pointer
-                    rounded-xl
-                    border
-                    transition-all
-                    duration-200
-                    ${seleccionado
-                                        ? "border-sky-600 bg-sky-50 shadow-md"
-                                        : "border-slate-200 bg-white hover:border-sky-300 hover:shadow"
+                        absolute
+                        left-0
+                        top-0
+                        h-full
+                        w-1
+
+                        ${seleccionado
+                                        ? "bg-sky-600"
+                                        : "bg-transparent group-hover:bg-sky-300"
                                       }
-                `}
-                                  >
+                    `}
+                                  />
 
-                                    <div className="p-5">
+                                  <div className="p-6 flex justify-between gap-6">
 
-                                      <div className="flex justify-between items-start">
+                                    {/*======================================================
+                        INFORMACIÓN
+                    ======================================================*/}
 
-                                        <div className="flex items-center gap-4">
+                                    <div className="flex gap-5 flex-1">
 
-                                          <div
-                                            className={`
-                                    h-12 w-12 rounded-full flex items-center justify-center
-                                    ${seleccionado
-                                                ? "bg-sky-600 text-white"
-                                                : "bg-slate-100 text-slate-600"
-                                              }
-                                `}
-                                          >
-                                            <UserRound size={22} />
-                                          </div>
+                                      <div
+                                        className={`
+                                h-16
+                                w-16
+                                rounded-2xl
+                                flex
+                                items-center
+                                justify-center
+                                shrink-0
 
-                                          <div>
+                                ${seleccionado
+                                            ? "bg-sky-600 text-white"
+                                            : "bg-slate-100 text-slate-600"
+                                          }
+                            `}
+                                      >
 
-                                            <h3 className="font-semibold text-slate-800">
-                                              {rep.nombre}
-                                            </h3>
-
-                                            <p className="text-sm text-slate-500">
-                                              {rep.rfc}
-                                            </p>
-
-                                          </div>
-
-                                        </div>
-
-                                        <input
-                                          type="radio"
-                                          checked={seleccionado}
-                                          readOnly
-                                          className="h-5 w-5 accent-sky-700"
-                                        />
+                                        <UserRound size={30} />
 
                                       </div>
 
-                                      <div className="mt-5 pt-4 border-t">
+                                      <div className="flex-1">
 
-                                        <div className="flex items-center justify-between">
+                                        {/* Nombre */}
 
-                                          <span className="text-sm text-slate-500">
-                                            Tipo de Representante
+                                        <div className="flex items-center gap-3">
+
+                                          <h3 className="text-lg font-semibold text-slate-800">
+
+                                            {rep.nombre}
+
+                                          </h3>
+
+                                          {/* {seleccionado && (
+
+                                            <span
+                                              className="
+            inline-flex
+            items-center
+            gap-2
+            rounded-full
+            bg-gradient-to-r
+            from-sky-600
+            to-blue-600
+            px-4
+            py-2
+            text-white
+            text-xs
+            font-bold
+            shadow-md
+        "
+                                            >
+
+                                              <BadgeCheck size={15} />
+
+                                              REPRESENTANTE LEGAL SELECCIONADO
+
+                                            </span>
+
+                                          )} */}
+
+                                        </div>
+
+                                        {/* RFC */}
+
+                                        <p className="text-sm text-slate-500 mt-2">
+
+                                          RFC: <span className="font-medium text-slate-700">
+
+                                            {rep.rfc}
+
                                           </span>
 
-                                          <span className="px-3 py-1 rounded-full bg-slate-100 text-slate-700 text-xs font-medium">
-                                            {rep.tipo}
+                                        </p>
+
+                                        {/* Pills */}
+
+                                        <div className="flex flex-wrap gap-3 mt-5">
+
+                                          <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-3 py-2 text-xs font-semibold text-violet-700">
+
+                                            📑 {rep.tipoAcreditacion}
+
+                                          </span>
+
+
+                                          <span
+                                            className="
+            inline-flex
+            items-start
+            gap-2
+            rounded-2xl
+            bg-amber-50
+            border
+            border-amber-200
+            px-4
+            py-3
+            text-sm
+            text-slate-700
+            leading-6
+        "
+                                          >
+
+                                            <MapPinned
+                                              size={18}
+                                              className="text-amber-600 shrink-0 mt-0.5"
+                                            />
+
+                                            {rep.domicilioFiscal}
+
                                           </span>
 
                                         </div>
@@ -1692,88 +1944,122 @@ export default function AvisosFiscales() {
 
                                     </div>
 
+                                    {/*======================================================
+                        ACCIONES
+                    ======================================================*/}
+
+                                    <div className="flex flex-col justify-between items-end">
+
+                                      {/* Radio */}
+                                      <button
+
+                                        onClick={() =>
+
+                                          setRepresentanteSeleccionado(
+
+                                            seleccionado
+
+                                              ? null
+
+                                              : rep
+
+                                          )
+
+                                        }
+
+                                        className={`
+        inline-flex
+        items-center
+        gap-2
+        px-5
+        py-2.5
+        rounded-xl
+        font-semibold
+        transition-all
+        duration-200
+
+        ${seleccionado
+                                            ? "bg-emerald-600 text-white shadow-md hover:bg-emerald-700"
+                                            : "border border-slate-300 text-slate-700 hover:bg-sky-50 hover:border-sky-500"
+                                          }
+    `}
+
+                                      >
+
+                                        {seleccionado ? (
+
+                                          <>
+                                            <BadgeCheck size={18} />
+                                            Seleccionado
+                                          </>
+
+                                        ) : (
+
+                                          <>
+                                            <Check size={18} />
+                                            Seleccionar
+                                          </>
+
+                                        )}
+
+                                      </button>
+
+                                      {/* Botón */}
+
+                                      <button
+                                        className="
+                                mt-8
+                                inline-flex
+                                items-center
+                                gap-2
+                                rounded-xl
+                                border
+                                px-4
+                                py-2.5
+                                text-sm
+                                font-medium
+                                text-slate-700
+                                transition
+                                hover:bg-sky-50
+                                hover:border-sky-300
+                            "
+                                        onClick={() => {
+
+                                          setRepresentanteConsulta(rep);
+
+                                          setModalRepresentante(true);
+
+                                        }}
+                                      >
+
+                                        <Eye size={17} />
+
+                                        Ver información
+
+                                      </button>
+
+                                    </div>
+
                                   </div>
 
-                                );
-
-                              })}
-
-                            </div>
-                          </div>
-                        )}
-                        {representanteSeleccionado && (
-                          <div className="border rounded-xl bg-sky-50 p-6">
-
-                            <div className="flex justify-between items-center mb-5">
-
-                              <h4 className="font-semibold text-slate-800">
-                                Representante Legal Seleccionado
-                              </h4>
-
-                              <button
-                                type="button"
-                                onClick={() =>
-                                  setRepresentanteSeleccionado(null)
-                                }
-                                className="text-sky-700 font-medium hover:underline"
-                              >
-                                Cambiar representante
-                              </button>
-
-                            </div>
-
-                            <div className="grid md:grid-cols-3 gap-4">
-
-                              <div>
-                                <label className="text-xs text-slate-500">
-                                  RFC
-                                </label>
-                                <div className="font-medium">
-                                  {representanteSeleccionado.rfc}
                                 </div>
-                              </div>
 
-                              <div>
-                                <label className="text-xs text-slate-500">
-                                  Nombre
-                                </label>
-                                <div className="font-medium">
-                                  {representanteSeleccionado.nombre}
-                                </div>
-                              </div>
+                              );
 
-                              <div>
-                                <label className="text-xs text-slate-500">
-                                  Tipo de Representación
-                                </label>
-                                <div className="font-medium">
-                                  {representanteSeleccionado.tipo}
-                                </div>
-                              </div>
-
-                              <div>
-                                <label className="text-xs text-slate-500">
-                                  Correo
-                                </label>
-                                <div className="font-medium">
-                                  {representanteSeleccionado.correo}
-                                </div>
-                              </div>
-
-                              <div>
-                                <label className="text-xs text-slate-500">
-                                  Teléfono
-                                </label>
-                                <div className="font-medium">
-                                  {representanteSeleccionado.telefono}
-                                </div>
-                              </div>
-
-                            </div>
+                            })}
 
                           </div>
+                        </div>
+                        <ModalRepresentanteLegal
 
-                        )}
+                          abierto={modalRepresentante}
+
+                          representante={representanteConsulta}
+
+                          onClose={() => setModalRepresentante(false)}
+
+                        />
+
                       </div>
                     )}
 
@@ -1807,6 +2093,7 @@ export default function AvisosFiscales() {
               </div>
 
             </div>
+
             {/* BOTONES */}
             <BotonesNavegacion
               izquierda={[
@@ -2276,17 +2563,15 @@ export default function AvisosFiscales() {
             <div className="space-y-6">
 
               {/* Header */}
-              <div className="bg-white rounded-xl border shadow-sm p-6">
+              <HeaderModulo
 
-                <h1 className="text-2xl font-semibold text-slate-800">
-                  Cambio de Domicilio Fiscal
-                </h1>
+                titulo="Cambio de Domicilio Fiscal"
 
-                <p className="text-slate-500 mt-2">
-                  Consulte el domicilio fiscal actual y capture la nueva información.
-                </p>
+                descripcion="Actualice el domicilio fiscal registrado."
 
-              </div>
+                icono="MapPinned"
+
+              />
 
               <div className="grid xl:grid-cols-3 gap-6">
 
@@ -2722,7 +3007,17 @@ export default function AvisosFiscales() {
         {
           selectedRow === "Cambio de Representante Legal" && activeStep === 4 && (
             <div className="space-y-6">
+              <HeaderModulo
 
+                titulo="Cambio de Representante Legal"
+
+                descripcion="Actualice la información del representante legal registrado para el contribuyente conforme a la documentación presentada."
+
+                icono="UserRoundCog"
+
+                color="red"
+
+              />
               {/* REPRESENTANTES LEGALES ASOCIADOS */}
 
               <div className="bg-white rounded-xl border shadow-sm">
@@ -2925,567 +3220,17 @@ export default function AvisosFiscales() {
 
               </div>
 
-              {modalRepresentante && representanteSeleccionado && (
-                <div className="fixed inset-0 bg-black/40 backdrop-blur-sm flex items-center justify-center z-50 p-6">
 
-                  <div className="bg-white rounded-2xl shadow-2xl w-full max-w-6xl max-h-[90vh] overflow-hidden flex flex-col">
+              <ModalRepresentanteLegal
 
-                    {/* HEADER */}
+                abierto={modalRepresentante}
 
-                    <div className="bg-gradient-to-r from-sky-700 to-sky-600 px-8 py-6">
+                representante={representanteSeleccionado}
 
-                      <div className="flex justify-between items-center">
+                onClose={() => setModalRepresentante(false)}
 
-                        <div className="flex items-center gap-4">
+              />
 
-                          <div className="h-14 w-14 rounded-xl bg-white/20 flex items-center justify-center">
-
-                            <UserRound
-                              className="text-white"
-                              size={28}
-                            />
-
-                          </div>
-
-                          <div>
-
-                            <h2 className="text-2xl font-semibold text-white">
-                              Datos del Representante Legal
-                            </h2>
-
-                            <p className="text-sky-100 mt-1">
-                              Consulte la información registrada del representante legal.
-                            </p>
-
-                          </div>
-
-                        </div>
-
-                        <button
-                          onClick={() => setModalRepresentante(false)}
-                          className="text-white hover:bg-white/20 rounded-lg p-2 transition"
-                        >
-
-                          <X size={24} />
-
-                        </button>
-
-                      </div>
-
-                    </div>
-
-                    {/* BODY */}
-
-                    <div className="flex-1 overflow-y-auto p-8">
-
-                      <div className="bg-white border rounded-xl shadow-sm overflow-hidden">
-
-                        {/* ==========================
-                             DATOS DE IDENTIFICACIÓN
-                           =========================== */}
-
-                        {/* ==========================================
-    DATOS DE IDENTIFICACIÓN
-========================================== */}
-
-                        <div className="border-b">
-
-                          <div className="px-6 py-5 bg-slate-50">
-
-                            <div className="flex items-center gap-3">
-
-                              <div className="h-10 w-10 rounded-lg bg-sky-100 flex items-center justify-center">
-
-                                <UserRound
-                                  className="text-sky-700"
-                                  size={20}
-                                />
-
-                              </div>
-
-                              <div>
-
-                                <h3 className="font-semibold text-slate-800">
-                                  Datos de Identificación
-                                </h3>
-
-                                <p className="text-sm text-slate-500">
-                                  Información general registrada del representante legal.
-                                </p>
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <div className="p-6">
-
-                            <div className="grid md:grid-cols-2 gap-5">
-
-                              <CampoInput
-                                etiqueta="RFC"
-                                value={representanteSeleccionado.rfc}
-                                disabled
-                              />
-
-                              <CampoInput
-                                etiqueta="CURP"
-                                value={representanteSeleccionado.curp}
-                                disabled
-                              />
-
-                              <CampoInput
-                                etiqueta="Primer Apellido"
-                                value={representanteSeleccionado.apellidoPaterno}
-                                disabled
-                              />
-
-                              <CampoInput
-                                etiqueta="Segundo Apellido"
-                                value={representanteSeleccionado.apellidoMaterno}
-                                disabled
-                              />
-
-                              <div className="md:col-span-2">
-
-                                <CampoInput
-                                  etiqueta="Nombre(s)"
-                                  value={representanteSeleccionado.nombre}
-                                  disabled
-                                />
-
-                              </div>
-
-                              <CampoInput
-                                etiqueta="Fecha de Nacimiento"
-                                type="date"
-                                value={representanteSeleccionado.fechaNacimiento}
-                                disabled
-                              />
-
-                              <CampoInput
-                                etiqueta="Género"
-                                value={representanteSeleccionado.genero}
-                                disabled
-                              />
-
-                              <div className="md:col-span-2">
-
-                                <CampoInput
-                                  etiqueta="Correo Electrónico"
-                                  value={representanteSeleccionado.correoElectronico}
-                                  disabled
-                                />
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                        {/* Aquí continuará Documento Protocolizado */}
-
-                        {/* ===========================================================
-    DOCUMENTO PROTOCOLIZADO
-=========================================================== */}
-
-                        {/* ==========================================
-    DOCUMENTO PROTOCOLIZADO
-========================================== */}
-
-                        <div className="border-b">
-
-                          <div className="px-6 py-5 bg-slate-50">
-
-                            <div className="flex items-center gap-3">
-
-                              <div className="h-10 w-10 rounded-lg bg-violet-100 flex items-center justify-center">
-
-                                <ScrollText
-                                  className="text-violet-700"
-                                  size={20}
-                                />
-
-                              </div>
-
-                              <div>
-
-                                <h3 className="font-semibold text-slate-800">
-                                  Documento Protocolizado
-                                </h3>
-
-                                <p className="text-sm text-slate-500">
-                                  Información del documento que acredita la representación legal.
-                                </p>
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <div className="p-6">
-
-                            <div className="grid md:grid-cols-2 gap-5">
-
-                              <CampoSelect
-                                etiqueta="Tipo de Documento que lo acredita"
-                                value={representanteSeleccionado.tipoDocumento}
-                                opciones={[
-                                  {
-                                    value: "CARTA_PODER",
-                                    label: "Carta Poder con Ratificación de Firmas ante Notario",
-                                  },
-                                  {
-                                    value: "PODER_NOTARIAL",
-                                    label: "Poder Notarial del Apoderado Legal",
-                                  },
-                                ]}
-                                disabled
-                              />
-
-                              <CampoInput
-                                etiqueta="Fecha"
-                                type="date"
-                                value={representanteSeleccionado.fechaDocumento}
-                                disabled
-                              />
-
-                              {/* Carta Poder */}
-
-                              {representanteSeleccionado.tipoDocumento === "CARTA_PODER" && (
-
-                                <CampoInput
-                                  etiqueta="Número del Acta"
-                                  value={representanteSeleccionado.numeroActa}
-                                  disabled
-                                />
-
-                              )}
-
-                              {/* Poder Notarial */}
-
-                              {representanteSeleccionado.tipoDocumento === "PODER_NOTARIAL" && (
-
-                                <>
-
-                                  <CampoInput
-                                    etiqueta="Número de Instrumento o Escritura"
-                                    value={representanteSeleccionado.numeroInstrumento}
-                                    disabled
-                                  />
-
-                                  <CampoInput
-                                    etiqueta="Número de Fojas Útiles"
-                                    value={representanteSeleccionado.numeroFojas}
-                                    disabled
-                                  />
-
-                                </>
-
-                              )}
-
-                              <div className="md:col-span-2">
-
-                                <DocumentoConsulta
-
-                                  etiqueta="Documento Protocolizado"
-
-                                  nombreArchivo={representanteSeleccionado.documento}
-
-                                  descripcion="Documento mediante el cual se acredita la representación legal."
-
-                                  onVer={() => {
-
-                                    console.log("Abrir documento");
-
-                                  }}
-
-                                />
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                        {/* Aquí continuará Domicilio Fiscal */}
-
-                        {/*DOMICILIO FISCAL*/}
-                        <div>
-
-
-                          <div  >
-
-                            <div className="px-6 py-5 bg-slate-50 flex items-center gap-3 ">
-                              <div className="h-10 w-10 rounded-lg bg-emerald-100 flex items-center justify-center">
-
-                                <Home
-                                  className="text-emerald-700"
-                                  size={20}
-                                />
-
-                              </div>
-                              <div>
-                                <h3 className="font-semibold text-slate-800">
-                                  Datos Generales del Domicilio
-                                </h3>
-
-                                <p className="text-sm text-slate-500 mt-1">
-                                  Información general del domicilio fiscal registrado.
-                                </p>
-                              </div>
-                            </div>
-
-                            <div className="p-6">
-                              <div className="grid md:grid-cols-2 gap-5 mb-6">
-
-                                <CampoInput
-                                  etiqueta="Código Postal"
-                                  value={representanteSeleccionado.codigoPostal}
-                                  disabled
-                                />
-
-                              </div>
-                              <div className="grid md:grid-cols-2 gap-5">
-                                <CampoInput
-                                  etiqueta="Tipo de Ámbito"
-                                  value={representanteSeleccionado.ambito}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Región"
-                                  value={representanteSeleccionado.region}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Distrito"
-                                  value={representanteSeleccionado.distrito}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Municipio / Delegación"
-                                  value={representanteSeleccionado.municipio}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Localidad"
-                                  value={representanteSeleccionado.localidad}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Tipo de Asentamiento"
-                                  value={representanteSeleccionado.tipoAsentamiento}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Nombre del Asentamiento"
-                                  value={representanteSeleccionado.nombreAsentamiento}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Tipo de Inmueble"
-                                  value={representanteSeleccionado.tipoInmueble}
-                                  disabled
-                                />
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <div >
-
-                            <div className="px-6 py-5 bg-slate-50">
-
-                              <h3 className="font-semibold text-slate-800">
-                                Ubicación del Domicilio
-                              </h3>
-
-                              <p className="text-sm text-slate-500 mt-1">
-                                Información de ubicación conforme al tipo de ámbito.
-                              </p>
-
-                            </div>
-
-                            <div className="p-6">
-
-                              <div className="grid md:grid-cols-2 gap-5">
-
-                                {representanteSeleccionado.ambito === "URBANO" ? (
-
-                                  <>
-
-                                    <CampoInput
-                                      etiqueta="Tipo de Vialidad"
-                                      value={representanteSeleccionado.tipoVialidad}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Nombre de Vialidad"
-                                      value={representanteSeleccionado.nombreVialidad}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Número Exterior y/o Letra"
-                                      value={representanteSeleccionado.numeroExterior}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Número Interior y/o Letra"
-                                      value={representanteSeleccionado.numeroInterior}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Entre Vialidad"
-                                      value={representanteSeleccionado.entreVialidad}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Y Vialidad"
-                                      value={representanteSeleccionado.yVialidad}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Ubicación del Inmueble dentro de la Manzana"
-                                      value={representanteSeleccionado.ubicacionManzana}
-                                      disabled
-                                    />
-
-                                  </>
-
-                                ) : (
-
-                                  <>
-
-                                    <CampoInput
-                                      etiqueta="Tipo de Vía de Comunicación"
-                                      value={representanteSeleccionado.tipoVia}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Nombre de Vía de Comunicación"
-                                      value={representanteSeleccionado.nombreVia}
-                                      disabled
-                                    />
-
-                                    <CampoInput
-                                      etiqueta="Tramo"
-                                      value={representanteSeleccionado.tramo}
-                                      disabled
-                                    />
-
-                                  </>
-
-                                )}
-
-                              </div>
-
-                            </div>
-
-                          </div>
-
-                          <div >
-
-                            <div className="px-6 py-5 bg-slate-50">
-
-                              <h3 className="font-semibold text-slate-800">
-                                Información Complementaria
-                              </h3>
-
-                            </div>
-
-                            <div className="p-6">
-
-                              <div className="grid gap-5">
-
-                                <CampoInput
-                                  etiqueta="Características del Domicilio"
-                                  value={representanteSeleccionado.caracteristicas}
-                                  disabled
-                                />
-
-                                <CampoInput
-                                  etiqueta="Referencias Adicionales"
-                                  value={representanteSeleccionado.referencias}
-                                  disabled
-                                />
-
-                              </div>
-
-                            </div>
-
-                          </div>
-                        </div>
-
-
-                        <div>
-
-                          <div className="px-6 py-5 bg-slate-50">
-
-                            <h3 className="font-semibold text-slate-800">
-                              Geolocalización
-                            </h3>
-
-                            <p className="text-sm text-slate-500">
-                              Ubicación registrada del domicilio fiscal.
-                            </p>
-
-                          </div>
-
-                          <div className="p-6">
-
-                            <div className="h-72 rounded-xl border bg-slate-100 flex items-center justify-center">
-
-                              Google Maps
-
-                            </div>
-
-                          </div>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    {/* FOOTER */}
-
-                    <div className="border-t bg-slate-50 px-8 py-5 flex justify-end">
-
-                      <button
-                        onClick={() => setModalRepresentante(false)}
-                        className="px-5 py-2.5 rounded-lg bg-slate-800 hover:bg-slate-900 text-white transition"
-                      >
-                        Cerrar
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-              )}
 
               {modalConfirmacion && representantePendiente && (
 
@@ -3765,24 +3510,7 @@ export default function AvisosFiscales() {
               </div>
 
 
-              {/* FOOTER */}
-              <div className="flex justify-between">
-
-                <button
-                  type="button"
-                  className="px-6 py-3 border rounded-lg"
-                >
-                  Regresar
-                </button>
-
-                <button
-                  type="button"
-                  className="px-6 py-3 bg-sky-700 text-white rounded-lg"
-                >
-                  Continuar
-                </button>
-
-              </div>
+        
 
             </div>
           )
@@ -3795,35 +3523,13 @@ export default function AvisosFiscales() {
 
               {tipoPersona === "fisica" && (
                 <div className="flex flex-col gap-4">
+                  <HeaderModulo
+                    titulo="Cambio de Nombre"
+                    descripcion="Actualice el nombre registrado del contribuyente conforme a la documentación presentada."
+                    icono="UserRoundPen"
+                    color="blue"
+                  />
                   <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-
-                    {/* Header */}
-
-                    <div className="border-b px-6 py-5 bg-slate-50">
-
-                      <div className="flex items-center gap-3">
-
-                        <div className="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-
-                          <UserRound className="text-sky-700" size={24} />
-
-                        </div>
-
-                        <div>
-
-                          <h3 className="text-lg font-semibold text-slate-800">
-                            Datos del Nuevo Nombre
-                          </h3>
-
-                          <p className="text-sm text-slate-500">
-                            Capture la nueva información del contribuyente.
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                    </div>
 
                     {/* Body */}
 
@@ -4037,38 +3743,17 @@ export default function AvisosFiscales() {
               {tipoPersona === "moral" && (
 
                 <div className="flex flex-col gap-5">
+                  <HeaderModulo
+                    titulo="Cambio de Denominación o Razón Social"
+                    descripcion="Actualice la denominación o razón social registrada de la persona moral conforme a la documentación presentada."
+                    icono="UserRoundPen"
+                    color="blue"
+                  />
                   <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
 
                     {/* Header */}
 
-                    <div className="border-b bg-slate-50 px-6 py-5">
 
-                      <div className="flex items-center gap-4">
-
-                        <div className="w-14 h-14 rounded-xl bg-indigo-100 flex items-center justify-center">
-
-                          <Building2
-                            className="text-indigo-700"
-                            size={28}
-                          />
-
-                        </div>
-
-                        <div>
-
-                          <h3 className="text-lg font-semibold text-slate-800">
-                            Nueva Denominación o Razón Social
-                          </h3>
-
-                          <p className="text-sm text-slate-500 mt-1">
-                            Capture la nueva información del contribuyente
-                          </p>
-
-                        </div>
-
-                      </div>
-
-                    </div>
 
                     {/* Body */}
 
@@ -4171,54 +3856,44 @@ export default function AvisosFiscales() {
         {/*suspensión de actividades*/}
         {selectedRow === "Suspensión de Actividades" && activeStep === 4 && (
 
-          <div className="bg-white rounded-xl border shadow-sm">
+          <div >
+            <HeaderModulo
 
-            <div className="border-b px-6 py-5">
+              titulo="Suspensión de Actividades"
 
-              <h3 className="text-xl font-semibold text-slate-800">
-                Aviso de Suspensión de Actividades
-              </h3>
+              descripcion="Registre la suspensión de actividades del contribuyente y actualice su situación fiscal conforme a la información proporcionada."
 
-              {/* <p className="text-slate-500 mt-2">
-                Consulte el historial de cumplimiento de las obligaciones fiscales asociadas al contribuyente.
-              </p> */}
+              icono="PauseCircle"
 
-              <div className="space-y-5 mt-4">
+              color="amber"
 
-                {/* ALERTA */}
-                <div className="border border-amber-300 bg-amber-50 rounded-xl p-5">
+            />
+            <div className="">
 
-                  <div className="font-semibold text-amber-800 mb-2">
-                    Declaraciones Pendientes
-                  </div>
+              <div className="mt-4">
 
-                  <p className="text-amber-700 text-sm">
-                    El aviso de suspensión de actividades no lo exime de las obligaciones pendientes
-                  </p>
-
-                </div>
                 {/* RESUMEN */}
 
                 <div className="grid md:grid-cols-2 gap-4">
 
-                  <div className="bg-slate-50 border rounded-xl p-4">
+                  {/* <div className="bg-slate-50 border rounded-xl p-4">
                     <div className="text-2xl font-bold text-slate-800">
                       3
                     </div>
                     <div className="text-sm text-slate-500">
                       Obligaciones Activas
                     </div>
-                  </div>
+                  </div> */}
 
 
-                  <div className="bg-red-50 border rounded-xl p-4">
+                  {/* <div className="bg-red-50 border rounded-xl p-4">
                     <div className="text-2xl font-bold text-red-600">
                       2
                     </div>
                     <div className="text-sm text-slate-500">
                       Declaraciones Pendientes
                     </div>
-                  </div>
+                  </div> */}
 
                 </div>
 
@@ -4475,38 +4150,17 @@ export default function AvisosFiscales() {
 
                 </div>
 
-
                 {mostrarFormularioDomicilio && (
                   <DomicilioFiscal
                     onGuardar={() => { }}
                     onCancelar={() => { }}
-                    className="border border-gray-300 shadow-sm"
+                    className="border shadow-sm"
                     titulo="Datos generales del domicilio"
                     descripcion="Capture o verifique la información general correspondiente al domicilio fiscal"
                   />
                 )}
 
               </div>
-            </div>
-
-            <div className="border-t px-6 py-4 flex justify-between">
-
-              <button
-                type="button"
-                onClick={() => setActiveStep(3)}
-                className="px-5 py-2 border rounded-lg"
-              >
-                Cancelar
-              </button>
-
-              <button
-                type="button"
-                onClick={() => setActiveStep(5)}
-                className="px-6 py-2 bg-sky-700 text-white rounded-lg"
-              >
-                Continuar
-              </button>
-
             </div>
           </div>
         )
@@ -4517,8 +4171,18 @@ export default function AvisosFiscales() {
           selectedRow === "Reanudación de Actividades" &&
           activeStep === 4 && (
             <div>
+              <HeaderModulo
 
-              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
+                titulo="Reanudación de Actividades"
+
+                descripcion="Registre la reanudación de actividades del contribuyente y actualice la información fiscal correspondiente."
+
+                icono="PlayCircle"
+
+                color="emerald"
+
+              />
+              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6 mt-6">
 
                 <h3 className="text-lg font-semibold text-slate-800 mb-5">
                   Selección de obligaciones y actividades económicas
@@ -4945,7 +4609,17 @@ export default function AvisosFiscales() {
           activeStep === 4 && (
 
             <div className="space-y-6">
+              <HeaderModulo
 
+                titulo="Apertura de Establecimientos o Locales"
+
+                descripcion="Registre la apertura de establecimientos o locales vinculados al contribuyente conforme a la información proporcionada."
+
+                icono="Store"
+
+                color="emerald"
+
+              />
               {/* OBLIGACION */}
 
               <div className="bg-white rounded-xl border shadow-sm">
@@ -5162,26 +4836,6 @@ export default function AvisosFiscales() {
 
                   </div>
 
-                  {/* FOOTER */}
-
-                  <div className="border-t px-6 py-4 flex justify-between">
-
-                    <button
-                      type="button"
-                      className="px-5 py-2 border rounded-lg"
-                    >
-                      Cancelar
-                    </button>
-
-                    <button
-                      type="button"
-                      className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg"
-                    >
-                      Guardar Establecimiento
-                    </button>
-
-                  </div>
-
                 </div>
 
               )}
@@ -5196,7 +4850,18 @@ export default function AvisosFiscales() {
           selectedRow === "Cierre de Establecimientos o Locales" &&
           activeStep === 4 && (
             <div>
-              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
+              <HeaderModulo
+
+                titulo="Cierre de Establecimientos o Locales"
+
+                descripcion="Registre el cierre de establecimientos o locales vinculados al contribuyente conforme a la información proporcionada."
+
+                icono="Store"
+
+                color="red"
+
+              />
+              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6 mt-5">
 
                 <h3 className="text-lg font-semibold text-slate-800 mb-2">
                   Selección de Obligación Fiscal
@@ -5421,27 +5086,6 @@ export default function AvisosFiscales() {
                   </div>
 
                 )}
-
-              <div className="border-t mt-6 px-6 py-4 flex justify-between">
-
-                <button
-                  type="button"
-                  onClick={() => setActiveStep(3)}
-                  className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-                >
-                  Regresar
-                </button>
-
-                <button
-                  type="button"
-                  disabled={!establecimientoSeleccionado}
-                  onClick={() => setOpenConfirmacion(true)}
-                  className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg disabled:bg-slate-400"
-                >
-                  Continuar
-                </button>
-
-              </div>
             </div>
           )
         }
@@ -5450,8 +5094,19 @@ export default function AvisosFiscales() {
         {
           selectedRow === "Cancelación en el Registro Estatal de Contribuyentes" &&
           activeStep === 4 && (
-            <div className="bg-white p-4 rounded rounded-md border">
-              <div className="bg-white rounded-xl border border-slate-300 shadow-sm mb-6">
+            <div className="">
+              <HeaderModulo
+
+                titulo="Cancelación en el Registro Estatal de Contribuyentes"
+
+                descripcion="Registre la cancelación de la inscripción del contribuyente en el Registro Estatal de Contribuyentes conforme a la información y documentación presentada."
+
+                icono="UserRoundX"
+
+                color="red"
+
+              />
+              <div className="bg-white rounded-xl border border-slate-300 shadow-sm my-4">
                 <button
                   type="button"
                   onClick={() => setMostrarObligaciones(!mostrarObligaciones)}
@@ -5489,29 +5144,6 @@ export default function AvisosFiscales() {
 
                       </div>
 
-                      {/* RESUMEN */}
-                      <div className="grid md:grid-cols-2 gap-4">
-
-                        <div className="bg-slate-50 border rounded-xl p-4">
-                          <div className="text-2xl font-bold text-slate-800">
-                            3
-                          </div>
-                          <div className="text-sm text-slate-500">
-                            Obligaciones Activas
-                          </div>
-                        </div>
-
-
-                        <div className="bg-red-50 border rounded-xl p-4">
-                          <div className="text-2xl font-bold text-red-600">
-                            2
-                          </div>
-                          <div className="text-sm text-slate-500">
-                            Declaraciones Pendientes
-                          </div>
-                        </div>
-
-                      </div>
 
                       {/* OBLIGACIONES */}
                       <div className="rounded-2xl border border-gray-300 shadow-sm">
@@ -6269,26 +5901,7 @@ export default function AvisosFiscales() {
                   </div>
                 </div>
               )}
-              <div className="border-t mt-6 px-6 py-4 flex justify-between">
 
-                <button
-                  type="button"
-                  onClick={() => setActiveStep(3)}
-                  className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
-                >
-                  Regresar
-                </button>
-
-                <button
-                  type="button"
-                  disabled={!establecimientoSeleccionado}
-                  onClick={() => setOpenConfirmacion(true)}
-                  className="px-6 py-2 bg-sky-700 hover:bg-sky-800 text-white rounded-lg disabled:bg-slate-400"
-                >
-                  Continuar
-                </button>
-
-              </div>
             </div>
 
           )

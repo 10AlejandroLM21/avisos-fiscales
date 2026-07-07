@@ -4,6 +4,7 @@ import CampoSelect from "../components/CampoSelect";
 import ModalFormulario from "../components/ModalFormulario";
 import DomicilioFiscal from "../components/DomicilioFiscal";
 import IdentificacionContribuyente from "../components/IdentificacionContribuyente";
+import HeaderModulo from "../components/HeaderModulo";
 import {
     Search,
     Users,
@@ -65,12 +66,12 @@ export default function AumentoObligaciones() {
         { value: "erogaciones", label: "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" }
     ];
 
-    const opcionesActividades = 
+    const opcionesActividades =
         [
-        { value: "", label: "Seleccione..." },
-        { value: "comercio", label: "Comercio" },
-        { value: "servicios", label: "Servicios Profesionales" },
-        { value: "manufactura", label: "Manufactura" }
+            { value: "", label: "Seleccione..." },
+            { value: "comercio", label: "Comercio" },
+            { value: "servicios", label: "Servicios Profesionales" },
+            { value: "manufactura", label: "Manufactura" }
         ];
 
 
@@ -276,26 +277,17 @@ export default function AumentoObligaciones() {
                             HEADER
       =======================================================*/}
 
-            <div className="bg-white rounded-xl border shadow-sm">
+            <HeaderModulo
 
-                <div className="px-6 py-5 border-b">
+                titulo="Aumento de Obligaciones"
 
-                    <h2 className="text-2xl font-semibold text-slate-800">
+                descripcion="Seleccione y registre las obligaciones fiscales que serán incorporadas al contribuyente conforme a la información proporcionada."
 
-                        Aumento de Obligaciones
+                icono="PlusCircle"
 
-                    </h2>
+                color="emerald"
 
-                    <p className="text-sm text-slate-500 mt-1">
-
-                        Seleccione las obligaciones fiscales y actividades
-                        económicas que serán incorporadas al contribuyente.
-
-                    </p>
-
-                </div>
-
-            </div>
+            />
 
             {/*======================================================
                   OBLIGACIONES DEL CONTRIBUYENTE
@@ -622,8 +614,8 @@ export default function AumentoObligaciones() {
                                     const value = e.target.value;
                                     const opcion = opcionesObligaciones.find(op => op.value === value).label;
 
-                                    console.log(value);       
-                                    console.log(opcion.label);   
+                                    console.log(value);
+                                    console.log(opcion.label);
 
                                     setObligacionSeleccionada(opcion);
                                 }}
@@ -751,7 +743,7 @@ export default function AumentoObligaciones() {
 
                                 }}
                                 opciones={opcionesActividades}
-                                
+
                             >
 
                             </CampoSelect>
@@ -1448,33 +1440,7 @@ export default function AumentoObligaciones() {
                 />
 
             </ModalFormulario>
-            <div className="bg-white rounded-xl border shadow-sm">
 
-                <div className="px-6 py-5 flex justify-between">
-
-                    <button
-
-                        className="px-6 py-3 rounded-lg border hover:bg-slate-50"
-
-                    >
-
-                        Regresar
-
-                    </button>
-
-                    <button
-
-                        className="px-6 py-3 rounded-lg bg-sky-700 hover:bg-sky-800 text-white"
-
-                    >
-
-                        Siguiente
-
-                    </button>
-
-                </div>
-
-            </div>
         </div>
 
     );
