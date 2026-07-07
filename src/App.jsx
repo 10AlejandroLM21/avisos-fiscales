@@ -20,6 +20,7 @@ import BotonesNavegacion from "./components/BotonesNavegacion";
 import HeaderModulo from "./components/HeaderModulo";
 import CarouselTarjetas from "./components/CarouselTarjetas";
 import ModalRepresentanteLegal from "./components/ModalRepresentanteLegal";
+import ModalAccionAviso from "./components/ModalAccionAviso";
 import {
   Search,
   Users,
@@ -66,7 +67,7 @@ export default function AvisosFiscales() {
   const [representanteConsulta, setRepresentanteConsulta] = useState(null); // Para el modal
   const [representanteSeleccionado, setRepresentanteSeleccionado] =
     useState(null);
-
+  const [modalAviso, setModalAviso] = useState(false);
   const [avisoPrev, setAvisoPrev] = useState("");
   const [modalRepresentante, setModalRepresentante] = useState(false);
   const [representacion, setRepresentacion] = useState("");
@@ -159,6 +160,90 @@ export default function AvisosFiscales() {
     setEstablecimientoDetalle
   ] = useState(null);
 
+  const obtenerConfiguracionAviso = () => {
+
+    switch (selectedRow) {
+
+      case "Cambio de Domicilio Fiscal":
+        return {
+          titulo: "Confirmar Cambio de Domicilio Fiscal",
+          descripcion: "Se generará el aviso de cambio de domicilio fiscal. Verifique que la información capturada sea correcta antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Cambio de Nombre, Denominación o Razón Social":
+        return {
+          titulo: "Confirmar Cambio de Nombre, Denominación o Razón Social",
+          descripcion: "Se generará el aviso para actualizar el nombre, denominación o razón social del contribuyente. Revise cuidadosamente la información antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Cambio de Representante Legal":
+        return {
+          titulo: "Confirmar Cambio de Representante Legal",
+          descripcion: "Se generará el aviso para actualizar el representante legal del contribuyente. Verifique que el representante seleccionado sea el correcto.",
+          boton: "Generar Aviso"
+        };
+
+      case "Aumento de Obligaciones":
+        return {
+          titulo: "Confirmar Aumento de Obligaciones",
+          descripcion: "Se generará el aviso de aumento de obligaciones fiscales. Confirme que las obligaciones seleccionadas sean las que desea registrar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Reanudación de Actividades":
+        return {
+          titulo: "Confirmar Reanudación de Actividades",
+          descripcion: "Se generará el aviso de reanudación de actividades del contribuyente. Verifique la información antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Disminucion de Obligaciones":
+        return {
+          titulo: "Confirmar Disminución de Obligaciones",
+          descripcion: "Se generará el aviso de disminución de obligaciones fiscales. Revise las obligaciones seleccionadas antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Suspensión de Actividades":
+        return {
+          titulo: "Confirmar Suspensión de Actividades",
+          descripcion: "Se generará el aviso de suspensión de actividades. Una vez generado el aviso, el trámite continuará con la digitalización de documentos.",
+          boton: "Generar Aviso"
+        };
+
+      case "Apertura de Establecimientos o Locales":
+        return {
+          titulo: "Confirmar Apertura de Establecimiento o Local",
+          descripcion: "Se generará el aviso de apertura del establecimiento o local registrado. Verifique los datos antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      case "Cierre de Establecimientos o Locales":
+        return {
+          titulo: "Confirmar Cierre de Establecimiento o Local",
+          descripcion: "Se generará el aviso de cierre del establecimiento o local seleccionado. Confirme que la información sea correcta.",
+          boton: "Generar Aviso"
+        };
+
+      case "Cancelación en el Registro Estatal de Contribuyentes":
+        return {
+          titulo: "Confirmar Cancelación en el Registro Estatal de Contribuyentes",
+          descripcion: "Se generará el aviso de cancelación en el Registro Estatal de Contribuyentes. Esta acción deberá revisarse cuidadosamente antes de continuar.",
+          boton: "Generar Aviso"
+        };
+
+      default:
+        return {
+          titulo: "Confirmar Aviso",
+          descripcion: "Verifique la información capturada antes de generar el aviso.",
+          boton: "Generar Aviso"
+        };
+
+    }
+
+  };
   // Modal de confirmación de cierre
   const [openConfirmacion, setOpenConfirmacion] =
     useState(false);
@@ -638,7 +723,8 @@ export default function AvisosFiscales() {
         className: "bg-blue-600 text-white hover:bg-blue-700",
         onClick: () => {
           setVistaPrevia(false);
-          setActiveStep(5);
+          setModalAviso(true);
+          // setActiveStep(5);
         }
       };
     }
@@ -650,13 +736,14 @@ export default function AvisosFiscales() {
         icono: "CheckCircle2",
         className: "bg-emerald-600 text-white hover:bg-emerald-700",
         onClick: () => {
-          // TODO: Finalizar trámite
+          setModalAviso(true);
         }
       };
     }
 
     return null;
   };
+  const configAviso = obtenerConfiguracionAviso();
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
 
@@ -6004,6 +6091,24 @@ export default function AvisosFiscales() {
           />
 
         )}
+        <ModalAccionAviso
+
+          abierto={modalAviso}
+
+          onClose={() => setModalAviso(false)}
+
+          titulo={configAviso.titulo}
+
+          descripcion={configAviso.descripcion}
+
+          textoBoton={configAviso.boton}
+          onAceptar={() => {
+            setActiveStep(5);
+            setModalAviso(false);
+
+          }}
+
+        />
       </main >
 
       {/* FOOTER */}
