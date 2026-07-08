@@ -96,7 +96,7 @@ export default function ModalAccionAviso({
 
                     >
 
-                        Cancelar
+                        Regresar
 
                     </button>
 

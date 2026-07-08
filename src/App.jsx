@@ -702,48 +702,87 @@ export default function AvisosFiscales() {
   };
   const obtenerBotonDerecha = () => {
 
-    // Paso 4 - Generar aviso
-    if (activeStep === 4 && !vistaPrevia) {
-      return {
-        etiqueta: obtenerEtiquetaBoton(),
-        icono: "FileCheck2",
-        className: "bg-blue-600 text-white hover:bg-blue-700",
-        disabled: !selectedRow,
-        onClick: () => {
-          setVistaPrevia(true);
+    // Paso 4
+    if (activeStep === 4) {
+
+      return [
+        {
+          etiqueta: obtenerEtiquetaBoton(),
+          icono: "FileCheck2",
+          className: "bg-blue-600 text-white hover:bg-blue-700",
+          disabled: !selectedRow,
+          onClick: () => {
+            setModalAviso(true);
+          }
         }
-      };
+      ];
+
     }
 
-    // Paso 4 - Vista previa
-    if (activeStep === 4 && vistaPrevia) {
-      return {
-        etiqueta: "Siguiente",
-        icono: "ArrowRight",
-        className: "bg-blue-600 text-white hover:bg-blue-700",
-        onClick: () => {
-          setVistaPrevia(false);
-          setModalAviso(true);
-          // setActiveStep(5);
-        }
-      };
+    // Paso 5 - Vista previa
+    if (activeStep === 5 && vistaPrevia) {
+
+      return [];
+
     }
 
     // Paso 5 - Digitalización
-    if (activeStep === 5) {
-      return {
-        etiqueta: "Finalizar Aviso",
-        icono: "CheckCircle2",
-        className: "bg-emerald-600 text-white hover:bg-emerald-700",
-        onClick: () => {
-          setModalAviso(true);
+    if (activeStep === 5 && !vistaPrevia) {
+
+      return [
+        {
+          etiqueta: "Finalizar Aviso",
+          icono: "CheckCircle2",
+          className: "bg-emerald-600 text-white hover:bg-emerald-700",
+          disabled: !selectedRow,
+          onClick: () => {
+            // Finalizar trámite
+          }
         }
-      };
+      ];
+
     }
 
-    return null;
+    return [];
+
   };
   const configAviso = obtenerConfiguracionAviso();
+  let botonesIzquierda = [];
+
+  if (activeStep === 5 && vistaPrevia) {
+
+    botonesIzquierda = []
+  } else if (activeStep === 5 && !vistaPrevia) {
+
+    botonesIzquierda = [
+
+      {
+        etiqueta: "Regresar",
+        icono: "ArrowLeft",
+        className: "bg-slate-600 text-white hover:bg-slate-700",
+        onClick: () => {
+          setVistaPrevia(true);
+        }
+      }
+
+    ];
+
+  } else if (activeStep === 4) {
+
+    botonesIzquierda = [
+
+      {
+        etiqueta: "Regresar",
+        icono: "ArrowLeft",
+        className: "bg-slate-600 text-white hover:bg-slate-700",
+        onClick: () => {
+          setActiveStep(3);
+        }
+      }
+
+    ];
+
+  }
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
 
@@ -1871,7 +1910,7 @@ export default function AvisosFiscales() {
                             <div>
 
                               <h3 className="font-semibold text-slate-800">
-                                Tercera Persona
+                                Representante Legal
                               </h3>
 
                               <p className="text-sm text-slate-500 mt-1">
@@ -2471,7 +2510,7 @@ export default function AvisosFiscales() {
 
 
         {
-          activeStep === 4 && vistaPrevia && (
+          activeStep === 5 && vistaPrevia && (
             <div className="space-y-6">
 
 
@@ -2599,6 +2638,10 @@ export default function AvisosFiscales() {
 
                   <button
                     className="rounded-xl border hover:border-sky-300 hover:bg-sky-50 transition p-6 text-left"
+                    onClick={() => {
+                      setActiveStep(4);
+                      setVistaPrevia(false);
+                    } }
                   >
 
                     <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center mb-4">
@@ -2680,6 +2723,36 @@ export default function AvisosFiscales() {
 
                   </button>
 
+                  <button
+                    className="rounded-xl border hover:border-emerald-300 hover:bg-emerald-50 transition p-6 text-left"
+                    onClick={() => {
+                      setVistaPrevia(false);
+                    } }
+                  >
+
+                    <div className="h-12 w-12 rounded-xl bg-emerald-100 flex items-center justify-center mb-4">
+
+                      <CheckCircle2
+                        size={22}
+                        className="text-emerald-700"
+                      />
+
+                    </div>
+
+                    <h4 className="font-semibold text-slate-800">
+
+                      Confirmar Aviso
+
+                    </h4>
+
+                    <p className="text-sm text-slate-500 mt-2">
+
+                      Confirma la información capturada y continúa con el proceso del aviso fiscal.
+
+                    </p>
+
+                  </button>
+
                 </div>
 
               </div>
@@ -2690,14 +2763,14 @@ export default function AvisosFiscales() {
           )
         }
 
-        {activeStep === 5 && (
+        {activeStep === 5 && !vistaPrevia && (
           <Digitalizacion></Digitalizacion>
         )
         }
 
         {/*Cambio de domicilio fiscal */}
         {
-          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && !vistaPrevia && (
+          selectedRow === "Cambio de Domicilio Fiscal" && activeStep === 4 && (
             <div className="space-y-6">
 
               {/* Header */}
@@ -3143,7 +3216,7 @@ export default function AvisosFiscales() {
 
         {/*Cambio de representante legal*/}
         {
-          selectedRow === "Cambio de Representante Legal" && activeStep === 4 && !vistaPrevia && (
+          selectedRow === "Cambio de Representante Legal" && activeStep === 4 && (
             <div className="space-y-6">
               <HeaderModulo
 
@@ -3656,7 +3729,7 @@ export default function AvisosFiscales() {
         {/* Cambio de Nombre, Denominación o Razón Social */}
 
         {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <div>
 
               {tipoPersona === "fisica" && (
@@ -3992,7 +4065,7 @@ export default function AvisosFiscales() {
           )}
 
         {/*suspensión de actividades*/}
-        {selectedRow === "Suspensión de Actividades" && activeStep === 4 && !vistaPrevia && (
+        {selectedRow === "Suspensión de Actividades" && activeStep === 4 && (
 
           <div >
             <HeaderModulo
@@ -4307,7 +4380,7 @@ export default function AvisosFiscales() {
         {/*Reanudación de actividades*/}
         {
           selectedRow === "Reanudación de Actividades" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <div>
               <HeaderModulo
 
@@ -4744,7 +4817,7 @@ export default function AvisosFiscales() {
         {/*Apertura de Establecimientos o Locales*/}
         {
           selectedRow === "Apertura de Establecimientos o Locales" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
 
             <div className="space-y-6">
               <HeaderModulo
@@ -4986,7 +5059,7 @@ export default function AvisosFiscales() {
         {/*Cierre de Establecimientos o Locales*/}
         {
           selectedRow === "Cierre de Establecimientos o Locales" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <div>
               <HeaderModulo
 
@@ -5231,7 +5304,7 @@ export default function AvisosFiscales() {
         {/*Cancelación del REC*/}
         {
           selectedRow === "Cancelación en el Registro Estatal de Contribuyentes" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <div className="">
               <HeaderModulo
 
@@ -6047,50 +6120,25 @@ export default function AvisosFiscales() {
         {/*Aumento de obligaciones*/}
         {
           selectedRow === "Aumento de Obligaciones" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <AumentoObligaciones />
           )}
         {/*Disminución de obligaciones*/}
         {
           selectedRow === "Disminucion de Obligaciones" &&
-          activeStep === 4 && !vistaPrevia && (
+          activeStep === 4 && (
             <DisminucionDeObligaciones />
           )}
-        {selectedRow && (activeStep === 4 || activeStep === 5) && (
+        {selectedRow &&
+          !(activeStep === 5 && vistaPrevia) &&
+          (activeStep === 4 || activeStep === 5) && (
 
-          <BotonesNavegacion
+            <BotonesNavegacion
+              izquierda={botonesIzquierda}
+              derecha={obtenerBotonDerecha()}
+            />
 
-            izquierda={[
-              {
-                etiqueta: "Regresar",
-                icono: "ArrowLeft",
-                className: "bg-slate-600 text-white hover:bg-slate-700",
-                onClick: () => {
-
-                  if (activeStep === 5) {
-                    setActiveStep(4);
-                    setVistaPrevia(false);
-                    return;
-                  }
-                  if (activeStep === 4) {
-                    setActiveStep(3);
-                    return;
-                  }
-                  if (vistaPrevia) {
-                    setVistaPrevia(false);
-                  }
-
-                }
-              }
-            ]}
-
-            derecha={[
-              obtenerBotonDerecha()
-            ]}
-
-          />
-
-        )}
+          )}
         <ModalAccionAviso
 
           abierto={modalAviso}
@@ -6105,7 +6153,7 @@ export default function AvisosFiscales() {
           onAceptar={() => {
             setActiveStep(5);
             setModalAviso(false);
-
+            setVistaPrevia(true);
           }}
 
         />

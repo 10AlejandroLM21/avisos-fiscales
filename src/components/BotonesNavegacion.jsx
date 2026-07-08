@@ -1,24 +1,4 @@
-import {
-    ArrowLeft,
-    ArrowRight,
-    CheckCircle2,
-    Eye,
-    Pencil,
-    X,
-    Search,
-    FileCheck2
-} from "lucide-react";
-
-const iconos = {
-    ArrowLeft,
-    ArrowRight,
-    CheckCircle2,
-    Eye,
-    Pencil,
-    X,
-    Search,
-    FileCheck2
-};
+import * as Icons from "lucide-react";
 
 export default function BotonesNavegacion({
 
@@ -29,7 +9,9 @@ export default function BotonesNavegacion({
 
     const renderBoton = (boton, index) => {
 
-        const Icono = iconos[boton.icono];
+        const Icono = boton.icono
+            ? Icons[boton.icono]
+            : null;
 
         return (
 
