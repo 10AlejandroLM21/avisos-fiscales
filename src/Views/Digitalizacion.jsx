@@ -10,7 +10,10 @@ import {
     Eye,
     File,
     ArrowRight,
-    ArrowLeft
+    ArrowLeft,
+    ChevronLeft,
+    ChevronRight,
+    Download
 } from "lucide-react";
 
 import { useMemo, useState } from "react";
@@ -137,7 +140,39 @@ export default function Digitalizacion() {
         };
 
     };
+    const [documentosGenerados, setDocumentosGenerados] = useState([
+        { id: 1, siglas: "AF-01", nombre: "Solicitud de Aviso", consultado: false },
+        { id: 2, siglas: "AF-02", nombre: "Formato para Firma", consultado: false },
+        { id: 3, siglas: "AF-03", nombre: "Acuse de Recepción", consultado: false },
+        { id: 4, siglas: "AF-04", nombre: "Manifestación del Contribuyente", consultado: false },
+        { id: 5, siglas: "AF-05", nombre: "Declaración Bajo Protesta", consultado: false },
+        { id: 6, siglas: "AF-06", nombre: "Constancia del Trámite", consultado: false },
+        { id: 7, siglas: "AF-07", nombre: "Resumen del Aviso", consultado: false },
+        { id: 8, siglas: "AF-08", nombre: "Anexo de Información", consultado: false },
+        { id: 9, siglas: "AF-09", nombre: "Hoja de Validación", consultado: false },
+        { id: 10, siglas: "AF-10", nombre: "Acuse Final", consultado: false },
+    ]);
 
+    const [pagina, setPagina] = useState(0);
+
+    const porPagina = 4;
+
+    const totalPaginas = Math.ceil(documentosGenerados.length / porPagina);
+
+    const documentosVisibles = documentosGenerados.slice(
+        pagina * porPagina,
+        pagina * porPagina + porPagina
+    );
+
+    const consultarDocumento = (id) => {
+        setDocumentosGenerados(prev =>
+            prev.map(doc =>
+                doc.id === id
+                    ? { ...doc, consultado: !doc.consultado }
+                    : doc
+            )
+        );
+    };
     return (
 
         <div className="space-y-6">
@@ -181,686 +216,335 @@ export default function Digitalizacion() {
                 </div>
 
             </div>
+            <div className="space-y-4">
 
-            {/*======================================================
-                DATOS DEL AVISO
-            ======================================================*/}
+                {documentos.map((doc) => {
 
-            <div className="bg-white rounded-2xl border shadow-sm">
+                    const estado = obtenerEstado(doc);
 
-                <div className="border-b px-6 py-5">
+                    return (
 
-                    <h3 className="font-semibold">
+                        <div
+                            key={doc.id}
+                            className="bg-white rounded-xl border shadow-sm overflow-hidden"
+                        >
 
-                        Datos del Aviso
+                            {/* HEADER */}
 
-                    </h3>
+                            <div className="px-5 py-4 border-b flex justify-between items-start">
 
-                    <p className="text-sm text-slate-500 mt-1">
+                                <div className="flex items-start gap-3">
 
-                        Información general del aviso fiscal.
+                                    <div className="h-11 w-11 rounded-xl bg-sky-100 flex items-center justify-center">
 
-                    </p>
+                                        <FileText
+                                            size={20}
+                                            className="text-sky-700"
+                                        />
 
-                </div>
+                                    </div>
 
-                <div className="p-6 grid lg:grid-cols-2 gap-6">
+                                    <div>
 
-                    <CampoConsulta
+                                        <h3 className="font-semibold text-slate-800">
 
-                        etiqueta="Tipo de Aviso"
+                                            {doc.nombre}
 
-                        valor="Disminución de Obligaciones"
+                                        </h3>
 
-                    />
+                                        <p className="text-sm text-slate-500 mt-1">
 
-                    <CampoConsulta
+                                            Documento requerido para integrar el expediente.
 
-                        etiqueta="Folio"
+                                        </p>
 
-                        valor="AF-2026-000001"
 
-                    />
 
-                    <CampoConsulta
+                                    </div>
+                                    <div className="flex gap-2 mt-3">
 
-                        etiqueta="RFC"
+                                        <span className={`
+                                    flex
+                                    px-3
+                                    py-1
+                                    rounded-full
+                                    text-xs
+                                    font-semibold
 
-                        valor="XAXX010101000"
-
-                    />
-
-                    <CampoConsulta
-
-                        etiqueta="Nombre"
-
-                        valor="COMERCIALIZADORA DEL SURESTE S.A. DE C.V."
-
-                    />
-
-                    <CampoConsulta
-
-                        etiqueta="Fecha"
-
-                        valor="08/07/2026"
-
-                    />
-
-                    <CampoConsulta
-
-                        etiqueta="Estado"
-
-                        valor="Pendiente de Digitalización"
-
-                    />
-
-                </div>
-
-            </div>
-
-            {/*======================================================
-                GESTOR DOCUMENTAL
-            ======================================================*/}
-
-            <div className="grid lg:grid-cols-12 gap-6">
-
-                {/*======================================================
-    PANEL IZQUIERDO
-======================================================*/}
-
-                <div className="lg:col-span-4">
-
-                    <div className="bg-white rounded-2xl border shadow-sm overflow-hidden">
-
-                        {/* HEADER */}
-
-                        <div className="px-5 py-5 border-b">
-
-                            <h3 className="font-semibold text-slate-800">
-
-                                Documentos
-
-                            </h3>
-
-                            <p className="text-sm text-slate-500 mt-1">
-
-                                Seleccione un documento para visualizarlo o adjuntarlo.
-
-                            </p>
-
-                        </div>
-
-                        {/* PROGRESO */}
-
-                        <div className="px-5 py-5 border-b bg-slate-50">
-
-                            <div className="flex justify-between text-sm mb-3">
-
-                                <span className="font-medium">
-
-                                    Expediente Digital
-
-                                </span>
-
-                                <span className="font-semibold text-sky-700">
-
-                                    {documentos.filter(d => d.archivo).length}
-
-                                    /
-
-                                    {documentos.length}
-
-                                </span>
-
-                            </div>
-
-                            <div className="h-3 rounded-full bg-slate-200 overflow-hidden">
-
-                                <div
-
-                                    className="bg-sky-600 h-full transition-all duration-500"
-
-                                    style={{
-
-                                        width: `${porcentaje}%`
-
-                                    }}
-
-                                />
-
-                            </div>
-
-                            <p className="text-xs text-slate-500 mt-2">
-
-                                {porcentaje}% del expediente integrado
-
-                            </p>
-
-                        </div>
-
-                        {/* LISTADO */}
-
-                        <div className="max-h-[650px] overflow-y-auto">
-
-                            {documentos.map((doc) => {
-
-                                const estado = obtenerEstado(doc);
-
-                                const activo = documentoSeleccionado === doc.id;
-
-                                return (
-
-                                    <button
-
-                                        key={doc.id}
-
-                                        onClick={() =>
-                                            setDocumentoSeleccionado(doc.id)
-                                        }
-
-                                        className={`
-                            w-full
-                            text-left
-                            transition-all
-                            border-b
-                            ${activo
-                                                ? "bg-sky-50 border-l-4 border-l-sky-600"
-                                                : "hover:bg-slate-50"
+                                    ${doc.obligatorio
+                                                ? "bg-red-100 text-red-700"
+                                                : "bg-slate-100 text-slate-700"
                                             }
-                        `}
+                                `}>
 
-                                    >
+                                            {doc.obligatorio
+                                                ? "Obligatorio"
+                                                : "Opcional"}
 
-                                        <div className="px-5 py-4">
+                                        </span>
 
-                                            <div className="flex justify-between items-start">
+                                        <span className={`
+                                 flex
+                                 items-center
+                                 px-3
+                                    py-1
+                                    rounded-full
+                                    text-xs
+                                    font-semibold
 
-                                                <div className="flex items-start gap-3">
+                                    ${estado.color}
+                                `}>
 
-                                                    <div
-                                                        className={`
-                                            h-10
-                                            w-10
-                                            rounded-xl
-                                            flex
-                                            items-center
-                                            justify-center
-                                            ${activo
+                                            {estado.icono}
 
-                                                                ? "bg-sky-100"
+                                            <span className="ml-1">
 
-                                                                : "bg-slate-100"
+                                                {estado.texto}
 
-                                                            }
-                                        `}
-                                                    >
+                                            </span>
 
-                                                        <FileText
+                                        </span>
 
-                                                            size={18}
+                                    </div>
+                                </div>
 
-                                                            className={
+                                <button
+                                    className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            px-4
+                            py-2
+                            rounded-lg
+                            border
+                            hover:bg-slate-50
+                            text-sm
+                        "
+                                >
 
-                                                                activo
+                                    <Download size={17} />
 
-                                                                    ? "text-sky-700"
+                                    Descargar formato
 
-                                                                    : "text-slate-500"
+                                </button>
 
-                                                            }
+                            </div>
 
-                                                        />
+                            {/* CUERPO */}
 
-                                                    </div>
+                            <div className="p-5">
+
+                                {/* Información */}
+
+                                <div className="flex justify-between items-center mb-4">
+
+                                    <div className="flex items-center gap-2">
+
+                                        <span className="text-xs uppercase font-medium text-slate-500">
+                                            Archivo:
+                                        </span>
+
+                                        <span className="text-sm font-medium text-slate-700 truncate">
+                                            {doc.archivo
+                                                ? doc.archivo.name
+                                                : "Sin documento"}
+                                        </span>
+
+                                    </div>
+
+                                    {
+
+                                        doc.archivo && (
+
+                                            <span className="text-sm text-slate-500">
+
+                                                {(doc.archivo.size / 1024 / 1024).toFixed(2)} MB
+
+                                            </span>
+
+                                        )
+
+                                    }
+
+                                </div>
+
+                                {/* Drag */}
+                                {
+                                    !doc.archivo ? (
+
+                                        <label>
+
+                                            <input
+                                                hidden
+                                                type="file"
+                                                accept=".pdf,.png,.jpg,.jpeg"
+                                                onChange={(e) =>
+                                                    seleccionarArchivo(doc.id, e.target.files?.[0])
+                                                }
+                                            />
+
+                                            <label>
+
+                                                <input
+                                                    hidden
+                                                    type="file"
+                                                    accept=".pdf,.png,.jpg,.jpeg"
+                                                    onChange={(e) =>
+                                                        seleccionarArchivo(doc.id, e.target.files?.[0])
+                                                    }
+                                                />
+
+                                                <div
+                                                    className="
+            h-20
+            rounded-xl
+            border-2
+            border-dashed
+            border-sky-300
+            hover:border-sky-500
+            hover:bg-sky-50
+            transition
+            cursor-pointer
+            flex
+            items-center
+            justify-center
+            gap-3
+        "
+                                                >
+
+                                                    <UploadCloud
+                                                        size={26}
+                                                        className="text-sky-600"
+                                                    />
 
                                                     <div>
 
-                                                        <h4
-                                                            className={`
-                                                font-medium
+                                                        <p className="font-medium text-sm">
+                                                            Arrastre un archivo aquí
+                                                        </p>
 
-                                                ${activo
-
-                                                                    ? "text-sky-700"
-
-                                                                    : "text-slate-700"
-
-                                                                }
-                                            `}
-                                                        >
-
-                                                            {doc.nombre}
-
-                                                        </h4>
-
-                                                        <p className="text-xs text-slate-500 mt-1">
-
-                                                            {
-
-                                                                doc.archivo
-
-                                                                    ? doc.archivo.name
-
-                                                                    : "Sin documento"
-
-                                                            }
-
+                                                        <p className="text-xs text-slate-500">
+                                                            o haga clic para seleccionarlo
                                                         </p>
 
                                                     </div>
 
                                                 </div>
 
-                                                <ArrowRight
+                                            </label>
 
-                                                    size={18}
+                                        </label>
 
-                                                    className={`
-                                        transition-transform
+                                    ) : (
 
-                                        ${activo
+                                        <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
 
-                                                            ? "rotate-90 text-sky-600"
+                                            <div className="flex justify-between items-center">
 
-                                                            : "text-slate-400"
+                                                <div className="flex items-center gap-3">
 
-                                                        }
-                                    `}
-
-                                                />
-
-                                            </div>
-
-                                            <div className="mt-4 flex items-center justify-between">
-
-                                                <span
-                                                    className={`
-                                        inline-flex
-                                        items-center
-                                        gap-2
-                                        px-3
-                                        py-1
-                                        rounded-full
-                                        text-xs
-                                        font-semibold
-
-                                        ${estado.color}
-                                    `}
-                                                >
-
-                                                    {estado.icono}
-
-                                                    {estado.texto}
-
-                                                </span>
-
-                                                {doc.archivo && (
-
-                                                    <span className="text-xs text-slate-400">
-
-                                                        {(doc.archivo.size / 1024 / 1024).toFixed(2)} MB
-
-                                                    </span>
-
-                                                )}
-
-                                            </div>
-
-                                        </div>
-
-                                    </button>
-
-                                );
-
-                            })}
-
-                        </div>
-
-                    </div>
-
-                </div>
-
-                {/*======================================================
-    PANEL DERECHO
-======================================================*/}
-
-                <div className="lg:col-span-8"><div className="bg-white rounded-2xl border shadow-sm overflow-hidden h-full">
-
-                    {/* HEADER */}
-
-                    <div className="border-b px-6 py-5 flex justify-between items-center">
-
-                        <div>
-
-                            <h3 className="text-xl font-semibold text-slate-800">
-
-                                {documentoActual.nombre}
-
-                            </h3>
-
-                            <p className="text-sm text-slate-500 mt-1">
-
-                                {documentoActual.obligatorio
-                                    ? "Documento obligatorio para integrar el expediente."
-                                    : "Documento opcional."
-                                }
-
-                            </p>
-
-                        </div>
-
-                        <span
-                            className={`inline-flex items-center gap-2 px-3 py-2 rounded-full text-xs font-semibold ${obtenerEstado(documentoActual).color
-                                }`}
-                        >
-
-                            {obtenerEstado(documentoActual).icono}
-
-                            {obtenerEstado(documentoActual).texto}
-
-                        </span>
-
-                    </div>
-
-                    <div className="p-6">
-
-                        {/*========================
-            SIN ARCHIVO
-        ========================*/}
-
-                        {!documentoActual.archivo && (
-
-                            <label className="block">
-
-                                <input
-
-                                    hidden
-
-                                    type="file"
-
-                                    accept=".pdf,.png,.jpg,.jpeg"
-
-                                    onChange={(e) =>
-                                        seleccionarArchivo(
-                                            documentoActual.id,
-                                            e.target.files?.[0]
-                                        )
-                                    }
-
-                                />
-
-                                <div className="
-                    h-[420px]
-                    rounded-2xl
-                    border-2
-                    border-dashed
-                    border-sky-300
-                    hover:border-sky-500
-                    hover:bg-sky-50
-                    transition-all
-                    cursor-pointer
-                    flex
-                    flex-col
-                    items-center
-                    justify-center
-                ">
-
-                                    <UploadCloud
-
-                                        size={80}
-
-                                        className="text-sky-600"
-
-                                    />
-
-                                    <h2 className="mt-6 text-xl font-semibold">
-
-                                        Arrastre un archivo aquí
-
-                                    </h2>
-
-                                    <p className="text-slate-500 mt-3">
-
-                                        o haga clic para seleccionarlo
-
-                                    </p>
-
-                                    <div className="mt-8 flex gap-3">
-
-                                        <span className="px-3 py-2 rounded-full bg-slate-100 text-sm">
-
-                                            PDF
-
-                                        </span>
-
-                                        <span className="px-3 py-2 rounded-full bg-slate-100 text-sm">
-
-                                            JPG
-
-                                        </span>
-
-                                        <span className="px-3 py-2 rounded-full bg-slate-100 text-sm">
-
-                                            PNG
-
-                                        </span>
-
-                                    </div>
-
-                                    <p className="mt-5 text-sm text-slate-400">
-
-                                        Tamaño máximo: 10 MB
-
-                                    </p>
-
-                                </div>
-
-                            </label>
-
-                        )}
-
-                        {/*========================
-            CON ARCHIVO
-        ========================*/}
-
-                        {documentoActual.archivo && (
-
-                            <div className="space-y-6">
-
-                                {/* Vista previa */}
-
-                                <div className="rounded-2xl border bg-slate-50 overflow-hidden">
-
-                                    {
-
-                                        documentoActual.archivo.type.startsWith("image/")
-
-                                            ? (
-
-                                                <img
-
-                                                    src={URL.createObjectURL(documentoActual.archivo)}
-
-                                                    alt="preview"
-
-                                                    className="w-full h-[420px] object-contain"
-
-                                                />
-
-                                            )
-
-                                            : (
-
-                                                <div className="
-                                    h-[420px]
-                                    flex
-                                    flex-col
-                                    justify-center
-                                    items-center
-                                ">
-
-                                                    <File
-
-                                                        size={90}
-
-                                                        className="text-red-600"
-
+                                                    <CheckCircle2
+                                                        className="text-emerald-600"
+                                                        size={22}
                                                     />
 
-                                                    <h2 className="mt-5 text-xl font-semibold">
+                                                    <div>
 
-                                                        Archivo PDF
+                                                        <p className="font-medium text-emerald-700">
+                                                            Documento cargado correctamente
+                                                        </p>
 
-                                                    </h2>
+                                                        <p className="text-sm text-slate-500">
+                                                            {doc.archivo.name}
+                                                        </p>
 
-                                                    <p className="text-slate-500 mt-2">
-
-                                                        Vista previa disponible al abrir el documento.
-
-                                                    </p>
+                                                    </div>
 
                                                 </div>
 
-                                            )
+                                                {/* <label>
 
-                                    }
+                                                    <input
+                                                        hidden
+                                                        type="file"
+                                                        accept=".pdf,.png,.jpg,.jpeg"
+                                                        onChange={(e) =>
+                                                            seleccionarArchivo(doc.id, e.target.files?.[0])
+                                                        }
+                                                    />
 
-                                </div>
+                                                    <div className="cursor-pointer text-sky-600 text-sm font-medium hover:underline">
 
-                                {/* Información */}
+                                                        Cambiar archivo
 
-                                <div className="grid md:grid-cols-3 gap-5">
+                                                    </div>
 
-                                    <div className="rounded-xl border p-5">
+                                                </label> */}
 
-                                        <p className="text-xs uppercase tracking-wide text-slate-500">
-
-                                            Archivo
-
-                                        </p>
-
-                                        <h3 className="mt-2 font-semibold break-all">
-
-                                            {documentoActual.archivo.name}
-
-                                        </h3>
-
-                                    </div>
-
-                                    <div className="rounded-xl border p-5">
-
-                                        <p className="text-xs uppercase tracking-wide text-slate-500">
-
-                                            Tamaño
-
-                                        </p>
-
-                                        <h3 className="mt-2 font-semibold">
-
-                                            {(documentoActual.archivo.size / 1024 / 1024).toFixed(2)} MB
-
-                                        </h3>
-
-                                    </div>
-
-                                    <div className="rounded-xl border p-5">
-
-                                        <p className="text-xs uppercase tracking-wide text-slate-500">
-
-                                            Estado
-
-                                        </p>
-
-                                        <h3 className="mt-2 font-semibold text-emerald-700">
-
-                                            Documento listo
-
-                                        </h3>
-
-                                    </div>
-
-                                </div>
-
-                                {/* Acciones */}
-
-                                <div className="flex justify-end gap-3">
-
-                                    <button
-                                        className="inline-flex items-center gap-2 px-5 py-3 rounded-xl border hover:bg-slate-50"
-                                    >
-
-                                        <Eye size={18} />
-
-                                        Vista previa
-
-                                    </button>
-
-                                    <label>
-
-                                        <input
-
-                                            hidden
-
-                                            type="file"
-
-                                            accept=".pdf,.png,.jpg,.jpeg"
-
-                                            onChange={(e) =>
-                                                seleccionarArchivo(
-                                                    documentoActual.id,
-                                                    e.target.files?.[0]
-                                                )
-                                            }
-
-                                        />
-
-                                        <div className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            px-5
-                            py-3
-                            rounded-xl
-                            border
-                            cursor-pointer
-                            hover:bg-slate-50
-                        ">
-
-                                            <RefreshCw size={18} />
-
-                                            Cambiar archivo
+                                            </div>
 
                                         </div>
 
-                                    </label>
+                                    )
+                                }
 
-                                    <button
 
-                                        onClick={() =>
-                                            eliminarArchivo(documentoActual.id)
-                                        }
+                                {/* Acciones */}
+                                {doc.archivo && (
+                                    <div className="flex justify-end gap-2 mt-4">
 
-                                        className="inline-flex items-center gap-2 px-5 py-3 rounded-xl bg-red-50 text-red-700 hover:bg-red-100"
+                                        <button
+                                            className="
+                                inline-flex
+                                items-center
+                                gap-2
+                                px-3
+                                py-2
+                                rounded-lg
+                                border
+                                hover:bg-slate-50
+                                text-sm
+                            "
+                                        >
 
-                                    >
+                                            <Eye size={16} />
 
-                                        <Trash2 size={18} />
+                                            Vista previa
 
-                                        Eliminar
+                                        </button>
 
-                                    </button>
 
-                                </div>
 
+                                        <button
+                                            onClick={() => eliminarArchivo(doc.id)}
+                                            className="
+        inline-flex
+        items-center
+        gap-2
+        px-3
+        py-2
+        rounded-lg
+        bg-red-50
+        text-red-700
+        hover:bg-red-100
+        text-sm
+    "
+                                        >
+                                            <Trash2 size={16} />
+                                            Eliminar
+                                        </button>
+
+                                    </div>
+                                )}
                             </div>
 
-                        )}
+                        </div>
 
-                    </div>
+                    );
 
-                </div>
+                })}
 
-                </div></div>
+            </div>
 
         </div>
     )

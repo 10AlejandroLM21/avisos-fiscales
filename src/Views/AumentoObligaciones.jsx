@@ -5,6 +5,7 @@ import ModalFormulario from "../components/ModalFormulario";
 import DomicilioFiscal from "../components/DomicilioFiscal";
 import IdentificacionContribuyente from "../components/IdentificacionContribuyente";
 import HeaderModulo from "../components/HeaderModulo";
+
 import {
     Search,
     Users,
@@ -35,8 +36,13 @@ import {
     Plus,
     FileWarning,
     BriefcaseBusiness,
-    PieChart
+    PieChart,
+    Percent,
+    ChevronUp,
+    ReceiptText,
+    CalendarDays
 } from "lucide-react";
+import { Fragment } from "react";
 
 export default function AumentoObligaciones() {
 
@@ -268,7 +274,7 @@ export default function AumentoObligaciones() {
             },
         },
     ];
-
+    const [expandida, setExpandida] = useState(false);
     return (
 
         <div className="space-y-6">
@@ -290,16 +296,15 @@ export default function AumentoObligaciones() {
             />
 
             {/*======================================================
-                  OBLIGACIONES DEL CONTRIBUYENTE
+                  OBLIGACIONES DEL CONTRIBUYENTE 2
       =======================================================*/}
-
             <div className="bg-white rounded-xl border shadow-sm">
 
-                <div className="border-b px-6 py-5 flex justify-between items-center">
+                <div className="border-b px-6 py-5 flex justify-between">
+                    <div className="">
 
-                    <div>
 
-                        <h3 className="text-lg font-semibold text-slate-800">
+                        <h3 className="font-semibold text-slate-800">
 
                             Obligaciones del Contribuyente
 
@@ -307,16 +312,13 @@ export default function AumentoObligaciones() {
 
                         <p className="text-sm text-slate-500 mt-1">
 
-                            El contribuyente actualmente cuenta con las siguientes
-                            obligaciones fiscales.
+                            Consulte las obligaciones fiscales asociadas al contribuyente actualmente
 
                         </p>
-
                     </div>
-
                     <button
                         onClick={() => setMostrarSeleccion(true)}
-                        className="inline-flex items-center gap-2 bg-sky-700 hover:bg-sky-800 text-white px-5 py-3 rounded-lg transition"
+                        className="inline-flex items-center gap-2 bg-blue-700 hover:bg-blue-800 text-white px-5 py-3 rounded-lg transition"
                     >
 
                         <Plus size={18} />
@@ -324,159 +326,175 @@ export default function AumentoObligaciones() {
                         Aumentar Obligación
 
                     </button>
-
                 </div>
 
                 <div className="p-6 space-y-5">
 
-                    {obligaciones.map((item) => (
+                    <div className="space-y-4">
 
-                        <div
-                            key={item.id}
-                            className="rounded-xl border overflow-hidden"
-                        >
+                        {obligaciones.map((obligacion) => {
+                            const totalParticipacion = obligacion.actividades.reduce(
+                                (total, actividad) =>
+                                    total + parseFloat(actividad.porcentaje),
+                                0
+                            );
 
-                            <button
-                                onClick={() =>
-                                    setObligacionAbierta(
-                                        obligacionAbierta === item.id
-                                            ? null
-                                            : item.id
-                                    )
-                                }
-                                className="w-full p-5 text-left hover:bg-slate-50 transition"
-                            >
+                            const totalTemporales = obligacion.actividades.reduce(
+                                (total, actividad) =>
+                                    total + Number(actividad.temporales ?? 0),
+                                0
+                            );
 
-                                <div className="flex justify-between">
+                            const totalPermanentes = obligacion.actividades.reduce(
+                                (total, actividad) =>
+                                    total + Number(actividad.permanentes ?? 0),
+                                0
+                            );
+                            return (
+                                <div
+                                    key={obligacion.id}
+                                    className="bg-white rounded-xl border shadow-sm overflow-hidden"
+                                >
 
-                                    <div className="flex gap-4">
+                                    <div className="px-6 py-5 flex justify-between items-center">
 
-                                        <div className="w-2 rounded-full bg-sky-700" />
+                                        <div className="flex items-start gap-4">
 
-                                        <div>
+                                            <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
 
-                                            <span className="text-xs uppercase tracking-wide text-slate-500">
+                                                <BriefcaseBusiness
+                                                    size={22}
+                                                    className="text-sky-700"
+                                                />
 
-                                                Obligación Fiscal
+                                            </div>
+
+                                            <div>
+
+                                                <h3 className="font-semibold text-slate-800 text-lg">
+
+                                                    {obligacion.nombre}
+
+                                                </h3>
+
+                                                <p className="text-sm text-slate-500 mt-1">
+
+                                                    {obligacion.actividades.length} actividad(es) económica(s)
+
+                                                </p>
+
+                                            </div>
+
+                                        </div>
+
+                                        <button
+                                            onClick={() =>
+                                                setExpandida(
+                                                    expandida === obligacion.id
+                                                        ? null
+                                                        : obligacion.id
+                                                )
+                                            }
+                                            className="rounded-lg border p-2 hover:bg-slate-100 transition"
+                                        >
+
+                                            {expandida === obligacion.id ? (
+
+                                                <ChevronUp size={20} />
+
+                                            ) : (
+
+                                                <ChevronDown size={20} />
+
+                                            )}
+
+                                        </button>
+
+                                    </div>
+
+                                    {/*======================================================
+            RESUMEN
+        ======================================================*/}
+
+                                    <div className="px-6 pb-6">
+
+                                        <div className="flex flex-wrap gap-3 mt-4">
+
+                                            {/* Actividades */}
+
+                                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-slate-100 text-slate-700 text-sm font-medium">
+
+                                                <BriefcaseBusiness size={16} />
+
+                                                {obligacion.actividades.length} Actividad(es) Económica(s)
 
                                             </span>
 
-                                            <h4 className="font-semibold text-slate-800 mt-1">
+                                            {/* Participación */}
 
-                                                {item.nombre}
+                                            <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-sky-100 text-sky-700 text-sm font-medium">
 
-                                            </h4>
+                                                <Percent size={16} />
+
+                                                Participación: {totalParticipacion}%
+
+                                            </span>
+
+                                            {/* Trabajadores */}
+
+                                            {obligacion.nombre.includes("Erogaciones") && (
+
+                                                <>
+                                                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-100 text-orange-700 text-sm font-medium">
+
+                                                        <Users size={16} />
+
+                                                        Temporales { }
+
+                                                    </span>
+
+                                                    <span className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-emerald-100 text-emerald-700 text-sm font-medium">
+
+                                                        <Users size={16} />
+
+                                                        Permanentes { }
+
+                                                    </span>
+                                                </>
+
+                                            )}
 
                                         </div>
 
                                     </div>
 
-                                    <div className="flex items-center gap-3">
+                                    {expandida === obligacion.id && (
 
-                                        <span className="bg-green-100 text-green-700 text-xs px-3 py-1 rounded-full">
+                                        <div className="border-t bg-slate-50">
 
-                                            {item.estatus}
+                                            <div className="p-6 space-y-3">
 
-                                        </span>
+                                                <h4 className="font-semibold text-slate-700">
 
-                                        <ChevronDown
-                                            size={18}
-                                            className={`transition-transform ${obligacionAbierta === item.id
-                                                ? "rotate-180"
-                                                : ""
-                                                }`}
-                                        />
+                                                    Actividades Económicas
 
-                                    </div>
+                                                </h4>
 
-                                </div>
+                                                <p className="text-sm text-slate-500">
 
-                                <div className="grid md:grid-cols-2 gap-5 mt-6">
+                                                    Consulte la información correspondiente a las actividades económicas asociadas a esta obligación fiscal.
 
-                                    <div>
+                                                </p>
 
-                                        <span className="text-xs text-slate-500">
+                                                <div className="space-y-4">
 
-                                            Actividades Económicas
+                                                    {/* Encabezado */}
 
-                                        </span>
+                                                    <div className="grid grid-cols-[1fr_180px] px-4 text-xs font-semibold uppercase tracking-wider text-slate-500">
 
-                                        <p className="font-semibold mt-1">
+                                                        <span>Actividad Económica</span>
 
-                                            {item.actividades.length}
-
-                                        </p>
-
-                                    </div>
-
-                                    <div>
-
-                                        <span className="text-xs text-slate-500">
-
-                                            Participación Total
-
-                                        </span>
-
-                                        <p className="font-semibold mt-1">
-
-                                            {item.porcentaje}
-
-                                        </p>
-
-                                    </div>
-
-                                </div>
-
-                            </button>
-
-                            {obligacionAbierta === item.id && (
-
-                                <div className="border-t bg-slate-50 p-6 space-y-6">
-
-                                    {/* ACTIVIDADES */}
-
-                                    <div>
-
-                                        <h5 className="font-semibold text-slate-700 mb-4">
-
-                                            Actividades Económicas
-
-                                        </h5>
-
-                                        <div className="space-y-3">
-
-                                            {item.actividades.map((actividad) => (
-
-                                                <div
-                                                    key={actividad.id}
-                                                    className="bg-white rounded-lg border p-4 flex justify-between"
-                                                >
-
-                                                    <div>
-
-                                                        <p className="font-medium">
-
-                                                            {actividad.nombre}
-
-                                                        </p>
-
-                                                        <span className="text-xs text-slate-500">
-
-                                                            Actividad Económica
-
-                                                        </span>
-
-                                                    </div>
-
-                                                    <div className="text-right">
-
-                                                        <p className="font-semibold">
-
-                                                            {actividad.porcentaje}
-
-                                                        </p>
-
-                                                        <span className="text-xs text-slate-500">
+                                                        <span className="text-right">
 
                                                             Participación
 
@@ -484,86 +502,166 @@ export default function AumentoObligaciones() {
 
                                                     </div>
 
-                                                </div>
+                                                    {/* Registros */}
 
-                                            ))}
+                                                    <div className="space-y-3">
 
-                                        </div>
+                                                        {obligacion.actividades.map((actividad) => (
 
-                                    </div>
+                                                            <div
+                                                                key={actividad.id}
+                                                                className="bg-white rounded-2xl px-5 py-4 shadow-sm hover:shadow-md transition"
+                                                            >
 
-                                    {/* DECLARACIONES */}
+                                                                <div className="grid grid-cols-[1fr_180px] items-center">
 
-                                    <div>
+                                                                    {/* Nombre */}
 
-                                        <div className="flex items-center gap-2 mb-4">
+                                                                    <div>
 
-                                            <FileWarning
-                                                size={18}
-                                                className="text-amber-600"
-                                            />
+                                                                        <h4 className="font-medium text-slate-800">
 
-                                            <h5 className="font-semibold text-slate-700">
+                                                                            {actividad.nombre}
 
-                                                Declaraciones Pendientes
+                                                                        </h4>
 
-                                            </h5>
+                                                                    </div>
 
-                                        </div>
+                                                                    {/* Porcentaje */}
 
-                                        <div className="space-y-3">
+                                                                    <div className="flex justify-end">
 
-                                            {item.declaraciones.periodos.map(
-                                                (periodo, index) => (
+                                                                        <span className="inline-flex items-center rounded-full bg-sky-100 px-4 py-2 font-semibold text-sky-700">
 
-                                                    <div
-                                                        key={index}
-                                                        className="bg-white rounded-lg border p-4 flex justify-between"
-                                                    >
+                                                                            {actividad.porcentaje}
 
-                                                        <div>
+                                                                        </span>
 
-                                                            <p className="font-medium">
+                                                                    </div>
 
-                                                                {periodo}
+                                                                </div>
 
-                                                            </p>
+                                                                {"temporales" in actividad && (
 
-                                                            <span className="text-xs text-slate-500">
+                                                                    <div className="flex gap-3 mt-4">
 
-                                                                Ejercicio {item.declaraciones.ejercicio}
+                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-3 py-1.5 text-sm font-medium text-orange-700">
 
-                                                            </span>
+                                                                            <Users size={15} />
 
-                                                        </div>
+                                                                            Temp.
 
-                                                        <span className="text-red-600 font-medium">
+                                                                            <span className="font-bold">
 
-                                                            No Cumplido
+                                                                                {actividad.temporales}
 
-                                                        </span>
+                                                                            </span>
+
+                                                                        </span>
+
+                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-3 py-1.5 text-sm font-medium text-emerald-700">
+
+                                                                            <Users size={15} />
+
+                                                                            Perm.
+
+                                                                            <span className="font-bold">
+
+                                                                                {actividad.permanentes}
+
+                                                                            </span>
+
+                                                                        </span>
+
+                                                                    </div>
+
+                                                                )}
+
+                                                            </div>
+
+                                                        ))}
 
                                                     </div>
 
-                                                )
-                                            )}
+                                                    {/* <div className="bg-white rounded-2xl px-6 py-5 shadow-sm">
+
+                                                        <div className="grid md:grid-cols-3 gap-6">
+
+                                                            <div>
+
+                                                                <p className="text-xs uppercase tracking-wide text-slate-500">
+
+                                                                    Participación Total
+
+                                                                </p>
+
+                                                                <p className="mt-2 text-2xl font-bold text-sky-700">
+
+                                                                    {totalParticipacion}%
+
+                                                                </p>
+
+                                                            </div>
+
+                                                            {totalTemporales > 0 && (
+
+                                                                <div>
+
+                                                                    <p className="text-xs uppercase tracking-wide text-slate-500">
+
+                                                                        Trabajadores Temporales
+
+                                                                    </p>
+
+                                                                    <p className="mt-2 text-2xl font-bold text-orange-600">
+
+                                                                        {totalTemporales}
+
+                                                                    </p>
+
+                                                                </div>
+
+                                                            )}
+
+                                                            {totalPermanentes > 0 && (
+
+                                                                <div>
+
+                                                                    <p className="text-xs uppercase tracking-wide text-slate-500">
+
+                                                                        Trabajadores Permanentes
+
+                                                                    </p>
+
+                                                                    <p className="mt-2 text-2xl font-bold text-emerald-600">
+
+                                                                        {totalPermanentes}
+
+                                                                    </p>
+
+                                                                </div>
+
+                                                            )}
+
+                                                        </div>
+
+                                                    </div> */}
+                                                </div>
+                                            </div>
 
                                         </div>
 
-                                    </div>
+                                    )}
 
                                 </div>
+                            )
+                        })}
 
-                            )}
-
-                        </div>
-
-                    ))}
+                    </div>
 
                 </div>
 
             </div>
-
             {/*======================================================
                 OBLIGACIÓN A AUMENTAR
 ======================================================*/}
@@ -611,19 +709,15 @@ export default function AumentoObligaciones() {
                                 obligatorio
                                 value={obligacionSeleccionada}
                                 onChange={(e) => {
+
                                     const value = e.target.value;
-                                    const opcion = opcionesObligaciones.find(op => op.value === value).label;
 
-                                    console.log(value);
-                                    console.log(opcion.label);
+                                    setObligacionSeleccionada(value);
 
-                                    setObligacionSeleccionada(opcion);
                                 }}
                                 opciones={opcionesObligaciones}
                                 disabled={obligacionConfirmada}
-                            >
-
-                            </CampoSelect>
+                            />
 
                         </div>
 
@@ -726,27 +820,19 @@ export default function AumentoObligaciones() {
                                 obligatorio
                                 value={actividadEconomica}
                                 onChange={(e) => {
+
                                     const valor = e.target.value;
-                                    const opcion = opcionesActividades.find((op) => op.value === valor).label;
 
-                                    setActividadEconomica(opcion);
+                                    setActividadEconomica(valor);
 
-                                    if (obligacionSeleccionada === "erogaciones") {
-
-                                        setMostrarTrabajadores(true);
-
-                                    } else {
-
-                                        setMostrarTrabajadores(false);
-
-                                    }
+                                    setMostrarTrabajadores(
+                                        obligacionSeleccionada === "erogaciones"
+                                    );
 
                                 }}
                                 opciones={opcionesActividades}
+                            />
 
-                            >
-
-                            </CampoSelect>
 
                             <CampoInput
                                 etiqueta="Porcentaje de Participación"
@@ -794,9 +880,7 @@ export default function AumentoObligaciones() {
                 </div>
 
             )}
-            {/*======================================================
-                INFORMACIÓN DE TRABAJADORES
-======================================================*/}
+
 
             {/*======================================================
             OBLIGACIONES A INCORPORAR
@@ -927,37 +1011,6 @@ export default function AumentoObligaciones() {
 
                                 <div className="p-6 space-y-6">
 
-                                    {/* <div>
-
-                                <div className="flex justify-between mb-2">
-
-                                    <span className="font-medium">
-
-                                        Participación Acumulada
-
-                                    </span>
-
-                                    <span className="font-semibold text-sky-700">
-
-                                        {porcentajeAcumulado}%
-
-                                    </span>
-
-                                </div>
-
-                                <div className="w-full h-3 rounded-full bg-slate-200 overflow-hidden">
-
-                                    <div
-                                        className="bg-sky-700 h-full transition-all"
-                                        style={{
-                                            width: `${porcentajeAcumulado}%`,
-                                        }}
-                                    />
-
-                                </div>
-
-                            </div> */}
-
                                     <div className="grid md:grid-cols-2 gap-5">
 
                                         <div className="rounded-xl border p-5 bg-slate-50">
@@ -1001,6 +1054,7 @@ export default function AumentoObligaciones() {
                         )}
 
                     </div>
+                    {/* Actividades agregadas */}
                     <div className="bg-white rounded-xl border shadow-sm mt-6">
 
                         {/* HEADER */}
@@ -1040,238 +1094,275 @@ export default function AumentoObligaciones() {
 
                         <div className="p-6 space-y-5">
 
-                            {actividadesAgregadas.map((item) => (
+                            {actividadesAgregadas.map((item) => {
+                                const actividad = opcionesActividades.find(
+                                    op => op.value === item.actividad
+                                );
 
-                                <div
-                                    key={item.id}
-                                    className="relative flex rounded-xl border overflow-hidden bg-white hover:shadow-md transition"
-                                >
+                                const nombreActividad = actividad?.label ?? item.actividad;
+                                const nombreObligacion =
+                                    opcionesObligaciones.find(
+                                        op => op.value === item.obligacion
+                                    )?.label ?? item.obligacion;
+                                return (
+                                    <div
+                                        key={item.id}
+                                        className="relative flex rounded-xl border overflow-hidden bg-white hover:shadow-md transition"
+                                    >
 
-                                    {/* INDICADOR */}
+                                        {/* INDICADOR */}
 
-                                    <div className="w-2 bg-cyan-700" />
+                                        <div className="w-2 bg-cyan-700" />
 
-                                    {/* CONTENIDO */}
+                                        {/* CONTENIDO */}
 
-                                    <div className="flex-1 p-5">
+                                        <div className="flex-1 p-5">
 
-                                        <div className="flex justify-between">
+                                            <div className="flex justify-between">
 
-                                            <div className="space-y-5 flex-1">
+                                                <div className="space-y-5 flex-1">
 
-                                                {/* OBLIGACION */}
-                                                <div className="grid md:grid-cols-2 gap-5">
-                                                    <div>
+                                                    {/* OBLIGACION */}
+                                                    <div className="flex flex-wrap items-center gap-3">
 
-                                                        <p className="text-xs uppercase tracking-wide text-slate-500">
+                                                        <span className="text-xs uppercase tracking-wide text-slate-500">
 
                                                             Obligación Fiscal
 
-                                                        </p>
+                                                        </span>
 
-                                                        <p className="font-semibold text-slate-800 mt-1">
+                                                        <span className="inline-flex items-center gap-2 rounded-full bg-sky-100 px-4 py-2 text-sky-700 font-semibold">
 
-                                                            {item.obligacion}
+                                                            <ReceiptText size={16} />
 
-                                                        </p>
+                                                            {nombreObligacion}
 
+                                                        </span>
 
                                                     </div>
+
+                                                    {/* ACTIVIDAD */}
+
                                                     <div>
 
-                                                        <p className="text-xs uppercase tracking-wide text-slate-500">
+                                                        <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
 
-                                                            Inicio de Operación
-
-                                                        </p>
-
-                                                        <p className="font-medium mt-1">
-
-                                                            {item.fecha}
+                                                            Actividad Económica
 
                                                         </p>
 
-                                                    </div>
-                                                </div>
+                                                        <div className="flex flex-wrap gap-2">
 
-                                                {/* ACTIVIDAD */}
+                                                            <span
+                                                                className="
+                inline-flex
+                items-center
+                gap-2
+                rounded-full
+                bg-sky-100
+                px-4
+                py-2
+                text-sm
+                font-semibold
+                text-sky-700
+            "
+                                                            >
 
-                                                <div>
+                                                                {nombreActividad}
 
-                                                    <p className="text-xs uppercase tracking-wide text-slate-500">
+                                                            </span>
 
-                                                        Actividad Económica
-
-                                                    </p>
-
-                                                    <p className="font-medium mt-1">
-
-                                                        {item.actividad}
-
-                                                    </p>
-
-                                                </div>
-
-                                                {/* GRID */}
-
-                                                <div className="grid md:grid-cols-2 gap-5">
-
-                                                    {actividadEditando === item.id ? (
-
-                                                        <CampoInput
-                                                            etiqueta="Porcentaje de Participación"
-                                                            value={item.porcentaje}
-                                                            onChange={(e) =>
-                                                                actualizarActividad(
-                                                                    item.id,
-                                                                    "porcentaje",
-                                                                    e.target.value
-                                                                )
-                                                            }
-                                                        />
-
-                                                    ) : (
-
-                                                        <div>
-                                                            <p className="text-xs uppercase tracking-wide text-slate-500">
-                                                                Participación
-                                                            </p>
-
-                                                            <p className="font-medium mt-1">
-                                                                {item.porcentaje} %
-                                                            </p>
                                                         </div>
 
+                                                    </div>
+                                                    {/* GRID */}
+
+                                                    <div className="grid md:grid-cols-2 gap-5">
+
+                                                        {actividadEditando === item.id ? (
+
+                                                            <CampoInput
+                                                                etiqueta="Porcentaje de Participación"
+                                                                value={item.porcentaje}
+                                                                onChange={(e) =>
+                                                                    actualizarActividad(
+                                                                        item.id,
+                                                                        "porcentaje",
+                                                                        e.target.value
+                                                                    )
+                                                                }
+                                                            />
+
+                                                        ) : (
+
+                                                            <div>
+
+                                                                <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+
+                                                                    Participación
+
+                                                                </p>
+
+                                                                <span className="inline-flex items-center gap-2 rounded-full bg-indigo-100 px-4 py-2 font-semibold text-indigo-700">
+
+                                                                    <Percent size={15} />
+
+                                                                    {item.porcentaje} %
+
+                                                                </span>
+
+                                                            </div>
+
+                                                        )}
+                                                        <div>
+
+                                                            <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+
+                                                                Inicio de Operación
+
+                                                            </p>
+
+                                                            <span className="inline-flex items-center gap-2 rounded-full bg-slate-100 px-4 py-2 text-slate-700">
+
+                                                                <CalendarDays size={15} />
+
+                                                                {item.fecha}
+
+                                                            </span>
+
+                                                        </div>
+                                                    </div>
+
+                                                    {/* TRABAJADORES */}
+
+                                                    {item.erogaciones && (
+                                                        <div>
+                                                            {actividadEditando == item.id ? (
+
+                                                                <div className="grid md:grid-cols-2 gap-5">
+
+                                                                    <CampoInput
+                                                                        etiqueta="Trabajadores Temporales"
+                                                                        value={item.temporales}
+                                                                        onChange={(e) => actualizarActividad(item.id, "temporales", e.target.value)}
+                                                                    />
+
+                                                                    <CampoInput
+                                                                        etiqueta="Trabajadores Permanentes"
+                                                                        value={item.permanentes}
+                                                                        onChange={(e) => actualizarActividad(item.id, "permanentes", e.target.value)}
+                                                                    />
+
+                                                                </div>
+
+
+                                                            ) : (
+                                                                <div className="flex flex-col gap-1">
+                                                                    <p className="text-xs uppercase tracking-wide text-slate-500 mb-2">
+
+                                                                        TRABAJADORES    
+
+                                                                    </p>
+                                                                    <div className="flex flex-wrap gap-3">
+
+                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-orange-100 px-4 py-2 font-medium text-orange-700">
+
+                                                                            <Users size={15} />
+
+                                                                            Temporales
+
+                                                                            <span className="font-bold">
+
+                                                                                {item.temporales}
+
+                                                                            </span>
+
+                                                                        </span>
+
+                                                                        <span className="inline-flex items-center gap-2 rounded-full bg-emerald-100 px-4 py-2 font-medium text-emerald-700">
+
+                                                                            <Users size={15} />
+
+                                                                            Permanentes
+
+                                                                            <span className="font-bold">
+
+                                                                                {item.permanentes}
+
+                                                                            </span>
+
+                                                                        </span>
+
+                                                                    </div>
+                                                                </div>
+
+                                                            )}
+                                                        </div>
                                                     )}
 
                                                 </div>
 
-                                                {/* TRABAJADORES */}
 
-                                                {item.erogaciones && (
-                                                    <div>
-                                                        {actividadEditando == item.id ? (
+                                                <div className="flex flex-col gap-2 ml-8 justify-end">
+                                                    {actividadEditando === item.id ? (
 
-                                                            <div className="grid md:grid-cols-2 gap-5">
+                                                        <div className="flex gap-2">
 
-                                                                <CampoInput
-                                                                    etiqueta="Trabajadores Temporales"
-                                                                    value={item.temporales}
-                                                                    onChange={(e) => actualizarActividad(item.id, "temporales", e.target.value)}
-                                                                />
+                                                            <button
 
-                                                                <CampoInput
-                                                                    etiqueta="Trabajadores Permanentes"
-                                                                    value={item.permanentes}
-                                                                    onChange={(e) => actualizarActividad(item.id, "permanentes", e.target.value)}
-                                                                />
+                                                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 text-white"
+                                                                onClick={guardarCambios}
+                                                            >
+                                                                <Save size={18} />
+                                                                Guardar Cambios
+                                                            </button>
 
-                                                            </div>
+                                                            <button
+                                                                onClick={() => setActividadEditando(null)}
+                                                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border"
+                                                            >
+                                                                <X size={18} />
+                                                                Cancelar
 
+                                                            </button>
 
-                                                        ) : (
-                                                            <div className="grid md:grid-cols-2 gap-5">
+                                                        </div>
 
-                                                                <div>
+                                                    ) : (
+                                                        // botones editar eliminar
+                                                        <>
+                                                            <button
+                                                                type="button"
+                                                                onClick={() => setActividadEditando(item.id)}
+                                                                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-slate-50"
+                                                            >
+                                                                <Pencil size={18} />
+                                                                Editar
+                                                            </button>
 
-                                                                    <p className="text-xs uppercase tracking-wide text-slate-500">
-
-                                                                        Trabajadores Temporales
-
-                                                                    </p>
-
-                                                                    <p className="font-medium mt-1">
-
-                                                                        {item.temporales}
-
-                                                                    </p>
-
-                                                                </div>
-
-                                                                <div>
-
-                                                                    <p className="text-xs uppercase tracking-wide text-slate-500">
-
-                                                                        Trabajadores Permanentes
-
-                                                                    </p>
-
-                                                                    <p className="font-medium mt-1">
-
-                                                                        {item.permanentes}
-
-                                                                    </p>
-
-                                                                </div>
-
-                                                            </div>
-                                                        )}
-                                                    </div>
-                                                )}
-
-                                            </div>
+                                                            <button
+                                                                onClick={() => {
+                                                                    setActividadEliminar(item);
+                                                                    setModalEliminar(true);
+                                                                }}
+                                                                className="inline-flex items-center gap-2 border rounded-lg px-4 py-2 text-red-600 hover:bg-red-50"
+                                                            >
+                                                                <Trash2 size={18} />
+                                                                Eliminar
+                                                            </button>
+                                                        </>
+                                                    )}
 
 
-                                            <div className="flex flex-col gap-2 ml-8 justify-end">
-                                                {actividadEditando === item.id ? (
-
-                                                    <div className="flex gap-2">
-
-                                                        <button
-
-                                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg bg-sky-700 text-white"
-                                                            onClick={guardarCambios}
-                                                        >
-                                                            <Save size={18} />
-                                                            Guardar Cambios
-                                                        </button>
-
-                                                        <button
-                                                            onClick={() => setActividadEditando(null)}
-                                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border"
-                                                        >
-                                                            <X size={18} />
-                                                            Cancelar
-
-                                                        </button>
-
-                                                    </div>
-
-                                                ) : (
-                                                    // botones editar eliminar
-                                                    <>
-                                                        <button
-                                                            type="button"
-                                                            onClick={() => setActividadEditando(item.id)}
-                                                            className="inline-flex items-center gap-2 px-4 py-2 rounded-lg border hover:bg-slate-50"
-                                                        >
-                                                            <Pencil size={18} />
-                                                            Editar
-                                                        </button>
-
-                                                        <button
-                                                            onClick={() => {
-                                                                setActividadEliminar(item);
-                                                                setModalEliminar(true);
-                                                            }}
-                                                            className="inline-flex items-center gap-2 border rounded-lg px-4 py-2 text-red-600 hover:bg-red-50"
-                                                        >
-                                                            <Trash2 size={18} />
-                                                            Eliminar
-                                                        </button>
-                                                    </>
-                                                )}
-
+                                                </div>
 
                                             </div>
 
                                         </div>
 
                                     </div>
-
-                                </div>
-
-                            ))}
+                                )
+                            })}
 
                         </div>
 
