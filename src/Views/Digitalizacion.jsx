@@ -25,28 +25,16 @@ export default function Digitalizacion() {
     const [documentos, setDocumentos] = useState([
         {
             id: 1,
-            nombre: "Identificación Oficial",
+            nombre: "Formato de Aviso del Registro Estatal de Contribuyentes",
             obligatorio: true,
             archivo: null
         },
         {
             id: 2,
-            nombre: "CURP",
+            nombre: "Constancia de Representante Legal",
             obligatorio: true,
             archivo: null
         },
-        {
-            id: 3,
-            nombre: "Comprobante de Domicilio",
-            obligatorio: false,
-            archivo: null
-        },
-        {
-            id: 4,
-            nombre: "Documento Soporte",
-            obligatorio: false,
-            archivo: null
-        }
     ]);
 
     const [documentoSeleccionado, setDocumentoSeleccionado] = useState(1);
@@ -216,54 +204,218 @@ export default function Digitalizacion() {
                 </div>
 
             </div>
-            <div className="space-y-4">
 
-                {documentos.map((doc) => {
+            <div className="bg-white rounded-2xl border shadow-sm">
 
-                    const estado = obtenerEstado(doc);
+                {/* Encabezado */}
 
-                    return (
+                <div className="px-6 py-5 border-b">
 
-                        <div
-                            key={doc.id}
-                            className="bg-white rounded-xl border shadow-sm overflow-hidden"
-                        >
+                    <h2 className="text-xl font-semibold text-slate-800">
+                        Documentación generada
+                    </h2>
 
-                            {/* HEADER */}
+                    <p className="text-sm text-slate-500 mt-1">
+                        Consulte y descargue los formatos generados durante el trámite.
+                    </p>
 
-                            <div className="px-5 py-4 border-b flex justify-between items-start">
+                </div>
 
-                                <div className="flex items-start gap-3">
+                {/* Contenido */}
 
-                                    <div className="h-11 w-11 rounded-xl bg-sky-100 flex items-center justify-center">
+                <div className="p-6 grid grid-cols-2 gap-6">
 
-                                        <FileText
-                                            size={20}
-                                            className="text-sky-700"
-                                        />
+                    {/* FAREC */}
 
-                                    </div>
+                    <div className="border rounded-xl p-5 hover:border-sky-500 hover:shadow-sm transition">
 
-                                    <div>
+                        <div className="flex gap-4">
 
-                                        <h3 className="font-semibold text-slate-800">
+                            <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
 
-                                            {doc.nombre}
+                                <FileText
+                                    size={24}
+                                    className="text-sky-700"
+                                />
 
-                                        </h3>
+                            </div>
 
-                                        <p className="text-sm text-slate-500 mt-1">
+                            <div className="flex-1">
 
-                                            Documento requerido para integrar el expediente.
+                                <h3 className="font-semibold text-slate-800">
+                                    Formato de Aviso del Registro Estatal de Contribuyentes
+                                </h3>
 
-                                        </p>
+                                <p className="text-sm text-slate-500 mt-1">
+                                    Siglas:
+                                    <span className="font-semibold text-slate-700 ml-1">
+                                        FAREC
+                                    </span>
+                                </p>
+
+                                <p className="text-sm text-slate-500 mt-3">
+                                    Seleccione el formato para visualizarlo o descargarlo.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="flex justify-end mt-5">
+
+                            <button
+                                className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    px-4
+                    py-2
+                    rounded-lg
+                    bg-sky-600
+                    text-white
+                    hover:bg-sky-700
+                    transition
+                "
+                            >
+
+                                <Download size={18} />
+
+                                Descargar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    {/* CREC */}
+
+                    <div className="border rounded-xl p-5 hover:border-sky-500 hover:shadow-sm transition">
+
+                        <div className="flex gap-4">
+
+                            <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
+
+                                <FileText
+                                    size={24}
+                                    className="text-sky-700"
+                                />
+
+                            </div>
+
+                            <div className="flex-1">
+
+                                <h3 className="font-semibold text-slate-800">
+                                    Constancia de Representante Legal
+                                </h3>
+
+                                <p className="text-sm text-slate-500 mt-1">
+                                    Siglas:
+                                    <span className="font-semibold text-slate-700 ml-1">
+                                        CREC
+                                    </span>
+                                </p>
+
+                                <p className="text-sm text-slate-500 mt-3">
+                                    Seleccione el formato para visualizarlo o descargarlo.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div className="flex justify-end mt-5">
+
+                            <button
+                                className="
+                    inline-flex
+                    items-center
+                    gap-2
+                    px-4
+                    py-2
+                    rounded-lg
+                    bg-sky-600
+                    text-white
+                    hover:bg-sky-700
+                    transition
+                "
+                            >
+
+                                <Download size={18} />
+
+                                Descargar
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div className="bg-white rounded-2xl border shadow-sm">
+
+                {/* Encabezado */}
+
+                <div className="px-6 py-5 border-b">
+
+                    <h2 className="text-xl font-semibold text-slate-800">
+                        Expediente digital
+                    </h2>
+
+                    <p className="text-sm text-slate-500 mt-1">
+                        Cargue los documentos generados para integrar el expediente digital.</p>
+
+                </div>
+                <div className="flex flex-col gap-3 p-4">
+                    {documentos.map((doc) => {
+
+                        const estado = obtenerEstado(doc);
+
+                        return (
+
+                            <div
+                                key={doc.id}
+                                className="bg-white rounded-xl border shadow-sm overflow-hidden"
+                            >
+
+                                {/* HEADER */}
+
+                                <div className="px-5 py-4 border-b flex justify-between items-start">
+
+                                    <div className="flex items-start gap-3">
+
+                                        <div className="h-11 w-11 rounded-xl bg-sky-100 flex items-center justify-center">
+
+                                            <FileText
+                                                size={20}
+                                                className="text-sky-700"
+                                            />
+
+                                        </div>
+
+                                        <div>
+
+                                            <h3 className="font-semibold text-slate-800">
+
+                                                {doc.nombre}
+
+                                            </h3>
+
+                                            <p className="text-sm text-slate-500 mt-1">
+
+                                                Documento requerido para integrar el expediente.
+
+                                            </p>
 
 
 
-                                    </div>
-                                    <div className="flex gap-2 mt-3">
+                                        </div>
+                                        <div className="flex gap-2 mt-3">
 
-                                        <span className={`
+                                            <span className={`
                                     flex
                                     px-3
                                     py-1
@@ -272,18 +424,18 @@ export default function Digitalizacion() {
                                     font-semibold
 
                                     ${doc.obligatorio
-                                                ? "bg-red-100 text-red-700"
-                                                : "bg-slate-100 text-slate-700"
-                                            }
+                                                    ? "bg-red-100 text-red-700"
+                                                    : "bg-slate-100 text-slate-700"
+                                                }
                                 `}>
 
-                                            {doc.obligatorio
-                                                ? "Obligatorio"
-                                                : "Opcional"}
+                                                {doc.obligatorio
+                                                    ? "Obligatorio"
+                                                    : "Opcional"}
 
-                                        </span>
+                                            </span>
 
-                                        <span className={`
+                                            <span className={`
                                  flex
                                  items-center
                                  px-3
@@ -295,20 +447,20 @@ export default function Digitalizacion() {
                                     ${estado.color}
                                 `}>
 
-                                            {estado.icono}
+                                                {estado.icono}
 
-                                            <span className="ml-1">
+                                                <span className="ml-1">
 
-                                                {estado.texto}
+                                                    {estado.texto}
+
+                                                </span>
 
                                             </span>
 
-                                        </span>
-
+                                        </div>
                                     </div>
-                                </div>
 
-                                <button
+                                    {/* <button
                                     className="
                             inline-flex
                             items-center
@@ -326,62 +478,51 @@ export default function Digitalizacion() {
 
                                     Descargar formato
 
-                                </button>
-
-                            </div>
-
-                            {/* CUERPO */}
-
-                            <div className="p-5">
-
-                                {/* Información */}
-
-                                <div className="flex justify-between items-center mb-4">
-
-                                    <div className="flex items-center gap-2">
-
-                                        <span className="text-xs uppercase font-medium text-slate-500">
-                                            Archivo:
-                                        </span>
-
-                                        <span className="text-sm font-medium text-slate-700 truncate">
-                                            {doc.archivo
-                                                ? doc.archivo.name
-                                                : "Sin documento"}
-                                        </span>
-
-                                    </div>
-
-                                    {
-
-                                        doc.archivo && (
-
-                                            <span className="text-sm text-slate-500">
-
-                                                {(doc.archivo.size / 1024 / 1024).toFixed(2)} MB
-
-                                            </span>
-
-                                        )
-
-                                    }
+                                </button> */}
 
                                 </div>
 
-                                {/* Drag */}
-                                {
-                                    !doc.archivo ? (
+                                {/* CUERPO */}
 
-                                        <label>
+                                <div className="p-5">
 
-                                            <input
-                                                hidden
-                                                type="file"
-                                                accept=".pdf,.png,.jpg,.jpeg"
-                                                onChange={(e) =>
-                                                    seleccionarArchivo(doc.id, e.target.files?.[0])
-                                                }
-                                            />
+                                    {/* Información */}
+
+                                    <div className="flex justify-between items-center mb-4">
+
+                                        <div className="flex items-center gap-2">
+
+                                            <span className="text-xs uppercase font-medium text-slate-500">
+                                                Archivo:
+                                            </span>
+
+                                            <span className="text-sm font-medium text-slate-700 truncate">
+                                                {doc.archivo
+                                                    ? doc.archivo.name
+                                                    : "Sin documento"}
+                                            </span>
+
+                                        </div>
+
+                                        {
+
+                                            doc.archivo && (
+
+                                                <span className="text-sm text-slate-500">
+
+                                                    {(doc.archivo.size / 1024 / 1024).toFixed(2)} MB
+
+                                                </span>
+
+                                            )
+
+                                        }
+
+                                    </div>
+
+                                    {/* Drag */}
+                                    {
+                                        !doc.archivo ? (
 
                                             <label>
 
@@ -394,8 +535,19 @@ export default function Digitalizacion() {
                                                     }
                                                 />
 
-                                                <div
-                                                    className="
+                                                <label>
+
+                                                    <input
+                                                        hidden
+                                                        type="file"
+                                                        accept=".pdf,.png,.jpg,.jpeg"
+                                                        onChange={(e) =>
+                                                            seleccionarArchivo(doc.id, e.target.files?.[0])
+                                                        }
+                                                    />
+
+                                                    <div
+                                                        className="
             h-20
             rounded-xl
             border-2
@@ -410,59 +562,59 @@ export default function Digitalizacion() {
             justify-center
             gap-3
         "
-                                                >
+                                                    >
 
-                                                    <UploadCloud
-                                                        size={26}
-                                                        className="text-sky-600"
-                                                    />
+                                                        <UploadCloud
+                                                            size={26}
+                                                            className="text-sky-600"
+                                                        />
 
-                                                    <div>
+                                                        <div>
 
-                                                        <p className="font-medium text-sm">
-                                                            Arrastre un archivo aquí
-                                                        </p>
+                                                            <p className="font-medium text-sm">
+                                                                Arrastre un archivo aquí
+                                                            </p>
 
-                                                        <p className="text-xs text-slate-500">
-                                                            o haga clic para seleccionarlo
-                                                        </p>
+                                                            <p className="text-xs text-slate-500">
+                                                                o haga clic para seleccionarlo
+                                                            </p>
+
+                                                        </div>
 
                                                     </div>
 
-                                                </div>
+                                                </label>
 
                                             </label>
 
-                                        </label>
+                                        ) : (
 
-                                    ) : (
+                                            <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
 
-                                        <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
+                                                <div className="flex justify-between items-center">
 
-                                            <div className="flex justify-between items-center">
+                                                    <div className="flex items-center gap-3">
 
-                                                <div className="flex items-center gap-3">
+                                                        <CheckCircle2
+                                                            className="text-emerald-600"
+                                                            size={22}
+                                                        />
 
-                                                    <CheckCircle2
-                                                        className="text-emerald-600"
-                                                        size={22}
-                                                    />
+                                                        <div>
 
-                                                    <div>
+                                                            <p className="font-medium text-emerald-700">
+                                                                Documento cargado correctamente
+                                                            </p>
 
-                                                        <p className="font-medium text-emerald-700">
-                                                            Documento cargado correctamente
-                                                        </p>
+                                                            <p className="text-sm text-slate-500">
+                                                                {doc.archivo.name}
+                                                            </p>
 
-                                                        <p className="text-sm text-slate-500">
-                                                            {doc.archivo.name}
-                                                        </p>
+                                                        </div>
 
                                                     </div>
 
-                                                </div>
-
-                                                {/* <label>
+                                                    {/* <label>
 
                                                     <input
                                                         hidden
@@ -481,20 +633,20 @@ export default function Digitalizacion() {
 
                                                 </label> */}
 
+                                                </div>
+
                                             </div>
 
-                                        </div>
-
-                                    )
-                                }
+                                        )
+                                    }
 
 
-                                {/* Acciones */}
-                                {doc.archivo && (
-                                    <div className="flex justify-end gap-2 mt-4">
+                                    {/* Acciones */}
+                                    {doc.archivo && (
+                                        <div className="flex justify-end gap-2 mt-4">
 
-                                        <button
-                                            className="
+                                            <button
+                                                className="
                                 inline-flex
                                 items-center
                                 gap-2
@@ -505,19 +657,19 @@ export default function Digitalizacion() {
                                 hover:bg-slate-50
                                 text-sm
                             "
-                                        >
+                                            >
 
-                                            <Eye size={16} />
+                                                <Eye size={16} />
 
-                                            Vista previa
+                                                Vista previa
 
-                                        </button>
+                                            </button>
 
 
 
-                                        <button
-                                            onClick={() => eliminarArchivo(doc.id)}
-                                            className="
+                                            <button
+                                                onClick={() => eliminarArchivo(doc.id)}
+                                                className="
         inline-flex
         items-center
         gap-2
@@ -529,23 +681,22 @@ export default function Digitalizacion() {
         hover:bg-red-100
         text-sm
     "
-                                        >
-                                            <Trash2 size={16} />
-                                            Eliminar
-                                        </button>
+                                            >
+                                                <Trash2 size={16} />
+                                                Eliminar
+                                            </button>
 
-                                    </div>
-                                )}
+                                        </div>
+                                    )}
+                                </div>
+
                             </div>
 
-                        </div>
+                        );
 
-                    );
-
-                })}
-
+                    })}
+                </div>
             </div>
-
         </div>
     )
 }

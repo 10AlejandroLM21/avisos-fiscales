@@ -122,7 +122,7 @@ export default function AvisosFiscales() {
         return "Ejecutar Cambio de Domicilio";
 
       case "Cambio de Nombre, Denominación o Razón Social":
-        return "Ejecutar Cambio de Nombre";
+        return "Ejecutar Cambio";
 
       case "Cambio de Representante Legal":
         return "Ejecutar Cambio de Representante";
@@ -283,8 +283,23 @@ export default function AvisosFiscales() {
       nombres: "",
     });
 
-  const [nuevosRepresentantes, setNuevosRepresentantes] =
-    useState([]);
+  const [nuevosRepresentantes, setNuevosRepresentantes] = useState([
+    {
+      id: 1,
+      rfc: "PEMJ900315AB2",
+      curp: "PEMJ900315HTSRRN09",
+      nombres: "Juan Carlos",
+      apellidoPaterno: "Pérez",
+      apellidoMaterno: "Martínez",
+      correoElectronico: "juan.perez@empresa.com.mx",
+      telefono: "9931234567",
+      tipoAcreditacion: "Poder Notarial",
+      documentoProtocolizado: "Escritura Pública No. 1245",
+      domicilio:
+        "Av. Paseo Tabasco No. 120, Col. Centro, C.P. 86000, Centro, Tabasco",
+      fechaRegistro: "12/07/2026",
+    },
+  ]);
   const [representantesActuales, setRepresentantesActuales] = useState([
     {
       id: 1,
@@ -2754,7 +2769,7 @@ export default function AvisosFiscales() {
 
                 titulo="Cambio de Domicilio Fiscal"
 
-                descripcion="Actualice el domicilio fiscal registrado."
+                descripcion="Consulte el domicilio fiscal actual y capture la nueva información"
 
                 icono="MapPinned"
 
@@ -2817,7 +2832,7 @@ export default function AvisosFiscales() {
     hover:bg-slate-50
   "
                       >
-                        Ver detalle completo
+                        Ver detalle de domicilio actual
                       </button>
 
                     </div>
@@ -3219,7 +3234,7 @@ export default function AvisosFiscales() {
                   </p>
                 </div>
 
-                <div className="grid md:grid-cols-2  gap-5 p-5">
+                <div className="grid md:grid-cols-2 gap-5 p-5">
 
                   {representantesActuales.map((representante) => {
 
@@ -3229,107 +3244,127 @@ export default function AvisosFiscales() {
 
                       <div
                         key={representante.id}
-                        onClick={() => {
-
-                          if (seleccionado) {
-                            toggleRepresentanteBaja(representante.id);
-                            return;
-                          }
-
-                          setRepresentantePendiente(representante);
-                          setModalConfirmacion(true);
-
-                        }}
                         className={`
-          relative cursor-pointer rounded-2xl border transition-all duration-200 overflow-hidden
-          ${seleccionado
-                            ? "border-red-500 bg-red-50 shadow-lg"
-                            : "border-slate-200 bg-white hover:border-sky-300 hover:shadow-md"
+                relative
+                bg-white
+                rounded-2xl
+                border
+                shadow-sm
+                transition-all
+                overflow-hidden
+                ${seleccionado
+                            ? "border-red-300 bg-red-50 shadow-md"
+                            : "border-sky-200 hover:shadow-md hover:border-sky-300"
                           }
-        `}
+            `}
                       >
 
-                        {/* Barra superior */}
+                        {/* Barra lateral */}
 
                         <div
-                          className={`h-2 ${seleccionado ? "bg-red-500" : "bg-emerald-500"
-                            }`}
+                          className={`
+                    absolute left-0 top-0 h-full w-2
+                    ${seleccionado ? "bg-red-500" : "bg-emerald-500"}
+                `}
                         />
 
-                        <div className="p-5">
+                        <div className="p-5 pl-6">
 
-                          {/* Encabezado */}
+                          {/* Header */}
 
-                          <div className="flex justify-between items-start">
+                          <div className="flex items-start justify-between">
 
-                            <div className="flex gap-4">
+                            <div className="flex items-center gap-4">
 
                               <div
                                 className={`
-                  h-14 w-14 rounded-full flex items-center justify-center
-                  ${seleccionado
+                                h-14
+                                w-14
+                                rounded-xl
+                                flex
+                                items-center
+                                justify-center
+                                ${seleccionado
                                     ? "bg-red-100 text-red-700"
                                     : "bg-sky-100 text-sky-700"
                                   }
-                `}
+                            `}
                               >
+
                                 <UserRound size={26} />
+
                               </div>
 
                               <div>
 
-                                <h4 className="font-semibold text-slate-800 text-base">
-                                  {representante.nombre}
-                                </h4>
+                                <div className="flex items-center gap-2">
 
-                                <p className="text-sm text-slate-500">
+                                  <h4 className="font-semibold text-slate-800 text-lg">
+
+                                    {representante.nombre}
+
+                                  </h4>
+
+                                  <span
+                                    className={`
+                                        px-2 py-1 rounded-full text-xs font-medium
+                                        ${seleccionado
+                                        ? "bg-red-100 text-red-700"
+                                        : "bg-emerald-100 text-emerald-700"
+                                      }
+                                    `}
+                                  >
+
+                                    {seleccionado ? "Baja" : "Vigente"}
+
+                                  </span>
+
+                                </div>
+
+                                <p className="text-sm text-slate-500 mt-1">
+
                                   Representante Legal
+
                                 </p>
 
                               </div>
 
                             </div>
 
-                            {seleccionado ? (
-
-                              <span className="px-3 py-1 rounded-full bg-red-100 text-red-700 text-xs font-semibold">
-                                Baja
-                              </span>
-
-                            ) : (
-
-                              <span className="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-xs font-semibold">
-                                Vigente
-                              </span>
-
-                            )}
-
                           </div>
 
-                          {/* Información */}
+                          {/* Datos */}
 
-                          <div className="mt-6 space-y-3 text-sm">
+                          <div className="mt-5 grid md:grid-cols-2 gap-3">
 
-                            <div className="flex justify-between">
+                            <div className="bg-slate-50 rounded-xl px-4 py-3">
 
-                              <span className="text-slate-500">
+                              <span className="text-xs text-slate-500 block">
+
                                 RFC
+
                               </span>
 
                               <span className="font-medium text-slate-800">
+
                                 {representante.rfc}
+
                               </span>
 
                             </div>
 
-                            <div className="flex justify-between">
+                            <div className="bg-slate-50 rounded-xl px-4 py-3">
 
-                              <span className="text-slate-500">
+                              <span className="text-xs text-slate-500 block">
+
                                 CURP
+
                               </span>
 
                               <span className="font-medium text-slate-800">
+
                                 {representante.curp}
+
                               </span>
 
                             </div>
@@ -3339,40 +3374,70 @@ export default function AvisosFiscales() {
                           {/* Footer */}
 
                           <div className="mt-6 pt-4 border-t flex justify-between items-center">
-
                             <button
                               type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
+                              onClick={() => {
+
                                 setRepresentanteSeleccionado(representante);
                                 setModalRepresentante(true);
+
                               }}
-                              className="text-sky-700 hover:text-sky-900 text-sm font-medium"
+                              className="
+            inline-flex
+            items-center
+            gap-2
+            text-sky-700
+            hover:text-sky-900
+            text-sm
+            font-medium
+            transition
+            bg-sky-100
+            py-2
+            px-4
+            rounded-xl
+        "
                             >
+
+                              <Eye size={17} />
+
                               Ver información
+
                             </button>
 
                             <button
                               type="button"
-                              onClick={(e) => {
-                                e.stopPropagation();
+                              onClick={() => {
 
                                 if (seleccionado) {
+
                                   toggleRepresentanteBaja(representante.id);
+
                                 } else {
+
                                   setRepresentantePendiente(representante);
                                   setModalConfirmacion(true);
+
                                 }
+
                               }}
                               className={`
-                px-4 py-2 rounded-lg text-sm font-medium transition
-                ${seleccionado
+                            px-4
+                            py-2
+                            rounded-xl
+                            text-sm
+                            font-medium
+                            transition
+                            ${seleccionado
                                   ? "bg-red-600 hover:bg-red-700 text-white"
                                   : "bg-slate-100 hover:bg-slate-200 text-slate-700"
                                 }
-              `}
+                        `}
                             >
-                              {seleccionado ? "Quitar baja" : "Dar de baja"}
+
+                              {seleccionado
+                                ? "Quitar baja"
+                                : "Dar de baja"}
+
                             </button>
 
                           </div>
@@ -3540,30 +3605,77 @@ export default function AvisosFiscales() {
               {/* NUEVOS REPRESENTANTES */}
               <div className="bg-white rounded-xl border shadow-sm">
 
-                <div className="border-b px-6 py-5 flex justify-between items-center">
+                <div className="border-b px-6 py-5">
 
-                  <div>
-                    <h3 className="text-lg font-semibold text-slate-800">
-                      Nuevos Representantes Legales
-                    </h3>
+                  {/* Encabezado */}
 
-                    <p className="text-sm text-slate-500 mt-1">
-                      Registre los representantes legales que serán incorporados (Opcional).
-                    </p>
+                  <div className="flex items-start justify-between gap-6">
+
+                    <div>
+
+                      <h3 className="text-lg font-semibold text-slate-800">
+                        Nuevos representantes legales
+                      </h3>
+
+                      <p className="text-sm text-slate-500 mt-1 max-w-2xl">
+                        Registre el representante legal que sustituirá al representante o a los representantes legales dados de baja.
+                      </p>
+
+                    </div>
+
+                    {!mostrarFormularioRepresentante && (
+
+                      <button
+                        type="button"
+                        onClick={() => setMostrarFormularioRepresentante(true)}
+                        disabled={nuevosRepresentantes.length > 0}
+                        className="
+                                  shrink-0
+                                  inline-flex
+                                  items-center
+                                  gap-2
+                                  px-4
+                                  py-2
+                                  rounded-lg
+                                  bg-sky-700
+                                  text-white
+                                  hover:bg-sky-800
+                                  transition
+                                  disabled:bg-gray-300
+                                "
+                      >
+
+                        + Nuevo representante legal
+
+                      </button>
+
+                    )}
+
                   </div>
 
-                  {!mostrarFormularioRepresentante && (
-                    <button
-                      type="button"
-                      onClick={() =>
-                        setMostrarFormularioRepresentante(true)
-                      }
-                      className="px-4 py-2 bg-sky-700 text-white rounded-lg"
-                    >
-                      + Nuevo representante Legal
-                    </button>
-                  )
-                  }
+                  {/* Aviso */}
+
+                  <div className="mt-5 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+
+                    <AlertTriangle
+                      size={18}
+                      className="mt-0.5 shrink-0 text-amber-600"
+                    />
+
+                    <div>
+
+                      <p className="text-sm font-semibold text-amber-800">
+                        Importante
+                      </p>
+
+                      <p className="mt-1 text-sm text-amber-700">
+                        Solo se permite incorporar un representante legal por trámite.
+                      </p>
+
+                    </div>
+
+                  </div>
+
                 </div>
 
                 <div className="p-6 space-y-4">
@@ -3584,19 +3696,18 @@ export default function AvisosFiscales() {
                   )}
                   {/* REPRESENTANTES A INCORPORAR */}
 
-                  {nuevosRepresentantes.length > 0 && (
+                  {nuevosRepresentantes.length > 0 ? (
 
-                    <div className="p-6 grid md:grid-cols-2 gap-4">
+                    <div className="p-1 grid md:grid-cols-2 gap-4">
 
                       {nuevosRepresentantes.map((item) => (
                         <div
                           key={item.id}
-                          className="
-    relative bg-white rounded-2xl border
-    border-sky-200 shadow-sm
-    hover:shadow-md transition-all
-    overflow-hidden
-  "
+                          className=" relative bg-white rounded-2xl border
+                                      border-sky-200 shadow-sm
+                                      hover:shadow-md transition-all
+                                      overflow-hidden
+                                              "
                         >
 
                           {/* Barra lateral */}
@@ -3644,7 +3755,7 @@ export default function AvisosFiscales() {
 
                               </div>
 
-                              <button
+                              {/* <button
                                 type="button"
                                 onClick={() => eliminarRepresentante(item.id)}
                                 className="
@@ -3655,7 +3766,7 @@ export default function AvisosFiscales() {
         "
                               >
                                 <Trash2 size={18} />
-                              </button>
+                              </button> */}
 
                             </div>
 
@@ -3684,20 +3795,100 @@ export default function AvisosFiscales() {
 
                             </div>
 
+                            {/* Footer */}
+
+                            <div className="mt-6 pt-4 border-t flex justify-between items-center">
+
+                              <button
+                                type="button"
+                                onClick={() => {
+
+                                  setRepresentanteSeleccionado(item);
+                                  setModalRepresentante(true);
+
+                                }}
+                                className="
+            inline-flex
+            items-center
+            gap-2
+            text-sky-700
+            hover:text-sky-900
+            text-sm
+            font-medium
+            transition
+            bg-sky-100
+            py-2
+            px-4
+            rounded-xl
+        "
+                              >
+
+                                <Eye size={17} />
+
+                                Ver información
+
+                              </button>
+
+                              <button
+                                type="button"
+                                onClick={() => eliminarRepresentante(item.id)}
+                                className="
+                                          inline-flex
+                                          items-center
+                                          gap-2
+                                          rounded-xl
+                                          bg-red-50
+                                          px-4
+                                          py-2
+                                          text-sm
+                                          font-medium
+                                          text-red-700
+                                          transition
+                                          hover:bg-red-100
+                                      "
+                              >
+                                <Trash2 size={16} />
+                                Eliminar
+                              </button>
+
+                            </div>
                           </div>
 
                         </div>
                       ))}
 
                     </div>
+                  ) : (
+
+                    <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-8 py-12">
+
+                      <div className="flex flex-col items-center text-center">
+
+                        <div className="h-16 w-16 rounded-2xl bg-sky-100 flex items-center justify-center">
+
+                          <UserPlus className="text-sky-700" size={30} />
+
+                        </div>
+
+                        <h3 className="mt-5 text-lg font-semibold text-slate-800">
+                          Sin representante legal
+                        </h3>
+
+                        <p className="mt-2 max-w-md text-sm text-slate-500">
+                          Aún no se ha incorporado un representante legal. Seleccione
+                          <strong> "Nuevo representante legal"</strong> para agregar uno al
+                          trámite.
+                        </p>
+
+                      </div>
+
+                    </div>
+
                   )}
 
                 </div>
 
               </div>
-
-
-
 
             </div>
           )
@@ -3707,17 +3898,42 @@ export default function AvisosFiscales() {
         {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
           activeStep === 4 && (
             <div>
-
+              <div className="mb-4">
+                <HeaderModulo
+                  titulo="Cambio de Nombre, Denominación o Razón Social"
+                  descripcion="Actualice la información correspondiente al nombre, denominación o razón social del contribuyente."
+                  icono="UserRoundPen"
+                  color="sky"
+                />
+              </div>
               {tipoPersona === "fisica" && (
-                <div className="flex flex-col gap-4">
-                  <HeaderModulo
-                    titulo="Cambio de Nombre"
-                    descripcion="Actualice el nombre registrado del contribuyente conforme a la documentación presentada."
-                    icono="UserRoundPen"
-                    color="blue"
-                  />
-                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+                <div className="flex flex-col gap-4 mt-4">
 
+                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+                    <div className="px-6 py-5 border-b flex items-start gap-4">
+
+                      <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
+
+                        <UserRound
+                          size={24}
+                          className="text-sky-700"
+                        />
+
+                      </div>
+
+                      <div>
+
+                        <h3 className="text-lg font-semibold text-slate-800">
+                          Nuevo nombre
+                        </h3>
+
+                        <p className="text-sm text-slate-500 mt-1">
+                          Capture la información correspondiente al nuevo nombre del contribuyente.
+                        </p>
+
+                      </div>
+
+                    </div>
                     {/* Body */}
 
                     <div className="p-6">
@@ -3929,27 +4145,39 @@ export default function AvisosFiscales() {
               {/* NUEVA DENOMINACIÓN O RAZÓN SOCIAL */}
               {tipoPersona === "moral" && (
 
-                <div className="flex flex-col gap-5">
-                  <HeaderModulo
-                    titulo="Cambio de Denominación o Razón Social"
-                    descripcion="Actualice la denominación o razón social registrada de la persona moral conforme a la documentación presentada."
-                    icono="UserRoundPen"
-                    color="blue"
-                  />
-                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
+                <div>
+                  <div className="bg-white rounded-2xl border border-sky-200 shadow-sm overflow-hidden">
 
-                    {/* Header */}
+                    <div className="px-6 py-5 border-b flex items-start gap-4">
+                      <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
 
+                        <Building2
+                          size={24}
+                          className="text-sky-700"
+                        />
 
+                      </div>
 
-                    {/* Body */}
+                      <div>
+
+                        <h3 className="text-lg font-semibold text-slate-800">
+                          Nueva denominación o razón social
+                        </h3>
+
+                        <p className="text-sm text-slate-500 mt-1">
+                          Capture la información correspondiente a la nueva Denominación o razón social del contribuyente.
+                        </p>
+
+                      </div>
+
+                    </div>
 
                     <div className="p-6">
 
                       <div className="grid md:grid-cols-2 gap-5">
 
-                        {/* RFC */}
                         <div>
+
                           <label className="block text-sm font-medium text-slate-700 mb-2">
                             RFC
                           </label>
@@ -3962,31 +4190,22 @@ export default function AvisosFiscales() {
 
                         </div>
 
-                        {/* Régimen */}
-
                         <div>
 
                           <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Régimen Capital
+                            Régimen de Capital
                           </label>
 
-                          <select
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          >
+                          <select className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none">
 
                             <option>S.A. de C.V.</option>
-
                             <option>S. de R.L.</option>
-
                             <option>S.C.</option>
-
                             <option>A.C.</option>
 
                           </select>
 
                         </div>
-
-                        {/* Razón Social */}
 
                         <div className="md:col-span-2">
 
@@ -4001,8 +4220,6 @@ export default function AvisosFiscales() {
                           />
 
                         </div>
-
-                        {/* Nombre Comercial */}
 
                         <div className="md:col-span-2">
 
@@ -4024,17 +4241,21 @@ export default function AvisosFiscales() {
 
                   </div>
 
-                  {/* DATOS DE PROTOCOLIZACIÓN DEL DOCUMENTO */}
+                  <div className="mt-4">
 
-                  <DocumentoProtocolizado
-                    tipoDocumento={tipoDocumento}
-                    setTipoDocumento={setTipoDocumento}
-                    documento={documento}
-                    setDocumento={setDocumento}
-                    descripcion="Capture la información del documento que acredita el cambio de denominación o razón social del contribuyente."
-                    resetKey={true}
-                  />
+                    <DocumentoProtocolizado
+                      tipoDocumento={tipoDocumento}
+                      setTipoDocumento={setTipoDocumento}
+                      documento={documento}
+                      setDocumento={setDocumento}
+                      titulo="Datos de protocolización del documento"
+                      descripcion="Capture la información del documento que acredita el cambio de denominación o razón social del contribuyente."
+                      resetKey={true}
+                    />
+
+                  </div>
                 </div>
+
               )
               }
             </div>

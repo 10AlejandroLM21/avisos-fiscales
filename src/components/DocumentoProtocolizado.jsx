@@ -10,7 +10,8 @@ export default function DocumentoProtocolizado({
     documento,
     setDocumento,
     descripcion,
-    resetKey
+    resetKey, 
+    titulo
 }) {
     useEffect(() => {
         if (resetKey) {
@@ -23,7 +24,7 @@ export default function DocumentoProtocolizado({
 
             {/* Header */}
 
-            <div className="bg-slate-50 border-b px-6 py-5">
+            <div className="bg-white border-b px-6 py-5">
 
                 <div className="flex items-center gap-4">
 
@@ -37,7 +38,7 @@ export default function DocumentoProtocolizado({
                     <div>
 
                         <h3 className="font-semibold text-lg text-slate-800">
-                            Documento Protocolizado
+                            {titulo}
                         </h3>
 
                         <p className="text-sm text-slate-500">
