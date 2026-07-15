@@ -771,15 +771,6 @@ export default function AvisosFiscales() {
 
     botonesIzquierda = [
 
-      {
-        etiqueta: "Regresar",
-        icono: "ArrowLeft",
-        className: "bg-slate-600 text-white hover:bg-slate-700",
-        onClick: () => {
-          setVistaPrevia(true);
-        }
-      }
-
     ];
 
   } else if (activeStep === 4) {
@@ -4269,7 +4260,7 @@ export default function AvisosFiscales() {
 
               titulo="Suspensión de Actividades"
 
-              descripcion="Registre la suspensión de actividades del contribuyente y actualice su situación fiscal conforme a la información proporcionada."
+              // descripcion="Registre la suspensión de actividades del contribuyente y actualice su situación fiscal conforme a la información proporcionada."
 
               icono="PauseCircle"
 
