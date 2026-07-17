@@ -2316,9 +2316,9 @@ export default function AvisosFiscales() {
                     Tipos de Avisos
                   </h3>
 
-                  <p className="text-slate-500 mt-2 font-medium">
+                  {/* <p className="text-slate-500 mt-2 font-medium">
                     Seleccione el aviso a presentar
-                  </p>
+                  </p> */}
                 </div>
 
 
