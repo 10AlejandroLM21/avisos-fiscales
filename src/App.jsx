@@ -891,7 +891,7 @@ export default function AvisosFiscales() {
 
                 <p className="text-sm text-slate-500 mt-1">
                   Seleccione el tipo de persona y el método de búsqueda para
-                  localizar al contribuyente.
+                  localizar al contribuyente registrado en el Registro Estatal de Contribuyentes.
                 </p>
               </div>
 
@@ -1297,10 +1297,10 @@ export default function AvisosFiscales() {
                 <h3 className="text-xl font-semibold text-slate-800">
                   Datos del Contribuyente
                 </h3>
-
+{/* 
                 <p className="text-slate-500 mt-2">
                   Información general del contribuyente seleccionado.
-                </p>
+                </p> */}
               </div>
 
               <div className="p-6 space-y-8">
