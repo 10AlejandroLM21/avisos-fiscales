@@ -1776,7 +1776,7 @@ export default function AvisosFiscales() {
 
                             {/* Footer */}
 
-                            <div className="mt-5 pt-4 border-t flex justify-between items-center">
+                            {/* <div className="mt-5 pt-4 border-t flex justify-between items-center">
 
                               <span className="text-xs text-slate-500">
 
@@ -1790,7 +1790,7 @@ export default function AvisosFiscales() {
 
                               </span>
 
-                            </div>
+                            </div> */}
 
                           </div>
 
