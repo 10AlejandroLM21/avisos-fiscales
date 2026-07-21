@@ -1,6 +1,7 @@
 import {
     Home,
     ScrollText,
+    Smartphone,
     UserRound,
     X
 } from "lucide-react";
@@ -174,20 +175,76 @@ export default function ModalRepresentanteLegal({
                                         disabled
                                     />
 
-                                    <div className="md:col-span-2">
+                                </div>
 
-                                        <CampoInput
-                                            etiqueta="Correo Electrónico"
-                                            value={representante.correoElectronico}
-                                            disabled
+                            </div>
+
+                            <div className="px-6 py-5 bg-slate-50">
+
+                                <div className="flex items-center gap-3">
+
+                                    <div className="h-10 w-10 rounded-lg bg-sky-100 flex items-center justify-center">
+
+                                        <Smartphone
+                                            className="text-sky-700"
+                                            size={20}
                                         />
 
                                     </div>
 
+                                    <div>
+
+                                        <h3 className="font-semibold text-slate-800">
+
+                                            Datos de Contacto
+
+                                        </h3>
+
+                                        <p className="text-sm text-slate-500">
+
+                                            Información general registrada del representante legal.
+
+                                        </p>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div className="p-6">
+
+                                <div className="grid md:grid-cols-2 gap-5">
+
+                                    <CampoInput
+                                        etiqueta="Correo Electrónico"
+                                        disabled
+                                    />
+                                    <CampoInput
+                                        etiqueta="Correo Electrónico Alternativo"
+                                        disabled
+                                    />
+
                                     <CampoInput
                                         etiqueta="Teléfono"
-                                        value={representante.telefono}
+
                                         disabled
+                                    />
+
+                                    <CampoInput
+                                        etiqueta="Teléfono Alternativo"
+                                        disabled
+                                    />
+                                    <CampoSelect
+                                        etiqueta="Tipo de teléfono alternativo"
+                                        obligatorio
+                                        value="F"
+                                        disabled
+                                        opciones={[
+                                            { value: "", label: "Seleccione..." },
+                                            { value: "F", label: "Fijo" },
+                                            { value: "M", label: "Movil" },
+                                        ]}
                                     />
 
                                 </div>

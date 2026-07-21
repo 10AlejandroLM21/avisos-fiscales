@@ -28,7 +28,7 @@ import {
 } from "lucide-react";
 import DatosRepresentante from "./DatosRepresentante";
 import DocumentoProtocolizado from "./DocumentoProtocolizado";
-import DomicilioFiscal from "./DomicilioFiscal";
+import DomicilioFiscalForm from "./DomicilioFiscalForm";
 import React, { useState } from "react";
 
 export default function ModalFormulario({
@@ -192,7 +192,7 @@ export default function ModalFormulario({
 
                         {pasoModal === 3 && (
 
-                            <DomicilioFiscal />
+                            <DomicilioFiscalForm />
 
                         )}
 
@@ -233,7 +233,7 @@ export default function ModalFormulario({
                                 onClick={onGuardar}
                                 className="px-5 py-2.5 rounded-lg bg-green-700 text-white"
                             >
-                                Registrar
+                                Siguiente
                             </button>
 
                         )}

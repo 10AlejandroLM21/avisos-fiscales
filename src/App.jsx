@@ -55,7 +55,8 @@ import {
   Eye,
   BadgeCheck,
   Check,
-  MapPinned
+  MapPinned,
+  CalendarDays
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
@@ -1096,7 +1097,7 @@ export default function AvisosFiscales() {
                 </h3>
 
                 <p className="text-slate-500 mt-2">
-                  Seleccione al contribuyente para dar inicio a su aviso fiscal.
+                  Seleccione al contribuyente para dar inicio con el aviso fiscal.
                 </p>
               </div>
 
@@ -1125,7 +1126,7 @@ export default function AvisosFiscales() {
                       </thead>
 
                       <tbody>
-                        <tr className="hover:bg-sky-50">
+                        {/* <tr className="hover:bg-sky-50">
                           <td className="border p-3 text-center">
                             <input type="checkbox" />
                           </td>
@@ -1143,7 +1144,7 @@ export default function AvisosFiscales() {
                             </span>
                           </td>
                           <td className="border p-3">SIOX</td>
-                        </tr>
+                        </tr> */}
 
                         <tr className="hover:bg-sky-50">
                           <td className="border p-3 text-center">
@@ -1205,52 +1206,77 @@ export default function AvisosFiscales() {
                           <td className="border p-3">
                             COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">
-                            COMSUR
-                          </td>
-                          <td className="border p-3">
-                            15/03/2021
-                          </td>
+                          <td className="border p-3">COMSUR MATRIZ</td>
+                          <td className="border p-3">15/03/2021</td>
                           <td className="border p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">
-                            REC
-                          </td>
-                          <td className="border p-3">
-                            PRINCIPAL
-                          </td>
+                          <td className="border p-3">SIOX</td>
+                          <td className="border p-3">PRINCIPAL</td>
                         </tr>
 
                         <tr className="hover:bg-sky-50">
                           <td className="border p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Unidad Económica</td>
-                          <td className="border p-3">TSO220614B22</td>
+                          <td className="border p-3">Moral</td>
+                          <td className="border p-3">CSO210315AA1</td>
                           <td className="border p-3">
-                            TECNOLOGÍAS DEL SURESTE
+                            COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">
-                            TDS
-                          </td>
-                          <td className="border p-3">
-                            14/06/2022
-                          </td>
+                          <td className="border p-3">COMSUR</td>
+                          <td className="border p-3">15/03/2021</td>
                           <td className="border p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">
-                            REC
-                          </td>
-                          <td className="border p-3">
-                            SECUNDARIA
-                          </td>
+                          <td className="border p-3">SIOX</td>
+                          <td className="border p-3">SECUNDARIO</td>
                         </tr>
+
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Moral</td>
+                          <td className="border p-3">CSO210315AA1</td>
+                          <td className="border p-3">
+                            COMERCIALIZADORA DEL SUR S.A. DE C.V.
+                          </td>
+                          <td className="border p-3">COMSUR</td>
+                          <td className="border p-3">15/03/2021</td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">SIOX</td>
+                          <td className="border p-3">SECUNDARIO</td>
+                        </tr>
+
+                        <tr className="hover:bg-sky-50">
+                          <td className="border p-3 text-center">
+                            <input type="checkbox" />
+                          </td>
+                          <td className="border p-3">Moral</td>
+                          <td className="border p-3">CSO210315AA1</td>
+                          <td className="border p-3">
+                            COMERCIALIZADORA DEL SUR S.A. DE C.V.
+                          </td>
+                          <td className="border p-3">COMSUR</td>
+                          <td className="border p-3">15/03/2021</td>
+                          <td className="border p-3">
+                            <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
+                              ACTIVO
+                            </span>
+                          </td>
+                          <td className="border p-3">SIOX</td>
+                          <td className="border p-3">SECUNDARIO</td>
+                        </tr>
+
                       </tbody>
                     </table>
                   </div>
@@ -1297,7 +1323,7 @@ export default function AvisosFiscales() {
                 <h3 className="text-xl font-semibold text-slate-800">
                   Datos del Contribuyente
                 </h3>
-{/* 
+                {/* 
                 <p className="text-slate-500 mt-2">
                   Información general del contribuyente seleccionado.
                 </p> */}
@@ -1342,6 +1368,7 @@ export default function AvisosFiscales() {
                               className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
+
                           <div>
                             <label className="text-sm font-medium text-slate-600">
                               CURP
@@ -1352,6 +1379,7 @@ export default function AvisosFiscales() {
                               className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
+
                           <div>
                             <label className="text-sm font-medium text-slate-600">
                               Primer Apellido
@@ -1395,6 +1423,7 @@ export default function AvisosFiscales() {
                               className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
+
                           <div className="col-span-3">
                             <label className="text-sm font-medium text-slate-600">
                               Régimen Fiscal
@@ -1402,6 +1431,27 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Régimen Simplificado de Confianza"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Nacionalidad
+                            </label>
+                            <input
+                              disabled
+                              value="Méxicana"
+                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                            />
+                          </div>
+                          <div>
+                            <label className="text-sm font-medium text-slate-600">
+                              Lugar de Nacimiento
+                            </label>
+                            <input
+                              disabled
+                              value="OC-OAXACA"
                               className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
@@ -1426,6 +1476,7 @@ export default function AvisosFiscales() {
                               className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
+
 
                         </div>
                       </div>
@@ -2250,15 +2301,7 @@ export default function AvisosFiscales() {
                     )}
 
                     {mostrarFormularioRepresentante && (
-                      // <RepresentanteLegalForm className="mt-5"
-                      //   titulo="Nuevo Representante Legal"
-                      //   onGuardar={() => {
-                      //     setMostrarFormularioRepresentante(false);
-                      //   }}
-                      //   onCancelar={() => {
-                      //     setMostrarFormularioRepresentante(false);
-                      //   }}
-                      // />
+
                       <FormularioRepresentanteLegal
                         abierto={mostrarFormularioRepresentante}
                         onClose={() => setMostrarFormularioRepresentante(false)}
@@ -2295,6 +2338,7 @@ export default function AvisosFiscales() {
                 {
                   etiqueta: "Siguiente",
                   icono: "ArrowRight",
+                  disabled: !(representanteSeleccionado || representacion === "propio"),
                   className: "bg-blue-600 text-white hover:bg-blue-700",
                   onClick: () => setActiveStep(3)
                 }
@@ -2324,7 +2368,7 @@ export default function AvisosFiscales() {
 
                 <div className="mx-4 mb-6 mt-4">
 
-                  <div className="bg-slate-50 border rounded-xl p-5">
+                  <div className="border border-slate-300 border-dashed bg-slate-100 rounded-xl p-5">
 
                     <div className="grid md:grid-cols-2 gap-6 items-center">
 
@@ -2347,6 +2391,7 @@ export default function AvisosFiscales() {
                         </div>
 
                       </div>
+
                       <div>
 
                         <label className="block text-sm font-semibold text-slate-700 mb-2">
@@ -2402,7 +2447,7 @@ export default function AvisosFiscales() {
                       "Cambio de Nombre, Denominación o Razón Social",
                       "Cambio de Representante Legal",
                       "Aumento de Obligaciones",
-                      "Reanudación de Actividades",
+                      // "Reanudación de Actividades",
                       "Disminucion de Obligaciones",
                       "Suspensión de Actividades",
                       "Apertura de Establecimientos o Locales",
@@ -2457,7 +2502,19 @@ export default function AvisosFiscales() {
 
                 )
                 }
-
+                {!fechaAvisoSAT && (
+                  <div className="mx-4 mb-6">
+                    <div className="border border-dashed border-slate-300 rounded-xl bg-slate-100 py-16 px-8 text-center">
+                      <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-200">
+                        <CalendarDays className="h-7 w-7 text-slate-500" />
+                      </div>
+                      <p className="mt-2 max-w-xl mx-auto text-sm text-slate-500">
+                        Para consultar los avisos fiscales disponibles y continuar con el trámite,
+                        primero capture la <strong>Fecha del Aviso ante el SAT</strong>.
+                      </p>
+                    </div>
+                  </div>
+                )}
 
               </div>
 
@@ -2607,8 +2664,7 @@ export default function AvisosFiscales() {
                       </h4>
 
                       <p className="mt-1 text-sm text-amber-700">
-                        Revise la información del aviso descargado mediante la opción
-                        <strong> "Vista previa"</strong> antes de confirmar el trámite.
+                        Revise la información del aviso,  descargando la <strong>“VISTA PREVIA”</strong>, antes de confirmar.
                       </p>
                     </div>
                   </div>
