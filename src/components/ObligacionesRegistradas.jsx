@@ -5,30 +5,30 @@ const obligaciones = [
         id: 1,
         obligacion: "Cedular",
         actividades: [
-            "Alquiler de viviendas amuebladas",
-            "Servicios de hospedaje temporal",
-            "Arrendamiento de locales comerciales"
+            {
+                nombre: "Alquiler de viviendas amuebladas",
+                porcentaje: 5,
+            },
+            {
+                nombre: "Hospedaje temporal",
+                porcentaje: 15,
+            },
+            {
+                nombre: "Arrendamiento de locales comerciales",
+                porcentaje: 30,
+            },
         ],
-        porcentaje: 5
     },
     {
         id: 2,
         obligacion: "Demasías Caducas",
         actividades: [
-            "Casas de préstamo y empeño"
+            {
+                nombre: "Casas de préstamo y empeño",
+                porcentaje: 50,
+            },
         ],
-        porcentaje: 50
     },
-    {
-        id: 3,
-        obligacion: "Nómina",
-        actividades: [
-            "Administración y supervisión de construcción de inmuebles comerciales",
-            "Servicios de consultoría",
-            "Servicios administrativos"
-        ],
-        porcentaje: 45
-    }
 ];
 
 export default function ObligacionesSuspender() {
@@ -78,28 +78,22 @@ export default function ObligacionesSuspender() {
 
                 <div className="overflow-hidden rounded-xl border border-slate-200">
 
-                    <table className="w-full">
+                    <table className="w-full border-collapse">
 
                         <thead>
 
                             <tr className="bg-slate-100">
 
-                                <th className="px-5 py-3 text-left text-xs uppercase font-semibold text-slate-600">
-
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
                                     Obligación
-
                                 </th>
 
-                                <th className="px-5 py-3 text-left text-xs uppercase font-semibold text-slate-600">
-
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
                                     Actividad Económica
-
                                 </th>
 
-                                <th className="px-5 py-3 text-center text-xs uppercase font-semibold text-slate-600 w-36">
-
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
                                     Porcentaje
-
                                 </th>
 
                             </tr>
@@ -108,63 +102,57 @@ export default function ObligacionesSuspender() {
 
                         <tbody>
 
-                            {obligaciones.map((item) => (
+                            {obligaciones.map((obligacion) => (
 
-                                <tr
-                                    key={item.id}
-                                    className="border-t hover:bg-slate-50"
-                                >
+                                obligacion.actividades.map((actividad, index) => (
 
-                                    <td className="px-5 py-4 font-medium text-slate-800">
+                                    <tr
+                                        key={`${obligacion.id}-${index}`}
+                                        className="border-t hover:bg-slate-50"
+                                    >
 
-                                        {item.obligacion}
+                                        {index === 0 && (
 
-                                    </td>
+                                            <td
+                                                rowSpan={obligacion.actividades.length}
+                                                className="
+                                    px-5
+                                    py-4
+                                    align-top
+                                    font-semibold
+                                    text-slate-800
+                                    bg-slate-50
+                                    border-r
+                                    border-slate-200
+                                    w-60
+                                "
+                                            >
 
-                                    <td className="px-5 py-4">
+                                                {obligacion.obligacion}
 
-                                        <div className="flex flex-wrap gap-2">
+                                            </td>
 
-                                            {item.actividades.map((actividad, index) => (
+                                        )}
 
-                                                <span
-                                                    key={index}
-                                                    className="
-inline-flex
-items-center
-rounded-full
-bg-blue-100
-text-sky-700
-border
-border-sky-200
-px-3
-py-1
-text-xs
-font-medium
-"
-                                                >
+                                        <td className="px-5 py-4 border-r border-slate-200">
 
-                                                    {actividad}
+                                            {actividad.nombre}
 
-                                                </span>
+                                        </td>
 
-                                            ))}
+                                        <td className="px-5 py-4 text-center">
 
-                                        </div>
+                                            <span className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-700">
 
-                                    </td>
+                                                {actividad.porcentaje}%
 
-                                    <td className="px-5 py-4 text-center">
+                                            </span>
 
-                                        <span className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-700">
+                                        </td>
 
-                                            {item.porcentaje}%
+                                    </tr>
 
-                                        </span>
-
-                                    </td>
-
-                                </tr>
+                                ))
 
                             ))}
 
@@ -173,7 +161,6 @@ font-medium
                     </table>
 
                 </div>
-
             </div>
 
         </div>
