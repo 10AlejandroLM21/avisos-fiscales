@@ -158,7 +158,7 @@ export default function ObligacionesPendientes() {
 
                                 <th className="px-5 py-3 text-left text-xs font-semibold uppercase tracking-wide text-slate-600">
 
-                                    Períodos pendientes
+                                    Períodos NO CUMPLIDOS
 
                                 </th>
 

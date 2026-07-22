@@ -4,20 +4,29 @@ const obligaciones = [
     {
         id: 1,
         obligacion: "Cedular",
-        actividad: "Alquiler de viviendas amuebladas",
+        actividades: [
+            "Alquiler de viviendas amuebladas",
+            "Servicios de hospedaje temporal",
+            "Arrendamiento de locales comerciales"
+        ],
         porcentaje: 5
     },
     {
         id: 2,
         obligacion: "Demasías Caducas",
-        actividad: "Casas de préstamo y empeño",
+        actividades: [
+            "Casas de préstamo y empeño"
+        ],
         porcentaje: 50
     },
     {
         id: 3,
         obligacion: "Nómina",
-        actividad:
-            "Administración y supervisión de construcción de inmuebles comerciales, institucionales y de servicios",
+        actividades: [
+            "Administración y supervisión de construcción de inmuebles comerciales",
+            "Servicios de consultoría",
+            "Servicios administrativos"
+        ],
         porcentaje: 45
     }
 ];
@@ -112,9 +121,36 @@ export default function ObligacionesSuspender() {
 
                                     </td>
 
-                                    <td className="px-5 py-4 text-slate-600">
+                                    <td className="px-5 py-4">
 
-                                        {item.actividad}
+                                        <div className="flex flex-wrap gap-2">
+
+                                            {item.actividades.map((actividad, index) => (
+
+                                                <span
+                                                    key={index}
+                                                    className="
+inline-flex
+items-center
+rounded-full
+bg-blue-100
+text-sky-700
+border
+border-sky-200
+px-3
+py-1
+text-xs
+font-medium
+"
+                                                >
+
+                                                    {actividad}
+
+                                                </span>
+
+                                            ))}
+
+                                        </div>
 
                                     </td>
 
