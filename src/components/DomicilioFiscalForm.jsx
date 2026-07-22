@@ -33,7 +33,7 @@ import {
     Eye
 } from "lucide-react";
 export default function DomicilioFiscal({
-    titulo = "Domicilio fiscal del representante legal",
+    titulo = "Datos del domicilio fiscal",
     onGuardar,
     onCancelar,
     className = ""
@@ -70,7 +70,7 @@ export default function DomicilioFiscal({
             <div className="rounded-xl overflow-hidden border border-sky-200">
                 {/* Header */}
 
-                <div className="bg-sky-100 flex justify-between items-center p-4">
+                <div className="bg-slate-50 flex justify-between items-center p-4">
 
                     <div className="flex items-center gap-4">
 
@@ -86,7 +86,7 @@ export default function DomicilioFiscal({
                         <div>
 
                             <h3 className="font-semibold text-slate-800">
-                                Datos Generales del Domicilio
+                                Datos del domicilio fiscal
                             </h3>
 
                             <p className="text-sm text-slate-500">
@@ -284,25 +284,19 @@ export default function DomicilioFiscal({
 
                     </div>
 
-                    <div className="bg-slate-50 px-6 py-5 flex justify-end gap-3">
+                    <div className="mt-6 flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
+                        <input
+                            id="validarInformacion"
+                            type="checkbox"
+                            className="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
+                        />
 
-                        {/* <button
-                            onClick={() => setMostrarFormularioDomicilio(false)}
-                            className="px-5 py-2 rounded-lg border"
+                        <label
+                            htmlFor="validarInformacion"
+                            className="text-sm text-slate-700 cursor-pointer"
                         >
-                            Cancelar
-                        </button> */}
-
-                        <button
-                            onClick={() => {
-                                onGuardar();
-                                setMostrarFormularioDomicilio(false);
-                            }}
-                            className="px-5 py-2 rounded-lg bg-green-700 text-white"
-                        >
-                            Guardar Domicilio
-                        </button>
-
+                            He validado que la información recuperada es correcta.
+                        </label>
                     </div>
 
                 </div>

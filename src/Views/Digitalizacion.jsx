@@ -193,11 +193,11 @@ export default function Digitalizacion() {
 
                         </h2>
 
-                        <p className="text-slate-500 mt-2">
+                        {/* <p className="text-slate-500 mt-2">
 
                             Adjunte la documentación requerida para integrar el expediente electrónico del aviso.
 
-                        </p>
+                        </p> */}
 
                     </div>
 

@@ -94,7 +94,7 @@ export default function ModalFormulario({
                                 <div className="text-left">
 
                                     <p className="font-medium">
-                                        Datos del Representante
+                                        Datos del representante legal
                                     </p>
 
                                     <p className="text-xs text-slate-500">
@@ -104,6 +104,35 @@ export default function ModalFormulario({
                                 </div>
 
                             </button>
+
+                            {/* <button
+                                className={`w-full flex items-center gap-4 rounded-xl p-4 transition ${pasoModal === 2
+                                    ? "bg-sky-100 border border-sky-300"
+                                    : "hover:bg-slate-100"
+                                    }`}
+                            >
+
+                                <Home
+                                    className={
+                                        pasoModal === 3
+                                            ? "text-sky-700"
+                                            : "text-slate-500"
+                                    }
+                                />
+
+                                <div>
+
+                                    <p className="font-medium text-left">
+                                        Domicilio Fiscal
+                                    </p>
+
+                                    <p className="text-xs text-slate-500 text-left">
+                                        Información del domicilio
+                                    </p>
+
+                                </div>
+
+                            </button> */}
 
                             <button
                                 className={`w-full flex items-center gap-4 rounded-xl p-4 transition ${pasoModal === 2
@@ -133,35 +162,6 @@ export default function ModalFormulario({
 
                             </button>
 
-                            <button
-                                className={`w-full flex items-center gap-4 rounded-xl p-4 transition ${pasoModal === 3
-                                    ? "bg-sky-100 border border-sky-300"
-                                    : "hover:bg-slate-100"
-                                    }`}
-                            >
-
-                                <Home
-                                    className={
-                                        pasoModal === 3
-                                            ? "text-sky-700"
-                                            : "text-slate-500"
-                                    }
-                                />
-
-                                <div>
-
-                                    <p className="font-medium text-left">
-                                        Domicilio Fiscal
-                                    </p>
-
-                                    <p className="text-xs text-slate-500 text-left">
-                                        Información del domicilio
-                                    </p>
-
-                                </div>
-
-                            </button>
-
                         </div>
 
                     </div>
@@ -170,16 +170,18 @@ export default function ModalFormulario({
                     <div className="flex-1 overflow-y-auto p-8">
 
                         {pasoModal === 1 && (
-
-                            <DatosRepresentante
-                                nuevoRepresentante={nuevoRepresentante}
-                                setNuevoRepresentante={setNuevoRepresentante}
-                            />
-
+                            <div>
+                                <DatosRepresentante
+                                    nuevoRepresentante={nuevoRepresentante}
+                                    setNuevoRepresentante={setNuevoRepresentante}
+                                    titulo="Datos de identificación del representante legal"
+                                    descripcion="Capture los datos del representante legal"
+                                />
+                                <DomicilioFiscalForm />
+                            </div>
                         )}
 
                         {pasoModal === 2 && (
-
                             <DocumentoProtocolizado
                                 tipoDocumento={tipoDocumento}
                                 setTipoDocumento={setTipoDocumento}
@@ -187,35 +189,28 @@ export default function ModalFormulario({
                                 setDocumento={setDocumento}
                                 descripcion="Capture la información correspondiente al documento que acredita al representante legal."
                             />
-
-                        )}
-
-                        {pasoModal === 3 && (
-
-                            <DomicilioFiscalForm />
-
                         )}
 
                     </div>
                 </div>
                 {/* Footer */}
                 <div className="border-t bg-slate-50 px-8 py-5 flex justify-between">
-
                     <button
-                        onClick={() => setPasoModal(pasoModal - 1)}
-                        disabled={pasoModal === 1}
-                        className="px-5 py-2.5 rounded-lg border disabled:opacity-50"
+                        onClick={onClose}
+                        className="px-5 py-2.5 rounded-lg border"
                     >
-                        Anterior
+                        Cerrar
                     </button>
+
 
                     <div className="flex gap-3">
 
                         <button
-                            onClick={onClose}
-                            className="px-5 py-2.5 rounded-lg border"
+                            onClick={() => setPasoModal(pasoModal - 1)}
+                            disabled={pasoModal === 1}
+                            className="px-5 py-2.5 rounded-lg border disabled:opacity-50"
                         >
-                            Cancelar
+                            Anterior
                         </button>
 
                         {pasoModal < 3 ? (

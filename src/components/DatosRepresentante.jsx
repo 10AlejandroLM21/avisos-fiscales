@@ -9,7 +9,9 @@ import CampoSelect from "./CampoSelect";
 
 export default function DatosRepresentante({
     nuevoRepresentante,
-    setNuevoRepresentante
+    setNuevoRepresentante,
+    titulo,
+    descripcion
 }) {
 
     return (
@@ -34,11 +36,11 @@ export default function DatosRepresentante({
                         <div>
 
                             <h3 className="font-semibold text-lg">
-                                Datos del Representante Legal
+                                {titulo}
                             </h3>
 
                             <p className="text-sm text-slate-500">
-                                Capture la información del nuevo representante legal.
+                                {descripcion}
                             </p>
 
                         </div>

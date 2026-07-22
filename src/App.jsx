@@ -21,6 +21,9 @@ import HeaderModulo from "./components/HeaderModulo";
 import CarouselTarjetas from "./components/CarouselTarjetas";
 import ModalRepresentanteLegal from "./components/ModalRepresentanteLegal";
 import ModalAccionAviso from "./components/ModalAccionAviso";
+import DocumentacionRequerida from "./components/DocumentacionRequerida";
+import ObligacionesPendientes from "./components/Adeudos";
+import ObligacionesSuspender from "./components/ObligacionesRegistradas";
 import {
   Search,
   Users,
@@ -120,34 +123,34 @@ export default function AvisosFiscales() {
     switch (selectedRow) {
 
       case "Cambio de Domicilio Fiscal":
-        return "Ejecutar Cambio de Domicilio";
+        return "Siguiente";
 
       case "Cambio de Nombre, Denominación o Razón Social":
-        return "Ejecutar Cambio";
+        return "Siguiente";
 
       case "Cambio de Representante Legal":
-        return "Ejecutar Cambio de Representante";
+        return "Siguiente";
 
       case "Aumento de Obligaciones":
-        return "Ejecutar Aumento de Obligaciones";
+        return "Siguiente";
 
       case "Reanudación de Actividades":
-        return "Ejecutar Reanudación de Actividades";
+        return "Siguiente";
 
       case "Disminucion de Obligaciones":
-        return "Ejecutar Disminución de Obligaciones";
+        return "Siguiente";
 
       case "Suspensión de Actividades":
-        return "Ejecutar Suspensión de Actividades";
+        return "Siguiente";
 
       case "Apertura de Establecimientos o Locales":
-        return "Ejecutar Apertura de Establecimiento";
+        return "Siguiente";
 
       case "Cierre de Establecimientos o Locales":
-        return "Ejecutar Cierre de Establecimiento";
+        return "Siguiente";
 
       case "Cancelación en el Registro Estatal de Contribuyentes":
-        return "Ejecutar Cancelación del Registro";
+        return "Siguiente";
 
       default:
         return "Siguiente";
@@ -2698,7 +2701,7 @@ export default function AvisosFiscales() {
 
                     <p className="text-sm text-slate-500 mt-2">
 
-                      Regrese a la pestaña del aviso para realizar modificaciones antes de continuar.
+                      Regrese a la pestaña del aviso para realizar modificaciones antes de confirmar.
                     </p>
 
                   </button>
@@ -3246,7 +3249,9 @@ export default function AvisosFiscales() {
 
                 </div>
 
+
               </div>
+              <DocumentacionRequerida />
 
             </div>
           )
@@ -4311,27 +4316,40 @@ export default function AvisosFiscales() {
         {/*suspensión de actividades*/}
         {selectedRow === "Suspensión de Actividades" && activeStep === 4 && (
 
-          <div >
+          <div>
             <HeaderModulo
 
               titulo="Suspensión de Actividades"
-
-              // descripcion="Registre la suspensión de actividades del contribuyente y actualice su situación fiscal conforme a la información proporcionada."
-
               icono="PauseCircle"
 
               color="amber"
-
             />
-            <div className="">
+            <div className="bg-white mt-2 p-4 border border-amber-800 border-dashed rounded-lg flex gap-2 bg-yellow-50">
+              <div className="h-14 w-14 rounded-xl flex items-center justify-center bg-yellow-100 text-amber-800">
+                <AlertTriangle
+                  size={30}
 
-              <div className="mt-4">
+                />
+              </div>
+              <div className="flex flex-col">
+                <p className="text-sm font-semibold text-amber-800">
+                  Importante
+                </p>
 
-                {/* RESUMEN */}
+                <p className="mt-1 text-sm text-amber-700">
+                  El aviso de suspensión de actividades no lo exime de las obligaciones pendientes.               </p>
+              </div>
 
-                <div className="grid md:grid-cols-2 gap-4">
 
-                  {/* <div className="bg-slate-50 border rounded-xl p-4">
+            </div>
+
+            <div className="mt-4">
+
+              {/* RESUMEN */}
+
+              <div className="grid md:grid-cols-2 gap-4">
+
+                {/* <div className="bg-slate-50 border rounded-xl p-4">
                     <div className="text-2xl font-bold text-slate-800">
                       3
                     </div>
@@ -4341,7 +4359,7 @@ export default function AvisosFiscales() {
                   </div> */}
 
 
-                  {/* <div className="bg-red-50 border rounded-xl p-4">
+                {/* <div className="bg-red-50 border rounded-xl p-4">
                     <div className="text-2xl font-bold text-red-600">
                       2
                     </div>
@@ -4350,272 +4368,21 @@ export default function AvisosFiscales() {
                     </div>
                   </div> */}
 
-                </div>
-
-                {/* OBLIGACIONES */}
-                <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-
-                  {/* Header */}
-
-                  <div className="bg-slate-50 border-b px-6 py-5">
-
-                    <div className="flex items-center gap-4">
-
-                      <div className="h-12 w-12 rounded-xl bg-amber-100 flex items-center justify-center">
-
-                        <ClipboardList
-                          className="text-amber-700"
-                          size={24}
-                        />
-
-                      </div>
-
-                      <div>
-
-                        <h3 className="font-semibold text-lg text-slate-800">
-                          Obligaciones Fiscales
-                        </h3>
-
-                        <p className="text-sm text-slate-500">
-                          Consulte las obligaciones fiscales registradas, así como las declaraciones pendientes por cada actividad económica.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                  {/* Body */}
-
-                  <div className="p-6">
-
-                    <div className="rounded-xl border border-slate-200 overflow-hidden">
-
-                      <div className="divide-y divide-slate-200">
-
-                        {obligaciones.map((item) => (
-
-                          <div
-                            key={item.id}
-                            className="border-b border-gray-300"
-                          >
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setObligacionAbierta(
-                                  obligacionAbierta === item.id ? null : item.id
-                                );
-                                setEjercicioSeleccionado(null);
-                              }
-                              }
-                              className="w-full p-5 text-left hover:bg-slate-50 transition"
-                            >
-
-                              <div className="flex justify-between items-start">
-
-                                <div>
-
-                                  <h5 className="font-semibold text-slate-800">
-                                    {item.nombre}
-                                  </h5>
-
-                                  <p className="text-sm text-slate-500 mt-1">
-                                    {item.actividad}
-                                  </p>
-
-                                </div>
-
-                                <div className="flex items-center gap-3">
-
-                                  <span className="px-3 py-1 rounded-full bg-green-100 text-green-700 text-xs font-medium">
-                                    ACTIVA
-                                  </span>
-
-                                  <ChevronDown
-                                    size={18}
-                                    className={`transition-transform ${obligacionAbierta === 1
-                                      ? "rotate-180"
-                                      : ""
-                                      }`}
-                                  />
-
-                                </div>
-
-                              </div>
-
-                              {obligacionAbierta === item.id && (
-                                <div >
-                                  {/* Barra de cumplimiento 1*/}
-
-                                  <div className="grid md:grid-cols-2 gap-4">
-
-                                    <div>
-                                      <span className="text-xs text-slate-500">
-                                        Porcentaje de la actividad económica.
-                                      </span>
-
-                                      <div className="font-medium text-slate-800">
-                                        70%
-                                      </div>
-                                    </div>
-
-                                    <div>
-                                      <span className="text-xs text-slate-500">
-                                        Pendientes
-                                      </span>
-
-                                      <div className="font-medium text-red-600">
-                                        2 Declaraciones
-                                      </div>
-                                    </div>
-
-                                  </div>
-
-                                </div>
-                              )
-                              }
-                            </button>
-
-                            {/* DECLARACIONES */}
-
-                            {obligacionAbierta === item.id && (
-
-                              <div className="border-t bg-slate-50 p-4">
-
-                                <div className="space-y-2 p-5">
-                                  <h6 className="font-medium text-slate-700 mb-4 ">
-                                    Declaraciones pendientes
-                                  </h6>
-
-                                  <div className="space-y-4">
-
-                                    {/* EJERCICIOS */}
-                                    <div>
-                                      <h6 className="font-medium text-slate-700 mb-3">
-                                        Ejercicios con Declaraciones Pendientes
-                                      </h6>
-
-                                      <div className="flex gap-2 flex-wrap">
-
-                                        <button
-                                          type="button"
-                                          onClick={() => setEjercicioSeleccionado(2026)}
-                                          className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2026
-                                            ? "bg-sky-700 text-white border-sky-700"
-                                            : "bg-white"
-                                            }`}
-                                        >
-                                          Ejercicio 2026
-                                        </button>
-
-                                        <button
-                                          type="button"
-                                          onClick={() => setEjercicioSeleccionado(2025)}
-                                          className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2025
-                                            ? "bg-sky-700 text-white border-sky-700"
-                                            : "bg-white"
-                                            }`}
-                                        >
-                                          Ejercicio 2025
-                                        </button>
-
-                                      </div>
-                                    </div>
-
-                                    {/* PERIODOS */}
-                                    {ejercicioSeleccionado && (
-                                      <div>
-
-                                        <h6 className="font-medium text-slate-700 mb-3">
-                                          Periodos Pendientes
-                                        </h6>
-
-                                        <div className="space-y-2 max-h-[250px] overflow-y-auto pr-2">
-
-                                          <div className="flex justify-between bg-white border rounded-lg p-3">
-                                            <div>
-                                              <div className="font-medium">
-                                                ENERO - FEBRERO
-                                              </div>
-
-                                              <div className="text-xs text-slate-500">
-                                                Bimestre 1 · Ejercicio {ejercicioSeleccionado}
-                                              </div>
-                                            </div>
-
-                                            <span className="text-red-600 font-medium">
-                                              No Cumplido
-                                            </span>
-                                          </div>
-
-                                          <div className="flex justify-between bg-white border rounded-lg p-3">
-                                            <div>
-                                              <div className="font-medium">
-                                                MARZO - ABRIL
-                                              </div>
-
-                                              <div className="text-xs text-slate-500">
-                                                Bimestre 2 · Ejercicio {ejercicioSeleccionado}
-                                              </div>
-                                            </div>
-
-                                            <span className="text-red-600 font-medium">
-                                              No Cumplido
-                                            </span>
-                                          </div>
-
-                                          <div className="flex justify-between bg-white border rounded-lg p-3">
-                                            <div>
-                                              <div className="font-medium">
-                                                MAYO - JUNIO
-                                              </div>
-
-                                              <div className="text-xs text-slate-500">
-                                                Bimestre 3 · Ejercicio {ejercicioSeleccionado}
-                                              </div>
-                                            </div>
-
-                                            <span className="text-red-600 font-medium">
-                                              No Cumplido
-                                            </span>
-                                          </div>
-
-                                        </div>
-
-                                      </div>
-                                    )}
-
-                                  </div>
-
-                                </div>
-
-                              </div>
-
-                            )}
-
-                          </div>
-
-                        ))}
-                      </div>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                {mostrarFormularioDomicilio && (
-                  <DomicilioFiscal
-                    onGuardar={() => { }}
-                    onCancelar={() => { }}
-                    className="border shadow-sm"
-                    titulo="Datos generales del domicilio"
-                    descripcion="Capture o verifique la información general correspondiente al domicilio fiscal"
-                  />
-                )}
-
               </div>
+              <ObligacionesSuspender />
+              {/* OBLIGACIONES */}
+              <ObligacionesPendientes />
+
+              {mostrarFormularioDomicilio && (
+                <DomicilioFiscal
+                  onGuardar={() => { }}
+                  onCancelar={() => { }}
+                  className="border shadow-sm"
+                  titulo="Domicilios del contribuyente"
+                  descripcion="Capture o verifique la información general correspondiente al domicilio fiscal"
+                />
+              )}
+
             </div>
           </div>
         )
@@ -5594,7 +5361,7 @@ export default function AvisosFiscales() {
                         </div>
 
                         <p className="text-amber-700 text-sm">
-                          El aviso de suspensión de actividades no lo exime de las obligaciones pendientes
+                          El aviso de Cancelación en el Registro Estatal de Contribuyentes no lo exime de las obligaciones pendientes
                         </p>
 
                       </div>
