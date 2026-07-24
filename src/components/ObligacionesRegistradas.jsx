@@ -31,7 +31,10 @@ const obligaciones = [
     },
 ];
 
-export default function ObligacionesSuspender() {
+export default function ObligacionesSuspender({
+    title,
+    description
+}) {
 
     return (
 
@@ -56,14 +59,13 @@ export default function ObligacionesSuspender() {
 
                         <h2 className="text-xl font-semibold text-slate-800">
 
-                            Obligaciones a Suspender
+                            {title}
 
                         </h2>
 
                         <p className="text-sm text-slate-500 mt-1">
 
-                            Relación de obligaciones fiscales, actividades económicas y porcentaje de participación asociados al contribuyente.
-
+                            {description}
                         </p>
 
                     </div>

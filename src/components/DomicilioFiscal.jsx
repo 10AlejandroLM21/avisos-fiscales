@@ -107,8 +107,10 @@ export default function DomicilioFiscal({
                                     type="button"
                                     onClick={() => setMostrarFormularioDomicilio(true)}
                                     className="px-4 py-2 bg-sky-700 text-white rounded-lg hover:bg-sky-800"
+                                    title="Agregar domicilio para notificación"
                                 >
                                     + Agregar Domicilio fiscal
+
                                 </button>
 
                             </div>

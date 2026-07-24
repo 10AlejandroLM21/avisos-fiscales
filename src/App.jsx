@@ -4369,7 +4369,7 @@ export default function AvisosFiscales() {
                   </div> */}
 
               </div>
-              <ObligacionesSuspender />
+              <ObligacionesSuspender title="Obligaciones fiscales" />
               {/* OBLIGACIONES */}
               <ObligacionesPendientes />
 
@@ -4379,7 +4379,7 @@ export default function AvisosFiscales() {
                   onCancelar={() => { }}
                   className="border shadow-sm"
                   titulo="Domicilios del contribuyente"
-                  descripcion="Capture o verifique la información general correspondiente al domicilio fiscal"
+                  descripcion="Capture o seleccione un domicilio para notificaciones"
                 />
               )}
 

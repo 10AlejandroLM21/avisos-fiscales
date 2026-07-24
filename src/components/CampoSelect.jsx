@@ -4,7 +4,7 @@ export default function CampoSelect({
   value,
   onChange,
   opciones = [],
-  disabled = true,
+  disabled = false,
   readOnly = false
 }) {
   return (
