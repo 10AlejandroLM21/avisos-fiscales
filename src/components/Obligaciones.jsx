@@ -4,8 +4,8 @@ export default function Obligaciones({ obligaciones }) {
 
     return (
 
-        <div className="border rounded-lg overflow-hidden">
-            <div className="border-b bg-gray-50 px-8 py-6">
+        <div className="shadow-xl rounded-lg overflow-hidden">
+            <div className="border-b bg-slate-50 px-8 py-6">
 
                 <h2 className="text-xl font-bold text-slate-800">
                     Obligaciones Fiscales
@@ -15,87 +15,92 @@ export default function Obligaciones({ obligaciones }) {
                     Consulte el listado de obligaciones fiscales del contribuyente.                </p>
 
             </div>
-            <table className="w-full border-collapse">
+            <div className="overflow-hidden rounded-xl p-4 bg-white">
+                <div className="overflow-hidden rounded-xl ">
+                    <table className="w-full border-collapse">
 
-                <thead>
+                        <thead>
+                            <tr className="bg-slate-50">
 
-                    <tr className="bg-sky-100">
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
+                                    Obligación
+                                </th>
 
-                        <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
-                            Obligación
-                        </th>
+                                <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
+                                    Actividad Económica
+                                </th>
 
-                        <th className="px-5 py-3 text-left text-xs font-semibold uppercase text-slate-600">
-                            Actividad Económica
-                        </th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
+                                    Porcentaje
+                                </th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
+                                    Fecha de Inicio de Operaciones
+                                </th>
 
-                        <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
-                            Porcentaje
-                        </th>
+                            </tr>
 
-                    </tr>
+                        </thead>
 
-                </thead>
+                        <tbody>
 
-                <tbody>
+                            {obligaciones.map((obligacion) => (
 
-                    {obligaciones.map((obligacion) => (
+                                obligacion.actividades.map((actividad, index) => (
 
-                        obligacion.actividades.map((actividad, index) => (
+                                    <tr key={`${obligacion.id}-${actividad.id}`} className="border-t border-slate-100 hover:bg-slate-200"
+                                    >
+                                        {index === 0 && (
 
-                            <tr
-                                key={`${obligacion.id}-${actividad.id}`}
-                                className="border-t hover:bg-slate-50"
-                            >
-
-                                {index === 0 && (
-
-                                    <td
-                                        rowSpan={obligacion.actividades.length}
-                                        className="
+                                            <td
+                                                rowSpan={obligacion.actividades.length}
+                                                className="
                                             px-5
                                             py-4
                                             align-top
                                             font-semibold
                                             text-slate-800
-                                            bg-slate-50
-                                            border-r
-                                            border-slate-200
+                                            bg-slate-200
                                             w-72
                                         "
-                                    >
+                                            >
 
-                                        {obligacion.nombre}
+                                                {obligacion.nombre}
 
-                                    </td>
+                                            </td>
 
-                                )}
+                                        )}
+                                        <td className="px-5 py-4 bg-white">
 
-                                <td className="px-5 py-4 border-r border-slate-200">
+                                            {actividad.nombre}
 
-                                    {actividad.nombre}
+                                        </td>
 
-                                </td>
+                                        <td className="px-5 py-4 text-center bg-white">
 
-                                <td className="px-5 py-4 text-center">
+                                            <span className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-700">
 
-                                    <span className="inline-flex items-center rounded-full bg-sky-100 px-3 py-1 text-sm font-semibold text-sky-700">
+                                                {actividad.porcentaje}
 
-                                        {actividad.porcentaje}
+                                            </span>
 
-                                    </span>
+                                        </td>
+                                        <td className="px-5 py-4 bg-white">
 
-                                </td>
+                                            {actividad.fechaOperaciones}
 
-                            </tr>
+                                        </td>
 
-                        ))
+                                    </tr>
 
-                    ))}
+                                ))
 
-                </tbody>
+                            ))}
 
-            </table>
+                        </tbody>
+
+                    </table>
+                </div>
+            </div>
 
         </div>
 

@@ -128,14 +128,16 @@ const AumentoObligaciones = () => {
                     nombre: "Comercio",
                     porcentaje: 60,
                     trabajadoresTemporales: 5,
-                    trabajadoresPermanentes: 15
+                    trabajadoresPermanentes: 15,
+                    fechaOperaciones: "24/10/2026"
                 },
                 {
                     id: 2,
                     nombre: "Servicios",
                     porcentaje: 40,
                     trabajadoresTemporales: 3,
-                    trabajadoresPermanentes: 10
+                    trabajadoresPermanentes: 10,
+                    fechaOperaciones: "24/10/2026"
                 },
 
             ],
@@ -150,7 +152,9 @@ const AumentoObligaciones = () => {
                 {
                     id: 3,
                     nombre: "Hotel",
-                    porcentaje: 100
+                    porcentaje: 100,
+                    fechaOperaciones: "24/10/2026"
+
                 }
             ],
             actividadesAgregadas: []
@@ -205,7 +209,11 @@ const AumentoObligaciones = () => {
     };
     const agregarObligacion = () => {
         console.log("formActividad " + formActividad.obligacionId);
-
+        const fechaActual = new Date().toLocaleDateString("es-MX", {
+            day: "2-digit",
+            month: "2-digit",
+            year: "numeric"
+        });
         if (!formActividad.obligacionId) return;
 
         setObligaciones(prev => {
@@ -234,6 +242,7 @@ const AumentoObligaciones = () => {
                         {
                             ...actividad,
                             porcentaje: Number(formActividad.porcentaje),
+                            fechaOperaciones: fechaActual,
                             trabajadoresTemporales: Number(formActividad.trabajadoresTemporales || 0),
                             trabajadoresPermanentes: Number(formActividad.trabajadoresPermanentes || 0)
                         }
@@ -257,6 +266,7 @@ const AumentoObligaciones = () => {
                         ...obligacion.actividadesAgregadas,
                         {
                             ...actividad,
+                            fechaOperaciones: fechaActual,
                             porcentaje: Number(formActividad.porcentaje),
                             trabajadoresTemporales: Number(formActividad.trabajadoresTemporales || 0),
                             trabajadoresPermanentes: Number(formActividad.trabajadoresPermanentes || 0)
@@ -520,13 +530,21 @@ const AumentoObligaciones = () => {
     const obligacionesDisponibles = catalogoObligaciones.filter(
         ecatalogo => !obligaciones.some(obligacion => obligacion.id === ecatalogo.id)
     );
+    const [conAgregados, setConAgregados] = useState(false);
 
     return (
         <div className="space-y-6">
 
             <HeaderModulo titulo="Aumento de obligaciones"
-            icono="FilePlus2"/>
-            <Obligaciones obligaciones={obligaciones} />
+                icono="FilePlus2" />
+
+            {!conAgregados && (
+                <Obligaciones obligaciones={obligaciones} />
+
+            )
+            }
+
+
             {/*======================================
     AGREGAR ACTIVIDAD ECONÓMICA
 ======================================*/}
@@ -790,7 +808,10 @@ const AumentoObligaciones = () => {
                         <div className={requiereTrabajadores ? "col-span-2" : "col-span-6"}>
 
                             <button
-                                onClick={agregarObligacion}
+                                onClick={() => {
+                                    agregarObligacion;
+                                    setConAgregados(true);
+                                }}
                                 disabled={!formularioValido}
                                 className="
                         w-full
@@ -823,11 +844,12 @@ const AumentoObligaciones = () => {
           RESUMEN DE OBLIGACIONES
       ======================================*/}
 
-            <section>
-                {!todasLasObligacionesCompletas && (
+            {conAgregados && (
+                <section>
+                    {!todasLasObligacionesCompletas && (
 
-                    <div
-                        className="
+                        <div
+                            className="
         bg-yellow-50
         border
         border-yellow-300
@@ -835,163 +857,171 @@ const AumentoObligaciones = () => {
         p-4
         text-yellow-800
     "
-                    >
+                        >
 
-                        Para continuar, el porcentaje total de participación de cada obligación fiscal deberá ser igual a 100%.
-
-                    </div>
-
-                )
-                }
-                <div className="bg-white rounded-lg shadow border">
-
-                    <div className="border-b px-6 py-4 flex justify-between items-center">
-
-                        <div>
-
-                            <h2 className="text-lg font-semibold">
-                                Resumen de Obligaciones
-                            </h2>
-
-                            <p className="text-sm text-gray-500">
-                                Consulte las actividades económicas asociadas a las obligaciones fiscales del contribuyente.
-                            </p>
+                            Para continuar, el porcentaje total de participación de cada obligación fiscal deberá ser igual a 100%.
 
                         </div>
 
-                    </div>
-                    <div className="p-4">
-                        <div className="overflow-hidden border rounded-lg">
+                    )
+                    }
+                    <div className="bg-white rounded-lg shadow-xl">
 
-                            <table className="min-w-full divide-y divide-gray-200">
+                        <div className="border-b px-6 py-4 flex justify-between items-center">
 
-                                <thead className="bg-slate-100 border-b border-slate-200">
+                            <div>
 
-                                    <tr>
+                                <h2 className="text-lg font-semibold">
+                                    Resumen de Obligaciones
+                                </h2>
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                            Obligación Fiscal
-                                        </th>
+                                <p className="text-sm text-gray-500">
+                                    Consulte las actividades económicas asociadas a las obligaciones fiscales del contribuyente.
+                                </p>
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                            Actividad Económica
-                                        </th>
+                            </div>
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">                                        %
-                                        </th>
+                        </div>
+                        <div className="p-4">
+                            <div className="overflow-hidden rounded-lg">
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">                                        Trab. Temp.
-                                        </th>
+                                <table className="min-w-full divide-y divide-gray-200">
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">                                        Trab. Perm.
-                                        </th>
+                                    <thead className="bg-slate-100 border-b border-slate-200">
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">                                        Tipo
-                                        </th>
+                                        <tr>
 
-                                        <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">                                        Acciones
-                                        </th>
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Obligación Fiscal
+                                            </th>
 
-                                    </tr>
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Actividad Económica
+                                            </th>
 
-                                </thead>
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                %
+                                            </th>
 
-                                <tbody className="divide-y divide-gray-100">
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Trab. Temp.
+                                            </th>
 
-                                    {obligaciones.map((obligacion) => {
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Trab. Perm.
+                                            </th>
 
-                                        const actividades = [
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Tipo
+                                            </th>
+                                            <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-slate-700 text-center">
+                                                Fecha de Inicio de Operaciones
+                                            </th>
 
-                                            ...obligacion.actividades.map(a => ({
-                                                ...a, agregado: false
-                                            })),
+                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
+                                                Acciones
+                                            </th>
 
-                                            ...obligacion.actividadesAgregadas.map(a => ({
-                                                ...a, agregado: true
-                                            }))
+                                        </tr>
 
-                                        ];
-                                        console.log(actividades)
-                                        return actividades.map((actividad) => (
+                                    </thead>
 
-                                            <tr
-                                                key={`${obligacion.id}-${actividad.id}-${actividad.agregado}`}
-                                                className="
+                                    <tbody className="divide-y divide-gray-100">
+
+                                        {obligaciones.map((obligacion) => {
+
+                                            const actividades = [
+
+                                                ...obligacion.actividades.map(a => ({
+                                                    ...a, agregado: false
+                                                })),
+
+                                                ...obligacion.actividadesAgregadas.map(a => ({
+                                                    ...a, agregado: true
+                                                }))
+
+                                            ];
+                                            console.log(actividades)
+                                            return actividades.map((actividad) => (
+
+                                                <tr
+                                                    key={`${obligacion.id}-${actividad.id}-${actividad.agregado}`}
+                                                    className="
         hover:bg-sky-50
         transition-all
         duration-200
         even:bg-gray-50/40
     "
-                                            >
+                                                >
 
-                                                {/* Obligación */}
+                                                    {/* Obligación */}
 
-                                                <td className="px-4 py-3 font-medium">
+                                                    <td className="px-4 py-3 font-medium">
 
-                                                    {obligacion.nombre}
+                                                        {obligacion.nombre}
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Actividad */}
+                                                    {/* Actividad */}
 
-                                                <td className="px-4 py-3">
+                                                    <td className="px-4 py-3">
 
-                                                    {actividad.nombre}
+                                                        {actividad.nombre}
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Porcentaje */}
+                                                    {/* Porcentaje */}
 
-                                                <td className="px-4 py-3 text-center">
+                                                    <td className="px-4 py-3 text-center">
 
-                                                    {actividadEditando?.actividadId === actividad.id ? (
+                                                        {actividadEditando?.actividadId === actividad.id ? (
 
-                                                        <input
-                                                            type="number"
-                                                            className="w-20 border rounded p-1 text-center"
-                                                            value={formEditar.porcentaje}
-                                                            onChange={(e) =>
-                                                                setFormEditar(prev => ({
-                                                                    ...prev,
-                                                                    porcentaje: e.target.value
-                                                                }))
-                                                            }
-                                                        />
+                                                            <input
+                                                                type="number"
+                                                                className="w-20 border rounded p-1 text-center"
+                                                                value={formEditar.porcentaje}
+                                                                onChange={(e) =>
+                                                                    setFormEditar(prev => ({
+                                                                        ...prev,
+                                                                        porcentaje: e.target.value
+                                                                    }))
+                                                                }
+                                                            />
 
-                                                    ) : (
+                                                        ) : (
 
-                                                        `${actividad.porcentaje}%`
+                                                            `${actividad.porcentaje}%`
 
-                                                    )}
+                                                        )}
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Trabajadores Temporales */}
+                                                    {/* Trabajadores Temporales */}
 
-                                                <td className="px-4 py-3 text-center">
+                                                    <td className="px-4 py-3 text-center">
 
-                                                    {obligacion.requiereTrabajadores
-                                                        ? actividad.trabajadoresTemporales
-                                                        : "—"}
+                                                        {obligacion.requiereTrabajadores
+                                                            ? actividad.trabajadoresTemporales
+                                                            : "—"}
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Trabajadores Permanentes */}
+                                                    {/* Trabajadores Permanentes */}
 
-                                                <td className="px-4 py-3 text-center">
+                                                    <td className="px-4 py-3 text-center">
 
-                                                    {obligacion.requiereTrabajadores
-                                                        ? actividad.trabajadoresPermanentes
-                                                        : "—"}
+                                                        {obligacion.requiereTrabajadores
+                                                            ? actividad.trabajadoresPermanentes
+                                                            : "—"}
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Tipo */}
+                                                    {/* Tipo */}
 
-                                                <td className="px-4 py-3 text-center">
+                                                    <td className="px-4 py-3 text-center">
 
-                                                    <span
-                                                        className={`
+                                                        <span
+                                                            className={`
 px-3
 py-1
 rounded-full
@@ -999,30 +1029,32 @@ text-xs
 font-semibold
 shadow-sm
 ${actividad.agregado
-                                                                ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-                                                                : "bg-slate-100 text-slate-600 border border-slate-200"
-                                                            }
+                                                                    ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
+                                                                    : "bg-slate-100 text-slate-600 border border-slate-200"
+                                                                }
 `}
-                                                    >
+                                                        >
 
-                                                        {actividad.agregado
-                                                            ? "Agregada"
-                                                            : "Existente"}
+                                                            {actividad.agregado
+                                                                ? "Agregada"
+                                                                : "Existente"}
 
-                                                    </span>
+                                                        </span>
 
-                                                </td>
+                                                    </td>
 
-                                                {/* Acciones */}
+                                                    {/* Acciones */}
+                                                    <td className="text-center">
+                                                        {actividad.fechaOperaciones}
+                                                    </td>
+                                                    <td>
 
-                                                <td>
+                                                        {actividadEditando?.actividadId === actividad.id ? (
 
-                                                    {actividadEditando?.actividadId === actividad.id ? (
-
-                                                        <div className="flex justify-center gap-2">
-                                                            <button
-                                                                onClick={guardarEdicion}
-                                                                className="
+                                                            <div className="flex justify-center gap-2">
+                                                                <button
+                                                                    onClick={guardarEdicion}
+                                                                    className="
         flex
         items-center
         gap-2
@@ -1035,14 +1067,14 @@ ${actividad.agregado
         text-sm
         transition
     "
-                                                            >
-                                                                <Check size={16} />
-                                                                Guardar
-                                                            </button>
+                                                                >
+                                                                    <Check size={16} />
+                                                                    Guardar
+                                                                </button>
 
-                                                            <button
-                                                                onClick={cancelarEdicion}
-                                                                className="
+                                                                <button
+                                                                    onClick={cancelarEdicion}
+                                                                    className="
         flex
         items-center
         gap-2
@@ -1055,20 +1087,20 @@ ${actividad.agregado
         text-sm
         transition
     "
-                                                            >
-                                                                <X size={16} />
-                                                                Cancelar
-                                                            </button>
+                                                                >
+                                                                    <X size={16} />
+                                                                    Cancelar
+                                                                </button>
 
-                                                        </div>
+                                                            </div>
 
-                                                    ) : (
+                                                        ) : (
 
-                                                        <div className="flex justify-center gap-2">
+                                                            <div className="flex justify-center gap-2">
 
-                                                            <button
-                                                                onClick={() => editarActividad(obligacion, actividad)}
-                                                                className="
+                                                                <button
+                                                                    onClick={() => editarActividad(obligacion, actividad)}
+                                                                    className="
         flex
         items-center
         gap-2
@@ -1081,20 +1113,20 @@ ${actividad.agregado
         text-sm
         transition
     "
-                                                            >
-                                                                <Pencil size={16} />
-                                                                Editar
-                                                            </button>
+                                                                >
+                                                                    <Pencil size={16} />
+                                                                    Editar
+                                                                </button>
 
-                                                            {actividad.agregado && (
-                                                                <button
-                                                                    onClick={() =>
-                                                                        eliminarActividad(
-                                                                            obligacion.id,
-                                                                            actividad.id
-                                                                        )
-                                                                    }
-                                                                    className="
+                                                                {actividad.agregado && (
+                                                                    <button
+                                                                        onClick={() =>
+                                                                            eliminarActividad(
+                                                                                obligacion.id,
+                                                                                actividad.id
+                                                                            )
+                                                                        }
+                                                                        className="
         flex
         items-center
         gap-2
@@ -1107,33 +1139,33 @@ ${actividad.agregado
         text-sm
         transition
     "
-                                                                >
-                                                                    <Trash2 size={16} />
-                                                                    Eliminar
-                                                                </button>
+                                                                    >
+                                                                        <Trash2 size={16} />
+                                                                        Eliminar
+                                                                    </button>
 
-                                                            )}
+                                                                )}
 
-                                                        </div>
+                                                            </div>
 
-                                                    )}
+                                                        )}
 
-                                                </td>
+                                                    </td>
 
-                                            </tr>
+                                                </tr>
 
-                                        ));
+                                            ));
 
-                                    })}
+                                        })}
 
-                                </tbody>
+                                    </tbody>
 
-                            </table>
+                                </table>
 
+                            </div>
                         </div>
-                    </div>
 
-                    {/* <span
+                        {/* <span
                         className={`px-3 py-1 rounded-full text-sm font-medium ${total === 100
                             ? "bg-green-100 text-green-700"
                             : "bg-red-100 text-red-700"
@@ -1144,9 +1176,11 @@ ${actividad.agregado
 
 
                     </span> */}
-                </div>
+                    </div>
 
-            </section>
+                </section>
+            )}
+
 
             {/*======================================
           NAVEGACIÓN

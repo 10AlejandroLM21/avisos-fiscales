@@ -67,9 +67,9 @@ export default function DocumentacionRequerida() {
     };
 
     return (
-        <div className="bg-white rounded-2xl border shadow-sm">
+        <div className="bg-white rounded-xl shadow-lg">
 
-            <div className="px-6 py-5 border-b">
+            <div className="px-6 py-5 bg-slate-50 rounded-xl">
 
                 <h2 className="text-xl font-semibold text-slate-800">
 
@@ -90,12 +90,12 @@ export default function DocumentacionRequerida() {
 
                     <div
                         key={doc.id}
-                        className="bg-white rounded-xl border shadow-sm overflow-hidden"
+                        className="bg-white rounded-xl shadow-sm overflow-hidden"
                     >
 
                         {/* HEADER */}
 
-                        <div className="px-5 py-3 flex justify-between items-center">
+                        <div className="px-5 py-3 flex justify-between items-center bg-slate-50">
 
                             <div className="flex items-center gap-3">
 
@@ -148,12 +148,10 @@ export default function DocumentacionRequerida() {
 
                         <div className="px-5 pb-4">
 
-                            {
-                                !doc.archivo ? (
+                            {!doc.archivo ? (
+                             <label className="block">
 
-                                    <label className="block">
-
-                                        <input
+                                <input
                                             hidden
                                             type="file"
                                             accept=".pdf,.png,.jpg,.jpeg"
