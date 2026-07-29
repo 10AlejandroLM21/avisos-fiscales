@@ -12,7 +12,7 @@ export default function DocumentoProtocolizado({
 
     return (
 
-        <div className="border-b">
+        <div className="bg-slate-50">
 
             <div className="px-6 py-5 bg-slate-50">
 

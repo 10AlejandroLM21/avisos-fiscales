@@ -1,13 +1,14 @@
-export default function CampoInput({
+export default function CampoFecha({
 
     etiqueta,
     obligatorio = false,
     value,
     onChange,
-    type = "text",
-    placeholder = "",
     disabled = false,
-    readOnly = false
+    readOnly = false,
+    min,
+    max
+
 }) {
 
     return (
@@ -25,16 +26,18 @@ export default function CampoInput({
             </label>
 
             <input
-                type={type}
+                type="date"
                 value={value}
                 onChange={onChange}
-                placeholder={placeholder}
                 disabled={disabled}
                 readOnly={readOnly}
-                className={`w-full shadow-sm border border-slate-200 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 ${disabled
-                    ? "bg-gray-100 cursor-not-allowed text-slate-500"
-                    : "bg-white"
-                    }`}
+                min={min}
+                max={max}
+                className={`w-full shadow-sm border border-slate-200 rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 ${
+                    disabled
+                        ? "bg-gray-100 cursor-not-allowed text-slate-500"
+                        : "bg-white"
+                }`}
             />
 
         </div>

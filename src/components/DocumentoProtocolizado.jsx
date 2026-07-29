@@ -34,7 +34,7 @@ export default function DocumentoProtocolizado({
         },
     ]);
 
-    const [esMunicipio,setEsMunicipio] = useState(false);
+    const [esMunicipio, setEsMunicipio] = useState(false);
     const seleccionarArchivo = (id, archivo) => {
 
         if (!archivo) return;
@@ -102,7 +102,7 @@ export default function DocumentoProtocolizado({
         }
 
         return {
-            color: "bg-slate-100 text-slate-600",
+            color: "bg-sky-100 text-slate-600",
             icono: <Clock3 size={15} />,
             texto: "Opcional"
         };
@@ -115,11 +115,11 @@ export default function DocumentoProtocolizado({
     }, [resetKey, setTipoDocumento]);
 
     return (
-        <div className="bg-white rounded-xl border border-sky-200 shadow-sm overflow-hidden mb-6">
+        <div className="bg-white rounded-xl shadow md  shadow md -sky-200 shadow-sm overflow-hidden mb-6">
 
             {/* Header */}
 
-            <div className="bg-white border-b px-6 py-5">
+            <div className="bg-sky-100 px-6 py-5">
 
                 <div className="flex items-center gap-4">
 
@@ -176,7 +176,7 @@ export default function DocumentoProtocolizado({
 
                 <div className="grid md:grid-cols-2 gap-4 mt-2">
 
-                    <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer hover:border-sky-500 transition">
+                    <label className="flex items-center gap-3  shadow-md rounded-xl p-4 cursor-pointer hover:shadow md -sky-500 hover:bg-sky-100 transition">
 
                         <input
                             type="radio"
@@ -198,7 +198,7 @@ export default function DocumentoProtocolizado({
 
                     </label>
 
-                    <label className="flex items-center gap-3 border rounded-xl p-4 cursor-pointer hover:border-sky-500 transition">
+                    <label className="flex items-center gap-3 shadow-md rounded-xl p-4 cursor-pointer hover:shadow md -sky-500 hover:bg-sky-100 transition">
 
                         <input
                             type="radio"
@@ -221,13 +221,15 @@ export default function DocumentoProtocolizado({
                     </label>
 
                 </div>
+
                 {/* Carta Poder */}
 
                 {tipoDocumento === "CARTA_PODER" && (
 
-                    <div className="mt-6 rounded-xl border border-sky-200 bg-sky-50/40 overflow-hidden">
-
-                        <div className="border-b px-6 py-4 bg-white flex items-center gap-4">
+                    <div className="mt-6 rounded-xl overflow-hidden shadow-md">
+                   
+                        {/* header */}
+                        <div className="px-6 py-4 flex bg-sky-100 items-center gap-4">
 
                             <div className="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
 
@@ -305,9 +307,9 @@ export default function DocumentoProtocolizado({
 
                 {tipoDocumento === "PODER_NOTARIAL" && (
                     <div>
-                        <div className="mt-6 rounded-xl border border-indigo-200 bg-indigo-50/30 overflow-hidden">
+                        <div className="mt-6 rounded-xl shadow-md  overflow-hidden">
 
-                            <div className="border-b bg-white px-6 py-5">
+                            <div className="px-6 py-5 bg-sky-100">
 
                                 <div className="flex items-center gap-4">
 
@@ -394,9 +396,9 @@ export default function DocumentoProtocolizado({
 
                         </div>
                         {!esMunicipio && (
-                            <div className="mt-6 rounded-xl border border-indigo-200 bg-indigo-50/30 overflow-hidden">
+                            <div className="mt-6 rounded-xl shadow md -indigo-200 bg-indigo-50/30 overflow-hidden">
 
-                                <div className="border-b bg-white px-6 py-5">
+                                <div className="bg-sky-100 px-6 py-5">
 
                                     <div className="flex items-center gap-4">
 
@@ -434,11 +436,11 @@ export default function DocumentoProtocolizado({
 
                                             <div
                                                 key={doc.id}
-                                                className="bg-white rounded-xl border border-slate-200 shadow-sm overflow-hidden"
+                                                className="bg-white rounded-xl shadow-sm overflow-hidden"
                                             >
                                                 {/* HEADER */}
 
-                                                <div className="bg-slate-100 px-5 py-4 border-b border-slate-200 flex justify-between items-start">
+                                                <div className="bg-sky-50/40 px-5 py-4 shadow md -slate-200 flex justify-between items-start">
 
                                                     <div className="flex items-start gap-3">
 
@@ -473,14 +475,14 @@ export default function DocumentoProtocolizado({
                                                             <span className={`
                                     flex
                                     px-3
-                                    py-1
+                                    py-1s
                                     rounded-full
                                     text-xs
                                     font-semibold
 
                                     ${doc.obligatorio
                                                                     ? "bg-red-100 text-red-700"
-                                                                    : "bg-slate-100 text-slate-700"
+                                                                    : "bg-sky-100 text-slate-700"
                                                                 }
                                 `}>
 
@@ -585,10 +587,10 @@ export default function DocumentoProtocolizado({
                                                                         className="
             h-20
             rounded-xl
-            border-2
-            border-dashed
-            border-sky-300
-            hover:border-sky-500
+            shadow md -2
+            shadow md -dashed
+            shadow md -sky-300
+            hover:shadow md -sky-500
             hover:bg-sky-50
             transition
             cursor-pointer
@@ -624,7 +626,7 @@ export default function DocumentoProtocolizado({
 
                                                         ) : (
 
-                                                            <div className="rounded-xl bg-emerald-50 border border-emerald-200 p-4">
+                                                            <div className="rounded-xl bg-emerald-50 shadow md  shadow md -emerald-200 p-4">
 
                                                                 <div className="flex justify-between items-center">
 
@@ -669,8 +671,8 @@ export default function DocumentoProtocolizado({
                                 px-3
                                 py-2
                                 rounded-lg
-                                border
-                                hover:bg-slate-50
+                                shadow md 
+                                hover:bg-sky-100
                                 text-sm
                             "
                                                             >
@@ -713,7 +715,6 @@ export default function DocumentoProtocolizado({
                                     })}
                                 </div>
                             </div>
-
                         )}
                     </div>
                 )}

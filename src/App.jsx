@@ -24,6 +24,7 @@ import ModalAccionAviso from "./components/ModalAccionAviso";
 import DocumentacionRequerida from "./components/DocumentacionRequerida";
 import ObligacionesPendientes from "./components/Adeudos";
 import ObligacionesSuspender from "./components/ObligacionesRegistradas";
+import CampoFecha from "./components/CampoFecha";
 import {
   Search,
   Users,
@@ -817,7 +818,7 @@ export default function AvisosFiscales() {
       </header>
 
       {/* BREADCRUMB */}
-      <div className="bg-white border-b">
+      <div className="bg-white -b">
         <div className="max-w-7xl mx-auto px-8 py-3 text-sm text-slate-500">
           INICIO / ADMINISTRACIÓN DE CONTRIBUYENTES / AVISOS FISCALES
         </div>
@@ -827,7 +828,7 @@ export default function AvisosFiscales() {
       <main className="flex-1 max-w-7xl mx-auto w-full p-8">
 
         {/* TITULO */}
-        <div className="bg-white rounded-xl border shadow-sm p-6 mb-6">
+        <div className="bg-white rounded-xl shadow md p-6 mb-6">
           <h2 className="text-2xl font-bold text-slate-800">
             AVISOS FISCALES
           </h2>
@@ -837,7 +838,7 @@ export default function AvisosFiscales() {
         </div>
 
         {/* STEPPER */}
-        <div className="bg-white rounded-xl border shadow-sm p-8 mb-6">
+        <div className="bg-white rounded-xl shadow-sm p-8 mb-6">
           <div className="relative flex justify-between">
             <div className="absolute top-5 left-0 right-0 h-1 bg-slate-200 z-0" />
 
@@ -855,12 +856,12 @@ export default function AvisosFiscales() {
                   <button
                     type="button"
                     onClick={() => setActiveStep(index)}
-                    className={`w-12 h-12 rounded-full flex items-center justify-center border-4 transition-all
+                    className={`w-12 h-12 rounded-full flex items-center justify-center -4 transition-all
                       ${completed
-                        ? "bg-green-600 border-green-600 text-white"
+                        ? "bg-green-600 -green-600 text-white"
                         : current
-                          ? "bg-sky-700 border-sky-700 text-white"
-                          : "bg-white border-slate-300 text-slate-500"
+                          ? "bg-sky-700 -sky-700 text-white"
+                          : "bg-white -slate-300 text-slate-500"
                       }
                     `}
                   >
@@ -888,8 +889,8 @@ export default function AvisosFiscales() {
         {/* PESTAÑA BÚSQUEDA */}
         {activeStep === 0 && (
           <div>
-            <div className="bg-white rounded-xl border shadow-sm">
-              <div className="border-b px-6 py-5">
+            <div className="bg-white rounded-xl  shadow-sm">
+              <div className="-b px-6 py-5">
                 <h3 className="text-lg font-semibold text-slate-800">
                   Búsqueda de Contribuyente
                 </h3>
@@ -909,9 +910,9 @@ export default function AvisosFiscales() {
 
                   <div className="grid md:grid-cols-2 gap-4">
                     <label
-                      className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
+                      className={` rounded-xl p-4 cursor-pointer transition hover:-sky-500
                     ${tipoPersona === "fisica"
-                          ? "border-sky-600 bg-sky-50"
+                          ? "-sky-600 bg-sky-50"
                           : ""
                         }`}
                     >
@@ -935,9 +936,9 @@ export default function AvisosFiscales() {
                     </label>
 
                     <label
-                      className={`border rounded-xl p-4 cursor-pointer transition hover:border-sky-500
+                      className={` rounded-xl p-4 cursor-pointer transition hover:-sky-500
                     ${tipoPersona === "moral"
-                          ? "border-sky-600 bg-sky-50"
+                          ? "-sky-600 bg-sky-50"
                           : ""
                         }`}
                     >
@@ -974,7 +975,7 @@ export default function AvisosFiscales() {
                       onChange={(e) =>
                         setMetodoBusqueda(e.target.value)
                       }
-                      className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
+                      className="w-full md:w-96  rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
                     >
                       <option value="">
                         Seleccione una opción
@@ -1002,7 +1003,7 @@ export default function AvisosFiscales() {
                       type="text"
                       maxLength={13}
                       placeholder="Ingrese RFC"
-                      className="w-full md:w-96 border rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
+                      className="w-full md:w-96  rounded-lg px-4 py-3 focus:ring-2 focus:ring-sky-600 outline-none"
                     />
                   </section>
                 )}
@@ -1023,7 +1024,7 @@ export default function AvisosFiscales() {
 
                           <input
                             type="text"
-                            className="w-full border rounded-lg px-4 py-3"
+                            className="w-full  rounded-lg px-4 py-3"
                           />
                         </div>
 
@@ -1034,7 +1035,7 @@ export default function AvisosFiscales() {
 
                           <input
                             type="text"
-                            className="w-full border rounded-lg px-4 py-3"
+                            className="w-full  rounded-lg px-4 py-3"
                           />
                         </div>
 
@@ -1045,7 +1046,7 @@ export default function AvisosFiscales() {
 
                           <input
                             type="text"
-                            className="w-full border rounded-lg px-4 py-3"
+                            className="w-full  rounded-lg px-4 py-3"
                           />
                         </div>
 
@@ -1069,7 +1070,7 @@ export default function AvisosFiscales() {
 
                         <input
                           type="text"
-                          className="w-full border rounded-lg px-4 py-3"
+                          className="w-full  rounded-lg px-4 py-3"
                         />
                       </div>
                     </section>
@@ -1093,9 +1094,9 @@ export default function AvisosFiscales() {
         {/* COINCIDENCIAS */}
         {activeStep === 1 && (
           <div>
-            <div className="bg-white rounded-xl border shadow-sm">
+            <div className="bg-white rounded-xl  shadow-sm">
 
-              <div className="border-b px-6 py-5">
+              <div className="-b px-6 py-5">
                 <h3 className="text-xl font-semibold text-slate-800">
                   Coincidencias
                 </h3>
@@ -1112,62 +1113,62 @@ export default function AvisosFiscales() {
                 {tipoPersona === "fisica" && (
                   <div className="overflow-x-auto">
 
-                    <table className="w-full text-sm border border-slate-200">
+                    <table className="w-full text-sm  -slate-200">
                       <thead className="bg-slate-100">
                         <tr>
-                          <th className="p-3 border">Seleccionar</th>
-                          <th className="p-3 border">Tipo Persona</th>
-                          <th className="p-3 border">RFC</th>
-                          <th className="p-3 border">Nombre</th>
-                          <th className="p-3 border">Primer Apellido</th>
-                          <th className="p-3 border">Segundo Apellido</th>
-                          <th className="p-3 border">Nombre Comercial</th>
-                          <th className="p-3 border">Fecha Nacimiento</th>
-                          <th className="p-3 border">CURP</th>
-                          <th className="p-3 border">Estatus</th>
-                          <th className="p-3 border">Origen</th>
+                          <th className="p-3 ">Seleccionar</th>
+                          <th className="p-3 ">Tipo Persona</th>
+                          <th className="p-3 ">RFC</th>
+                          <th className="p-3 ">Nombre</th>
+                          <th className="p-3 ">Primer Apellido</th>
+                          <th className="p-3 ">Segundo Apellido</th>
+                          <th className="p-3 ">Nombre Comercial</th>
+                          <th className="p-3 ">Fecha Nacimiento</th>
+                          <th className="p-3 ">CURP</th>
+                          <th className="p-3 ">Estatus</th>
+                          <th className="p-3 ">Origen</th>
                         </tr>
                       </thead>
 
                       <tbody>
                         {/* <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Física</td>
-                          <td className="border p-3">MORL900512ABC</td>
-                          <td className="border p-3">JUAN</td>
-                          <td className="border p-3">MORALES</td>
-                          <td className="border p-3">LÓPEZ</td>
-                          <td className="border p-3">ABARROTES JUAN</td>
-                          <td className="border p-3">12/05/1990</td>
-                          <td className="border p-3">MOLJ900512HTCRPN01</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Física</td>
+                          <td className=" p-3">MORL900512ABC</td>
+                          <td className=" p-3">JUAN</td>
+                          <td className=" p-3">MORALES</td>
+                          <td className=" p-3">LÓPEZ</td>
+                          <td className=" p-3">ABARROTES JUAN</td>
+                          <td className=" p-3">12/05/1990</td>
+                          <td className=" p-3">MOLJ900512HTCRPN01</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
+                          <td className=" p-3">SIOX</td>
                         </tr> */}
 
                         <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Física</td>
-                          <td className="border p-3">PEMG850318XYZ</td>
-                          <td className="border p-3">MARÍA</td>
-                          <td className="border p-3">PÉREZ</td>
-                          <td className="border p-3">GARCÍA</td>
-                          <td className="border p-3">PAPELERÍA DEL SUR</td>
-                          <td className="border p-3">18/03/1985</td>
-                          <td className="border p-3">PEGM850318MTCRRR02</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Física</td>
+                          <td className=" p-3">PEMG850318XYZ</td>
+                          <td className=" p-3">MARÍA</td>
+                          <td className=" p-3">PÉREZ</td>
+                          <td className=" p-3">GARCÍA</td>
+                          <td className=" p-3">PAPELERÍA DEL SUR</td>
+                          <td className=" p-3">18/03/1985</td>
+                          <td className=" p-3">PEGM850318MTCRRR02</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
+                          <td className=" p-3">SIOX</td>
                         </tr>
                       </tbody>
                     </table>
@@ -1179,106 +1180,106 @@ export default function AvisosFiscales() {
                 {tipoPersona === "moral" && (
                   <div className="overflow-x-auto">
 
-                    <table className="w-full text-sm border border-slate-200">
+                    <table className="w-full text-sm  -slate-200">
                       <thead className="bg-slate-100">
                         <tr>
-                          <th className="p-3 border">Seleccionar</th>
-                          <th className="p-3 border">Tipo Persona</th>
-                          <th className="p-3 border">RFC</th>
-                          <th className="p-3 border">
+                          <th className="p-3 ">Seleccionar</th>
+                          <th className="p-3 ">Tipo Persona</th>
+                          <th className="p-3 ">RFC</th>
+                          <th className="p-3 ">
                             Denominación o Razón Social
                           </th>
-                          <th className="p-3 border">
+                          <th className="p-3 ">
                             Nombre Comercial
                           </th>
-                          <th className="p-3 border">
+                          <th className="p-3 ">
                             Fecha Acta Constitutiva
                           </th>
-                          <th className="p-3 border">Estatus</th>
-                          <th className="p-3 border">Origen</th>
-                          <th className="p-3 border">Tipo Entidad</th>
+                          <th className="p-3 ">Estatus</th>
+                          <th className="p-3 ">Origen</th>
+                          <th className="p-3 ">Tipo Entidad</th>
                         </tr>
                       </thead>
 
                       <tbody>
                         <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Moral</td>
-                          <td className="border p-3">CSO210315AA1</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Moral</td>
+                          <td className=" p-3">CSO210315AA1</td>
+                          <td className=" p-3">
                             COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">COMSUR MATRIZ</td>
-                          <td className="border p-3">15/03/2021</td>
-                          <td className="border p-3">
+                          <td className=" p-3">COMSUR MATRIZ</td>
+                          <td className=" p-3">15/03/2021</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
-                          <td className="border p-3">PRINCIPAL</td>
+                          <td className=" p-3">SIOX</td>
+                          <td className=" p-3">PRINCIPAL</td>
                         </tr>
 
                         <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Moral</td>
-                          <td className="border p-3">CSO210315AA1</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Moral</td>
+                          <td className=" p-3">CSO210315AA1</td>
+                          <td className=" p-3">
                             COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">COMSUR</td>
-                          <td className="border p-3">15/03/2021</td>
-                          <td className="border p-3">
+                          <td className=" p-3">COMSUR</td>
+                          <td className=" p-3">15/03/2021</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
-                          <td className="border p-3">SECUNDARIO</td>
+                          <td className=" p-3">SIOX</td>
+                          <td className=" p-3">SECUNDARIO</td>
                         </tr>
 
                         <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Moral</td>
-                          <td className="border p-3">CSO210315AA1</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Moral</td>
+                          <td className=" p-3">CSO210315AA1</td>
+                          <td className=" p-3">
                             COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">COMSUR</td>
-                          <td className="border p-3">15/03/2021</td>
-                          <td className="border p-3">
+                          <td className=" p-3">COMSUR</td>
+                          <td className=" p-3">15/03/2021</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
-                          <td className="border p-3">SECUNDARIO</td>
+                          <td className=" p-3">SIOX</td>
+                          <td className=" p-3">SECUNDARIO</td>
                         </tr>
 
                         <tr className="hover:bg-sky-50">
-                          <td className="border p-3 text-center">
+                          <td className=" p-3 text-center">
                             <input type="checkbox" />
                           </td>
-                          <td className="border p-3">Moral</td>
-                          <td className="border p-3">CSO210315AA1</td>
-                          <td className="border p-3">
+                          <td className=" p-3">Moral</td>
+                          <td className=" p-3">CSO210315AA1</td>
+                          <td className=" p-3">
                             COMERCIALIZADORA DEL SUR S.A. DE C.V.
                           </td>
-                          <td className="border p-3">COMSUR</td>
-                          <td className="border p-3">15/03/2021</td>
-                          <td className="border p-3">
+                          <td className=" p-3">COMSUR</td>
+                          <td className=" p-3">15/03/2021</td>
+                          <td className=" p-3">
                             <span className="bg-green-100 text-green-700 px-2 py-1 rounded-full text-xs">
                               ACTIVO
                             </span>
                           </td>
-                          <td className="border p-3">SIOX</td>
-                          <td className="border p-3">SECUNDARIO</td>
+                          <td className=" p-3">SIOX</td>
+                          <td className=" p-3">SECUNDARIO</td>
                         </tr>
 
                       </tbody>
@@ -1296,7 +1297,7 @@ export default function AvisosFiscales() {
                 {
                   etiqueta: "Regresar",
                   icono: "ArrowLeft",
-                  className: "border border-slate-300 text-slate-700 hover:bg-slate-50",
+                  className: " -slate-300 text-slate-700 hover:bg-slate-50",
                   onClick: () => setActiveStep(0)
                 }
 
@@ -1320,10 +1321,10 @@ export default function AvisosFiscales() {
         {/* DATOS DEL CONTRIBUYENTE */}
         {activeStep === 2 && (
           <div>
-            <div className="bg-white rounded-xl border shadow-sm">
+            <div className="bg-white rounded-xl  shadow-sm">
 
               {/* ENCABEZADO */}
-              <div className="border-b px-6 py-5">
+              <div className="-b px-6 py-5">
                 <h3 className="text-xl font-semibold text-slate-800">
                   Datos del Contribuyente
                 </h3>
@@ -1358,7 +1359,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="RFC"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1369,7 +1370,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="MORL900512ABC"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1380,7 +1381,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="MOLJ900512HTCRPN01"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1391,7 +1392,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="MORALES"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1402,7 +1403,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="LÓPEZ"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1413,7 +1414,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="JUAN CARLOS"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1424,7 +1425,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="ABARROTES JUAN"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1435,7 +1436,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Régimen Simplificado de Confianza"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1446,7 +1447,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Méxicana"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div>
@@ -1456,7 +1457,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="OC-OAXACA"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div>
@@ -1466,7 +1467,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="12/05/1990"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1477,7 +1478,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Masculino"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1506,7 +1507,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="juan.morales@email.com"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div>
@@ -1516,7 +1517,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="juan.morales@email.com"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1527,7 +1528,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="9511234567"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1538,7 +1539,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="9511234567"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                         </div>
@@ -1567,7 +1568,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="RFC"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1578,7 +1579,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="MORL900512ABC"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div className="col-span-6">
@@ -1588,7 +1589,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="MOLJ900512HTCRPN01"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div className="col-span-6">
@@ -1598,7 +1599,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Régimen Simplificado de Confianza"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1609,7 +1610,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="Régimen Simplificado de Confianza"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1620,7 +1621,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="ABARROTES JUAN"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1631,7 +1632,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="12/05/1990"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1659,7 +1660,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="juan.morales@email.com"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                           <div>
@@ -1669,7 +1670,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="juan.morales@email.com"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1680,7 +1681,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="9511234567"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
 
@@ -1691,7 +1692,7 @@ export default function AvisosFiscales() {
                             <input
                               disabled
                               value="9511234567"
-                              className="w-full mt-1 border rounded-lg px-3 py-2 bg-slate-100"
+                              className="w-full mt-1  rounded-lg px-3 py-2 bg-slate-100"
                             />
                           </div>
                         </div>
@@ -1715,7 +1716,7 @@ export default function AvisosFiscales() {
                     </h4>
                   </div>
 
-                  <div className="bg-slate-50 border rounded-xl p-5">
+                  <div className="bg-slate-50  rounded-xl p-5">
 
                     <div className="mb-3">
                       <span className="font-semibold text-slate-700">
@@ -1759,11 +1760,11 @@ export default function AvisosFiscales() {
 
                       renderItem={(item) => (
 
-                        <div className="w-full h-full rounded-2xl border bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
+                        <div className="w-full h-full rounded-2xl  bg-white shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col overflow-hidden">
 
                           {/* Header */}
 
-                          <div className="px-5 py-4 border-b bg-gradient-to-r from-sky-50 to-white">
+                          <div className="px-5 py-4 -b bg-gradient-to-r from-sky-50 to-white">
 
                             <div className="flex items-center justify-between">
 
@@ -1831,7 +1832,7 @@ export default function AvisosFiscales() {
 
                             {/* Footer */}
 
-                            {/* <div className="mt-5 pt-4 border-t flex justify-between items-center">
+                            {/* <div className="mt-5 pt-4 -t flex justify-between items-center">
 
                               <span className="text-xs text-slate-500">
 
@@ -1869,7 +1870,7 @@ export default function AvisosFiscales() {
                       Representación del Trámite
                     </h4>
                   </div>
-                  <div className="border rounded-xl p-6 mb-4">
+                  <div className=" rounded-xl p-6 mb-4">
 
                     <p className="text-slate-600 mb-4">
                       Seleccione la persona que llevará a cabo el trámite.
@@ -1884,12 +1885,12 @@ export default function AvisosFiscales() {
                         className={`
             cursor-pointer
             rounded-xl
-            border
+            
             p-5
             transition-all
             ${representacion === "propio"
-                            ? "border-sky-600 bg-sky-50 shadow-md"
-                            : "border-slate-200 hover:border-sky-300 hover:shadow"
+                            ? "-sky-600 bg-sky-50 shadow-md"
+                            : "-slate-200 hover:-sky-300 hover:shadow"
                           }
         `}
                       >
@@ -1942,12 +1943,12 @@ export default function AvisosFiscales() {
                         className={`
             cursor-pointer
             rounded-xl
-            border
+            
             p-5
             transition-all
             ${representacion === "tercero"
-                            ? "border-sky-600 bg-sky-50 shadow-md"
-                            : "border-slate-200 hover:border-sky-300 hover:shadow"
+                            ? "-sky-600 bg-sky-50 shadow-md"
+                            : "-slate-200 hover:-sky-300 hover:shadow"
                           }
         `}
                       >
@@ -2000,7 +2001,7 @@ export default function AvisosFiscales() {
                 {representacion === "tercero" && (
                   <section>
                     {!mostrarFormularioRepresentante && (
-                      <div className="bg-white border rounded-xl p-6 mt-4">
+                      <div className="bg-white  rounded-xl p-6 mt-4">
                         <div>
                           {/*Header */}
                           <div className="flex justify-between items-center mb-4">
@@ -2038,14 +2039,14 @@ export default function AvisosFiscales() {
                                             relative
                                             overflow-hidden
                                             rounded-2xl
-                                            border
+                                            
                                             bg-white
                                             transition-all
                                             duration-300
 
                                     ${seleccionado
-                                      ? "border-sky-500 shadow-lg ring-2 ring-sky-100"
-                                      : "border-slate-200 hover:border-sky-300 hover:shadow-lg"
+                                      ? "-sky-500 shadow-lg ring-2 ring-sky-100"
+                                      : "-slate-200 hover:-sky-300 hover:shadow-lg"
                                     }`}
                                 >
                                   {seleccionado && (
@@ -2158,8 +2159,8 @@ export default function AvisosFiscales() {
             gap-2
             rounded-2xl
             bg-amber-50
-            border
-            border-amber-200
+            
+            -amber-200
             px-4
             py-3
             text-sm
@@ -2219,7 +2220,7 @@ export default function AvisosFiscales() {
 
         ${seleccionado
                                             ? "bg-emerald-600 text-white shadow-md hover:bg-emerald-700"
-                                            : "border border-slate-300 text-slate-700 hover:bg-sky-50 hover:border-sky-500"
+                                            : " -slate-300 text-slate-700 hover:bg-sky-50 hover:-sky-500"
                                           }
     `}
 
@@ -2252,8 +2253,8 @@ export default function AvisosFiscales() {
                                 items-center
                                 gap-2
                                 rounded-xl
-                                border
-                                border-slate-300 
+                                
+                                -slate-300 
                                 px-4
                                 py-2.5
                                 text-sm
@@ -2261,7 +2262,7 @@ export default function AvisosFiscales() {
                                 text-slate-700
                                 transition
                                 hover:bg-sky-50
-                                hover:border-sky-300
+                                hover:-sky-300
                             "
                                         onClick={() => {
 
@@ -2357,9 +2358,9 @@ export default function AvisosFiscales() {
         {
           activeStep === 3 && (
             <div>
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className="border-b px-6 py-5">
+                <div className="-b px-6 py-5">
                   <h3 className="text-xl font-semibold text-slate-800">
                     Tipos de Avisos
                   </h3>
@@ -2372,7 +2373,7 @@ export default function AvisosFiscales() {
 
                 <div className="mx-4 mb-6 mt-4">
 
-                  <div className="border border-slate-300 border-dashed bg-slate-100 rounded-xl p-5">
+                  <div className=" -slate-300 -dashed bg-slate-100 rounded-xl p-5">
 
                     <div className="grid md:grid-cols-2 gap-6 items-center">
 
@@ -2410,14 +2411,14 @@ export default function AvisosFiscales() {
                           onChange={(e) => setFechaAvisoSAT(e.target.value)}
                           className="
             w-full
-            border
+            
             rounded-xl
             px-4
             py-3
             bg-white
             focus:ring-2
             focus:ring-sky-600
-            focus:border-sky-600
+            focus:-sky-600
             outline-none
             transition
           "
@@ -2461,12 +2462,12 @@ export default function AvisosFiscales() {
                       <label
                         key={index}
                         className={`
-                              border-2 rounded-xl p-5 cursor-pointer
+                              -2 rounded-xl p-5 cursor-pointer
                               transition-all duration-200
-                              hover:border-sky-600 hover:shadow-md
+                              hover:-sky-600 hover:shadow-md
                               ${selectedRow === aviso
-                            ? "border-sky-700 bg-sky-50"
-                            : "border-slate-200"
+                            ? "-sky-700 bg-sky-50"
+                            : "-slate-200"
                           }`}
                       >
                         <input
@@ -2478,10 +2479,10 @@ export default function AvisosFiscales() {
                         />
 
                         <div className="flex items-start gap-3">
-                          <div className={`mt-1 w-5 h-5 rounded-full border-2 flex items-center justify-center
+                          <div className={`mt-1 w-5 h-5 rounded-full -2 flex items-center justify-center
                               ${selectedRow === aviso
-                              ? "border-sky-700"
-                              : "border-slate-400"
+                              ? "-sky-700"
+                              : "-slate-400"
                             }`}>
 
                             {selectedRow === aviso && (
@@ -2508,7 +2509,7 @@ export default function AvisosFiscales() {
                 }
                 {!fechaAvisoSAT && (
                   <div className="mx-4 mb-6">
-                    <div className="border border-dashed border-slate-300 rounded-xl bg-slate-100 py-16 px-8 text-center">
+                    <div className=" -dashed -slate-300 rounded-xl bg-slate-100 py-16 px-8 text-center">
                       <div className="mx-auto flex h-14 w-14 items-center justify-center rounded-full bg-slate-200">
                         <CalendarDays className="h-7 w-7 text-slate-500" />
                       </div>
@@ -2551,7 +2552,7 @@ export default function AvisosFiscales() {
             <div className="space-y-6">
 
 
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
                 <div className="px-8 py-8 flex items-center gap-5">
 
@@ -2582,9 +2583,9 @@ export default function AvisosFiscales() {
                 </div>
 
               </div>
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className="border-b px-6 py-5">
+                <div className="-b px-6 py-5">
 
                   <h3 className="font-semibold text-slate-800">
 
@@ -2651,15 +2652,15 @@ export default function AvisosFiscales() {
               </div>
 
 
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className="border-b px-6 py-5">
+                <div className="-b px-6 py-5">
 
                   <h3 className="font-semibold text-slate-800 mb-2 ">
 
                     Realizó la captura de información del aviso a presentar ¿Que acción desea realizar?
                   </h3>
-                  <div className="flex items-start gap-3 rounded-xl border border-amber-300 bg-amber-50 p-4">
+                  <div className="flex items-start gap-3 rounded-xl  -amber-300 bg-amber-50 p-4">
                     <AlertTriangle className="mt-0.5 text-amber-600" size={20} />
 
                     <div>
@@ -2678,7 +2679,7 @@ export default function AvisosFiscales() {
 
 
                   <button
-                    className="rounded-xl border hover:border-sky-300 hover:bg-sky-50 transition p-6 text-left"
+                    className="rounded-xl  hover:-sky-300 hover:bg-sky-50 transition p-6 text-left"
                     onClick={() => {
                       setActiveStep(4);
                       setVistaPrevia(false);
@@ -2709,7 +2710,7 @@ export default function AvisosFiscales() {
 
 
                   <button
-                    className="rounded-xl border hover:border-indigo-300 hover:bg-indigo-50 transition p-6 text-left"
+                    className="rounded-xl  hover:-indigo-300 hover:bg-indigo-50 transition p-6 text-left"
                   >
 
                     <div className="h-12 w-12 rounded-xl bg-indigo-100 flex items-center justify-center mb-4">
@@ -2736,7 +2737,7 @@ export default function AvisosFiscales() {
 
 
                   <button
-                    className="rounded-xl border hover:border-red-300 hover:bg-red-50 transition p-6 text-left"
+                    className="rounded-xl  hover:-red-300 hover:bg-red-50 transition p-6 text-left"
                     onClick={
                       () => {
                         setActiveStep(0);
@@ -2767,7 +2768,7 @@ export default function AvisosFiscales() {
                   </button>
 
                   <button
-                    className="rounded-xl border hover:border-emerald-300 hover:bg-emerald-50 transition p-6 text-left"
+                    className="rounded-xl  hover:-emerald-300 hover:bg-emerald-50 transition p-6 text-left"
                     onClick={() => {
                       setVistaPrevia(false);
                     }}
@@ -2865,7 +2866,7 @@ export default function AvisosFiscales() {
 
                       {/* Código Postal */}
 
-                      <section className="bg-slate-50 rounded-xl p-4 border mb-4">
+                      <section className="bg-slate-50 rounded-xl p-4  mb-4">
 
                         <label className="text-xs uppercase text-slate-500 font-medium ">
                           Código Postal
@@ -3014,7 +3015,7 @@ export default function AvisosFiscales() {
                           Ubicación Geográfica
                         </h4>
 
-                        <div className="h-80 border rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
+                        <div className="h-80  rounded-xl bg-slate-100 flex items-center justify-center text-slate-500">
                           Google Maps
                         </div>
 
@@ -3047,7 +3048,7 @@ export default function AvisosFiscales() {
                       className="
                   inline-flex items-center gap-2
                   px-4 py-2
-                  border rounded-lg
+                   rounded-lg
                   bg-white
                   hover:bg-slate-50
                 "
@@ -3076,7 +3077,7 @@ export default function AvisosFiscales() {
                           </label>
 
                           <input
-                            className="w-full border rounded-lg px-3 py-2"
+                            className="w-full  rounded-lg px-3 py-2"
                             placeholder="68000"
                           />
                         </div>
@@ -3095,14 +3096,14 @@ export default function AvisosFiscales() {
 
                       <div className="grid md:grid-cols-2 gap-4">
 
-                        <input className="border rounded-lg p-2" placeholder="Tipo de Ámbito" />
-                        <input className="border rounded-lg p-2" placeholder="Región" />
-                        <input className="border rounded-lg p-2" placeholder="Distrito" />
-                        <input className="border rounded-lg p-2" placeholder="Municipio" />
-                        <input className="border rounded-lg p-2" placeholder="Localidad" />
-                        <input className="border rounded-lg p-2" placeholder="Tipo de Asentamiento" />
-                        <input className="border rounded-lg p-2" placeholder="Nombre de Asentamiento" />
-                        <input className="border rounded-lg p-2" placeholder="Tipo de Inmueble" />
+                        <input className=" rounded-lg p-2" placeholder="Tipo de Ámbito" />
+                        <input className=" rounded-lg p-2" placeholder="Región" />
+                        <input className=" rounded-lg p-2" placeholder="Distrito" />
+                        <input className=" rounded-lg p-2" placeholder="Municipio" />
+                        <input className=" rounded-lg p-2" placeholder="Localidad" />
+                        <input className=" rounded-lg p-2" placeholder="Tipo de Asentamiento" />
+                        <input className=" rounded-lg p-2" placeholder="Nombre de Asentamiento" />
+                        <input className=" rounded-lg p-2" placeholder="Tipo de Inmueble" />
 
                       </div>
 
@@ -3118,12 +3119,12 @@ export default function AvisosFiscales() {
 
                       <div className="grid md:grid-cols-2 gap-4">
 
-                        <input className="border rounded-lg p-2" placeholder="Tipo de Vialidad" />
-                        <input className="border rounded-lg p-2" placeholder="Nombre de Vialidad" />
-                        <input className="border rounded-lg p-2" placeholder="Número Exterior" />
-                        <input className="border rounded-lg p-2" placeholder="Número Interior" />
-                        <input className="border rounded-lg p-2" placeholder="Entre Vialidad" />
-                        <input className="border rounded-lg p-2" placeholder="Y Vialidad" />
+                        <input className=" rounded-lg p-2" placeholder="Tipo de Vialidad" />
+                        <input className=" rounded-lg p-2" placeholder="Nombre de Vialidad" />
+                        <input className=" rounded-lg p-2" placeholder="Número Exterior" />
+                        <input className=" rounded-lg p-2" placeholder="Número Interior" />
+                        <input className=" rounded-lg p-2" placeholder="Entre Vialidad" />
+                        <input className=" rounded-lg p-2" placeholder="Y Vialidad" />
 
                       </div>
 
@@ -3141,13 +3142,13 @@ export default function AvisosFiscales() {
 
                         <textarea
                           rows="3"
-                          className="w-full border rounded-lg p-3"
+                          className="w-full  rounded-lg p-3"
                           placeholder="Características del domicilio"
                         />
 
                         <textarea
                           rows="3"
-                          className="w-full border rounded-lg p-3"
+                          className="w-full  rounded-lg p-3"
                           placeholder="Referencias adicionales"
                         />
 
@@ -3171,7 +3172,7 @@ export default function AvisosFiscales() {
 
                       <div
                         className="
-                    h-80 rounded-xl border
+                    h-80 rounded-xl 
                     bg-slate-100
                     flex items-center justify-center
                     text-slate-500
@@ -3204,7 +3205,7 @@ export default function AvisosFiscales() {
 
                 titulo="Cambio de Representante Legal"
 
-                descripcion="Actualice la información del representante legal registrado para el contribuyente conforme a la documentación presentada."
+                // descripcion="Actualice la información del representante legal registrado para el contribuyente conforme a la documentación presentada."
 
                 icono="UserRoundCog"
 
@@ -3213,9 +3214,9 @@ export default function AvisosFiscales() {
               />
               {/* REPRESENTANTES LEGALES ASOCIADOS */}
 
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className="border-b px-6 py-5">
+                <div className="-b px-6 py-5">
                   <h3 className="text-lg font-semibold text-slate-800">
                     Representantes Legales Asociados
                   </h3>
@@ -3239,13 +3240,13 @@ export default function AvisosFiscales() {
                 relative
                 bg-white
                 rounded-2xl
-                border
+                
                 shadow-sm
                 transition-all
                 overflow-hidden
                 ${seleccionado
-                            ? "border-red-300 bg-red-50 shadow-md"
-                            : "border-sky-200 hover:shadow-md hover:border-sky-300"
+                            ? "-red-300 bg-red-50 shadow-md"
+                            : "-sky-200 hover:shadow-md hover:-sky-300"
                           }
             `}
                       >
@@ -3364,7 +3365,7 @@ export default function AvisosFiscales() {
 
                           {/* Footer */}
 
-                          <div className="mt-6 pt-4 border-t flex justify-between items-center">
+                          <div className="mt-6 pt-4 -t flex justify-between items-center">
                             <button
                               type="button"
                               onClick={() => {
@@ -3444,7 +3445,7 @@ export default function AvisosFiscales() {
                 </div>
                 {/* Resumen */}
 
-                <div className="border-t bg-slate-50 px-6 py-4 flex items-center justify-between">
+                <div className="-t bg-slate-50 px-6 py-4 flex items-center justify-between">
 
                   <div className="text-sm text-slate-600">
                     <span className="font-medium">
@@ -3483,7 +3484,7 @@ export default function AvisosFiscales() {
 
                     {/* Header */}
 
-                    <div className="bg-red-50 border-b border-red-100 px-6 py-5">
+                    <div className="bg-red-50 -b -red-100 px-6 py-5">
 
                       <div className="flex items-center gap-3">
 
@@ -3516,7 +3517,7 @@ export default function AvisosFiscales() {
                         <p className="text-sm text-amber-800 font-bold">
                           ¿Desea continuar con la baja de este representante legal?”</p>
                       </div>
-                      <div className="bg-amber-50 border border-amber-200 rounded-lg p-3 mb-4">
+                      <div className="bg-amber-50  -amber-200 rounded-lg p-3 mb-4">
 
                         <p className="text-sm text-amber-800">
                           Está a punto de marcar para baja al siguiente representante legal.
@@ -3525,7 +3526,7 @@ export default function AvisosFiscales() {
 
                       </div>
 
-                      <div className="border rounded-xl bg-slate-50 p-4">
+                      <div className=" rounded-xl bg-slate-50 p-4">
 
                         <div className="grid grid-cols-1 gap-3">
 
@@ -3567,14 +3568,14 @@ export default function AvisosFiscales() {
 
                     {/* Footer */}
 
-                    <div className="border-t px-6 py-4 flex justify-end gap-3 bg-slate-50">
+                    <div className="-t px-6 py-4 flex justify-end gap-3 bg-slate-50">
 
                       <button
                         onClick={() => {
                           setModalConfirmacion(false);
                           setRepresentantePendiente(null);
                         }}
-                        className="px-5 py-2.5 border border-slate-300 rounded-lg hover:bg-slate-100 transition"
+                        className="px-5 py-2.5  -slate-300 rounded-lg hover:bg-slate-100 transition"
                       >
                         Cancelar
                       </button>
@@ -3594,9 +3595,9 @@ export default function AvisosFiscales() {
               )}
 
               {/* NUEVOS REPRESENTANTES */}
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className="border-b px-6 py-5">
+                <div className="-b px-6 py-5">
 
                   {/* Encabezado */}
 
@@ -3609,7 +3610,7 @@ export default function AvisosFiscales() {
                       </h3>
 
                       <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-                        Registre el representante legal que sustituirá al representante o a los representantes legales dados de baja.
+                        Registre al representante legal que sustituirá al representante o a los representantes legales dados de baja.
                       </p>
 
                     </div>
@@ -3646,7 +3647,7 @@ export default function AvisosFiscales() {
 
                   {/* Aviso */}
 
-                  <div className="mt-5 flex items-start gap-3 rounded-xl border border-amber-200 bg-amber-50 px-4 py-3">
+                  <div className="mt-5 flex items-start gap-3 rounded-xl  -amber-200 bg-amber-50 px-4 py-3">
 
                     <AlertTriangle
                       size={18}
@@ -3694,8 +3695,8 @@ export default function AvisosFiscales() {
                       {nuevosRepresentantes.map((item) => (
                         <div
                           key={item.id}
-                          className=" relative bg-white rounded-2xl border
-                                      border-sky-200 shadow-sm
+                          className=" relative bg-white rounded-2xl 
+                                      -sky-200 shadow-sm
                                       hover:shadow-md transition-all
                                       overflow-hidden
                                               "
@@ -3788,7 +3789,7 @@ export default function AvisosFiscales() {
 
                             {/* Footer */}
 
-                            <div className="mt-6 pt-4 border-t flex justify-between items-center">
+                            <div className="mt-6 pt-4 -t flex justify-between items-center">
 
                               <button
                                 type="button"
@@ -3851,7 +3852,7 @@ export default function AvisosFiscales() {
                     </div>
                   ) : (
 
-                    <div className="rounded-2xl border border-dashed border-slate-300 bg-slate-50 px-8 py-12">
+                    <div className="rounded-2xl  -dashed -slate-300 bg-slate-50 px-8 py-12">
 
                       <div className="flex flex-col items-center text-center">
 
@@ -3867,7 +3868,7 @@ export default function AvisosFiscales() {
 
                         <p className="mt-2 max-w-md text-sm text-slate-500">
                           Aún no se ha incorporado un representante legal. Seleccione
-                          <strong> "Nuevo representante legal"</strong> para agregar uno al
+                          la opción <strong> "Nuevo representante legal"</strong> para agregar uno al
                           trámite.
                         </p>
 
@@ -3892,16 +3893,20 @@ export default function AvisosFiscales() {
               <div className="mb-4">
                 <HeaderModulo
                   titulo="Cambio de Nombre, Denominación o Razón Social"
-                  descripcion="Actualice la información correspondiente al nombre, denominación o razón social del contribuyente."
+                  // descripcion="Actualice la información correspondiente al nombre, denominación o razón social del contribuyente."
                   icono="UserRoundPen"
                   color="sky"
                 />
               </div>
+
+              {/* NUEVO NOMBRE */}
               {tipoPersona === "fisica" && (
                 <div className="flex flex-col gap-4 mt-4">
 
-                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden">
-                    <div className="px-6 py-5 border-b flex items-start gap-4">
+                  <div className="bg-white rounded-xl shadow-md overflow-hidden">
+
+                    {/* Header */}
+                    <div className="px-6 py-5 bg-slate-50 flex items-start gap-4">
 
                       <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
 
@@ -3915,7 +3920,7 @@ export default function AvisosFiscales() {
                       <div>
 
                         <h3 className="text-lg font-semibold text-slate-800">
-                          Nuevo nombre
+                          Datos del nuevo nombre
                         </h3>
 
                         <p className="text-sm text-slate-500 mt-1">
@@ -3933,89 +3938,32 @@ export default function AvisosFiscales() {
 
                         {/* RFC */}
 
-                        <div>
-
-                          <label className="block text-sm font-medium mb-2">
-                            RFC
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                            defaultValue=""
-                          />
-
-                        </div>
+                        <CampoInput etiqueta="RFC"></CampoInput>
 
                         {/* CURP */}
 
-                        <div>
+                        <CampoInput etiqueta="CURP"></CampoInput>
 
-                          <label className="block text-sm font-medium mb-2">
-                            CURP Nueva
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                            defaultValue=""
-                          />
-
-                        </div>
 
                         {/* Nombre Comercial */}
 
-                        <div className="md:col-span-2">
+                        <CampoInput etiqueta="Nombre Comercial"></CampoInput>
 
-                          <label className="block text-sm font-medium mb-2">
-                            Nombre Comercial
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                          />
-
-                        </div>
 
                         {/* Primer apellido */}
 
-                        <div>
+                        <CampoInput etiqueta="Primer Apellido "></CampoInput>
 
-                          <label className="block text-sm font-medium mb-2">
-                            Primer Apellido
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                          />
-
-                        </div>
 
                         {/* Segundo apellido */}
 
-                        <div>
+                        <CampoInput etiqueta="Segundo Apellido"></CampoInput>
 
-                          <label className="block text-sm font-medium mb-2">
-                            Segundo Apellido
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                          />
-
-                        </div>
 
                         {/* Nombre */}
 
-                        <div className="md:col-span-2">
+                        <CampoInput etiqueta="Nombre"></CampoInput>
 
-                          <label className="block text-sm font-medium mb-2">
-                            Nombre(s)
-                          </label>
-
-                          <input
-                            className="w-full border rounded-lg px-4 py-3"
-                          />
-
-                        </div>
 
                       </div>
 
@@ -4024,11 +3972,11 @@ export default function AvisosFiscales() {
                   </div>
                   {/* DATOS DEL ACTA DE NACIMIENTO */}
 
-                  <div className="bg-white rounded-xl border shadow-sm overflow-hidden mb-6">
+                  <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
 
                     {/* Header */}
 
-                    <div className="border-b bg-slate-50 px-6 py-5">
+                    <div className="bg-slate-50 px-6 py-5">
 
                       <div className="flex items-center gap-4">
 
@@ -4045,7 +3993,7 @@ export default function AvisosFiscales() {
                           </h3>
 
                           <p className="text-sm text-slate-500 mt-1">
-                            Capture la información correspondiente al acta de nacimiento
+                            Capture la información correspondiente al acta de nacimiento del contribuyente
                           </p>
 
                         </div>
@@ -4062,67 +4010,21 @@ export default function AvisosFiscales() {
 
                         {/* Fecha Corrección */}
 
-                        <div>
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Fecha de Corrección de Acta
-                          </label>
-
-                          <input
-                            type="date"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
+                        <CampoFecha etiqueta="Fecha de corrección de acta"></CampoFecha>
 
                         {/* Fecha Nacimiento */}
 
-                        <div>
+                        <CampoFecha etiqueta="Fecha de nacimiento"></CampoFecha>
 
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Fecha de Nacimiento
-                          </label>
-
-                          <input
-                            type="date"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
 
                         {/* Número Acta */}
 
-                        <div>
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Número de Acta
-                          </label>
-
-                          <input
-                            type="text"
-                            maxLength={5}
-                            placeholder="00000"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
+                        <CampoInput etiqueta="Número de acta"></CampoInput>
 
                         {/* Número Foja */}
 
-                        <div>
+                        <CampoInput etiqueta="Número de Foja"></CampoInput>
 
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Número de Foja
-                          </label>
-
-                          <input
-                            type="text"
-                            maxLength={5}
-                            placeholder="00000"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
 
                       </div>
 
@@ -4137,9 +4039,10 @@ export default function AvisosFiscales() {
               {tipoPersona === "moral" && (
 
                 <div>
-                  <div className="bg-white rounded-2xl border border-sky-200 shadow-sm overflow-hidden">
+                  <div className="bg-white rounded-2xl shadow-sm overflow-hidden">
 
-                    <div className="px-6 py-5 border-b flex items-start gap-4">
+                    <div className="px-6 py-5 flex items-start gap-4 bg-sky-100 ">
+
                       <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
 
                         <Building2
@@ -4166,65 +4069,21 @@ export default function AvisosFiscales() {
                     <div className="p-6">
 
                       <div className="grid md:grid-cols-2 gap-5">
+                        
+                        {/*RFC*/}
+                        <CampoInput etiqueta="RFC"></CampoInput>
 
-                        <div>
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            RFC
-                          </label>
-
-                          <input
-                            type="text"
-                            defaultValue="ABC010203AA1"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
-
-                        <div>
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Régimen de Capital
-                          </label>
-
-                          <select className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none">
-
-                            <option>S.A. de C.V.</option>
-                            <option>S. de R.L.</option>
-                            <option>S.C.</option>
-                            <option>A.C.</option>
-
-                          </select>
-
-                        </div>
-
-                        <div className="md:col-span-2">
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Denominación o Razón Social
-                          </label>
-
-                          <input
-                            type="text"
-                            placeholder="Ingrese la nueva denominación o razón social"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
-
-                        <div className="md:col-span-2">
-
-                          <label className="block text-sm font-medium text-slate-700 mb-2">
-                            Nombre Comercial
-                          </label>
-
-                          <input
-                            type="text"
-                            placeholder="Ingrese el nombre comercial"
-                            className="w-full rounded-lg border border-slate-300 px-4 py-3 focus:ring-2 focus:ring-sky-500 outline-none"
-                          />
-
-                        </div>
+                        {/* Denominación o razón social */}
+                        <CampoInput etiqueta="Denominación o razón social"></CampoInput>
+                       
+                        {/* Régimen Fiscal */}
+                        <CampoInput etiqueta="Régimen Fiscal"></CampoInput>
+                       
+                        {/* Régimen Capital */}
+                        <CampoInput etiqueta="Régimen Capital"></CampoInput>
+                        
+                        {/* Nombre Comercial */}
+                        <CampoInput etiqueta="Nombre Comercial"></CampoInput>
 
                       </div>
 
@@ -4263,7 +4122,7 @@ export default function AvisosFiscales() {
 
               color="amber"
             />
-            <div className="bg-white mt-2 p-4 border border-amber-800 border-dashed rounded-lg flex gap-2 bg-yellow-50">
+            <div className="bg-white mt-2 p-4  -amber-800 -dashed rounded-lg flex gap-2 bg-yellow-50">
               <div className="h-14 w-14 rounded-xl flex items-center justify-center bg-yellow-100 text-amber-800">
                 <AlertTriangle
                   size={30}
@@ -4288,7 +4147,7 @@ export default function AvisosFiscales() {
 
               <div className="grid md:grid-cols-2 gap-4">
 
-                {/* <div className="bg-slate-50 border rounded-xl p-4">
+                {/* <div className="bg-slate-50  rounded-xl p-4">
                     <div className="text-2xl font-bold text-slate-800">
                       3
                     </div>
@@ -4298,7 +4157,7 @@ export default function AvisosFiscales() {
                   </div> */}
 
 
-                {/* <div className="bg-red-50 border rounded-xl p-4">
+                {/* <div className="bg-red-50  rounded-xl p-4">
                     <div className="text-2xl font-bold text-red-600">
                       2
                     </div>
@@ -4316,7 +4175,7 @@ export default function AvisosFiscales() {
                 <DomicilioFiscal
                   onGuardar={() => { }}
                   onCancelar={() => { }}
-                  className="border shadow-sm"
+                  className=" shadow-sm"
                   titulo="Domicilios del contribuyente"
                   descripcion="Capture o seleccione un domicilio para notificaciones"
                 />
@@ -4343,7 +4202,7 @@ export default function AvisosFiscales() {
                 color="emerald"
 
               />
-              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6 mt-6">
+              <div className="bg-white rounded-xl  shadow-sm p-6 mb-6 mt-6">
 
                 <h3 className="text-lg font-semibold text-slate-800 mb-5">
                   Selección de obligaciones y actividades económicas
@@ -4361,7 +4220,7 @@ export default function AvisosFiscales() {
                       onChange={(e) =>
                         setObligacionSeleccionada(e.target.value)
                       }
-                      className="w-full border rounded-lg px-4 py-3"
+                      className="w-full  rounded-lg px-4 py-3"
                     >
                       <option value="">
                         Seleccione una obligación
@@ -4391,7 +4250,7 @@ export default function AvisosFiscales() {
                       onChange={(e) =>
                         setActividadSeleccionada(e.target.value)
                       }
-                      className="w-full border rounded-lg px-4 py-3"
+                      className="w-full  rounded-lg px-4 py-3"
                     >
                       <option value="">
                         Seleccione
@@ -4419,7 +4278,7 @@ export default function AvisosFiscales() {
                       onChange={(e) =>
                         setPorcentaje(e.target.value)
                       }
-                      className="w-full border rounded-lg px-4 py-3"
+                      className="w-full  rounded-lg px-4 py-3"
                     />
                   </div>
 
@@ -4469,7 +4328,7 @@ export default function AvisosFiscales() {
                           onChange={(e) =>
                             setTrabajadoresTemporales(e.target.value)
                           }
-                          className="w-full border rounded-lg px-4 py-3"
+                          className="w-full  rounded-lg px-4 py-3"
                         />
                       </div>
 
@@ -4485,7 +4344,7 @@ export default function AvisosFiscales() {
                           onChange={(e) =>
                             setTrabajadoresPermanentes(e.target.value)
                           }
-                          className="w-full border rounded-lg px-4 py-3"
+                          className="w-full  rounded-lg px-4 py-3"
                         />
                       </div>
                     </>
@@ -4494,13 +4353,13 @@ export default function AvisosFiscales() {
                 }
               </div>
               {actividadesAgregadas.length > 0 && (
-                <div className="bg-white rounded-xl border shadow-sm p-6">
+                <div className="bg-white rounded-xl  shadow-sm p-6">
 
                   <h3 className="text-lg font-semibold text-slate-800 mb-5">
                     Obligaciones del Contribuyente
                   </h3>
 
-                  <div className="bg-sky-50 border rounded-xl p-6 my-6 ">
+                  <div className="bg-sky-50  rounded-xl p-6 my-6 ">
 
                     <div className="flex justify-between items-center mb-3">
 
@@ -4537,12 +4396,12 @@ export default function AvisosFiscales() {
 
                       <div
                         key={index}
-                        className="bg-white border rounded-xl shadow-sm overflow-hidden"
+                        className="bg-white  rounded-xl shadow-sm overflow-hidden"
                       >
 
                         {/* HEADER */}
 
-                        <div className="bg-slate-50 border-b px-6 py-4 flex justify-between items-center">
+                        <div className="bg-slate-50 -b px-6 py-4 flex justify-between items-center">
 
                           <div>
 
@@ -4592,7 +4451,7 @@ export default function AvisosFiscales() {
                                 </label>
 
                                 <select
-                                  className="w-full border rounded-lg px-4 py-3"
+                                  className="w-full  rounded-lg px-4 py-3"
                                   defaultValue={item.actividad}
                                 >
                                   <option>
@@ -4616,7 +4475,7 @@ export default function AvisosFiscales() {
                                   <input
                                     type="number"
                                     defaultValue={item.porcentaje}
-                                    className="w-full border rounded-lg px-4 py-3"
+                                    className="w-full  rounded-lg px-4 py-3"
                                   />
 
                                   <span className="absolute right-4 top-3 text-slate-500">
@@ -4634,7 +4493,7 @@ export default function AvisosFiscales() {
 
                                 <input
                                   type="date"
-                                  className="w-full border rounded-lg px-4 py-3"
+                                  className="w-full  rounded-lg px-4 py-3"
                                   defaultValue="2026-01-01"
                                 />
                               </div>
@@ -4642,7 +4501,7 @@ export default function AvisosFiscales() {
                             </div>
                             {item.obligacion === "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
 
-                              <div className="mt-5 border-t pt-5">
+                              <div className="mt-5 -t pt-5">
 
                                 <h5 className="font-medium text-slate-700 mb-4">
                                   Información Laboral
@@ -4669,7 +4528,7 @@ export default function AvisosFiscales() {
                                         setActividadesAgregadas(nuevas);
 
                                       }}
-                                      className="w-full border rounded-lg px-4 py-3"
+                                      className="w-full  rounded-lg px-4 py-3"
                                     />
                                   </div>
 
@@ -4692,7 +4551,7 @@ export default function AvisosFiscales() {
                                         setActividadesAgregadas(nuevas);
 
                                       }}
-                                      className="w-full border rounded-lg px-4 py-3"
+                                      className="w-full  rounded-lg px-4 py-3"
                                     />
                                   </div>
 
@@ -4708,7 +4567,7 @@ export default function AvisosFiscales() {
                           {item.obligacion ===
                             "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
 
-                              <div className="border-t pt-6">
+                              <div className="-t pt-6">
 
                                 <h5 className="font-medium text-slate-700 mb-4">
                                   Información Laboral
@@ -4725,7 +4584,7 @@ export default function AvisosFiscales() {
                                     <input
                                       type="number"
                                       min="0"
-                                      className="w-full border rounded-lg px-4 py-3"
+                                      className="w-full  rounded-lg px-4 py-3"
                                     />
 
                                   </div>
@@ -4739,7 +4598,7 @@ export default function AvisosFiscales() {
                                     <input
                                       type="number"
                                       min="0"
-                                      className="w-full border rounded-lg px-4 py-3"
+                                      className="w-full  rounded-lg px-4 py-3"
                                     />
 
                                   </div>
@@ -4783,9 +4642,9 @@ export default function AvisosFiscales() {
               />
               {/* OBLIGACION */}
 
-              <div className="bg-white rounded-xl border shadow-sm">
+              <div className="bg-white rounded-xl  shadow-sm">
 
-                <div className=" border-b border-slate-500 p-5">
+                <div className=" -b -slate-500 p-5">
                   <h3 className="text-lg font-semibold text-slate-800 mb-2">
                     Selección de Obligación Fiscal
                   </h3>
@@ -4806,10 +4665,10 @@ export default function AvisosFiscales() {
                       type="button"
                       onClick={() => setObligacionSeleccionada(item)}
                       className={`
-                border-2 rounded-xl p-5 text-left transition
+                -2 rounded-xl p-5 text-left transition
                 ${obligacionSeleccionada === item
-                          ? "border-sky-700 bg-sky-50"
-                          : "border-slate-200 hover:border-sky-500"
+                          ? "-sky-700 bg-sky-50"
+                          : "-slate-200 hover:-sky-500"
                         }
               `}
                     >
@@ -4828,11 +4687,11 @@ export default function AvisosFiscales() {
 
               {obligacionSeleccionada && (
 
-                <div className="bg-white rounded-xl border shadow-sm">
+                <div className="bg-white rounded-xl  shadow-sm">
 
                   {/* HEADER */}
 
-                  <div className="border-b px-6 py-5">
+                  <div className="-b px-6 py-5">
 
                     <h3 className="text-lg font-semibold text-slate-800">
                       Datos del Establecimiento
@@ -4848,7 +4707,7 @@ export default function AvisosFiscales() {
 
                     {/* DATOS ESTABLECIMIENTO */}
 
-                    <section className="border-b px-6 py-5">
+                    <section className="-b px-6 py-5">
                       <div className="flex items-center gap-2 mb-4">
 
                         <Building2
@@ -4871,7 +4730,7 @@ export default function AvisosFiscales() {
 
                           <input
                             type="text"
-                            className="w-full border rounded-lg px-4 py-3"
+                            className="w-full  rounded-lg px-4 py-3"
                           />
                         </div>
 
@@ -4890,7 +4749,7 @@ export default function AvisosFiscales() {
 
                     {ambito === "urbano" && (
 
-                      <section className="border-b px-6 py-5">
+                      <section className="-b px-6 py-5">
 
                         <h4 className="font-semibold text-slate-700 mb-4">
                           Ubicación del Domicilio
@@ -4900,32 +4759,32 @@ export default function AvisosFiscales() {
 
                           <input
                             placeholder="Tipo de Vialidad"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Nombre de Calle"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Número Exterior y/o Letra"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Número Interior y/o Letra"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Entre Vialidad"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Y Vialidad"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                         </div>
@@ -4946,17 +4805,17 @@ export default function AvisosFiscales() {
 
                           <input
                             placeholder="Vía de Comunicación"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Nombre de Terracería"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             placeholder="Tramo"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                         </div>
@@ -4980,13 +4839,13 @@ export default function AvisosFiscales() {
                           <textarea
                             rows={3}
                             placeholder="Características del domicilio"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <textarea
                             rows={3}
                             placeholder="Referencias adicionales"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                         </div>
@@ -5022,7 +4881,7 @@ export default function AvisosFiscales() {
                 color="red"
 
               />
-              <div className="bg-white rounded-xl border shadow-sm p-6 mb-6 mt-5">
+              <div className="bg-white rounded-xl  shadow-sm p-6 mb-6 mt-5">
 
                 <h3 className="text-lg font-semibold text-slate-800 mb-2">
                   Selección de Obligación Fiscal
@@ -5044,10 +4903,10 @@ export default function AvisosFiscales() {
                       key={obligacion}
                       type="button"
                       onClick={() => setObligacionSeleccionada(obligacion)}
-                      className={`p-5 rounded-xl border-2 text-left transition-all
+                      className={`p-5 rounded-xl -2 text-left transition-all
         ${obligacionSeleccionada === obligacion
-                          ? "border-sky-700 bg-sky-50"
-                          : "border-slate-200 hover:border-sky-500"
+                          ? "-sky-700 bg-sky-50"
+                          : "-slate-200 hover:-sky-500"
                         }`}
                     >
 
@@ -5069,7 +4928,7 @@ export default function AvisosFiscales() {
               {
                 obligacionSeleccionada && (
 
-                  <div className="bg-white rounded-xl border shadow-sm p-6">
+                  <div className="bg-white rounded-xl  shadow-sm p-6">
 
                     <div className="mb-6">
 
@@ -5145,7 +5004,7 @@ export default function AvisosFiscales() {
 
                           {/* Header */}
 
-                          <div className="px-6 py-5 border-b bg-red-50 flex items-center gap-3">
+                          <div className="px-6 py-5 -b bg-red-50 flex items-center gap-3">
 
                             <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
 
@@ -5182,7 +5041,7 @@ export default function AvisosFiscales() {
 
                             {establecimientoPendiente && (
 
-                              <div className="mt-6 rounded-xl border bg-slate-50 p-4">
+                              <div className="mt-6 rounded-xl  bg-slate-50 p-4">
 
                                 <p className="text-xs uppercase text-slate-500">
                                   Nombre del Establecimiento
@@ -5208,7 +5067,7 @@ export default function AvisosFiscales() {
 
                           {/* Footer */}
 
-                          <div className="border-t bg-slate-50 px-6 py-4 flex justify-end gap-3">
+                          <div className="-t bg-slate-50 px-6 py-4 flex justify-end gap-3">
 
                             <button
                               type="button"
@@ -5216,7 +5075,7 @@ export default function AvisosFiscales() {
                                 setModalConfirmacion(false);
                                 setEstablecimientoPendiente(null);
                               }}
-                              className="px-5 py-2.5 rounded-lg border hover:bg-slate-100"
+                              className="px-5 py-2.5 rounded-lg  hover:bg-slate-100"
                             >
                               No
                             </button>
@@ -5267,7 +5126,7 @@ export default function AvisosFiscales() {
                 color="red"
 
               />
-              <div className="bg-white rounded-xl border border-slate-300 shadow-sm my-4">
+              <div className="bg-white rounded-xl  -slate-300 shadow-sm my-4">
                 <button
                   type="button"
                   onClick={() => setMostrarObligaciones(!mostrarObligaciones)}
@@ -5289,11 +5148,11 @@ export default function AvisosFiscales() {
                 </button>
 
                 {mostrarObligaciones && (
-                  <div className="border-t p-6">
+                  <div className="-t p-6">
 
                     <div className="flex flex-col gap-4">
                       {/* ALERTA */}
-                      <div className="border border-amber-300 bg-amber-50 rounded-xl p-5">
+                      <div className=" -amber-300 bg-amber-50 rounded-xl p-5">
 
                         <div className="font-semibold text-amber-800 mb-2">
                           Declaraciones Pendientes
@@ -5307,13 +5166,13 @@ export default function AvisosFiscales() {
 
 
                       {/* OBLIGACIONES */}
-                      <div className="rounded-2xl border border-gray-300 shadow-sm">
+                      <div className="rounded-2xl  -gray-300 shadow-sm">
                         <div className="divide-y divide-gray-300">
                           {obligaciones.map((item) => (
 
                             <div
                               key={item.id}
-                              className="border-b border-gray-300"
+                              className="-b -gray-300"
                             >
                               <button
                                 type="button"
@@ -5406,7 +5265,7 @@ export default function AvisosFiscales() {
 
                               {obligacionAbierta === item.id && (
 
-                                <div className="border-t bg-slate-50 p-4">
+                                <div className="-t bg-slate-50 p-4">
 
                                   <div className="space-y-2 p-5">
                                     <h6 className="font-medium text-slate-700 mb-4 ">
@@ -5426,8 +5285,8 @@ export default function AvisosFiscales() {
                                           <button
                                             type="button"
                                             onClick={() => setEjercicioSeleccionado(2026)}
-                                            className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2026
-                                              ? "bg-sky-700 text-white border-sky-700"
+                                            className={`px-4 py-2 rounded-lg  ${ejercicioSeleccionado === 2026
+                                              ? "bg-sky-700 text-white -sky-700"
                                               : "bg-white"
                                               }`}
                                           >
@@ -5437,8 +5296,8 @@ export default function AvisosFiscales() {
                                           <button
                                             type="button"
                                             onClick={() => setEjercicioSeleccionado(2025)}
-                                            className={`px-4 py-2 rounded-lg border ${ejercicioSeleccionado === 2025
-                                              ? "bg-sky-700 text-white border-sky-700"
+                                            className={`px-4 py-2 rounded-lg  ${ejercicioSeleccionado === 2025
+                                              ? "bg-sky-700 text-white -sky-700"
                                               : "bg-white"
                                               }`}
                                           >
@@ -5458,7 +5317,7 @@ export default function AvisosFiscales() {
 
                                           <div className="space-y-2 max-h-[250px] overflow-y-auto pr-2">
 
-                                            <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div className="flex justify-between bg-white  rounded-lg p-3">
                                               <div>
                                                 <div className="font-medium">
                                                   ENERO - FEBRERO
@@ -5474,7 +5333,7 @@ export default function AvisosFiscales() {
                                               </span>
                                             </div>
 
-                                            <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div className="flex justify-between bg-white  rounded-lg p-3">
                                               <div>
                                                 <div className="font-medium">
                                                   MARZO - ABRIL
@@ -5490,7 +5349,7 @@ export default function AvisosFiscales() {
                                               </span>
                                             </div>
 
-                                            <div className="flex justify-between bg-white border rounded-lg p-3">
+                                            <div className="flex justify-between bg-white  rounded-lg p-3">
                                               <div>
                                                 <div className="font-medium">
                                                   MAYO - JUNIO
@@ -5532,8 +5391,8 @@ export default function AvisosFiscales() {
 
               {/* MOTIVO DE CANCELACIÓN */}
               {!mostrarObligaciones && (
-                <div className="bg-white rounded-xl border border-slate-300 shadow-sm">
-                  <div className="border-b px-6 py-5">
+                <div className="bg-white rounded-xl  -slate-300 shadow-sm">
+                  <div className="-b px-6 py-5">
                     <h3 className="text-lg font-semibold text-slate-800">
                       Motivo de Cancelación
                     </h3>
@@ -5549,9 +5408,9 @@ export default function AvisosFiscales() {
                       <div className="grid md:grid-cols-2 gap-4">
 
                         <label
-                          className={`border rounded-xl p-5 cursor-pointer transition hover:border-sky-500
+                          className={` rounded-xl p-5 cursor-pointer transition hover:-sky-500
         ${motivoCancelacion === "fusion"
-                              ? "border-sky-600 bg-sky-50"
+                              ? "-sky-600 bg-sky-50"
                               : ""
                             }`}
                         >
@@ -5577,9 +5436,9 @@ export default function AvisosFiscales() {
                         </label>
 
                         <label
-                          className={`border rounded-xl p-5 cursor-pointer transition hover:border-sky-500
+                          className={` rounded-xl p-5 cursor-pointer transition hover:-sky-500
         ${motivoCancelacion === "escision"
-                              ? "border-sky-600 bg-sky-50"
+                              ? "-sky-600 bg-sky-50"
                               : ""
                             }`}
                         >
@@ -5611,9 +5470,9 @@ export default function AvisosFiscales() {
                       <div className="grid md:grid-cols-1 gap-4">
 
                         <label
-                          className={`block border rounded-xl p-5 cursor-pointer transition hover:border-sky-500
+                          className={`block  rounded-xl p-5 cursor-pointer transition hover:-sky-500
       ${motivoCancelacion === "fallecimiento"
-                              ? "border-sky-600 bg-sky-50"
+                              ? "-sky-600 bg-sky-50"
                               : ""
                             }`}
                         >
@@ -5644,9 +5503,9 @@ export default function AvisosFiscales() {
                 </div>
               )}
               {motivoCancelacion && (
-                <div className="bg-white rounded-xl border border-slate-300 shadow-sm mt-6">
+                <div className="bg-white rounded-xl  -slate-300 shadow-sm mt-6">
                   <div>
-                    <div className="border-b px-6 py-5">
+                    <div className="-b px-6 py-5">
                       <h3 className="text-lg font-semibold text-slate-800">
                         Datos del Aviso de Cancelación
                       </h3>
@@ -5665,7 +5524,7 @@ export default function AvisosFiscales() {
 
                             <input
                               type="date"
-                              className="w-full border rounded-lg px-4 py-3"
+                              className="w-full  rounded-lg px-4 py-3"
                             />
                           </div>
 
@@ -5676,11 +5535,11 @@ export default function AvisosFiscales() {
 
                             <input
                               type="text"
-                              className="w-full border rounded-lg px-4 py-3"
+                              className="w-full  rounded-lg px-4 py-3"
                             />
                           </div>
 
-                          <div className="md:col-span-2 border-t pt-6">
+                          <div className="md:col-span-2 -t pt-6">
                             <h4 className="font-semibold text-slate-700 mb-4">
                               Datos del RFC Sucesor
                             </h4>
@@ -5689,32 +5548,32 @@ export default function AvisosFiscales() {
                           <input
                             type="text"
                             placeholder="RFC *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="CURP *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Primer Apellido *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Segundo Apellido"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <div className="md:col-span-2">
                             <input
                               type="text"
                               placeholder="Nombre(s) *"
-                              className="w-full border rounded-lg px-4 py-3"
+                              className="w-full  rounded-lg px-4 py-3"
                             />
                           </div>
 
@@ -5727,16 +5586,16 @@ export default function AvisosFiscales() {
                           <input
                             type="text"
                             placeholder="RFC de la Sociedad Subsistente *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Razón Social *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
-                          <div className="md:col-span-2 border-t pt-6">
+                          <div className="md:col-span-2 -t pt-6">
                             <h4 className="font-semibold text-slate-700 mb-4">
                               Representante Legal de Sociedad Subsistente
                             </h4>
@@ -5745,32 +5604,32 @@ export default function AvisosFiscales() {
                           <input
                             type="text"
                             placeholder="RFC *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="CURP *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Primer Apellido *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Segundo Apellido"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <div className="md:col-span-2">
                             <input
                               type="text"
                               placeholder="Nombre(s) *"
-                              className="w-full border rounded-lg px-4 py-3"
+                              className="w-full  rounded-lg px-4 py-3"
                             />
                           </div>
 
@@ -5783,16 +5642,16 @@ export default function AvisosFiscales() {
                           <input
                             type="text"
                             placeholder="RFC de la Sociedad Escindida *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Razón Social *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
-                          <select className="border rounded-lg px-4 py-3">
+                          <select className=" rounded-lg px-4 py-3">
                             <option>Tipo de Escisión *</option>
                             <option>Total</option>
                             <option>Parcial</option>
@@ -5800,7 +5659,7 @@ export default function AvisosFiscales() {
 
                           <div />
 
-                          <div className="md:col-span-2 border-t pt-6">
+                          <div className="md:col-span-2 -t pt-6">
                             <h4 className="font-semibold text-slate-700 mb-4">
                               Representante Legal de Sociedad Escindida
                             </h4>
@@ -5809,32 +5668,32 @@ export default function AvisosFiscales() {
                           <input
                             type="text"
                             placeholder="RFC *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="CURP *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Primer Apellido *"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <input
                             type="text"
                             placeholder="Segundo Apellido"
-                            className="border rounded-lg px-4 py-3"
+                            className=" rounded-lg px-4 py-3"
                           />
 
                           <div className="md:col-span-2">
                             <input
                               type="text"
                               placeholder="Nombre(s) *"
-                              className="w-full border rounded-lg px-4 py-3"
+                              className="w-full  rounded-lg px-4 py-3"
                             />
                           </div>
 
@@ -5842,10 +5701,10 @@ export default function AvisosFiscales() {
                       )}
                     </div>
                   </div>
-                  <div className="border-t px-6 py-4 flex justify-end">
+                  <div className="-t px-6 py-4 flex justify-end">
                     {/* <button
                       type="button"
-                      className="px-5 py-2 border border-slate-300 rounded-lg hover:bg-slate-50"
+                      className="px-5 py-2  -slate-300 rounded-lg hover:bg-slate-50"
                     >
                       Regresar
                     </button> */}
@@ -5868,7 +5727,7 @@ export default function AvisosFiscales() {
                 <DomicilioFiscal
                   onGuardar={() => { }}
                   onCancelar={() => { }}
-                  className="border border-gray-300 shadow-sm"
+                  className=" -gray-300 shadow-sm"
                   titulo="Domicilio para notificaciones"
                   descripcion="Seleccione Un Domicilio Para Recibir Notificaciones"
                 />
@@ -5879,7 +5738,7 @@ export default function AvisosFiscales() {
                 <div className="fixed inset-0 bg-black/40 flex items-center justify-center z-50">
                   <div className="bg-white rounded-xl shadow-xl w-full max-w-5xl max-h-[90vh] overflow-y-auto">
 
-                    <div className="border-b px-6 py-4 flex justify-between items-center">
+                    <div className="-b px-6 py-4 flex justify-between items-center">
                       <div>
                         <h3 className="text-lg font-semibold text-slate-800">
                           Consulta de Domicilio
@@ -5896,7 +5755,7 @@ export default function AvisosFiscales() {
                           setMostrarModalDomicilio(false);
                           setDomicilioConsulta(null);
                         }}
-                        className="px-4 py-2 border rounded-lg hover:bg-slate-50"
+                        className="px-4 py-2  rounded-lg hover:bg-slate-50"
                       >
                         Cerrar
                       </button>
