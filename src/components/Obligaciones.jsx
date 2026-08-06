@@ -33,9 +33,13 @@ export default function Obligaciones({ obligaciones }) {
                                 <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
                                     Porcentaje
                                 </th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">Trabajadores Temporales</th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">Trabajadores Permanentes</th>
                                 <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">
                                     Fecha de Inicio de Operaciones
                                 </th>
+                                <th className="px-5 py-3 text-center text-xs font-semibold uppercase text-slate-600 w-36">Estatus</th>
+
 
                             </tr>
 
@@ -84,11 +88,68 @@ export default function Obligaciones({ obligaciones }) {
                                             </span>
 
                                         </td>
+
+
+
+                                        {obligacion.clave === "erogaciones" ? (
+                                            <>
+                                                <td className="px-5 py-4 bg-white justify-center">
+                                                    <div className="flex items-center justify-center h-full font-semibold text-slate-800">
+                                                        <span className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700">
+                                                            {actividad.trabajadoresTemporales ? actividad.trabajadoresTemporales : 0}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-4 bg-white">
+                                                    <div className="flex items-center justify-center h-full font-semibold text-slate-800">
+                                                        <span className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700">
+                                                            {actividad.TrabajadoresPermanentes ? actividad.TrabajadoresPermanentes : 0}
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </>
+                                        ) : (
+                                            <>
+                                                <td className="px-5 py-4 bg-white">
+                                                    <div className="flex items-center justify-center h-full font-semibold text-slate-800">
+
+                                                        <span className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700">
+                                                            N/A
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                                <td className="px-5 py-4 bg-white">
+                                                    <div className="flex items-center justify-center h-full font-semibold text-slate-800">
+                                                        <span className="inline-flex items-center rounded-full bg-rose-100 px-3 py-1 text-sm font-semibold text-rose-700">
+                                                            N/A
+                                                        </span>
+                                                    </div>
+                                                </td>
+                                            </>
+                                        )}
+
+
                                         <td className="px-5 py-4 bg-white">
 
                                             {actividad.fechaOperaciones}
 
                                         </td>
+
+                                        {index === 0 && (
+                                            <td
+                                                rowSpan={obligacion.actividades.length}
+                                                className="px-5 py-4 bg-sky-100/30 w-72 align-middle"
+                                            >
+                                                <div className="flex items-center justify-center h-full font-semibold text-slate-800">
+                                                    <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-sm font-semibold text-green-700">
+
+                                                        {obligacion.estatus}
+
+                                                    </span>
+                                                </div>
+                                            </td>
+                                        )}
+
 
                                     </tr>
 

@@ -5,10 +5,11 @@ export default function CampoSelect({
   onChange,
   opciones = [],
   disabled = false,
-  readOnly = false
+  readOnly = false,
+  className
 }) {
   return (
-    <div>
+    <div className={`w-full ${className}`}>
 
       <label className="block text-sm font-medium text-slate-700 mb-2">
         {etiqueta}
@@ -26,7 +27,7 @@ export default function CampoSelect({
         className={`
     w-full
     rounded-lg
-    border
+    shadow-md
     px-4
     py-3
     outline-none

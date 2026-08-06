@@ -121,12 +121,13 @@ const AumentoObligaciones = () => {
             id: 1,
             clave: "nominas",
             nombre: "IMPUESTO SOBRE NÓMINAS",
+            estatus: "Activo",
             requiereTrabajadores: false,
             actividades: [
                 {
                     id: 1,
                     nombre: "Comercio",
-                    porcentaje: 60,
+                    porcentaje: 10,
                     trabajadoresTemporales: 5,
                     trabajadoresPermanentes: 15,
                     fechaOperaciones: "24/10/2026"
@@ -134,7 +135,7 @@ const AumentoObligaciones = () => {
                 {
                     id: 2,
                     nombre: "Servicios",
-                    porcentaje: 40,
+                    porcentaje: 20,
                     trabajadoresTemporales: 3,
                     trabajadoresPermanentes: 10,
                     fechaOperaciones: "24/10/2026"
@@ -148,13 +149,40 @@ const AumentoObligaciones = () => {
             clave: "hospedaje",
             nombre: "IMPUESTO SOBRE HOSPEDAJE",
             requiereTrabajadores: false,
+            estatus: "Activo",
             actividades: [
                 {
                     id: 3,
                     nombre: "Hotel",
-                    porcentaje: 100,
+                    porcentaje: 20,
                     fechaOperaciones: "24/10/2026"
 
+                }
+            ],
+            actividadesAgregadas: []
+        },
+        {
+            id: 3,
+            clave: "erogaciones",
+            nombre: "IMPUESTO SOBRE EROGACIONES...",
+            requiereTrabajadores: true,
+            estatus: "Activo",
+            actividades: [
+                {
+                    id: 1,
+                    nombre: "Comercio",
+                    porcentaje: 30,
+                    trabajadoresTemporales: 5,
+                    trabajadoresPermanentes: 15,
+                    fechaOperaciones: "24/10/2026"
+                },
+                {
+                    id: 2,
+                    nombre: "Servicios",
+                    porcentaje: 20,
+                    trabajadoresTemporales: 3,
+                    trabajadoresPermanentes: 10,
+                    fechaOperaciones: "24/10/2026"
                 }
             ],
             actividadesAgregadas: []

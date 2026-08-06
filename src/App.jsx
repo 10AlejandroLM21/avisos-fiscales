@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import './App.css';
 import RepresentanteLegalForm from "./components/RepresentanteLegal";
 import DomicilioFiscal from "./components/DomicilioFiscal";
@@ -61,11 +61,79 @@ import {
   CalendarDays,
   ChevronDown,
   ChevronRight,
-  MapPin
+  MapPin,
+  BriefcaseBusiness
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
+  const catalogoObligaciones = [
 
+    {
+      value: "erogaciones",
+      label: "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal"
+    },
+
+    {
+      value: "hospedaje",
+      label: "Impuesto Sobre Prestación de Servicios de Hospedaje"
+    },
+
+    {
+      value: "cedular",
+      label: "Impuesto Cedular por la Prestación de Servicios Profesionales"
+    },
+
+    {
+      value: "cedular_arrendamiento",
+      label: "Impuesto Cedular por el Otorgamiento del Uso o Goce Temporal de Bienes Inmuebles"
+    },
+
+    {
+      value: "cedular_enajenacion",
+      label: "Impuesto Cedular por la Enajenación de Bienes Inmuebles"
+    },
+
+    {
+      value: "rifas",
+      label: "Impuesto Sobre Loterías, Rifas, Sorteos y Concursos"
+    },
+
+    {
+      value: "espectaculos",
+      label: "Impuesto Sobre Espectáculos Públicos"
+    },
+
+    {
+      value: "juegos",
+      label: "Impuesto Sobre Juegos Permitidos"
+    },
+
+    {
+      value: "nomina_eventual",
+      label: "Impuesto Sobre Nóminas por Personal Eventual"
+    },
+
+    {
+      value: "bebidas",
+      label: "Impuesto Sobre Venta Final de Bebidas con Contenido Alcohólico"
+    },
+
+    {
+      value: "adquisicion",
+      label: "Impuesto Sobre Adquisición de Vehículos Usados"
+    },
+
+    {
+      value: "notarios",
+      label: "Obligación de Presentar Avisos Notariales"
+    },
+
+    {
+      value: "retenedor",
+      label: "Retenedor del Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal"
+    }
+
+  ];
   const [activeStep, setActiveStep] = useState(0);
   const [tipoPersona, setTipoPersona] = useState("");
   const [metodoBusqueda, setMetodoBusqueda] = useState("");
@@ -769,7 +837,115 @@ export default function AvisosFiscales() {
   };
   const configAviso = obtenerConfiguracionAviso();
   let botonesIzquierda = [];
+  const configuracionCampos = [
 
+    {
+      key: "rfc",
+      etiqueta: "RFC",
+      tipoExistente: "actualizacion"
+    },
+
+    {
+
+      key: "curp",
+      etiqueta: "CURP",
+      tipoExistente: "correccion"
+    },
+
+    {
+      key: "nombreComercial",
+      etiqueta: "Nombre Comercial",
+      tipoExistente: "actualizacion"
+    },
+
+    {
+      key: "primerApellido",
+      etiqueta: "Primer Apellido",
+      tipoExistente: "correccion"
+    },
+
+    {
+      key: "segundoApellido",
+      etiqueta: "Segundo Apellido",
+      tipoExistente: "correccion"
+    },
+
+    {
+      key: "nombre",
+      etiqueta: "Nombre",
+      tipoExistente: "correccion"
+    },
+
+    {
+      key: "fechaNacimiento",
+      etiqueta: "Fecha de Nacimiento",
+      tipoExistente: "correccion"
+    }
+
+  ];
+  const [datosActuales, setDatosActuales] = useState({
+
+    rfc: "PEMJ900101ABC",
+
+    curp: "",
+
+    nombreComercial: "",
+
+    primerApellido: "PEREZ",
+
+    segundoApellido: "LOPEZ",
+
+    nombre: "JUAN",
+
+    fechaNacimiento: ""
+
+  });
+
+  const respuesta = {
+
+    rfc: "PEMJ900101ABC",
+
+    curp: "",
+
+    nombreComercial: "",
+
+    primerApellido: "PEREZ",
+
+    segundoApellido: "LOPEZ",
+
+    nombre: "JUAN",
+
+    fechaNacimiento: ""
+
+  };
+  const obtenerTipoCambio = (campo) => {
+
+    const valorActual = datosActuales[campo.key];
+
+    if (!valorActual)
+      return "Incorporación";
+
+    // Siempre inicia como Actualización
+    // El usuario decide si cambiarlo a Corrección
+    return "Actualización";
+
+  };
+
+  const [tipoCambio, setTipoCambio] = useState({});
+  
+  useEffect(() => {
+
+    const cambios = {};
+
+    configuracionCampos.forEach(campo => {
+
+      cambios[campo.key] = obtenerTipoCambio(campo);
+
+    });
+
+    setTipoCambio(cambios);
+
+  }, [datosActuales]);
   if (activeStep === 5 && vistaPrevia) {
 
     botonesIzquierda = []
@@ -795,6 +971,7 @@ export default function AvisosFiscales() {
     ];
 
   }
+
   return (
     <div className="min-h-screen bg-slate-100 flex flex-col">
 
@@ -2452,7 +2629,7 @@ export default function AvisosFiscales() {
                       "Cambio de Nombre, Denominación o Razón Social",
                       "Cambio de Representante Legal",
                       "Aumento de Obligaciones",
-                      // "Reanudación de Actividades",
+                      "Reanudación de Actividades",
                       "Disminucion de Obligaciones",
                       "Suspensión de Actividades",
                       "Apertura de Establecimientos o Locales",
@@ -3428,7 +3605,7 @@ export default function AvisosFiscales() {
 
                               {seleccionado
                                 ? "Quitar baja"
-                                : "Dar de baja"}
+                                : "Baja"}
 
                             </button>
 
@@ -3930,43 +4107,77 @@ export default function AvisosFiscales() {
                       </div>
 
                     </div>
+
                     {/* Body */}
-
-                    <div className="p-6">
-
+                    <div className="p-6 grid md:grid-cols-2 gap-5">
+                      {/* 
                       <div className="grid md:grid-cols-2 gap-5">
 
-                        {/* RFC */}
+                        <div className="grid grid-cols-7 items-end gap-2">
+                          <CampoInput className="col-span-5" etiqueta="RFC"
+                            value={datosActuales.rfc}
 
-                        <CampoInput etiqueta="RFC"></CampoInput>
+                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
 
-                        {/* CURP */}
+                          <button className="col-span-2 flex gap-2 bg-blue-600 font-semibold shadow-md text-white p-3 rounded-xl h-12 hover:bg-white hover:text-black w-full">
+                            <Search size={20}></Search> Buscar RFC
+                          </button>
 
-                        <CampoInput etiqueta="CURP"></CampoInput>
+                        </div>
 
+                        <div className="grid grid-cols-7 items-end gap-2">
 
-                        {/* Nombre Comercial */}
+                          <CampoInput className="col-span-5" etiqueta="CURP" 
+                              value={datosActuales.curp}
 
-                        <CampoInput etiqueta="Nombre Comercial"></CampoInput>
+                          badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
 
+                          <button className="col-span-2 flex gap-2 bg-blue-600 font-semibold shadow-md text-white p-3 rounded-xl h-12 hover:bg-white hover:text-black w-full">
+                            <Search size={20}></Search> Buscar CURP
+                          </button>
 
-                        {/* Primer apellido */}
+                        </div>
 
-                        <CampoInput etiqueta="Primer Apellido "></CampoInput>
+                        <CampoInput etiqueta="Nombre Comercial"
+                            value={datosActuales.nombreComercial}
+                        badge={obtenerTipoCambio(configuracionCampos[2])}
+                        ></CampoInput>
 
+                        <CampoInput etiqueta="Primer Apellido " 
+                            value={datosActuales.primerApellido}
+                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
 
-                        {/* Segundo apellido */}
+                        <CampoInput etiqueta="Segundo Apellido" 
+                            value={datosActuales.segundoApellido}
+                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
 
-                        <CampoInput etiqueta="Segundo Apellido"></CampoInput>
+                        <CampoInput etiqueta="Nombre" 
+                            value={datosActuales.nombre}
+                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
 
+                      </div> */}
+                      {
+                        configuracionCampos.map(campo => (
 
-                        {/* Nombre */}
+                          <CampoInput
 
-                        <CampoInput etiqueta="Nombre"></CampoInput>
+                            key={campo.key}
 
+                            etiqueta={campo.etiqueta}
 
-                      </div>
+                            value={datosActuales[campo.key]}
 
+                            mostrarTipoCambio={true}
+
+                            tipoCambio={tipoCambio[campo.key]}
+
+                            onTipoCambio={(valor) => setTipoCambio(prev => ({...prev,[campo.key]: valor}))
+                            }
+
+                          />
+
+                        ))
+                      }
                     </div>
 
                   </div>
@@ -4025,12 +4236,12 @@ export default function AvisosFiscales() {
 
                         <CampoInput etiqueta="Número de Foja"></CampoInput>
 
-
                       </div>
 
                     </div>
 
                   </div>
+
                 </div>
               )
               }
@@ -4043,7 +4254,7 @@ export default function AvisosFiscales() {
 
                     <div className="px-6 py-5 flex items-start gap-4 bg-sky-100 ">
 
-                      <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center">
+                      <div className="h-12 w-12 rounded-xl bg-slate-100 flex items-center justify-center">
 
                         <Building2
                           size={24}
@@ -4069,21 +4280,37 @@ export default function AvisosFiscales() {
                     <div className="p-6">
 
                       <div className="grid md:grid-cols-2 gap-5">
-                        
+
                         {/*RFC*/}
-                        <CampoInput etiqueta="RFC"></CampoInput>
+                        <div className="grid grid-cols-7 items-end gap-2">
+                          <CampoInput className="col-span-5" etiqueta="RFC"></CampoInput>
+
+                          <button className="col-span-2 flex gap-2 bg-blue-600 font-semibold shadow-md text-white p-3 rounded-xl h-12 hover:bg-white hover:text-black w-full">
+                            <Search size={20}></Search> Buscar RFC
+                          </button>
+
+                        </div>
 
                         {/* Denominación o razón social */}
-                        <CampoInput etiqueta="Denominación o razón social"></CampoInput>
-                       
-                        {/* Régimen Fiscal */}
-                        <CampoInput etiqueta="Régimen Fiscal"></CampoInput>
-                       
-                        {/* Régimen Capital */}
-                        <CampoInput etiqueta="Régimen Capital"></CampoInput>
-                        
+                        <CampoInput className="col-span-2" etiqueta="Denominación o razón social"></CampoInput>
                         {/* Nombre Comercial */}
-                        <CampoInput etiqueta="Nombre Comercial"></CampoInput>
+                        <CampoInput className="col-span-2" etiqueta="Nombre Comercial"></CampoInput>
+
+                        {/* Régimen Fiscal */}
+                        <CampoSelect etiqueta="Régimen Fiscal" opciones={
+                          [
+                            { value: "", label: "Seleccione" }
+                          ]
+                        } ></CampoSelect>
+
+                        {/* Régimen Capital */}
+                        <CampoSelect etiqueta="Régimen Capital" opciones={
+                          [
+                            { value: "", label: "Seleccione" }
+                          ]
+                        }></CampoSelect>
+
+
 
                       </div>
 
@@ -4146,29 +4373,10 @@ export default function AvisosFiscales() {
               {/* RESUMEN */}
 
               <div className="grid md:grid-cols-2 gap-4">
-
-                {/* <div className="bg-slate-50  rounded-xl p-4">
-                    <div className="text-2xl font-bold text-slate-800">
-                      3
-                    </div>
-                    <div className="text-sm text-slate-500">
-                      Obligaciones Activas
-                    </div>
-                  </div> */}
-
-
-                {/* <div className="bg-red-50  rounded-xl p-4">
-                    <div className="text-2xl font-bold text-red-600">
-                      2
-                    </div>
-                    <div className="text-sm text-slate-500">
-                      Declaraciones Pendientes
-                    </div>
-                  </div> */}
-
               </div>
               <ObligacionesSuspender title="Obligaciones fiscales" />
-              {/* OBLIGACIONES */}
+
+              {/* OBLIGACIONES PENDIENTES */}
               <ObligacionesPendientes />
 
               {mostrarFormularioDomicilio && (
@@ -4195,94 +4403,66 @@ export default function AvisosFiscales() {
 
                 titulo="Reanudación de Actividades"
 
-                descripcion="Registre la reanudación de actividades del contribuyente y actualice la información fiscal correspondiente."
+                // descripcion="Registre la reanudación de actividades del contribuyente y actualice la información fiscal correspondiente."
 
                 icono="PlayCircle"
 
                 color="emerald"
 
               />
-              <div className="bg-white rounded-xl  shadow-sm p-6 mb-6 mt-6">
+              <div className="bg-white rounded-xl shadow-md border border-slate-200 mb-6 mt-4 overflow-hidden">
+                {/* Header */}
 
-                <h3 className="text-lg font-semibold text-slate-800 mb-5">
-                  Selección de obligaciones y actividades económicas
-                </h3>
+                <div className="mb-6 border-b border-slate-200 p-6 bg-slate-100 flex items-center gap-4">
 
-                <div className="grid md:grid-cols-4 gap-4">
-
-                  <div>
-                    <label className="block mb-2 font-medium text-slate-700">
-                      Obligación
-                    </label>
-
-                    <select
-                      value={obligacionSeleccionada}
-                      onChange={(e) =>
-                        setObligacionSeleccionada(e.target.value)
-                      }
-                      className="w-full  rounded-lg px-4 py-3"
-                    >
-                      <option value="">
-                        Seleccione una obligación
-                      </option>
-
-                      <option>
-                        Impuesto Sobre Nóminas
-                      </option>
-
-                      <option>
-                        Impuesto Sobre Hospedaje
-                      </option>
-                      <option>
-                        Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal
-                      </option>
-
-                    </select>
+                  <div className="bg-sky-100 w-12 h-12 rounded-lg flex justify-center items-center">
+                    <BriefcaseBusiness className="h-6 w-6 text-sky-600" />
                   </div>
 
-                  <div>
-                    <label className="block mb-2 font-medium">
-                      Actividad
-                    </label>
+                  <div className="flex flex-col">
+                    <h1 className="text-md font-bold text-slate-800">
+                      OBLIGACIONES FISCALES Y ACTIVIDADES ECONÓMICAS
+                    </h1>
 
-                    <select
+                    <p className="mt-1 text-sm text-slate-500">
+                      Seleccione la obligación fiscal y las actividades económicas que serán incorporadas al contribuyente.
+                    </p>
+
+                  </div>
+
+                </div>
+
+                <div className="flex flex-col p-6 gap-4 w-full">
+
+                  <CampoSelect etiqueta="Obligación"
+                    value={obligacionSeleccionada}
+                    opciones={[{ value: "", label: "Seleccione" }, ...catalogoObligaciones]}
+                  ></CampoSelect>
+
+                  <div className="grid grid-cols-5 gap-4">
+                    <CampoSelect etiqueta="Actividad"
+                      className="col-span-2"
                       value={actividadSeleccionada}
                       onChange={(e) =>
                         setActividadSeleccionada(e.target.value)
                       }
-                      className="w-full  rounded-lg px-4 py-3"
-                    >
-                      <option value="">
-                        Seleccione
-                      </option>
-
-                      <option>
-                        Prestación de Servicios
-                      </option>
-
-                      <option>
-                        Comercialización
-                      </option>
-
-                    </select>
-                  </div>
-
-                  <div>
-                    <label className="block mb-2 font-medium">
-                      Porcentaje
-                    </label>
-
-                    <input
-                      type="number"
-                      value={porcentaje}
-                      onChange={(e) =>
-                        setPorcentaje(e.target.value)
+                      opciones={
+                        [
+                          { value: "", label: "Seleccione" },
+                          { value: "", label: "Prestación de Servicios" },
+                          { value: "", label: "Comercialización" }
+                        ]
                       }
-                      className="w-full  rounded-lg px-4 py-3"
-                    />
-                  </div>
+                    >
+                    </CampoSelect>
 
-                  <div className="flex items-end">
+                    <CampoInput etiqueta="Porcentaje"
+                      className='col-span-2'
+                      onChange={(e) => {
+                        setPorcentaje(e.target.value)
+                      }}
+                      type="number"
+                    ></CampoInput>
 
                     <button
                       type="button"
@@ -4304,14 +4484,14 @@ export default function AvisosFiscales() {
                         setPorcentaje("");
 
                       }}
-                      className="w-full px-5 py-3 bg-green-600 hover:bg-green-700 text-white rounded-lg"
+                      className="self-end px-5 py-3 h-12 bg-blue-600 hover:bg-green-700 text-white rounded-lg shadow-md"
                     >
                       + Agregar
                     </button>
-
                   </div>
 
                 </div>
+
                 {obligacionSeleccionada ===
                   "Impuesto Sobre Erogaciones por Remuneraciones al Trabajo Personal" && (
 

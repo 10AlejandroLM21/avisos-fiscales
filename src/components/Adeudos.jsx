@@ -42,9 +42,7 @@ const obligaciones = [
 
 export default function ObligacionesPendientes() {
 
-    const [obligacionSeleccionada, setObligacionSeleccionada] = useState(
-        obligaciones[0].id
-    );
+    const [obligacionSeleccionada, setObligacionSeleccionada] = useState(0);
 
     const obligacion = useMemo(
         () =>
@@ -83,7 +81,8 @@ export default function ObligacionesPendientes() {
 
                         <p className="text-sm text-slate-500 mt-1">
 
-                            Consulte los ejercicios y períodos pendientes de cumplimiento correspondientes a la obligación seleccionada.
+                            Consulte los ejercicios y períodos pendientes de
+                            cumplimiento correspondientes a la obligación seleccionada.
 
                         </p>
 
@@ -121,7 +120,7 @@ export default function ObligacionesPendientes() {
                         focus:border-sky-500
                     "
                 >
-
+                    <option value={0}>Seleccione</option>
                     {obligaciones.map(item => (
 
                         <option
