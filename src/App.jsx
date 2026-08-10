@@ -837,11 +837,13 @@ export default function AvisosFiscales() {
   };
   const configAviso = obtenerConfiguracionAviso();
   let botonesIzquierda = [];
+
   const configuracionCampos = [
 
     {
       key: "rfc",
       etiqueta: "RFC",
+      tipo: "input",
       tipoExistente: "actualizacion"
     },
 
@@ -849,37 +851,55 @@ export default function AvisosFiscales() {
 
       key: "curp",
       etiqueta: "CURP",
+      tipo: "input",
       tipoExistente: "correccion"
     },
 
     {
       key: "nombreComercial",
       etiqueta: "Nombre Comercial",
+      tipo: "input",
       tipoExistente: "actualizacion"
     },
 
     {
       key: "primerApellido",
       etiqueta: "Primer Apellido",
+      tipo: "input",
       tipoExistente: "correccion"
     },
 
     {
       key: "segundoApellido",
       etiqueta: "Segundo Apellido",
+      tipo: "input",
       tipoExistente: "correccion"
     },
 
     {
       key: "nombre",
       etiqueta: "Nombre",
+      tipo: "input",
       tipoExistente: "correccion"
     },
 
     {
       key: "fechaNacimiento",
       etiqueta: "Fecha de Nacimiento",
+      tipo: "input",
       tipoExistente: "correccion"
+    },
+    {
+      key: "sectorGubernamental",
+      etiqueta: "Sector Gubernamental",
+      tipo: "select",
+      tipoExistente: "Incorporación"
+    },
+    {
+      key: "subsectorGubernamental",
+      etiqueta: "Tipo de Subsector Gubernamental",
+      tipo: "select",
+      tipoExistente: "Incorporación"
     }
 
   ];
@@ -932,7 +952,7 @@ export default function AvisosFiscales() {
   };
 
   const [tipoCambio, setTipoCambio] = useState({});
-  
+
   useEffect(() => {
 
     const cambios = {};
@@ -4079,7 +4099,6 @@ export default function AvisosFiscales() {
               {/* NUEVO NOMBRE */}
               {tipoPersona === "fisica" && (
                 <div className="flex flex-col gap-4 mt-4">
-
                   <div className="bg-white rounded-xl shadow-md overflow-hidden">
 
                     {/* Header */}
@@ -4110,73 +4129,110 @@ export default function AvisosFiscales() {
 
                     {/* Body */}
                     <div className="p-6 grid md:grid-cols-2 gap-5">
-                      {/* 
-                      <div className="grid md:grid-cols-2 gap-5">
 
-                        <div className="grid grid-cols-7 items-end gap-2">
-                          <CampoInput className="col-span-5" etiqueta="RFC"
-                            value={datosActuales.rfc}
-
-                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
-
-                          <button className="col-span-2 flex gap-2 bg-blue-600 font-semibold shadow-md text-white p-3 rounded-xl h-12 hover:bg-white hover:text-black w-full">
-                            <Search size={20}></Search> Buscar RFC
-                          </button>
-
-                        </div>
-
-                        <div className="grid grid-cols-7 items-end gap-2">
-
-                          <CampoInput className="col-span-5" etiqueta="CURP" 
-                              value={datosActuales.curp}
-
-                          badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
-
-                          <button className="col-span-2 flex gap-2 bg-blue-600 font-semibold shadow-md text-white p-3 rounded-xl h-12 hover:bg-white hover:text-black w-full">
-                            <Search size={20}></Search> Buscar CURP
-                          </button>
-
-                        </div>
-
-                        <CampoInput etiqueta="Nombre Comercial"
-                            value={datosActuales.nombreComercial}
-                        badge={obtenerTipoCambio(configuracionCampos[2])}
-                        ></CampoInput>
-
-                        <CampoInput etiqueta="Primer Apellido " 
-                            value={datosActuales.primerApellido}
-                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
-
-                        <CampoInput etiqueta="Segundo Apellido" 
-                            value={datosActuales.segundoApellido}
-                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
-
-                        <CampoInput etiqueta="Nombre" 
-                            value={datosActuales.nombre}
-                            badge={obtenerTipoCambio(configuracionCampos[2])}></CampoInput>
-
-                      </div> */}
                       {
-                        configuracionCampos.map(campo => (
+                        configuracionCampos.map(campo => {
 
-                          <CampoInput
+                          const Componente =
+                            campo.tipo === "input"
+                              ? CampoInput
+                              : CampoSelect;
 
-                            key={campo.key}
+                          return (
 
-                            etiqueta={campo.etiqueta}
+                            <Componente
 
-                            value={datosActuales[campo.key]}
+                              key={campo.key}
 
-                            mostrarTipoCambio={true}
+                              etiqueta={campo.etiqueta}
 
-                            tipoCambio={tipoCambio[campo.key]}
+                              value={datosActuales[campo.key]}
 
-                            onTipoCambio={(valor) => setTipoCambio(prev => ({...prev,[campo.key]: valor}))
-                            }
+                              mostrarTipoCambio={true}
 
-                          />
+                              tipoCambio={tipoCambio[campo.key]}
 
-                        ))
+                              onTipoCambio={(valor) =>
+                                setTipoCambio(prev => ({
+                                  ...prev,
+                                  [campo.key]: valor
+                                }))
+                              }
+
+                            />
+
+                          );
+
+                        })
+                      }
+                    </div>
+
+                  </div>
+                  <div className="bg-white rounded-xl shadow-md overflow-hidden">
+
+                    {/* Header */}
+                    <div className="px-6 py-5 bg-slate-50 flex items-start gap-4">
+
+                      <div className="h-12 w-12 rounded-xl bg-sky-100 flex items-center justify-center shrink-0">
+
+                        <UserRound
+                          size={24}
+                          className="text-sky-700"
+                        />
+
+                      </div>
+
+                      <div>
+
+                        <h3 className="text-lg font-semibold text-slate-800">
+                          Datos del nuevo nombre
+                        </h3>
+
+                        <p className="text-sm text-slate-500 mt-1">
+                          Capture la información correspondiente al nuevo nombre del contribuyente.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+                    <div className="p-6 grid md:grid-cols-2 gap-5">
+
+                      {
+                        configuracionCampos.map(campo => {
+
+                          const Componente =
+                            campo.tipo === "input"
+                              ? CampoInput
+                              : CampoSelect;
+
+                          return (
+
+                            <Componente
+
+                              key={campo.key}
+
+                              etiqueta={campo.etiqueta}
+
+                              value={datosActuales[campo.key]}
+
+                              mostrarTipoCambio={true}
+
+                              tipoCambio={tipoCambio[campo.key]}
+
+                              onTipoCambio={(valor) =>
+                                setTipoCambio(prev => ({
+                                  ...prev,
+                                  [campo.key]: valor
+                                }))
+                              }
+
+                            />
+
+                          );
+
+                        })
                       }
                     </div>
 

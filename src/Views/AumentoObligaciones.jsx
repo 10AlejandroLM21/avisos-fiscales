@@ -28,6 +28,12 @@ const AumentoObligaciones = () => {
             nombre: "IMPUESTO SOBRE EROGACIONES...",
             clave: "erogaciones",
             requiereTrabajadores: true
+        },
+        {
+            id: 4,
+            nombre: "EXTRACCIÓN",
+            clave: "extraccion",
+            requiereTrabajadores: false
         }
     ];
     const catalogoActividades = {
@@ -102,6 +108,32 @@ const AumentoObligaciones = () => {
                 id: 206,
                 nombre: "Salud"
             }
+        ],
+        extraccion: [
+            {
+                id: 301,
+                nombre: "Extracción de minerales"
+            },
+            {
+                id: 302,
+                nombre: "Extracción de materiales pétreos"
+            },
+            {
+                id: 303,
+                nombre: "Extracción de arena y grava"
+            },
+            {
+                id: 304,
+                nombre: "Extracción de piedra"
+            },
+            {
+                id: 305,
+                nombre: "Extracción de arcilla"
+            },
+            {
+                id: 306,
+                nombre: "Extracción de otros minerales no metálicos"
+            }
         ]
     };
 
@@ -160,33 +192,34 @@ const AumentoObligaciones = () => {
                 }
             ],
             actividadesAgregadas: []
-        },
-        {
-            id: 3,
-            clave: "erogaciones",
-            nombre: "IMPUESTO SOBRE EROGACIONES...",
-            requiereTrabajadores: true,
-            estatus: "Activo",
-            actividades: [
-                {
-                    id: 1,
-                    nombre: "Comercio",
-                    porcentaje: 30,
-                    trabajadoresTemporales: 5,
-                    trabajadoresPermanentes: 15,
-                    fechaOperaciones: "24/10/2026"
-                },
-                {
-                    id: 2,
-                    nombre: "Servicios",
-                    porcentaje: 20,
-                    trabajadoresTemporales: 3,
-                    trabajadoresPermanentes: 10,
-                    fechaOperaciones: "24/10/2026"
-                }
-            ],
-            actividadesAgregadas: []
         }
+        // ,
+        // {
+        //     id: 3,
+        //     clave: "erogaciones",
+        //     nombre: "IMPUESTO SOBRE EROGACIONES...",
+        //     requiereTrabajadores: true,
+        //     estatus: "Activo",
+        //     actividades: [
+        //         {
+        //             id: 1,
+        //             nombre: "Comercio",
+        //             porcentaje: 30,
+        //             trabajadoresTemporales: 5,
+        //             trabajadoresPermanentes: 15,
+        //             fechaOperaciones: "24/10/2026"
+        //         },
+        //         {
+        //             id: 2,
+        //             nombre: "Servicios",
+        //             porcentaje: 20,
+        //             trabajadoresTemporales: 3,
+        //             trabajadoresPermanentes: 10,
+        //             fechaOperaciones: "24/10/2026"
+        //         }
+        //     ],
+        //     actividadesAgregadas: []
+        // }
     ]);
     const actividadesDisponibles = obligacionSeleccionada
         ? catalogoActividades[obligacionSeleccionada.clave] ?? []
@@ -236,68 +269,84 @@ const AumentoObligaciones = () => {
 
     };
     const agregarObligacion = () => {
-        console.log("formActividad " + formActividad.obligacionId);
+
+        if (!formActividad.obligacionId) return false;
+        if (!formActividad.actividadId) return false;
+        if (!formActividad.porcentaje) return false;
+
         const fechaActual = new Date().toLocaleDateString("es-MX", {
             day: "2-digit",
             month: "2-digit",
             year: "numeric"
         });
-        if (!formActividad.obligacionId) return;
+
+        const actividad = actividadesDisponibles.find(
+            a => a.id === Number(formActividad.actividadId)
+        );
+
+        if (!actividad) return false;
 
         setObligaciones(prev => {
 
-            // Buscar si la obligación ya existe
             const indice = prev.findIndex(
                 o => o.id === Number(formActividad.obligacionId)
             );
 
-            // Si no existe, obtenerla del catálogo y agregarla
+            // La obligación todavía no existe
             if (indice === -1) {
 
                 const catalogo = catalogoObligaciones.find(
                     o => o.id === Number(formActividad.obligacionId)
                 );
-                const actividad = actividadesDisponibles.find(
-                    a => a.id === Number(formActividad.actividadId)
-                );
 
-                if (!actividad) return;
-                return [...prev,
-                {
-                    ...catalogo,
-                    actividades: [],
-                    actividadesAgregadas: [
-                        {
-                            ...actividad,
-                            porcentaje: Number(formActividad.porcentaje),
-                            fechaOperaciones: fechaActual,
-                            trabajadoresTemporales: Number(formActividad.trabajadoresTemporales || 0),
-                            trabajadoresPermanentes: Number(formActividad.trabajadoresPermanentes || 0)
-                        }
-                    ]
-                }
+                return [
+                    ...prev,
+                    {
+                        ...catalogo,
+                        actividades: [],
+                        actividadesAgregadas: [
+                            {
+                                ...actividad,
+                                porcentaje: Number(formActividad.porcentaje),
+                                fechaOperaciones: fechaActual,
+                                trabajadoresTemporales: Number(
+                                    formActividad.trabajadoresTemporales || 0
+                                ),
+                                trabajadoresPermanentes: Number(
+                                    formActividad.trabajadoresPermanentes || 0
+                                )
+                            }
+                        ]
+                    }
                 ];
             }
 
-            // Si ya existe, agregar la actividad a esa obligación
+            // La obligación ya existe
             return prev.map(obligacion => {
 
-                if (obligacion.id !== Number(formActividad.obligacionId)) {
+                if (
+                    obligacion.id !==
+                    Number(formActividad.obligacionId)
+                ) {
                     return obligacion;
                 }
-                const actividad = actividadesDisponibles.find(
-                    a => a.id === Number(formActividad.actividadId)
-                );
+
                 return {
                     ...obligacion,
+
                     actividadesAgregadas: [
                         ...obligacion.actividadesAgregadas,
+
                         {
                             ...actividad,
-                            fechaOperaciones: fechaActual,
                             porcentaje: Number(formActividad.porcentaje),
-                            trabajadoresTemporales: Number(formActividad.trabajadoresTemporales || 0),
-                            trabajadoresPermanentes: Number(formActividad.trabajadoresPermanentes || 0)
+                            fechaOperaciones: fechaActual,
+                            trabajadoresTemporales: Number(
+                                formActividad.trabajadoresTemporales || 0
+                            ),
+                            trabajadoresPermanentes: Number(
+                                formActividad.trabajadoresPermanentes || 0
+                            )
                         }
                     ]
                 };
@@ -306,16 +355,7 @@ const AumentoObligaciones = () => {
 
         });
 
-        setFormActividad({
-
-            obligacionId: "",
-            actividadId: "",
-            porcentaje: "",
-            trabajadoresTemporales: "",
-            trabajadoresPermanentes: ""
-
-        });
-
+        return true;
     };
     const agregarActividad = () => {
 
@@ -402,11 +442,7 @@ const AumentoObligaciones = () => {
 
     };
 
-    const formularioValido =
-
-        formActividad.obligacionId &&
-        formActividad.actividadId &&
-        formActividad.porcentaje &&
+    const formularioValido = formActividad.obligacionId && formActividad.actividadId && formActividad.porcentaje &&
         (
             !requiereTrabajadores ||
 
@@ -572,7 +608,6 @@ const AumentoObligaciones = () => {
             )
             }
 
-
             {/*======================================
     AGREGAR ACTIVIDAD ECONÓMICA
 ======================================*/}
@@ -584,11 +619,12 @@ const AumentoObligaciones = () => {
                 <div className="border-b bg-gray-50 px-8 py-6">
 
                     <h2 className="text-xl font-bold text-slate-800">
-                        Agregar Actividad Económica
+                        Aumentar obligación fiscal
                     </h2>
 
                     <p className="text-sm text-slate-500 mt-2">
-                        Seleccione una obligación fiscal y capture la información correspondiente para asociar una nueva actividad económica al contribuyente.
+                        Seleccione la obligación fiscal que desea incorporar al
+                        contribuyente y registre las actividades económicas asociadas a la misma.
                     </p>
 
                 </div>
@@ -644,28 +680,6 @@ const AumentoObligaciones = () => {
                         </select>
 
                     </div>
-
-                    {/* Separador */}
-
-                    <div className="border-t border-dashed border-gray-300 mb-8"></div>
-
-                    {/* Título */}
-
-                    <div className="mb-5">
-
-                        <h3 className="font-semibold text-slate-700">
-                            Datos de la actividad
-                        </h3>
-
-                        <p className="text-sm text-gray-500">
-                            Capture la información de la actividad económica seleccionada.
-                        </p>
-
-                    </div>
-
-                    {/* ===================== */}
-                    {/* Datos */}
-                    {/* ===================== */}
 
                     <div className="grid grid-cols-12 gap-6 items-end">
 
@@ -727,8 +741,7 @@ const AumentoObligaciones = () => {
                                 Participación (%)
                             </label>
 
-                            <input
-                                type="number"
+                            <input type="number"
                                 min={1}
                                 max={100}
                                 disabled={!formActividad.actividadId}
@@ -837,26 +850,31 @@ const AumentoObligaciones = () => {
 
                             <button
                                 onClick={() => {
-                                    agregarObligacion;
-                                    setConAgregados(true);
+
+                                    const agregado = agregarObligacion();
+
+                                    if (agregado) {
+                                        setConAgregados(true);
+                                    }
+
                                 }}
                                 disabled={!formularioValido}
                                 className="
-                        w-full
-                        h-12
-                        rounded-xl
-                        bg-sky-600
-                        hover:bg-sky-700
-                        text-white
-                        font-semibold
-                        shadow-md
-                        hover:shadow-lg
-                        transition-all
-                        duration-200
-                        disabled:bg-gray-300
-                        disabled:shadow-none
-                        disabled:cursor-not-allowed
-                    "
+        w-full
+        h-12
+        rounded-xl
+        bg-sky-600
+        hover:bg-sky-700
+        text-white
+        font-semibold
+        shadow-md
+        hover:shadow-lg
+        transition-all
+        duration-200
+        disabled:bg-gray-300
+        disabled:shadow-none
+        disabled:cursor-not-allowed
+    "
                             >
                                 + Agregar Actividad
                             </button>
@@ -874,25 +892,7 @@ const AumentoObligaciones = () => {
 
             {conAgregados && (
                 <section>
-                    {!todasLasObligacionesCompletas && (
 
-                        <div
-                            className="
-        bg-yellow-50
-        border
-        border-yellow-300
-        rounded-lg
-        p-4
-        text-yellow-800
-    "
-                        >
-
-                            Para continuar, el porcentaje total de participación de cada obligación fiscal deberá ser igual a 100%.
-
-                        </div>
-
-                    )
-                    }
                     <div className="bg-white rounded-lg shadow-xl">
 
                         <div className="border-b px-6 py-4 flex justify-between items-center">
@@ -969,7 +969,6 @@ const AumentoObligaciones = () => {
                                                 }))
 
                                             ];
-                                            console.log(actividades)
                                             return actividades.map((actividad) => (
 
                                                 <tr
@@ -1028,9 +1027,25 @@ const AumentoObligaciones = () => {
 
                                                     <td className="px-4 py-3 text-center">
 
-                                                        {obligacion.requiereTrabajadores
-                                                            ? actividad.trabajadoresTemporales
-                                                            : "—"}
+                                                        {obligacion.requiereTrabajadores ? (
+                                                            actividadEditando?.actividadId === actividad.id ? (
+                                                                <input
+                                                                    type="number"
+                                                                    className="w-20 border rounded p-1 text-center"
+                                                                    value={formEditar.trabajadoresTemporales}
+                                                                    onChange={(e) =>
+                                                                        setFormEditar(prev => ({
+                                                                            ...prev,
+                                                                            trabajadoresTemporales: e.target.value
+                                                                        }))
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                actividad.trabajadoresTemporales
+                                                            )
+                                                        ) : (
+                                                            "—"
+                                                        )}
 
                                                     </td>
 
@@ -1038,9 +1053,25 @@ const AumentoObligaciones = () => {
 
                                                     <td className="px-4 py-3 text-center">
 
-                                                        {obligacion.requiereTrabajadores
-                                                            ? actividad.trabajadoresPermanentes
-                                                            : "—"}
+                                                        {obligacion.requiereTrabajadores ? (
+                                                            actividadEditando?.actividadId === actividad.id ? (
+                                                                <input
+                                                                    type="number"
+                                                                    className="w-20 border rounded p-1 text-center"
+                                                                    value={formEditar.trabajadoresPermanentes}
+                                                                    onChange={(e) =>
+                                                                        setFormEditar(prev => ({
+                                                                            ...prev,
+                                                                            trabajadoresPermanentes: e.target.value
+                                                                        }))
+                                                                    }
+                                                                />
+                                                            ) : (
+                                                                actividad.trabajadoresPermanentes
+                                                            )
+                                                        ) : (
+                                                            "—"
+                                                        )}
 
                                                     </td>
 
