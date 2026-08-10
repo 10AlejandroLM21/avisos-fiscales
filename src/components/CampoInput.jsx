@@ -31,7 +31,7 @@ export default function CampoInput({
 
         <div className={`w-full ${className}`}>
             <div className="flex items-center justify-between mb-2">
-                <label className="block text-sm font-medium text-slate-700 mb-2">
+                <label className="block text-sm font-medium text-slate-700 mb-0">
 
                     {etiqueta}
 
@@ -42,78 +42,72 @@ export default function CampoInput({
                 </label>
                 {/* NUEVO */}
 
-                {
+                {mostrarTipoCambio ? (
 
-                    mostrarTipoCambio ? (
+                    tipoCambio === "Incorporación"
 
-                        tipoCambio === "Incorporación"
+                        ? (
 
-                            ? (
+                            <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
 
-                                <span className="px-3 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                                Incorporación
 
-                                    Incorporación
+                            </span>
 
-                                </span>
+                        )
 
-                            )
+                        : (
 
-                            : (
+                            <div className="flex rounded-full overflow-hidden border border-slate-300">
 
-                                <div className="flex rounded-full overflow-hidden border border-slate-300">
-
-                                    <button
-                                        type="button"
-                                        onClick={() => onTipoCambio("Actualización")}
-                                        className={`px-3 py-1 text-xs font-semibold transition
+                                <button
+                                    type="button"
+                                    onClick={() => onTipoCambio("Actualización")}
+                                    className={`px-3 py-1 text-xs font-semibold transition
 
                                 ${tipoCambio === "Actualización"
 
-                                                ? "bg-sky-600 text-white"
+                                            ? "bg-sky-600 text-white"
 
-                                                : "bg-white hover:bg-slate-100"
-                                            }
+                                            : "bg-white hover:bg-slate-100"
+                                        }
 
                             `}
-                                    >
+                                >
 
-                                        Actualización
+                                    Actualización
 
-                                    </button>
+                                </button>
 
-                                    <button
-                                        type="button"
-                                        onClick={() => onTipoCambio("Corrección")}
-                                        className={`px-3 py-1 text-xs font-semibold transition
+                                <button
+                                    type="button"
+                                    onClick={() => onTipoCambio("Corrección")}
+                                    className={`px-3 py-1 text-xs font-semibold transition
 
                                 ${tipoCambio === "Corrección"
 
-                                                ? "bg-amber-500 text-white"
+                                            ? "bg-amber-500 text-white"
 
-                                                : "bg-white hover:bg-slate-100"
-                                            }
+                                            : "bg-white hover:bg-slate-100"
+                                        }
 
                             `}
-                                    >
+                                >
 
-                                        Corrección
+                                    Corrección
 
-                                    </button>
+                                </button>
 
-                                </div>
+                            </div>
 
-                            )
+                        )
 
-                    )
+                ) : (
 
-                        :
+                    badge &&
 
-                        (
-
-                            badge &&
-
-                            <span
-                                className={`
+                    <span
+                        className={`
                     px-3
                     py-1
                     rounded-full
@@ -121,14 +115,13 @@ export default function CampoInput({
                     font-semibold
                     ${colores[badgeColor]}
                 `}
-                            >
+                    >
 
-                                {badge}
+                        {badge}
 
-                            </span>
+                    </span>
 
-                        )
-
+                )
                 }
             </div>
 

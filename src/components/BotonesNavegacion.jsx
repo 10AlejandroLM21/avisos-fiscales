@@ -38,7 +38,7 @@ export default function BotonesNavegacion({
 
     return (
 
-        <div className="sticky bottom-0 bg-white rounded-2xl border shadow-sm mt-4">
+        <div className="sticky bottom-0 bg-white rounded-2xl border border-slate-200 shadow-xl mt-6">
 
             <div className="px-6 py-5 flex justify-between items-center">
 
