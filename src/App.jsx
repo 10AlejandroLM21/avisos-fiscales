@@ -951,6 +951,7 @@ export default function AvisosFiscales() {
     return "Actualización";
 
   };
+  const [representanteEjecutor, setRepresentanteEjecutor] = useState(null);
 
   const [tipoCambio, setTipoCambio] = useState({});
 
@@ -1016,7 +1017,7 @@ export default function AvisosFiscales() {
       </header>
 
       {/* BREADCRUMB */}
-      <div className="bg-white -b">
+      <div className="bg-white">
         <div className="max-w-7xl mx-auto px-8 py-3 text-sm text-slate-500">
           INICIO / ADMINISTRACIÓN DE CONTRIBUYENTES / AVISOS FISCALES
         </div>
@@ -2391,18 +2392,13 @@ export default function AvisosFiscales() {
                                       {/* Radio */}
                                       <button
 
-                                        onClick={() =>
-
+                                        onClick={() => {
                                           setRepresentanteSeleccionado(
-
-                                            seleccionado
-
-                                              ? null
-
-                                              : rep
-
+                                            seleccionado ? null : rep
                                           )
-
+                                          setRepresentanteEjecutor(seleccionado ? null : rep
+                                          );
+                                        }
                                         }
 
                                         className={`
@@ -3410,6 +3406,328 @@ export default function AvisosFiscales() {
                 color="red"
 
               />
+
+              <ModalRepresentanteLegal
+
+                abierto={modalRepresentante}
+
+                representante={representanteSeleccionado}
+
+                onClose={() => setModalRepresentante(false)}
+              />
+              {modalConfirmacion && representantePendiente && (
+
+                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
+
+                  <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden">
+
+                    {/* Header */}
+
+                    <div className="bg-red-50 -b -red-100 px-6 py-5">
+
+                      <div className="flex items-center gap-3">
+
+                        <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                          <AlertTriangle
+                            size={24}
+                            className="text-red-600"
+                          />
+                        </div>
+
+                        <div>
+                          <h3 className="text-lg font-semibold text-slate-800">
+                            Confirmar Baja de Representante Legal
+                          </h3>
+
+                          <p className="text-sm text-slate-500">
+                            Esta acción marcará al representante para su baja.
+                          </p>
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Body */}
+
+                    <div className="p-6">
+                      <div className=" rounded-lg px-3 mb-4">
+
+                        <p className="text-sm text-amber-800 font-bold">
+                          ¿Desea continuar con la baja de este representante legal?”</p>
+                      </div>
+                      <div className="bg-amber-50  -amber-200 rounded-lg p-3 mb-4">
+
+                        <p className="text-sm text-amber-800">
+                          Está a punto de marcar para baja al siguiente representante legal.
+
+                          Esta acción se aplicará al concluir el trámite</p>
+
+                      </div>
+
+                      <div className=" rounded-xl bg-slate-50 p-4">
+
+                        <div className="grid grid-cols-1 gap-3">
+
+                          <div>
+                            <span className="text-xs uppercase tracking-wide text-slate-500">
+                              Nombre
+                            </span>
+
+                            <p className="font-medium text-slate-800">
+                              {representantePendiente.nombre}
+                            </p>
+                          </div>
+
+                          <div>
+                            <span className="text-xs uppercase tracking-wide text-slate-500">
+                              RFC
+                            </span>
+
+                            <p className="font-medium text-slate-800">
+                              {representantePendiente.rfc}
+                            </p>
+                          </div>
+
+                          <div>
+                            <span className="text-xs uppercase tracking-wide text-slate-500">
+                              CURP
+                            </span>
+
+                            <p className="font-medium text-slate-800">
+                              {representantePendiente.curp}
+                            </p>
+                          </div>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                    {/* Footer */}
+
+                    <div className="-t px-6 py-4 flex justify-end gap-3 bg-slate-50">
+
+                      <button
+                        onClick={() => {
+                          setModalConfirmacion(false);
+                          setRepresentantePendiente(null);
+                        }}
+                        className="px-5 py-2.5  -slate-300 rounded-lg hover:bg-slate-100 transition"
+                      >
+                        Cancelar
+                      </button>
+
+                      <button
+                        onClick={confirmarSeleccion}
+                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
+                      >
+                        Confirmar Baja
+                      </button>
+
+                    </div>
+
+                  </div>
+
+                </div>
+              )}
+
+              {/*REPRESENTANTE EJECUTOR */}
+              <div className="bg-white rounded-xl shadow-md">
+
+                <div className="px-6 py-5 bg-slate-100/30">
+                  {/* Encabezado */}
+                  <div className="flex items-start justify-between gap-6">
+                    <div>
+                      <h3 className="text-lg font-semibold text-slate-800">
+                        Representante Legal Ejecutor
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Representante legal seleccionado para ejecutar el trámite.
+                      </p>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="p-6 space-y-4">
+
+                  {/* REPRESENTANTE LEGAL EJECUTOR */}
+
+                  {representanteEjecutor ? (
+
+                    <div
+                      className="
+          relative
+          bg-white
+          rounded-2xl
+          shadow-sm
+          hover:shadow-md
+          transition-all
+          overflow-hidden
+          w-full
+        "
+                    >
+
+                      {/* Barra lateral */}
+                      <div className="absolute left-0 top-0 h-full w-2 bg-emerald-500" />
+
+                      <div className="p-5 pl-6">
+
+                        <div className="flex items-start justify-between">
+
+                          <div className="flex items-center gap-4">
+
+                            {/* Icono */}
+                            <div
+                              className="
+                  h-14 w-14 rounded-xl
+                  bg-sky-100
+                  flex items-center justify-center
+                "
+                            >
+                              <User size={26} className="text-sky-700" />
+                            </div>
+
+                            {/* Información principal */}
+                            <div>
+
+                              <div className="flex items-center gap-2">
+
+                                <h4 className="font-semibold text-slate-800 text-lg">
+                                  {representanteEjecutor.nombre}
+                                </h4>
+
+                                <span
+                                  className="
+                      px-2 py-1 rounded-full
+                      text-xs font-medium
+                      bg-emerald-100 text-emerald-700
+                    "
+                                >
+                                  Ejecutor
+                                </span>
+
+                              </div>
+
+                              <p className="text-sm text-slate-500 mt-1">
+                                Representante Legal que ejecutará el trámite
+                              </p>
+
+                            </div>
+
+                          </div>
+
+                        </div>
+
+                        {/* Datos */}
+                        <div className="mt-5 grid md:grid-cols-2 gap-3">
+
+                          <div className="bg-slate-50 rounded-xl px-4 py-3">
+                            <span className="text-xs text-slate-500 block">
+                              RFC
+                            </span>
+
+                            <span className="font-medium text-slate-800">
+                              {representanteEjecutor.rfc}
+                            </span>
+                          </div>
+
+                          <div className="bg-slate-50 rounded-xl px-4 py-3">
+                            <span className="text-xs text-slate-500 block">
+                              CURP
+                            </span>
+
+                            <span className="font-medium text-slate-800">
+                              {representanteEjecutor.curp}
+                            </span>
+                          </div>
+
+                        </div>
+
+                        {/* Footer */}
+                        <div className="mt-6 pt-4 flex justify-between items-center">
+
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setRepresentanteSeleccionado(representanteEjecutor);
+                              setModalRepresentante(true);
+                            }}
+                            className="
+                inline-flex
+                items-center
+                gap-2
+                text-sky-700
+                hover:text-sky-900
+                text-sm
+                font-medium
+                transition
+                bg-sky-100
+                py-2
+                px-4
+                rounded-xl
+              "
+                          >
+                            <Eye size={17} />
+                            Ver información
+                          </button>
+
+                        </div>
+
+                      </div>
+
+                    </div>
+
+                  ) : (
+
+                    /* SIN REPRESENTANTE EJECUTOR */
+
+                    <div
+                      className="
+          rounded-2xl
+          border-dashed
+          border-slate-300
+          bg-slate-50
+          px-8
+          py-12
+        "
+                    >
+
+                      <div className="flex flex-col items-center text-center">
+
+                        <div
+                          className="
+              h-16 w-16 rounded-2xl
+              bg-sky-100
+              flex items-center justify-center
+            "
+                        >
+                          <UserPlus
+                            className="text-sky-700"
+                            size={30}
+                          />
+                        </div>
+
+                        <h3 className="mt-5 text-lg font-semibold text-slate-800">
+                          Sin representante legal ejecutor
+                        </h3>
+
+                        <p className="mt-2 max-w-md text-sm text-slate-500">
+                          No se ha seleccionado un representante legal para ejecutar el
+                          trámite.
+                        </p>
+
+                      </div>
+
+                    </div>
+
+                  )}
+
+                </div>
+
+              </div>
+
               {/* REPRESENTANTES LEGALES ASOCIADOS */}
 
               <div className="bg-white rounded-xl  shadow-sm">
@@ -3420,7 +3738,7 @@ export default function AvisosFiscales() {
                   </h3>
 
                   <p className="text-sm text-slate-500 mt-1">
-                    Seleccione los representantes legales que serán dados de baja. Los registros no seleccionados permanecerán vigentes.
+                    Seleccione los representantes legales que serán dados de baja. Los registros no seleccionados permanecerán asociados al contribuyente.
                   </p>
                 </div>
 
@@ -3661,428 +3979,10 @@ export default function AvisosFiscales() {
                 </div>
 
               </div>
-
-
-              <ModalRepresentanteLegal
-
-                abierto={modalRepresentante}
-
-                representante={representanteSeleccionado}
-
-                onClose={() => setModalRepresentante(false)}
-
-              />
-
-
-              {modalConfirmacion && representantePendiente && (
-
-                <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
-
-                  <div className="bg-white rounded-2xl shadow-2xl max-w-lg w-full overflow-hidden">
-
-                    {/* Header */}
-
-                    <div className="bg-red-50 -b -red-100 px-6 py-5">
-
-                      <div className="flex items-center gap-3">
-
-                        <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
-                          <AlertTriangle
-                            size={24}
-                            className="text-red-600"
-                          />
-                        </div>
-
-                        <div>
-                          <h3 className="text-lg font-semibold text-slate-800">
-                            Confirmar Baja de Representante Legal
-                          </h3>
-
-                          <p className="text-sm text-slate-500">
-                            Esta acción marcará al representante para su baja.
-                          </p>
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    {/* Body */}
-
-                    <div className="p-6">
-                      <div className=" rounded-lg px-3 mb-4">
-
-                        <p className="text-sm text-amber-800 font-bold">
-                          ¿Desea continuar con la baja de este representante legal?”</p>
-                      </div>
-                      <div className="bg-amber-50  -amber-200 rounded-lg p-3 mb-4">
-
-                        <p className="text-sm text-amber-800">
-                          Está a punto de marcar para baja al siguiente representante legal.
-
-                          Esta acción se aplicará al concluir el trámite</p>
-
-                      </div>
-
-                      <div className=" rounded-xl bg-slate-50 p-4">
-
-                        <div className="grid grid-cols-1 gap-3">
-
-                          <div>
-                            <span className="text-xs uppercase tracking-wide text-slate-500">
-                              Nombre
-                            </span>
-
-                            <p className="font-medium text-slate-800">
-                              {representantePendiente.nombre}
-                            </p>
-                          </div>
-
-                          <div>
-                            <span className="text-xs uppercase tracking-wide text-slate-500">
-                              RFC
-                            </span>
-
-                            <p className="font-medium text-slate-800">
-                              {representantePendiente.rfc}
-                            </p>
-                          </div>
-
-                          <div>
-                            <span className="text-xs uppercase tracking-wide text-slate-500">
-                              CURP
-                            </span>
-
-                            <p className="font-medium text-slate-800">
-                              {representantePendiente.curp}
-                            </p>
-                          </div>
-
-                        </div>
-
-                      </div>
-
-                    </div>
-
-                    {/* Footer */}
-
-                    <div className="-t px-6 py-4 flex justify-end gap-3 bg-slate-50">
-
-                      <button
-                        onClick={() => {
-                          setModalConfirmacion(false);
-                          setRepresentantePendiente(null);
-                        }}
-                        className="px-5 py-2.5  -slate-300 rounded-lg hover:bg-slate-100 transition"
-                      >
-                        Cancelar
-                      </button>
-
-                      <button
-                        onClick={confirmarSeleccion}
-                        className="px-5 py-2.5 bg-red-600 text-white rounded-lg hover:bg-red-700 transition"
-                      >
-                        Confirmar Baja
-                      </button>
-
-                    </div>
-
-                  </div>
-
-                </div>
-              )}
-
-              {/* NUEVOS REPRESENTANTES */}
-              <div className="bg-white rounded-xl  shadow-sm">
-
-                <div className="-b px-6 py-5">
-
-                  {/* Encabezado */}
-
-                  <div className="flex items-start justify-between gap-6">
-
-                    <div>
-
-                      <h3 className="text-lg font-semibold text-slate-800">
-                        Nuevos representantes legales
-                      </h3>
-
-                      <p className="text-sm text-slate-500 mt-1 max-w-2xl">
-                        Registre al representante legal que sustituirá al representante o a los representantes legales dados de baja.
-                      </p>
-
-                    </div>
-
-                    {!mostrarFormularioRepresentante && (
-
-                      <button
-                        type="button"
-                        onClick={() => setMostrarFormularioRepresentante(true)}
-                        disabled={nuevosRepresentantes.length > 0}
-                        className="
-                                  shrink-0
-                                  inline-flex
-                                  items-center
-                                  gap-2
-                                  px-4
-                                  py-2
-                                  rounded-lg
-                                  bg-sky-700
-                                  text-white
-                                  hover:bg-sky-800
-                                  transition
-                                  disabled:bg-gray-300
-                                "
-                      >
-
-                        + Nuevo representante legal
-
-                      </button>
-
-                    )}
-
-                  </div>
-
-                  {/* Aviso */}
-
-                  <div className="mt-5 flex items-start gap-3 rounded-xl  -amber-200 bg-amber-50 px-4 py-3">
-
-                    <AlertTriangle
-                      size={18}
-                      className="mt-0.5 shrink-0 text-amber-600"
-                    />
-
-                    <div>
-
-                      <p className="text-sm font-semibold text-amber-800">
-                        Importante
-                      </p>
-
-                      <p className="mt-1 text-sm text-amber-700">
-                        Solo se permite incorporar un representante legal por trámite.
-                      </p>
-
-                    </div>
-
-                  </div>
-
-                </div>
-
-                <div className="p-6 space-y-4">
-                  {mostrarFormularioRepresentante && (
-                    <FormularioRepresentanteLegal
-                      abierto={mostrarFormularioRepresentante}
-                      onClose={() => setMostrarFormularioRepresentante(false)}
-                      onGuardar={agregarRepresentante}
-                      nuevoRepresentante={nuevoRepresentante}
-                      setNuevoRepresentante={setNuevoRepresentante}
-                      tipoDocumento={tipoDocumento}
-                      setTipoDocumento={setTipoDocumento}
-                      documento={documento}
-                      setDocumento={setDocumento}
-                    />
-
-
-                  )}
-                  {/* REPRESENTANTES A INCORPORAR */}
-
-                  {nuevosRepresentantes.length > 0 ? (
-
-                    <div className="p-1 grid md:grid-cols-2 gap-4">
-
-                      {nuevosRepresentantes.map((item) => (
-                        <div
-                          key={item.id}
-                          className=" relative bg-white rounded-2xl 
-                                      -sky-200 shadow-sm
-                                      hover:shadow-md transition-all
-                                      overflow-hidden
-                                              "
-                        >
-
-                          {/* Barra lateral */}
-                          <div className="absolute left-0 top-0 h-full w-2 bg-emerald-500" />
-
-                          <div className="p-5 pl-6">
-
-                            <div className="flex items-start justify-between">
-
-                              <div className="flex items-center gap-4">
-
-                                <div className="
-          h-14 w-14 rounded-xl
-          bg-sky-100
-          flex items-center justify-center
-        ">
-                                  <User size={26} className="text-sky-700" />
-                                </div>
-
-                                <div>
-
-                                  <div className="flex items-center gap-2">
-
-                                    <h4 className="font-semibold text-slate-800 text-lg">
-                                      {item.nombres} {item.apellidoPaterno} {item.apellidoMaterno}
-                                    </h4>
-
-                                    <span
-                                      className="
-                px-2 py-1 rounded-full
-                text-xs font-medium
-                bg-emerald-100 text-emerald-700
-              "
-                                    >
-                                      Nuevo
-                                    </span>
-
-                                  </div>
-
-                                  <p className="text-sm text-slate-500 mt-1">
-                                    Representante Legal a incorporar
-                                  </p>
-
-                                </div>
-
-                              </div>
-
-                              {/* <button
-                                type="button"
-                                onClick={() => eliminarRepresentante(item.id)}
-                                className="
-          p-2 rounded-lg
-          text-red-500
-          hover:bg-red-50
-          transition-colors
-        "
-                              >
-                                <Trash2 size={18} />
-                              </button> */}
-
-                            </div>
-
-                            {/* Datos */}
-                            <div className="mt-5 grid md:grid-cols-2 gap-3">
-
-                              <div className="bg-slate-50 rounded-xl px-4 py-3">
-                                <span className="text-xs text-slate-500 block">
-                                  RFC
-                                </span>
-
-                                <span className="font-medium text-slate-800">
-                                  {item.rfc}
-                                </span>
-                              </div>
-
-                              <div className="bg-slate-50 rounded-xl px-4 py-3">
-                                <span className="text-xs text-slate-500 block">
-                                  CURP
-                                </span>
-
-                                <span className="font-medium text-slate-800">
-                                  {item.curp}
-                                </span>
-                              </div>
-
-                            </div>
-
-                            {/* Footer */}
-
-                            <div className="mt-6 pt-4 -t flex justify-between items-center">
-
-                              <button
-                                type="button"
-                                onClick={() => {
-
-                                  setRepresentanteSeleccionado(item);
-                                  setModalRepresentante(true);
-
-                                }}
-                                className="
-            inline-flex
-            items-center
-            gap-2
-            text-sky-700
-            hover:text-sky-900
-            text-sm
-            font-medium
-            transition
-            bg-sky-100
-            py-2
-            px-4
-            rounded-xl
-        "
-                              >
-
-                                <Eye size={17} />
-
-                                Ver información
-
-                              </button>
-
-                              <button
-                                type="button"
-                                onClick={() => eliminarRepresentante(item.id)}
-                                className="
-                                          inline-flex
-                                          items-center
-                                          gap-2
-                                          rounded-xl
-                                          bg-red-50
-                                          px-4
-                                          py-2
-                                          text-sm
-                                          font-medium
-                                          text-red-700
-                                          transition
-                                          hover:bg-red-100
-                                      "
-                              >
-                                <Trash2 size={16} />
-                                Eliminar
-                              </button>
-
-                            </div>
-                          </div>
-
-                        </div>
-                      ))}
-
-                    </div>
-                  ) : (
-
-                    <div className="rounded-2xl  -dashed -slate-300 bg-slate-50 px-8 py-12">
-
-                      <div className="flex flex-col items-center text-center">
-
-                        <div className="h-16 w-16 rounded-2xl bg-sky-100 flex items-center justify-center">
-
-                          <UserPlus className="text-sky-700" size={30} />
-
-                        </div>
-
-                        <h3 className="mt-5 text-lg font-semibold text-slate-800">
-                          Sin representante legal
-                        </h3>
-
-                        <p className="mt-2 max-w-md text-sm text-slate-500">
-                          Aún no se ha incorporado un representante legal. Seleccione
-                          la opción <strong> "Nuevo representante legal"</strong> para agregar uno al
-                          trámite.
-                        </p>
-
-                      </div>
-
-                    </div>
-
-                  )}
-
-                </div>
-
-              </div>
-
             </div>
           )
         }
+
         {/* Cambio de Nombre, Denominación o Razón Social */}
 
         {selectedRow === "Cambio de Nombre, Denominación o Razón Social" &&
@@ -4169,7 +4069,7 @@ export default function AvisosFiscales() {
                     </div>
 
                   </div>
-                 
+
                   {/* DATOS DEL ACTA DE NACIMIENTO */}
 
                   <div className="bg-white rounded-xl shadow-md overflow-hidden mb-6">
@@ -4286,11 +4186,11 @@ export default function AvisosFiscales() {
                         <CampoInput className="col-span-2" etiqueta="Nombre Comercial"></CampoInput>
 
                         {/* Régimen Fiscal */}
-                        <CampoSelect etiqueta="Régimen Fiscal" opciones={
+                        {/* <CampoSelect etiqueta="Régimen Fiscal" opciones={
                           [
                             { value: "", label: "Seleccione" }
                           ]
-                        } ></CampoSelect>
+                        } ></CampoSelect> */}
 
                         {/* Régimen Capital */}
                         <CampoSelect etiqueta="Régimen Capital" opciones={
