@@ -3738,8 +3738,7 @@ export default function AvisosFiscales() {
                   </h3>
 
                   <p className="text-sm text-slate-500 mt-1">
-                    Seleccione los representantes legales que serán dados de baja. Los registros no seleccionados permanecerán asociados al contribuyente.
-                  </p>
+                    Seleccione los representantes legales a cambiar. Los registros no seleccionados permanecerán asociados al contribuyente                  </p>
                 </div>
 
                 <div className="grid md:grid-cols-2 gap-5 p-5">
@@ -3823,7 +3822,7 @@ export default function AvisosFiscales() {
                                     `}
                                   >
 
-                                    {seleccionado ? "Baja" : "Vigente"}
+                                    {seleccionado ? "Seleccionado para baja" : "Vigente"}
 
                                   </span>
 
@@ -3943,8 +3942,8 @@ export default function AvisosFiscales() {
                             >
 
                               {seleccionado
-                                ? "Quitar baja"
-                                : "Baja"}
+                                ? "Cancelar"
+                                : "Seleccionar"}
 
                             </button>
 
