@@ -3822,7 +3822,7 @@ export default function AvisosFiscales() {
                                     `}
                                   >
 
-                                    {seleccionado ? "Seleccionado para baja" : "Vigente"}
+                                    {seleccionado ? "Seleccionado para cambio" : "Vigente"}
 
                                   </span>
 
