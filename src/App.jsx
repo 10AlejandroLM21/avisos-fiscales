@@ -3920,9 +3920,9 @@ export default function AvisosFiscales() {
                                   toggleRepresentanteBaja(representante.id);
 
                                 } else {
-
-                                  setRepresentantePendiente(representante);
-                                  setModalConfirmacion(true);
+                                  toggleRepresentanteBaja(representante.id);
+                                  // setRepresentantePendiente(representante);
+                                  // setModalConfirmacion(true);
 
                                 }
 
@@ -3958,9 +3958,9 @@ export default function AvisosFiscales() {
                   })}
 
                 </div>
-                {/* Resumen */}
 
-                <div className="-t bg-slate-50 px-6 py-4 flex items-center justify-between">
+
+                {/* <div className="-t bg-slate-50 px-6 py-4 flex items-center justify-between">
 
                   <div className="text-sm text-slate-600">
                     <span className="font-medium">
@@ -3975,7 +3975,7 @@ export default function AvisosFiscales() {
                     </div>
                   )}
 
-                </div>
+                </div> */}
 
               </div>
             </div>
