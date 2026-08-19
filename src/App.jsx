@@ -381,12 +381,15 @@ export default function AvisosFiscales() {
       nombre: "Juan Pérez López",
       rfc: "JUAP900101XXX",
       curp: "JUAP900101HOCXXX01",
+      fechaRegistro: "20/01/2025"
     },
     {
       id: 2,
       nombre: "María López Torres",
       rfc: "MALT900101XXX",
       curp: "MALT900101MOCXXX01",
+      fechaRegistro: "20/01/2024"
+
     },
   ]);
   const toggleRepresentanteVigente = (id) => {
@@ -689,7 +692,7 @@ export default function AvisosFiscales() {
       nombre: "Juan Pérez Hernández",
       rfc: "PEHJ900101ABC",
       curp: "PEHJ900101HOCRNN09",
-
+      fechaRegistro: "20/01/2025",
       tipoAcreditacion: "Carta Poder con Ratificación de Firmas ante Notario",
 
       correo: "juan@correo.com",
@@ -715,7 +718,7 @@ export default function AvisosFiscales() {
       nombre: "María López Ruiz",
       rfc: "LORM920215AAA",
       curp: "LORM920215MOCRZZ01",
-
+      fechaRegistro: "20/01/2025",
       tipoAcreditacion: "Acta Protocolizada mediante Carta Poder",
 
       correo: "maria@correo.com",
@@ -734,6 +737,37 @@ export default function AvisosFiscales() {
     }
 
   ]);
+
+  const [representantesNuevos, setRepresentantesNuevos] = useState([
+
+    {
+      id: 1,
+      nombre: "María Fernanda López García",
+      rfc: "LOGF920315XYZ",
+      curp: "LOGF920315MOCPRRA7",
+      fechaRegistro: "20/01/2025",
+      tipoAcreditacion: "Poder Notarial",
+
+      correo: "maria.lopez@correo.com",
+      telefono: "9512346789",
+
+      ambito: "RURAL",
+
+      calle: "Calle Independencia",
+      numeroExterior: "245",
+      numeroInterior: "2-A",
+      colonia: "Centro",
+      codigoPostal: "68000",
+      municipio: "Oaxaca de Juárez",
+      entidad: "Oaxaca",
+
+      domicilioFiscal:
+        "Calle Independencia No. 245 Int. 2-A, Col. Centro, C.P. 68000, Oaxaca de Juárez, Oaxaca"
+    }
+
+  ]);
+
+  const [eliminarRep, setEliminarRep] = useState(false);
   const movimientos = [
     {
       id: "cambio",
@@ -2238,7 +2272,9 @@ export default function AvisosFiscales() {
                                             relative
                                             overflow-hidden
                                             rounded-2xl
-                                            
+                                            shadow-md
+                                            border 
+                                            border-slate-100 
                                             bg-white
                                             transition-all
                                             duration-300
@@ -2411,10 +2447,274 @@ export default function AvisosFiscales() {
         font-semibold
         transition-all
         duration-200
-
+        border
+        border-slate-200
+        shadow-xs
         ${seleccionado
                                             ? "bg-emerald-600 text-white shadow-md hover:bg-emerald-700"
-                                            : " -slate-300 text-slate-700 hover:bg-sky-50 hover:-sky-500"
+                                            : "text-slate-700 hover:bg-green-500 hover:text-white"
+                                          }
+    `}
+
+                                      >
+
+                                        {seleccionado ? (
+
+                                          <>
+                                            <BadgeCheck size={18} />
+                                            Seleccionado
+                                          </>
+
+                                        ) : (
+
+                                          <>
+                                            <Check size={18} />
+                                            Seleccionar
+                                          </>
+
+                                        )}
+
+                                      </button>
+
+                                      {/* Botón */}
+
+                                      <button
+                                        className="
+                                mt-8
+                                inline-flex
+                                items-center
+                                gap-2
+                                rounded-xl
+                                border
+                                border-slate-200
+                                shadow-xs
+                                px-4
+                                py-2.5
+                                text-sm
+                                font-medium
+                                text-slate-700
+                                transition
+                                hover:bg-sky-500
+                                hover:text-white
+                            "
+                                        onClick={() => {
+
+                                          setRepresentanteConsulta(rep);
+
+                                          setModalRepresentante(true);
+
+                                        }}
+                                      >
+
+                                        <Eye size={17} />
+
+                                        Ver información
+
+                                      </button>
+
+
+                                    </div>
+
+                                  </div>
+
+                                </div>
+
+                              );
+
+                            })}
+                            {representantesNuevos.map((rep) => {
+
+                              const seleccionado =
+                                representanteSeleccionado?.id === rep.id;
+
+                              return (
+
+                                <div
+                                  key={rep.id}
+                                  className={`
+                                            group
+                                            relative
+                                            overflow-hidden
+                                            rounded-2xl
+                                            shadow-md
+                                            border 
+                                            border-slate-100
+                                            bg-green-100/40
+                                            transition-all
+                                            duration-300
+
+                                    ${seleccionado
+                                      ? "shadow-lg ring-2 ring-sky-100"
+                                      : " hover:-sky-300 hover:shadow-lg"
+                                    }`}
+                                >
+                                  {seleccionado && (
+
+                                    <div
+                                      className="
+                                            bg-gradient-to-r
+                                            from-sky-600
+                                            to-blue-600
+                                            text-white
+                                            px-6
+                                            py-2
+                                            text-sm
+                                            font-semibold
+                                            flex
+                                            items-center
+                                            gap-2
+                                        ">
+
+                                      <BadgeCheck size={18} />
+                                      REPRESENTANTE SELECCIONADO
+                                    </div>
+
+                                  )}
+
+                                  <div
+                                    className={`
+                                        absolute
+                                        left-0
+                                        top-0
+                                        h-full
+                                        w-1
+                        ${seleccionado
+                                        ? "bg-sky-600"
+                                        : "bg-transparent group-hover:bg-sky-300"
+                                      }`}
+                                  />
+
+                                  <div className="p-6 flex justify-between gap-6">
+
+                                    {/*INFORMACIÓN*/}
+
+                                    <div className="flex gap-5 flex-1">
+
+                                      <div
+                                        className={`
+                                          h-16
+                                          w-16
+                                          rounded-2xl
+                                          flex
+                                          items-center
+                                          justify-center
+                                          shrink-0
+
+                                        ${seleccionado
+                                            ? "bg-sky-600 text-white"
+                                            : "bg-slate-100 text-slate-600"
+                                          }`}>
+
+                                        <UserRound size={30} />
+
+                                      </div>
+
+                                      <div className="flex-1">
+
+                                        <div className="flex flex-col gap-2">
+
+                                          {/* Nombre + Nuevo */}
+                                          <div className="flex items-center gap-3">
+                                            <h3 className="text-lg font-semibold text-slate-800">
+                                              {rep.nombre}
+                                            </h3>
+
+                                            <span className="inline-flex items-center rounded-full bg-green-100 px-3 py-1 text-xs font-semibold text-green-700">
+                                              Nuevo
+                                            </span>
+                                          </div>
+
+                                          {/* RFC */}
+                                          <p className="text-sm text-slate-500">
+                                            RFC:{" "}
+                                            <span className="font-medium text-slate-700">
+                                              {rep.rfc}
+                                            </span>
+                                          </p>
+
+                                        </div>
+
+                                        {/* Pills */}
+
+                                        <div className="flex flex-wrap gap-3 mt-5">
+
+                                          <span className="inline-flex items-center gap-2 rounded-full bg-green-100 px-3 py-2 text-xs font-semibold text-green-700">
+                                            📬{rep.correo}
+                                          </span>
+                                          <span className="inline-flex items-center gap-2 rounded-full bg-blue-100 px-3 py-2 text-xs font-semibold text-blue-700">
+                                            📲 {rep.telefono}
+                                          </span>
+                                          <span className="inline-flex items-center gap-2 rounded-full bg-violet-100 px-3 py-2 text-xs font-semibold text-violet-700">
+
+                                            📑 {rep.tipoAcreditacion}
+
+                                          </span>
+                                          <span
+                                            className="
+            inline-flex
+            items-start
+            gap-2
+            rounded-2xl
+            bg-amber-50
+            
+            -amber-200
+            px-4
+            py-3
+            text-sm
+            text-slate-700
+            leading-6
+        "
+                                          >
+
+                                            <MapPinned
+                                              size={18}
+                                              className="text-amber-600 shrink-0 mt-0.5"
+                                            />
+
+                                            {rep.domicilioFiscal}
+
+                                          </span>
+
+                                        </div>
+
+                                      </div>
+
+                                    </div>
+
+                                    {/*======================================================
+                                                    ACCIONES
+                                      ======================================================*/}
+
+                                    <div className="flex flex-col justify-between items-end">
+
+                                      {/* Radio */}
+                                      <button
+
+                                        onClick={() => {
+                                          setRepresentanteSeleccionado(
+                                            seleccionado ? null : rep
+                                          )
+                                          setRepresentanteEjecutor(seleccionado ? null : rep
+                                          );
+                                        }
+                                        }
+
+                                        className={`
+        inline-flex
+        items-center
+        gap-2
+        px-5
+        py-2.5
+        rounded-xl
+        font-semibold
+        transition-all
+        duration-200
+ border
+        border-slate-200
+        shadow-xs
+        ${seleccionado
+                                            ? "bg-emerald-600 text-white shadow-md hover:bg-emerald-700"
+                                            : "text-slate-700 hover:bg-green-500 hover:text-white"
                                           }
     `}
 
@@ -2448,15 +2748,17 @@ export default function AvisosFiscales() {
                                 gap-2
                                 rounded-xl
                                 
-                                -slate-300 
+                                 border
+        border-slate-200
+        shadow-xs
                                 px-4
                                 py-2.5
                                 text-sm
                                 font-medium
                                 text-slate-700
                                 transition
-                                hover:bg-sky-50
-                                hover:-sky-300
+                                hover:bg-sky-500
+                                hover:text-white
                             "
                                         onClick={() => {
 
@@ -2473,6 +2775,49 @@ export default function AvisosFiscales() {
 
                                       </button>
 
+                                      <button
+                                        className="
+                                mt-8
+                                inline-flex
+                                items-center
+                                gap-2
+                                rounded-xl
+                                
+                                 border
+        border-slate-200
+        shadow-xs
+                                px-4
+                                py-2.5
+                                text-sm
+                                font-medium
+                                text-slate-700
+                                transition
+                                hover:bg-red-500
+                                hover:text-white
+                              
+                            "
+                                        onClick={() => {
+
+                                          setEliminarRep(true);
+                                        }}
+                                      >
+                                        <Trash2 size={17} />
+
+                                        Eliminar representante
+
+                                      </button>
+                                      <ModalAccionAviso titulo="¿Desea eliminar a este representante legal?"
+                                        abierto={eliminarRep}
+                                        descripcion="Al eliminar a este representante legal, se perderá toda la información capturada y no podrá recuperarse. ¿Desea continuar con la eliminación?"
+                                        textoBoton="Eliminar"
+                                        onAceptar={() => {
+                                          setEliminarRep(false);
+                                          setRepresentantesNuevos(prev => prev.filter(r => r.id !== rep.id));
+                                        }}
+                                        onClose={() => {
+                                          setEliminarRep(false);
+                                        }}
+                                        estilo={{ button: "bg-red-600 hover:bg-red-700", text: "text-red-600" }} />
                                     </div>
 
                                   </div>
@@ -2487,13 +2832,11 @@ export default function AvisosFiscales() {
                         </div>
 
                         <ModalRepresentanteLegal
-
                           abierto={modalRepresentante}
 
                           representante={representanteConsulta}
 
                           onClose={() => setModalRepresentante(false)}
-
                         />
 
                       </div>
@@ -3598,7 +3941,7 @@ export default function AvisosFiscales() {
                                   {representanteEjecutor.nombre}
                                 </h4>
 
-                                <span
+                                {/* <span
                                   className="
                       px-2 py-1 rounded-full
                       text-xs font-medium
@@ -3606,7 +3949,7 @@ export default function AvisosFiscales() {
                     "
                                 >
                                   Ejecutor
-                                </span>
+                                </span> */}
 
                               </div>
 
@@ -3621,7 +3964,7 @@ export default function AvisosFiscales() {
                         </div>
 
                         {/* Datos */}
-                        <div className="mt-5 grid md:grid-cols-2 gap-3">
+                        <div className="mt-5 grid md:grid-cols-3 gap-3">
 
                           <div className="bg-slate-50 rounded-xl px-4 py-3">
                             <span className="text-xs text-slate-500 block">
@@ -3643,10 +3986,20 @@ export default function AvisosFiscales() {
                             </span>
                           </div>
 
+                          <div className="bg-slate-50 rounded-xl px-4 py-3">
+                            <span className="text-xs text-slate-500 block">
+                              Fecha de registro como representante legal
+                            </span>
+
+                            <span className="font-medium text-slate-800">
+                              {representanteEjecutor.fechaRegistro}
+                            </span>
+                          </div>
+
                         </div>
 
                         {/* Footer */}
-                        <div className="mt-6 pt-4 flex justify-between items-center">
+                        <div className="mt-6 pt-4 flex justify-end items-center gap-4">
 
                           <button
                             type="button"
@@ -3672,7 +4025,30 @@ export default function AvisosFiscales() {
                             <Eye size={17} />
                             Ver información
                           </button>
-
+                          {/* <button
+                            type="button"
+                            onClick={() => {
+                              setRepresentanteSeleccionado(representanteEjecutor);
+                              setModalRepresentante(true);
+                            }}
+                            className="
+                inline-flex
+                items-center
+                gap-2
+                text-sky-700
+                hover:text-sky-900
+                text-sm
+                font-medium
+                transition
+                bg-sky-100
+                py-2
+                px-4
+                rounded-xl
+              "
+                          >
+                            <Pencil size={17} />
+                            Editar información
+                          </button> */}
                         </div>
 
                       </div>
@@ -3876,6 +4252,21 @@ export default function AvisosFiscales() {
 
                             </div>
 
+                            <div className="bg-slate-50 rounded-xl px-4 py-3">
+
+                              <span className="text-xs text-slate-500 block">
+
+                                Fecha de registro como representante legal
+
+                              </span>
+
+                              <span className="font-medium text-slate-800">
+
+                                {representante.fechaRegistro}
+
+                              </span>
+
+                            </div>
                           </div>
 
                           {/* Footer */}
@@ -3914,17 +4305,7 @@ export default function AvisosFiscales() {
                             <button
                               type="button"
                               onClick={() => {
-
-                                if (seleccionado) {
-
-                                  toggleRepresentanteBaja(representante.id);
-
-                                } else {
-                                  toggleRepresentanteBaja(representante.id);
-                                  // setRepresentantePendiente(representante);
-                                  // setModalConfirmacion(true);
-
-                                }
+                                toggleRepresentanteBaja(representante.id);
 
                               }}
                               className={`
