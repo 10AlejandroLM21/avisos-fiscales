@@ -74,16 +74,12 @@ export default function ObligacionesPendientes() {
                     <div>
 
                         <h2 className="text-xl font-semibold text-slate-800">
-
                             Obligaciones Pendientes
-
                         </h2>
 
                         <p className="text-sm text-slate-500 mt-1">
-
                             Consulte los ejercicios y períodos pendientes de
                             cumplimiento correspondientes a la obligación seleccionada.
-
                         </p>
 
                     </div>
@@ -103,6 +99,7 @@ export default function ObligacionesPendientes() {
                 </label>
 
                 <select
+
                     value={obligacionSeleccionada}
                     onChange={(e) =>
                         setObligacionSeleccionada(e.target.value)
@@ -121,6 +118,7 @@ export default function ObligacionesPendientes() {
                     "
                 >
                     <option value={0}>Seleccione</option>
+
                     {obligaciones.map(item => (
 
                         <option
@@ -166,29 +164,29 @@ export default function ObligacionesPendientes() {
                         </thead>
 
                         <tbody>
+                            {obligaciones.map(obligacion => (
+                                obligacion.ejercicios.map((ejercicio) => (
 
-                            {obligacion.ejercicios.map((ejercicio) => (
+                                    <tr
+                                        key={ejercicio.anio}
+                                        className="border-t border-slate-200 hover:bg-slate-50 transition"
+                                    >
 
-                                <tr
-                                    key={ejercicio.anio}
-                                    className="border-t border-slate-200 hover:bg-slate-50 transition"
-                                >
+                                        <td className="px-5 py-4 font-medium">
 
-                                    <td className="px-5 py-4 font-medium">
+                                            {ejercicio.anio}
 
-                                        {ejercicio.anio}
+                                        </td>
 
-                                    </td>
+                                        <td className="px-5 py-4">
 
-                                    <td className="px-5 py-4">
+                                            <div className="flex flex-wrap gap-2">
 
-                                        <div className="flex flex-wrap gap-2">
+                                                {ejercicio.periodos.map(periodo => (
 
-                                            {ejercicio.periodos.map(periodo => (
-
-                                                <span
-                                                    key={periodo}
-                                                    className="
+                                                    <span
+                                                        key={periodo}
+                                                        className="
                                                     inline-flex
                                                     items-center
                                                     gap-2
@@ -202,24 +200,24 @@ export default function ObligacionesPendientes() {
                                                     text-red-700
                                                     font-medium
                                                 "
-                                                >
+                                                    >
 
-                                                    <CircleAlert size={14} />
+                                                        <CircleAlert size={14} />
 
-                                                    {periodo}° Bimestre
+                                                        {periodo}° Bimestre
 
-                                                </span>
+                                                    </span>
 
-                                            ))}
+                                                ))}
 
-                                        </div>
+                                            </div>
 
-                                    </td>
+                                        </td>
 
-                                </tr>
+                                    </tr>
 
+                                ))
                             ))}
-
                         </tbody>
 
                     </table>

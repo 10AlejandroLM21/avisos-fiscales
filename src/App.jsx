@@ -2806,7 +2806,8 @@ export default function AvisosFiscales() {
                                         Eliminar representante
 
                                       </button>
-                                      <ModalAccionAviso titulo="¿Desea eliminar a este representante legal?"
+                                      
+                                      <ModalAccionAviso icono="UserRoundMinus" color="red" titulo="¿Desea eliminar a este representante legal?"
                                         abierto={eliminarRep}
                                         descripcion="Al eliminar a este representante legal, se perderá toda la información capturada y no podrá recuperarse. ¿Desea continuar con la eliminación?"
                                         textoBoton="Eliminar"

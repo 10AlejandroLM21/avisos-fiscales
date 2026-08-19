@@ -9,6 +9,7 @@ export default function ModalAccionAviso({
     icono = "FileCheck2",
     color = "blue",
     textoBoton = "Aceptar",
+    textRegresar,
     onAceptar
 
 }) {
@@ -96,8 +97,8 @@ export default function ModalAccionAviso({
 
                     >
 
-                        Regresar
-
+                        {!textRegresar ? "Regresar" : textRegresar}
+|
                     </button>
 
                     <button
