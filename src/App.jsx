@@ -2908,7 +2908,6 @@ export default function AvisosFiscales() {
                   </p> */}
                 </div>
 
-
                 <div className="mx-4 mb-6 mt-4">
 
                   <div className=" -slate-300 -dashed bg-slate-100 rounded-xl p-5">
@@ -2996,16 +2995,17 @@ export default function AvisosFiscales() {
                       "Apertura de Establecimientos o Locales",
                       "Cierre de Establecimientos o Locales",
                       "Cancelación en el Registro Estatal de Contribuyentes"
-                    ].map((aviso, index) => (
+                    ]
+                    .map((aviso, index) => (
                       <label
                         key={index}
                         className={`
-                              -2 rounded-xl p-5 cursor-pointer
+                              shadow-sm border rounded-xl p-5 cursor-pointer
                               transition-all duration-200
-                              hover:-sky-600 hover:shadow-md
+                              hover:bg-sky-100 hover:shadow-lg 
                               ${selectedRow === aviso
-                            ? "-sky-700 bg-sky-50"
-                            : "-slate-200"
+                            ? "border-sky-700 bg-sky-50"
+                            : "border-slate-200"
                           }`}
                       >
                         <input
@@ -3017,9 +3017,9 @@ export default function AvisosFiscales() {
                         />
 
                         <div className="flex items-start gap-3">
-                          <div className={`mt-1 w-5 h-5 rounded-full -2 flex items-center justify-center
+                          <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center
                               ${selectedRow === aviso
-                              ? "-sky-700"
+                              ? "-sky-800"
                               : "-slate-400"
                             }`}>
 

@@ -1,47 +1,125 @@
 import { useMemo, useState } from "react";
+import CampoSelect from "./CampoSelect";
+import CampoInput from "./CampoInput";
+import CampoFecha from "./CampoFecha";
 import {
     FileWarning,
     CircleAlert,
     ClipboardList
 } from "lucide-react";
 
-const obligaciones = [
-    {
-        id: 1,
-        obligacion: "CEDULAR",
-        ejercicios: [
-            {
-                anio: 2025,
-                periodos: [1, 2, 3, 4, 5, 6]
-            },
-            {
-                anio: 2024,
-                periodos: [1, 2, 3, 4, 5, 6]
-            },
-            {
-                anio: 2023,
-                periodos: [1, 2, 3, 4, 5, 6]
-            }
-        ]
-    },
-    {
-        id: 2,
-        obligacion: "DEMASÍAS CADUCAS",
-        ejercicios: [
-            {
-                anio: 2025,
-                periodos: [3, 4, 5, 6]
-            },
-            {
-                anio: 2026,
-                periodos: [1]
-            }
-        ]
-    }
-];
 
 export default function ObligacionesPendientes() {
+    const [obligaciones, setObligaciones] = useState([
+        {
+            id: 1,
+            clave: "nominas",
+            nombre: "IMPUESTO SOBRE NÓMINAS",
+            estatus: "Activo",
+            requiereTrabajadores: false,
+            actividades: [
+                {
+                    id: 1,
+                    nombre: "Comercio",
+                    porcentaje: 10,
+                    trabajadoresTemporales: 5,
+                    trabajadoresPermanentes: 15,
+                    fechaOperaciones: "24/10/2026"
+                },
+                {
+                    id: 2,
+                    nombre: "Servicios",
+                    porcentaje: 20,
+                    trabajadoresTemporales: 3,
+                    trabajadoresPermanentes: 10,
+                    fechaOperaciones: "24/10/2026"
+                },
 
+            ],
+            actividadesAgregadas: [],
+            ejercicios: [
+                {
+                    anio: 2025,
+                    periodos: [3, 4, 5, 6]
+                },
+                {
+                    anio: 2026,
+                    periodos: [1]
+                }
+            ]
+        },
+        {
+            id: 2,
+            clave: "hospedaje",
+            nombre: "IMPUESTO SOBRE HOSPEDAJE",
+            requiereTrabajadores: false,
+            estatus: "Activo",
+            actividades: [
+                {
+                    id: 3,
+                    nombre: "Hotel",
+                    porcentaje: 20,
+                    fechaOperaciones: "24/10/2026"
+
+                }
+            ],
+            actividadesAgregadas: [],
+            ejercicios: [
+                {
+                    anio: 2025,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                },
+                {
+                    anio: 2024,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                },
+                {
+                    anio: 2023,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                }
+            ]
+        },
+        {
+            id: 3,
+            clave: "erogaciones",
+            nombre: "IMPUESTO SOBRE EROGACIONES POR REMUNERACIONES AL TRABAJO PERSONAL",
+            requiereTrabajadores: true,
+            estatus: "Activo",
+            actividades: [
+                {
+                    id: 1,
+                    nombre: "Comercio",
+                    porcentaje: 30,
+                    trabajadoresTemporales: 5,
+                    trabajadoresPermanentes: 15,
+                    fechaOperaciones: "24/10/2026"
+                },
+                {
+                    id: 2,
+                    nombre: "Servicios",
+                    porcentaje: 20,
+                    trabajadoresTemporales: 3,
+                    trabajadoresPermanentes: 10,
+                    fechaOperaciones: "24/10/2026"
+                }
+            ],
+            actividadesAgregadas: [],
+            ejercicios: [
+                {
+                    anio: 2025,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                },
+                {
+                    anio: 2024,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                },
+                {
+                    anio: 2023,
+                    periodos: [1, 2, 3, 4, 5, 6]
+                }
+            ]
+        }
+    ]);
     const [obligacionSeleccionada, setObligacionSeleccionada] = useState(0);
 
     const obligacion = useMemo(
@@ -54,11 +132,11 @@ export default function ObligacionesPendientes() {
 
     return (
 
-        <div className="bg-white rounded-2xl border shadow-sm">
+        <div className="bg-white rounded-2xl  shadow-sm">
 
             {/* Encabezado */}
 
-            <div className="px-6 py-5 border-b">
+            <div className="px-6 py-5 -b">
 
                 <div className="flex items-center gap-4">
 
@@ -90,58 +168,24 @@ export default function ObligacionesPendientes() {
 
             {/* Selector */}
 
-            <div className="p-5 border-b">
-
-                <label className="block text-sm font-medium text-slate-700 mb-2">
-
-                    Obligación Fiscal
-
-                </label>
-
-                <select
-
+            <div className="p-5 -b">
+                <CampoSelect etiqueta="Obligación Fiscal"
+                    id="obligacionFiscal"
+                    name="obligacionFiscal"
                     value={obligacionSeleccionada}
-                    onChange={(e) =>
-                        setObligacionSeleccionada(e.target.value)
-                    }
-                    className="
-                        w-full
-                        rounded-lg
-                        border
-                        border-slate-300
-                        px-3
-                        py-2.5
-                        text-sm
-                        focus:ring-2
-                        focus:ring-sky-500
-                        focus:border-sky-500
-                    "
-                >
-                    <option value={0}>Seleccione</option>
-
-                    {obligaciones.map(item => (
-
-                        <option
-                            key={item.id}
-                            value={item.id}
-                        >
-
-                            {item.obligacion}
-
-                        </option>
-
-                    ))}
-
-                </select>
-
+                    onChange={(e) => setObligacionSeleccionada(e.target.value)}
+                    opciones={obligaciones.map(ob => ({
+                        value: ob.id,
+                        label: ob.nombre
+                    }))} />
             </div>
 
             {/* Tabla */}
             <div className="p-5">
 
-                <div className="overflow-hidden rounded-xl border border-slate-200">
+                <div className="overflow-hidden rounded-xl  -slate-200">
 
-                    <table className="w-full border-collapse">
+                    <table className="w-full -collapse">
 
                         <thead>
 
@@ -162,61 +206,42 @@ export default function ObligacionesPendientes() {
                             </tr>
 
                         </thead>
-
                         <tbody>
-                            {obligaciones.map(obligacion => (
-                                obligacion.ejercicios.map((ejercicio) => (
+                            {obligacion?.ejercicios?.map((ejercicio) => (
+                                <tr
+                                    key={ejercicio.anio}
+                                    className="border-t border-slate-200 hover:bg-slate-50 transition"
+                                >
+                                    <td className="px-5 py-4 font-medium">
+                                        {ejercicio.anio}
+                                    </td>
 
-                                    <tr
-                                        key={ejercicio.anio}
-                                        className="border-t border-slate-200 hover:bg-slate-50 transition"
-                                    >
-
-                                        <td className="px-5 py-4 font-medium">
-
-                                            {ejercicio.anio}
-
-                                        </td>
-
-                                        <td className="px-5 py-4">
-
-                                            <div className="flex flex-wrap gap-2">
-
-                                                {ejercicio.periodos.map(periodo => (
-
-                                                    <span
-                                                        key={periodo}
-                                                        className="
-                                                    inline-flex
-                                                    items-center
-                                                    gap-2
-                                                    rounded-lg
-                                                    bg-red-50
-                                                    border
-                                                    border-red-200
-                                                    px-3
-                                                    py-1.5
-                                                    text-sm
-                                                    text-red-700
-                                                    font-medium
-                                                "
-                                                    >
-
-                                                        <CircleAlert size={14} />
-
-                                                        {periodo}° Bimestre
-
-                                                    </span>
-
-                                                ))}
-
-                                            </div>
-
-                                        </td>
-
-                                    </tr>
-
-                                ))
+                                    <td className="px-5 py-4">
+                                        <div className="flex flex-wrap gap-2">
+                                            {ejercicio.periodos.map((periodo) => (
+                                                <span
+                                                    key={periodo}
+                                                    className="
+                                inline-flex
+                                items-center
+                                gap-2
+                                rounded-lg
+                                bg-red-50
+                                border border-red-200
+                                px-3
+                                py-1.5
+                                text-sm
+                                text-red-700
+                                font-medium
+                            "
+                                                >
+                                                    <CircleAlert size={14} />
+                                                    {periodo}° Bimestre
+                                                </span>
+                                            ))}
+                                        </div>
+                                    </td>
+                                </tr>
                             ))}
                         </tbody>
 
