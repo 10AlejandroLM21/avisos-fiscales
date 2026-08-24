@@ -2806,7 +2806,7 @@ export default function AvisosFiscales() {
                                         Eliminar representante
 
                                       </button>
-                                      
+
                                       <ModalAccionAviso icono="UserRoundMinus" color="red" titulo="¿Desea eliminar a este representante legal?"
                                         abierto={eliminarRep}
                                         descripcion="Al eliminar a este representante legal, se perderá toda la información capturada y no podrá recuperarse. ¿Desea continuar con la eliminación?"
@@ -2996,50 +2996,50 @@ export default function AvisosFiscales() {
                       "Cierre de Establecimientos o Locales",
                       "Cancelación en el Registro Estatal de Contribuyentes"
                     ]
-                    .map((aviso, index) => (
-                      <label
-                        key={index}
-                        className={`
+                      .map((aviso, index) => (
+                        <label
+                          key={index}
+                          className={`
                               shadow-sm border rounded-xl p-5 cursor-pointer
                               transition-all duration-200
                               hover:bg-sky-100 hover:shadow-lg 
                               ${selectedRow === aviso
-                            ? "border-sky-700 bg-sky-50"
-                            : "border-slate-200"
-                          }`}
-                      >
-                        <input
-                          type="radio"
-                          name="aviso"
-                          className="hidden"
-                          checked={selectedRow === aviso}
-                          onChange={() => setSelectedRow(aviso)}
-                        />
+                              ? "border-sky-700 bg-sky-50"
+                              : "border-slate-200"
+                            }`}
+                        >
+                          <input
+                            type="radio"
+                            name="aviso"
+                            className="hidden"
+                            checked={selectedRow === aviso}
+                            onChange={() => setSelectedRow(aviso)}
+                          />
 
-                        <div className="flex items-start gap-3">
-                          <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center
+                          <div className="flex items-start gap-3">
+                            <div className={`mt-1 w-5 h-5 rounded-full flex items-center justify-center
                               ${selectedRow === aviso
-                              ? "-sky-800"
-                              : "-slate-400"
-                            }`}>
+                                ? "-sky-800"
+                                : "-slate-400"
+                              }`}>
 
-                            {selectedRow === aviso && (
-                              <div className="w-2.5 h-2.5 rounded-full bg-sky-700"></div>
-                            )}
+                              {selectedRow === aviso && (
+                                <div className="w-2.5 h-2.5 rounded-full bg-sky-700"></div>
+                              )}
+
+                            </div>
+
+                            <div>
+                              <h5 className="font-medium text-slate-800">
+                                {aviso}
+                              </h5>
+                            </div>
 
                           </div>
 
-                          <div>
-                            <h5 className="font-medium text-slate-800">
-                              {aviso}
-                            </h5>
-                          </div>
+                        </label>
 
-                        </div>
-
-                      </label>
-
-                    ))}
+                      ))}
 
                   </div>
 
@@ -4715,16 +4715,15 @@ export default function AvisosFiscales() {
                       type="button"
                       onClick={() => setObligacionSeleccionada(item)}
                       className={`
-                -2 rounded-xl p-5 text-left transition
+                border-2 rounded-xl p-5 text-left transition shadow-md hover:text-white font-semibold
                 ${obligacionSeleccionada === item
-                          ? "-sky-700 bg-sky-50"
-                          : "-slate-200 hover:-sky-500"
+                          ? "bg-sky-500 text-white"
+                          : "border-slate-100 hover:bg-sky-500 "
                         }
               `}
                     >
-                      <h4 className="font-medium text-slate-800">
-                        {item}
-                      </h4>
+                      {item}
+
                     </button>
 
                   ))}
@@ -4991,42 +4990,28 @@ export default function AvisosFiscales() {
                       </p>
 
                     </div>
-                    {establecimientoSeleccionado ? (
+                    <div className="space-y-4">
 
-                      <CardEstablecimiento
-                        establecimiento={establecimientoSeleccionado}
-                        seleccionado
-                        onCambiar={() => setEstablecimientoSeleccionado(null)}
-                        onVer={() => {
-                          setEstablecimientoDetalle(establecimientoSeleccionado);
-                          setOpenDetalle(true);
-                        }}
-                      />
+                      {establecimientos.map((item) => (
 
-                    ) : (
+                        <CardEstablecimiento
+                          key={item.id}
+                          establecimiento={item}
+                          seleccionado={establecimientoSeleccionado?.id === item.id}
+                          onSeleccionar={() => {
+                            setEstablecimientoPendiente(item);
+                            setModalConfirmacion(true);
+                          }}
+                          onVer={() => {
+                            setEstablecimientoDetalle(item);
+                            setOpenDetalle(true);
+                          }}
+                        />
 
-                      <div className="space-y-4">
+                      ))}
 
-                        {establecimientos.map((item) => (
+                    </div>
 
-                          <CardEstablecimiento
-                            key={item.id}
-                            establecimiento={item}
-                            onSeleccionar={() => {
-                              setEstablecimientoPendiente(item);
-                              setModalConfirmacion(true);
-                            }}
-                            onVer={() => {
-                              setEstablecimientoDetalle(item);
-                              setOpenDetalle(true);
-                            }}
-                          />
-
-                        ))}
-
-                      </div>
-
-                    )}
                     {openDetalle && (
 
                       <ModalFormulario
@@ -5046,6 +5031,7 @@ export default function AvisosFiscales() {
 
                     )
                     }
+
                     {modalConfirmacion && (
 
                       <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
@@ -5135,7 +5121,6 @@ export default function AvisosFiscales() {
                               onClick={() => {
 
                                 setEstablecimientoSeleccionado(establecimientoPendiente);
-
                                 setModalConfirmacion(false);
 
                                 setEstablecimientoPendiente(null);
@@ -5155,7 +5140,8 @@ export default function AvisosFiscales() {
                     )}
                   </div>
 
-                )}
+                )
+              }
             </div>
           )
         }
