@@ -4705,31 +4705,54 @@ export default function AvisosFiscales() {
                   </p>
                 </div>
                 <div className="grid md:grid-cols-3 gap-4 p-5">
-
                   {[
-                    "Impuesto Sobre Nóminas",
-                    "Impuesto Sobre Hospedaje",
-                    "Impuesto Cedular"
+                    {
+                      obligacion: "Impuesto Sobre Nóminas",
+                      estatus: "VIGENTE"
+                    },
+                    {
+                      obligacion: "Impuesto Sobre Hospedaje",
+                      estatus: "VIGENTE"
+                    },
+                    {
+                      obligacion: "Impuesto Cedular",
+                      estatus: "VIGENTE"
+                    }
                   ].map((item) => (
-
                     <button
-                      key={item}
+                      key={item.obligacion}
                       type="button"
-                      onClick={() => setObligacionSeleccionada(item)}
+                      onClick={() => setObligacionSeleccionada(item.obligacion)}
                       className={`
-                border-2 rounded-xl p-5 text-left transition shadow-md hover:text-white font-semibold
-                ${obligacionSeleccionada === item
-                          ? "bg-sky-500 text-white"
-                          : "border-slate-100 hover:bg-sky-500 "
+                border-2 rounded-xl p-5 text-left transition shadow-md
+                ${obligacionSeleccionada === item.obligacion
+                          ? "bg-sky-500 text-white border-sky-500"
+                          : "border-slate-100 bg-white hover:bg-sky-500 hover:text-white"
                         }
-              `}
+            `}
                     >
-                      {item}
+                      <div className="flex items-center justify-between gap-3">
+                        <span className="font-semibold">
+                          {item.obligacion}
+                        </span>
 
+                        <span
+                          className={`
+                        px-2.5 py-1 rounded-full text-xs font-semibold
+                        ${item.estatus === "VIGENTE"
+                              ? "bg-emerald-100 text-emerald-700"
+                              : "bg-red-100 text-red-700"
+                            }
+                    `}
+                        >
+                          {item.estatus}
+                        </span>
+                      </div>
+                      <div>
+                        <span className="text-sm text-slate-500">Ver establecimientos registrados</span>
+                      </div>
                     </button>
-
                   ))}
-
                 </div>
 
               </div>
@@ -4739,7 +4762,6 @@ export default function AvisosFiscales() {
               {obligacionSeleccionada && (
 
                 <div className="flex flex-col gap-3">
-
 
                   <div className="shadow-lg rounded-xl overflow-hidden border border-slate-200">
                     <div className="px-6 py-5 bg-slate-50">
@@ -4779,8 +4801,6 @@ export default function AvisosFiscales() {
 
                 </div>
 
-
-
               )}
 
             </div>
@@ -4815,36 +4835,38 @@ export default function AvisosFiscales() {
                 </p>
 
                 <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-
                   {[
                     "Impuesto Sobre Nóminas",
                     "Impuesto Sobre Hospedaje",
                     "Impuesto Cedular"
                   ].map((obligacion) => (
-
                     <button
                       key={obligacion}
                       type="button"
                       onClick={() => setObligacionSeleccionada(obligacion)}
-                      className={`p-5 rounded-xl -2 text-left transition-all
-        ${obligacionSeleccionada === obligacion
-                          ? "-sky-700 bg-sky-50"
-                          : "-slate-200 hover:-sky-500"
-                        }`}
+                      className={`
+                p-5 rounded-xl border-2 text-left transition-all
+                ${obligacionSeleccionada === obligacion
+                          ? "border-sky-700 bg-sky-50"
+                          : "border-slate-200 hover:border-sky-500 hover:bg-sky-50"
+                        }
+            `}
                     >
+                      <div className="flex items-center justify-between gap-3">
+                        <h4 className="font-semibold text-slate-800">
+                          {obligacion}
+                        </h4>
 
-                      <h4 className="font-semibold text-slate-800">
-                        {obligacion}
-                      </h4>
+                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
+                          VIGENTE
+                        </span>
+                      </div>
 
                       <p className="text-sm text-slate-500 mt-2">
                         Ver establecimientos registrados
                       </p>
-
                     </button>
-
                   ))}
-
                 </div>
 
               </div>
