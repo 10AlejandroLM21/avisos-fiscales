@@ -1,7 +1,7 @@
 import React, { useState } from "react";
-import Input from "../components/Input";
-import CampoSelect from "../components/CampoSelect";
-import CampoInput from "../components/CampoInput";
+import Input from "./Input";
+import CampoSelect from "./CampoSelect";
+import CampoInput from "./CampoInput";
 import CampoTextArea from "./CampoTextArea";
 import {
     Search,
@@ -69,7 +69,7 @@ export default function DomicilioFiscal({
         <div className="">
 
 
-            <div className="rounded-xl overflow-hidden">
+            <div className="rounded-xl overflow-hidden shadow-lg">
                 {/* Header */}
 
                 <div className="bg-slate-50 flex justify-between items-center p-5">
@@ -100,8 +100,8 @@ export default function DomicilioFiscal({
                     </div>
                 </div>
                 {/* Content */}
-                <div className="bg-white rounded-xl shadow-sm overflow-hidden mt-2">
-                    <div className="px-6 space-y-5">
+                <div className="bg-white shadow-sm overflow-hidden">
+                    <div className="px-6 space-y-5 mb-4">
 
                         {/* BÚSQUEDA POR CÓDIGO POSTAL */}
 
@@ -261,25 +261,7 @@ export default function DomicilioFiscal({
                         </section>
 
                     </div>
-
-                    <div className="mt-6 flex items-start gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
-                        <input
-                            id="validarInformacion"
-                            type="checkbox"
-                            className="mt-1 h-4 w-4 rounded border-slate-300 text-sky-600 focus:ring-sky-500"
-                        />
-
-                        <label
-                            htmlFor="validarInformacion"
-                            className="text-sm text-slate-700 cursor-pointer"
-                        >
-                            He validado que la información recuperada es correcta.
-                        </label>
-                    </div>
-
                 </div>
-
-
             </div>
 
         </div>

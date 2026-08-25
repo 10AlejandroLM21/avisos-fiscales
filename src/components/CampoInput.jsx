@@ -133,7 +133,7 @@ export default function CampoInput({
                 placeholder={placeholder}
                 disabled={disabled}
                 readOnly={readOnly}
-                className={`w-full shadow-md rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 ${disabled
+                className={`w-full border border-slate-300 shadow-md rounded-lg px-4 py-3 outline-none focus:ring-2 focus:ring-sky-500 ${disabled
                     ? "bg-gray-100 cursor-not-allowed text-slate-500"
                     : "bg-white"
                     }`}

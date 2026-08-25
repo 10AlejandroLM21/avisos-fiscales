@@ -3,6 +3,7 @@ import './App.css';
 import RepresentanteLegalForm from "./components/RepresentanteLegal";
 import DomicilioFiscal from "./components/DomicilioFiscal";
 import DomicilioFiscalForm from "./components/DomicilioFiscalForm";
+import DomicilioFiscalForm2 from "./components/DomicilioFiscalFormAlternativo";
 import DatosRepresentante from "./components/DatosRepresentante";
 import DocumentoProtocolizado from "./components/DocumentoProtocolizado";
 import CampoConsulta from "./components/CampoConsulta";
@@ -26,6 +27,7 @@ import ObligacionesPendientes from "./components/Adeudos";
 import ObligacionesSuspender from "./components/ObligacionesRegistradas";
 import CampoFecha from "./components/CampoFecha";
 import ReanudacionDeActividades from "./Views/ReanudacionDeActividades";
+import CampoTextArea from "./components/CampoTextArea";
 import {
   Search,
   Users,
@@ -4736,176 +4738,48 @@ export default function AvisosFiscales() {
 
               {obligacionSeleccionada && (
 
-                <div className="bg-white rounded-xl  shadow-sm">
+                <div className="flex flex-col gap-3">
 
-                  {/* HEADER */}
 
-                  <div className="-b px-6 py-5">
+                  <div className="shadow-lg rounded-xl overflow-hidden border border-slate-200">
+                    <div className="px-6 py-5 bg-slate-50">
+                      {/* HEADER */}
+                      <div className="flex items-center gap-2 mb-1">
 
-                    <h3 className="text-lg font-semibold text-slate-800">
-                      Datos del Establecimiento
-                    </h3>
-
-                    <p className="text-sm text-slate-500 mt-1">
-                      Capture la información del establecimiento o local.
-                    </p>
-
-                  </div>
-
-                  <div className="">
-
-                    {/* DATOS ESTABLECIMIENTO */}
-
-                    <section className="-b px-6 py-5">
-                      <div className="flex items-center gap-2 mb-4">
-
-                        <Building2
-                          size={20}
-                          className="text-sky-700"
-                        />
-
-                        <h4 className="font-semibold text-slate-700">
-                          Datos del Establecimiento
-                        </h4>
-
-                      </div>
-
-                      <div className="grid md:grid-cols-2 gap-6">
-
-                        <div>
-                          <label className="block mb-2 font-medium">
-                            Nombre del Establecimiento *
-                          </label>
-
-                          <input
-                            type="text"
-                            className="w-full  rounded-lg px-4 py-3"
+                        <span className="bg-blue-100 rounded-lg">
+                          <Building2
+                            size={20}
+                            className="text-sky-700 m-3"
                           />
-                        </div>
+                        </span>
 
+                        <div className="flex flex-col">
+                          <h4 className="font-semibold text-slate-700">
+                            Datos del Establecimiento
+                          </h4>
+                          <p className="text-sm text-slate-500 mt-1">
+                            Capture la información del establecimiento o local.
+                          </p>
+                        </div>
                       </div>
+
+                    </div>
+                    <section className="px-6 py-4 bg-white">
+                      <CampoInput etiqueta="Nombre del Establecimiento" obligatorio={true} />
                     </section>
-
-                    {/* DATOS GENERALES */}
-
-                    <DomicilioFiscalForm
-                      onGuardar={() => { }}
-                      onCancelar={() => { }}
-                    />
-
-
-                    {/* UBICACION */}
-
-                    {ambito === "urbano" && (
-
-                      <section className="-b px-6 py-5">
-
-                        <h4 className="font-semibold text-slate-700 mb-4">
-                          Ubicación del Domicilio
-                        </h4>
-
-                        <div className="grid md:grid-cols-3 gap-6">
-
-                          <input
-                            placeholder="Tipo de Vialidad"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Nombre de Calle"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Número Exterior y/o Letra"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Número Interior y/o Letra"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Entre Vialidad"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Y Vialidad"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                        </div>
-
-                      </section>
-
-                    )}
-
-                    {ambito === "rural" && (
-
-                      <section>
-
-                        <h4 className="font-semibold text-slate-700 mb-4">
-                          Ubicación del Domicilio
-                        </h4>
-
-                        <div className="grid md:grid-cols-3 gap-6">
-
-                          <input
-                            placeholder="Vía de Comunicación"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Nombre de Terracería"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <input
-                            placeholder="Tramo"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                        </div>
-
-                      </section>
-
-                    )}
-
-                    {/* COMPLEMENTARIA */}
-
-                    {ambito && (
-
-                      <section>
-
-                        <h4 className="font-semibold text-slate-700 mb-4">
-                          Información Complementaria
-                        </h4>
-
-                        <div className="grid gap-6">
-
-                          <textarea
-                            rows={3}
-                            placeholder="Características del domicilio"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                          <textarea
-                            rows={3}
-                            placeholder="Referencias adicionales"
-                            className=" rounded-lg px-4 py-3"
-                          />
-
-                        </div>
-
-                      </section>
-
-                    )}
-
                   </div>
+
+
+                  {/* DATOS GENERALES */}
+
+                  <DomicilioFiscalForm2
+                    onGuardar={() => { }}
+                    onCancelar={() => { }}
+                  />
 
                 </div>
+
+
 
               )}
 
