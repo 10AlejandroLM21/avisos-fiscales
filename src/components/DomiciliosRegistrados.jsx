@@ -4,7 +4,8 @@ import {
     SlidersHorizontal,
     ChevronDown,
     MapPin,
-    CalendarDays
+    CalendarDays,
+    Eye
 } from "lucide-react";
 
 export default function DomiciliosRegistrados() {
@@ -157,13 +158,13 @@ export default function DomiciliosRegistrados() {
 
                 {/* ENCABEZADOS */}
                 <div className="
-        hidden md:grid
-        grid-cols-[1.3fr_2fr_1fr]
-        gap-6
-        px-6 py-4
-        bg-slate-50
-        border-b border-slate-100
-    ">
+    hidden md:grid
+    grid-cols-[1.3fr_2fr_1fr_1fr]
+    gap-6
+    px-6 py-4
+    bg-slate-50
+    border-b border-slate-100
+">
 
                     {/* NOMBRE COMERCIAL */}
                     <div>
@@ -362,6 +363,17 @@ export default function DomiciliosRegistrados() {
                         </div>
                     </div>
 
+                    <div>
+                        <span className="
+                                text-xs
+                                font-semibold
+                                text-slate-500
+                                uppercase
+                            ">
+                            Ver domicilio
+                        </span>
+                    </div>
+
                 </div>
 
 
@@ -369,19 +381,18 @@ export default function DomiciliosRegistrados() {
                 {establecimientosFiltrados.length > 0 ? (
 
                     establecimientosFiltrados.map((establecimiento) => (
-
                         <div
                             key={establecimiento.id}
                             className="
-                    grid
-                    md:grid-cols-[1.3fr_2fr_1fr]
-                    gap-4 md:gap-6
-                    px-6 py-5
-                    border-b border-slate-100
-                    last:border-b-0
-                    hover:bg-slate-50
-                    transition-colors
-                "
+        grid
+        md:grid-cols-[1.3fr_2fr_1fr_1fr]
+        gap-4 md:gap-6
+        px-6 py-5
+        border-b border-slate-100
+        last:border-b-0
+        hover:bg-slate-50
+        transition-colors
+    "
                         >
 
                             {/* NOMBRE */}
@@ -435,6 +446,33 @@ export default function DomiciliosRegistrados() {
                                 <span>
                                     {establecimiento.fechaAlta}
                                 </span>
+
+                            </div>
+
+                            {/* VER DOMICILIO */}
+                            <div className="flex items-center">
+
+                                <button
+                                    type="button"
+                                    onClick={() => verDomicilio(establecimiento)}
+                                    className="
+            inline-flex
+            items-center
+            gap-2
+            px-3
+            py-2
+            rounded-lg
+            text-sm
+            font-medium
+            text-sky-700
+            bg-sky-50
+            hover:bg-sky-100
+            transition-colors
+        "
+                                >
+                                    <Eye size={17} />
+                                    Ver domicilio
+                                </button>
 
                             </div>
 
