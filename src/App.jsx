@@ -27,6 +27,7 @@ import ObligacionesPendientes from "./components/Adeudos";
 import ObligacionesSuspender from "./components/ObligacionesRegistradas";
 import CampoFecha from "./components/CampoFecha";
 import ReanudacionDeActividades from "./Views/ReanudacionDeActividades";
+import DomiciliosRegistrados from "./components/DomiciliosRegistrados";
 import CampoTextArea from "./components/CampoTextArea";
 import {
   Search,
@@ -65,7 +66,8 @@ import {
   ChevronDown,
   ChevronRight,
   MapPin,
-  BriefcaseBusiness
+  BriefcaseBusiness,
+  Building
 } from "lucide-react";
 import AumentoObligaciones from "./Views/AumentoObligaciones";
 export default function AvisosFiscales() {
@@ -137,6 +139,8 @@ export default function AvisosFiscales() {
     }
 
   ];
+  const [desplegarCapturaDomicilio, setDesplegarCapturaDomicilio] = useState(false);
+  const [mostrarDomicilios, setMostrarDomicilios] = useState(false);
   const [activeStep, setActiveStep] = useState(0);
   const [tipoPersona, setTipoPersona] = useState("");
   const [metodoBusqueda, setMetodoBusqueda] = useState("");
@@ -4694,114 +4698,140 @@ export default function AvisosFiscales() {
               />
               {/* OBLIGACION */}
 
-              <div className="bg-white rounded-xl  shadow-sm">
+              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
 
-                <div className=" -b -slate-500 p-5">
-                  <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                    Selección de Obligación Fiscal
-                  </h3>
-                  <p className="text-sm text-slate-500">
-                    Seleccione la obligación fiscal a la que se asociará la apertura del establecimiento.
-                  </p>
-                </div>
-                <div className="grid md:grid-cols-3 gap-4 p-5">
-                  {[
-                    {
-                      obligacion: "Impuesto Sobre Nóminas",
-                      estatus: "VIGENTE"
-                    },
-                    {
-                      obligacion: "Impuesto Sobre Hospedaje",
-                      estatus: "VIGENTE"
-                    },
-                    {
-                      obligacion: "Impuesto Cedular",
-                      estatus: "VIGENTE"
+                {/* ENCABEZADO */}
+                <button
+                  type="button"
+                  onClick={() => setMostrarDomicilios(!mostrarDomicilios)}
+                  className="
+        w-full
+        flex
+        items-center
+        justify-between
+        px-6
+        py-5
+        text-left
+        bg-white
+        hover:bg-slate-100
+        transition-colors
+        bg-slate-100
+    "
+                >
+                  <div className="flex items-center justify-content gap-3">
+                    <div className="p-3 bg-blue-200 rounded-lg">
+                      <Building
+                        size={20}
+                        className="text-blue-700"
+                      />
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Domicilios registrados
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Consulte los domicilios asociados al contribuyente.
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <ChevronDown
+                    size={20}
+                    className={`
+            text-slate-500
+            transition-transform
+            duration-700
+            ease-in-out
+            ${mostrarDomicilios ? "rotate-180" : ""}
+        `}
+                  />
+                </button>
+
+                {/* CONTENIDO DESPLEGABLE */}
+                <div
+                  className={`
+        px-6
+        overflow-hidden
+        transition-all
+        duration-700
+        ease-in-out
+        ${mostrarDomicilios
+                      ? "max-h-[1000px] opacity-100 pb-6"
+                      : "max-h-0 opacity-0"
                     }
-                  ].map((item) => (
-                    <button
-                      key={item.obligacion}
-                      type="button"
-                      onClick={() => setObligacionSeleccionada(item.obligacion)}
-                      className={`
-                border-2 rounded-xl p-5 text-left transition shadow-md
-                ${obligacionSeleccionada === item.obligacion
-                          ? "bg-sky-500 text-white border-sky-500"
-                          : "border-slate-100 bg-white hover:bg-sky-500 hover:text-white"
-                        }
-            `}
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <span className="font-semibold">
-                          {item.obligacion}
-                        </span>
-
-                        <span
-                          className={`
-                        px-2.5 py-1 rounded-full text-xs font-semibold
-                        ${item.estatus === "VIGENTE"
-                              ? "bg-emerald-100 text-emerald-700"
-                              : "bg-red-100 text-red-700"
-                            }
-                    `}
-                        >
-                          {item.estatus}
-                        </span>
-                      </div>
-                      <div>
-                        <span className="text-sm text-slate-500">Ver establecimientos registrados</span>
-                      </div>
-                    </button>
-                  ))}
+    `}
+                >
+                  <DomiciliosRegistrados />
                 </div>
 
               </div>
 
               {/* FORMULARIO */}
+              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+                <button className="
+        w-full
+        flex
+        items-center
+        justify-between
+        px-6
+        py-5
+        text-left
+        bg-white
+        hover:bg-slate-100
+        transition-colors
+        bg-slate-100"
+                  onClick={() => {
+                    setDesplegarCapturaDomicilio(!desplegarCapturaDomicilio)
+                  }}>
+                  <div className="flex items-center gap-2">
 
-              {obligacionSeleccionada && (
+                    <span className="bg-blue-100 rounded-lg">
+                      <Building2
+                        size={20}
+                        className="text-sky-700 m-3"
+                      />
+                    </span>
 
-                <div className="flex flex-col gap-3">
+                    <div className="flex flex-col">
 
-                  <div className="shadow-lg rounded-xl overflow-hidden border border-slate-200">
-                    <div className="px-6 py-5 bg-slate-50">
-                      {/* HEADER */}
-                      <div className="flex items-center gap-2 mb-1">
+                      <h4 className="font-semibold text-slate-700">
+                        Datos del Establecimiento
+                      </h4>
 
-                        <span className="bg-blue-100 rounded-lg">
-                          <Building2
-                            size={20}
-                            className="text-sky-700 m-3"
-                          />
-                        </span>
-
-                        <div className="flex flex-col">
-                          <h4 className="font-semibold text-slate-700">
-                            Datos del Establecimiento
-                          </h4>
-                          <p className="text-sm text-slate-500 mt-1">
-                            Capture la información del establecimiento o local.
-                          </p>
-                        </div>
-                      </div>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Capture la información del establecimiento o local.
+                      </p>
 
                     </div>
-                    <section className="px-6 py-4 bg-white">
-                      <CampoInput etiqueta="Nombre del Establecimiento" obligatorio={true} />
-                    </section>
                   </div>
 
+                  <ChevronDown size={20}
+                    className={`text-slate-500
+                    transition-transform
+                    duration-700
+                    ease-in-out
+                    ${desplegarCapturaDomicilio ? "rotate-180" : ""}`}
+                  />
 
-                  {/* DATOS GENERALES */}
+                </button>
 
+                {/* DATOS GENERALES */}
+                <div className={
+                  `transition-all
+                duration-700
+                ease-in-out
+                ${desplegarCapturaDomicilio ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}
+                `}>
                   <DomicilioFiscalForm2
                     onGuardar={() => { }}
                     onCancelar={() => { }}
                   />
-
                 </div>
 
-              )}
+
+              </div>
 
             </div>
 

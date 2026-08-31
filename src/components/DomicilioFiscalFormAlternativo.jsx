@@ -19,7 +19,7 @@ import {
     AlertTriangle,
     Home,
     MapPin,
-    MapPinHouse,    
+    MapPinHouse,
     Copy,
     ArrowRight,
     FilePenLine,
@@ -41,7 +41,58 @@ export default function DomicilioFiscal({
     className = ""
 
 }) {
-    const [domicilioSeleccionado, setDomicilioSeleccionado] = useState(null);
+
+
+
+    const obligacionesDisponibles = [
+        {
+            id: 1,
+            nombre: "Impuesto Sobre Nóminas"
+        },
+        {
+            id: 2,
+            nombre: "Impuesto Sobre Hospedaje"
+        },
+        {
+            id: 3,
+            nombre: "Impuesto Cedular"
+        }
+    ];
+
+    const [obligacionesSeleccionadas, setObligacionesSeleccionadas] = useState([]);
+    const [obligacionSeleccionada, setObligacionSeleccionada] = useState("");
+
+    const agregarObligacion = (id) => {
+        if (!id) return;
+        console.log(id);
+        const obligacion = obligacionesDisponibles.find(
+            (item) => item.id === Number(id)
+        );
+
+        if (!obligacion) return;
+
+        const yaExiste = obligacionesSeleccionadas.some(
+            (item) => item.id === obligacion.id
+        );
+
+        if (!yaExiste) {
+            setObligacionesSeleccionadas([
+                ...obligacionesSeleccionadas,
+                obligacion
+            ]);
+        }
+
+        // Regresar el selector a su estado inicial
+        setObligacionSeleccionada("");
+    };
+
+    const eliminarObligacion = (id) => {
+        setObligacionesSeleccionadas(
+            obligacionesSeleccionadas.filter(
+                (item) => item.id !== id
+            )
+        );
+    }; const [domicilioSeleccionado, setDomicilioSeleccionado] = useState(null);
     const [mostrarFormularioDomicilio, setMostrarFormularioDomicilio] = useState(false);
     const [ambito, setAmbito] = useState("");
     const [domicilios] = useState([
@@ -67,49 +118,25 @@ export default function DomicilioFiscal({
 
     return (
         <div className="">
-
-
-            <div className="rounded-xl overflow-hidden shadow-lg">
+            <div className="overflow-hidden shadow-lg">
                 {/* Header */}
 
-                <div className="bg-slate-50 flex justify-between items-center p-5">
-
-                    <div className="flex items-center gap-4">
-
-                        <div className="w-12 h-12 rounded-xl bg-sky-100 flex items-center justify-center">
-
-                            <MapPinHouse
-                                className="text-sky-700"
-                                size={20}
-                            />
-
-                        </div>
-
-                        <div>
-
-                            <h3 className="font-semibold text-slate-800">
-                                Datos del domicilio fiscal
-                            </h3>
-
-                            <p className="text-sm text-slate-500">
-                                Capture o verifique la información general correspondiente al domicilio fiscal.
-                            </p>
-
-                        </div>
-
-                    </div>
-                </div>
-                {/* Content */}
                 <div className="bg-white shadow-sm overflow-hidden">
+
+                    <section className="px-6 py-4 bg-white">
+
+                        <CampoInput etiqueta="Nombre del Establecimiento" obligatorio={true} />
+
+                    </section>
                     <div className="px-6 space-y-5 mb-4">
 
                         {/* BÚSQUEDA POR CÓDIGO POSTAL */}
 
                         <section>
 
-                            <h3 className="font-medium text-slate-700 mb-4">
+                            {/* <h3 className="font-medium text-slate-700 mb-4">
                                 Búsqueda por Código Postal
-                            </h3>
+                            </h3> */}
 
                             <div className="grid md:grid-cols-3 gap-4">
 
@@ -260,10 +287,130 @@ export default function DomicilioFiscal({
 
                         </section>
 
+                        {/* OBLIGACIONES FISCALES */}
+                        <section>
+                            <div className="flex items-center gap-2 mb-4">
+                                <FileText
+                                    size={18}
+                                    className="text-sky-700"
+                                />
+
+                                <h3 className="font-medium text-slate-700">
+                                    Obligaciones fiscales
+                                </h3>
+                            </div>
+
+                            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
+                                <div className="flex gap-2 items-end">
+                                    {/* SELECTOR */}
+                                    <CampoSelect
+                                        etiqueta="Obligación Fiscal"
+                                        value={obligacionSeleccionada}
+                                        onChange={(e) => {
+                                            setObligacionSeleccionada(e.target.value);
+                                        }}
+                                        opciones={[
+                                            {
+                                                key: "",
+                                                value: "",
+                                                label: "Seleccione una obligación fiscal"
+
+                                            },
+                                            ...obligacionesDisponibles
+                                                .filter((obligacion) =>
+                                                    !obligacionesSeleccionadas.some(
+                                                        (seleccionada) =>
+                                                            obligacion.id === seleccionada.id
+                                                    )
+                                                )
+                                                .map((obligacion) => ({
+                                                    key: obligacion.id,
+                                                    value: obligacion.id,
+                                                    label: obligacion.nombre
+                                                }))
+                                        ]}
+                                    />
+                                    <button
+                                        type="button"
+                                        onClick={() => agregarObligacion(obligacionSeleccionada)}
+                                        className="
+        border
+        border-slate-200
+        bg-blue-400
+        text-white
+        rounded-lg
+        px-4
+        py-2
+        hover:bg-white
+        hover:text-slate-700
+        shadow-md
+        h-13
+        whitespace-nowrap
+        transition-colors
+    "
+                                    >
+                                        + Agregar obligación
+                                    </button>
+                                </div>
+
+
+                                {/* OBLIGACIONES SELECCIONADAS */}
+                                {obligacionesSeleccionadas.length > 0 && (
+                                    <div className="flex flex-wrap gap-2 mt-4">
+                                        {obligacionesSeleccionadas.map((obligacion) => (
+                                            <span
+                                                key={obligacion.id}
+                                                className="
+                            inline-flex
+                            items-center
+                            gap-2
+                            px-3
+                            py-2
+                            rounded-full
+                            bg-sky-100
+                            text-sky-700
+                            text-sm
+                            font-medium
+                        "
+                                            >
+                                                {obligacion.nombre}
+
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        eliminarObligacion(obligacion.id)
+                                                    }
+                                                    className="
+                                flex
+                                items-center
+                                justify-center
+                                rounded-full
+                                hover:bg-sky-200
+                                transition-colors
+                            "
+                                                    title="Eliminar obligación"
+                                                >
+                                                    <X size={15} />
+                                                </button>
+                                            </span>
+                                        ))}
+
+                                    </div>
+                                )}
+
+                                {/* SIN OBLIGACIONES */}
+                                {obligacionesSeleccionadas.length === 0 && (
+                                    <p className="text-sm text-slate-400 mt-3">
+                                        No hay obligaciones fiscales seleccionadas.
+                                    </p>
+                                )}
+
+                            </div>
+                        </section>
                     </div>
                 </div>
-            </div>
+            </div >
 
-        </div>
+        </div >
     );
 }
