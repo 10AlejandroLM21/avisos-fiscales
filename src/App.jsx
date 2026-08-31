@@ -4696,6 +4696,57 @@ export default function AvisosFiscales() {
                 color="emerald"
 
               />
+
+              {/* RESUMEN DE ESTABLECIMIENTOS */}
+              <div className="
+                              bg-white
+                              border
+                              border-slate-200
+                              rounded-xl
+                              p-5
+                              flex
+                              items-center
+                              justify-between
+                              shadow-sm
+                          ">
+                <div className="flex justify-between gap-2">
+                  <div className="p-3 bg-sky-200 rounded-lg">
+                    <Building
+                      size={20}
+                      className="text-sky-700"
+                    />
+                  </div>
+
+                  <div className="flex flex-col">
+                    <p className="font-semibold">
+                      Resumen de Establecimientos registrados
+                    </p>
+
+                    <p className="text-sm text-slate-400 mt-1">
+                      Total de establecimientos asociados al contribuyente
+                    </p>
+                  </div>
+                </div>
+
+
+                <div className="
+            min-w-14
+            h-14
+            px-4
+            rounded-xl
+            bg-sky-100
+            text-sky-700
+            flex
+            items-center
+            justify-center
+            text-xl
+            font-bold
+        ">
+                  {establecimientos.length}
+                </div>
+
+              </div>
+
               {/* OBLIGACION */}
 
               <div className="bg-white rounded-xl shadow-sm overflow-hidden">
@@ -4728,7 +4779,7 @@ export default function AvisosFiscales() {
 
                     <div>
                       <h3 className="font-semibold text-slate-800">
-                        Domicilios registrados
+                        Establecimientos registrados
                       </h3>
                       <p className="text-sm text-slate-500 mt-1">
                         Consulte los domicilios asociados al contribuyente.

@@ -14,35 +14,36 @@ export default function DomiciliosRegistrados() {
             id: 1,
             nombreComercial: "ABARROTES LA ECONÓMICA",
             domicilio: "Av. Universidad 120, Col. Centro, Oaxaca de Juárez, Oaxaca, C.P. 68000",
-            fechaAlta: "15/01/2026",
-            estatus: "VIGENTE"
+            distrito: "Centro",
+            fechaAlta: "15/01/2026"
         },
         {
             id: 2,
             nombreComercial: "RESTAURANTE EL SABOR OAXAQUEÑO",
             domicilio: "Calz. Porfirio Díaz 315, Col. Reforma, Oaxaca de Juárez, Oaxaca, C.P. 68050",
-            fechaAlta: "28/02/2026",
-            estatus: "VIGENTE"
+            distrito: "Centro",
+            fechaAlta: "28/02/2026"
         },
         {
             id: 3,
             nombreComercial: "HOTEL CASA OAXACA",
             domicilio: "Calle García Vigil 407, Col. Centro, Oaxaca de Juárez, Oaxaca, C.P. 68000",
-            fechaAlta: "10/03/2025",
-            estatus: "NO VIGENTE"
+            distrito: "Centro",
+            fechaAlta: "10/03/2025"
         },
         {
             id: 4,
             nombreComercial: "SERVICIOS INTEGRALES DEL SUR",
             domicilio: "Calle Reforma 215, Col. Reforma, Oaxaca de Juárez, Oaxaca, C.P. 68050",
-            fechaAlta: "05/06/2026",
-            estatus: "VIGENTE"
+            distrito: "Centro",
+            fechaAlta: "05/06/2026"
         }
     ];
     const [filtros, setFiltros] = useState({
         nombreComercial: "",
         domicilio: "",
-        fechaAlta: ""
+        fechaAlta: "",
+        distrito: ""
     });
 
     const [orden, setOrden] = useState({
@@ -82,7 +83,11 @@ export default function DomiciliosRegistrados() {
                 .toLowerCase()
                 .includes(filtros.fechaAlta.toLowerCase());
 
-            return nombre && domicilio && fecha;
+            const distrito = establecimiento.distrito
+                .toLowerCase()
+                .includes(filtros.distrito.toLowerCase());
+
+            return nombre && domicilio && fecha && distrito;
         })
         .sort((a, b) => {
 
@@ -142,7 +147,7 @@ export default function DomiciliosRegistrados() {
     // }, [busqueda, filtroEstatus]);
 
     return (
-        <div className="w-full">
+        <div className="w-full mt-4">
 
             {/* ENCABEZADO */}
 
@@ -159,7 +164,7 @@ export default function DomiciliosRegistrados() {
                 {/* ENCABEZADOS */}
                 <div className="
     hidden md:grid
-    grid-cols-[1.3fr_2fr_1fr_1fr]
+    grid-cols-[1.3fr_2fr_1fr_1fr_1fr]
     gap-6
     px-6 py-4
     bg-slate-50
@@ -231,7 +236,6 @@ export default function DomiciliosRegistrados() {
                         </div>
                     </div>
 
-
                     {/* DOMICILIO */}
                     <div>
                         <button
@@ -297,6 +301,70 @@ export default function DomiciliosRegistrados() {
                         </div>
                     </div>
 
+                    {/* DISTRITO */}
+                    <div>
+                        <button
+                            type="button"
+                            onClick={() => ordenarPor("distrito")}
+                            className="
+                    flex
+                    items-center
+                    gap-2
+                    text-xs
+                    font-semibold
+                    text-slate-500
+                    uppercase
+                    hover:text-sky-700
+                "
+                        >
+                            Distrito
+
+                            {orden.campo === "distrito" && (
+                                orden.direccion === "asc"
+                                    ? <ChevronUp size={14} />
+                                    : <ChevronDown size={14} />
+                            )}
+                        </button>
+
+                        <div className="relative mt-2">
+                            <Search
+                                size={15}
+                                className="
+                        absolute
+                        left-3
+                        top-1/2
+                        -translate-y-1/2
+                        text-slate-400
+                    "
+                            />
+
+                            <input
+                                type="text"
+                                value={filtros.distrito}
+                                onChange={(e) =>
+                                    cambiarFiltro(
+                                        "distrito",
+                                        e.target.value
+                                    )
+                                }
+                                placeholder="Buscar..."
+                                className="
+                        w-full
+                        h-9
+                        pl-9
+                        pr-3
+                        text-xs
+                        bg-white
+                        border
+                        border-slate-200
+                        rounded-lg
+                        outline-none
+                        focus:ring-2
+                        focus:ring-sky-500
+                    "
+                            />
+                        </div>
+                    </div>
 
                     {/* FECHA DE ALTA */}
                     <div>
@@ -363,12 +431,14 @@ export default function DomiciliosRegistrados() {
                         </div>
                     </div>
 
-                    <div>
+                    {/* VER DOMICILIO*/}
+                    <div className="flex items-center justify-center">
                         <span className="
                                 text-xs
                                 font-semibold
                                 text-slate-500
                                 uppercase
+                                
                             ">
                             Ver domicilio
                         </span>
@@ -385,7 +455,7 @@ export default function DomiciliosRegistrados() {
                             key={establecimiento.id}
                             className="
         grid
-        md:grid-cols-[1.3fr_2fr_1fr_1fr]
+        md:grid-cols-[1.3fr_2fr_1fr_1fr_1fr]
         gap-4 md:gap-6
         px-6 py-5
         border-b border-slate-100
@@ -428,7 +498,24 @@ export default function DomiciliosRegistrados() {
 
                             </div>
 
+                            <div className="
+                    flex
+                    items-center
+                    gap-2
+                    text-sm
+                    text-slate-600
+                ">
 
+                                <CalendarDays
+                                    size={17}
+                                    className="text-slate-400"
+                                />
+
+                                <span>
+                                    {establecimiento.distrito}
+                                </span>
+
+                            </div>
                             {/* FECHA */}
                             <div className="
                     flex
@@ -448,6 +535,7 @@ export default function DomiciliosRegistrados() {
                                 </span>
 
                             </div>
+
 
                             {/* VER DOMICILIO */}
                             <div className="flex items-center">
