@@ -32,7 +32,9 @@ import {
     X,
     Save,
     Repeat,
-    Eye
+    Eye,
+    CirclePlus,
+    Info
 } from "lucide-react";
 export default function DomicilioFiscal({
     titulo = "Datos del domicilio fiscal",
@@ -118,17 +120,17 @@ export default function DomicilioFiscal({
 
     return (
         <div className="">
-            <div className="overflow-hidden shadow-lg">
-                {/* Header */}
+            {/* FORMULARIO */}
+            <div className="overflow-hidden shadow-md mb-4">
 
-                <div className="bg-white shadow-sm overflow-hidden">
+                <div className="bg-white shadow-md overflow-hidden rounded-lg">
 
                     <section className="px-6 py-4 bg-white">
 
                         <CampoInput etiqueta="Nombre del Establecimiento" obligatorio={true} />
 
                     </section>
-                    <div className="px-6 space-y-5 mb-4">
+                    <div className="px-6 space-y-5 mb-4 pb-5">
 
                         {/* BÚSQUEDA POR CÓDIGO POSTAL */}
 
@@ -287,56 +289,74 @@ export default function DomicilioFiscal({
 
                         </section>
 
-                        {/* OBLIGACIONES FISCALES */}
-                        <section>
-                            <div className="flex items-center gap-2 mb-4">
-                                <FileText
-                                    size={18}
-                                    className="text-sky-700"
-                                />
+                    </div>
+                </div>
 
-                                <h3 className="font-medium text-slate-700">
-                                    Obligaciones fiscales
-                                </h3>
-                            </div>
+            </div >
 
-                            <div className="rounded-xl border border-slate-200 bg-slate-50 p-4">
-                                <div className="flex gap-2 items-end">
-                                    {/* SELECTOR */}
-                                    <CampoSelect
-                                        etiqueta="Obligación Fiscal"
-                                        value={obligacionSeleccionada}
-                                        onChange={(e) => {
-                                            setObligacionSeleccionada(e.target.value);
-                                        }}
-                                        opciones={[
-                                            {
-                                                key: "",
-                                                value: "",
-                                                label: "Seleccione una obligación fiscal"
+            {/* OBLIGACIONES FISCALES */}
+            <div className="flex flex-col rounded-lg p-5 shadow-lg bg-white gap-4">
+                {/* Header */}
+                <div className="flex items-center gap-2">
 
-                                            },
-                                            ...obligacionesDisponibles
-                                                .filter((obligacion) =>
-                                                    !obligacionesSeleccionadas.some(
-                                                        (seleccionada) =>
-                                                            obligacion.id === seleccionada.id
-                                                    )
-                                                )
-                                                .map((obligacion) => ({
-                                                    key: obligacion.id,
-                                                    value: obligacion.id,
-                                                    label: obligacion.nombre
-                                                }))
-                                        ]}
-                                    />
-                                    <button
-                                        type="button"
-                                        onClick={() => agregarObligacion(obligacionSeleccionada)}
-                                        className="
+                    <span className="bg-blue-100 rounded-lg">
+                        <Building2
+                            size={20}
+                            className="text-sky-700 m-3"
+                        />
+                    </span>
+
+                    <div className="flex flex-col">
+
+                        <h4 className="font-semibold text-slate-700">
+                            Obligaciones fiscales
+                        </h4>
+
+                        <p className="text-sm text-slate-500 mt-1">
+                            Seleccione las obligaciones fiscales que desea vincular al domicilio del establecimiento.
+                            <b>  Puede seleccionar una o más obligaciones fiscales.  </b>
+                        </p>
+
+                    </div>
+                </div>
+
+                <div className="rounded-xl border-slate-200">
+                    <div className="flex gap-2 items-end">
+                        {/* SELECTOR */}
+                        <CampoSelect
+                            etiqueta="Obligación Fiscal"
+                            value={obligacionSeleccionada}
+                            onChange={(e) => {
+                                setObligacionSeleccionada(e.target.value);
+                            }}
+                            opciones={[
+                                {
+                                    key: "",
+                                    value: "",
+                                    label: "Seleccione una obligación fiscal"
+
+                                },
+                                ...obligacionesDisponibles
+                                    .filter((obligacion) =>
+                                        !obligacionesSeleccionadas.some(
+                                            (seleccionada) =>
+                                                obligacion.id === seleccionada.id
+                                        )
+                                    )
+                                    .map((obligacion) => ({
+                                        key: obligacion.id,
+                                        value: obligacion.id,
+                                        label: obligacion.nombre
+                                    }))
+                            ]}
+                        />
+                        <button
+                            type="button"
+                            onClick={() => agregarObligacion(obligacionSeleccionada)}
+                            className="
         border
         border-slate-200
-        bg-blue-400
+        bg-blue-600
         text-white
         rounded-lg
         px-4
@@ -348,69 +368,102 @@ export default function DomicilioFiscal({
         whitespace-nowrap
         transition-colors
     "
-                                    >
-                                        + Agregar obligación
-                                    </button>
-                                </div>
-
-
-                                {/* OBLIGACIONES SELECCIONADAS */}
-                                {obligacionesSeleccionadas.length > 0 && (
-                                    <div className="flex flex-wrap gap-2 mt-4">
-                                        {obligacionesSeleccionadas.map((obligacion) => (
-                                            <span
-                                                key={obligacion.id}
-                                                className="
-                            inline-flex
-                            items-center
-                            gap-2
-                            px-3
-                            py-2
-                            rounded-full
-                            bg-sky-100
-                            text-sky-700
-                            text-sm
-                            font-medium
-                        "
-                                            >
-                                                {obligacion.nombre}
-
-                                                <button
-                                                    type="button"
-                                                    onClick={() =>
-                                                        eliminarObligacion(obligacion.id)
-                                                    }
-                                                    className="
-                                flex
-                                items-center
-                                justify-center
-                                rounded-full
-                                hover:bg-sky-200
-                                transition-colors
-                            "
-                                                    title="Eliminar obligación"
-                                                >
-                                                    <X size={15} />
-                                                </button>
-                                            </span>
-                                        ))}
-
-                                    </div>
-                                )}
-
-                                {/* SIN OBLIGACIONES */}
-                                {obligacionesSeleccionadas.length === 0 && (
-                                    <p className="text-sm text-slate-400 mt-3">
-                                        No hay obligaciones fiscales seleccionadas.
-                                    </p>
-                                )}
-
-                            </div>
-                        </section>
+                        >
+                            + Agregar obligación
+                        </button>
                     </div>
-                </div>
-            </div >
+                    {/* OBLIGACIONES SELECCIONADAS */}
+                    {obligacionesSeleccionadas.length > 0 && (
+                        <div className="
+    flex
+    flex-wrap
+    gap-2
+    mt-4
+    p-4
+    rounded-lg
+    border
+    border-dotted
+    border-slate-300
+    min-h-[120px]
+">
+                            {obligacionesSeleccionadas.map((obligacion) => (
+                                <span
+                                    key={obligacion.id}
+                                    className="
+                inline-flex
+                items-center
+                gap-2
+                h-fit
+                px-3
+                py-2
+                rounded-full
+                bg-sky-100
+                text-sky-700
+                text-sm
+                font-medium
+            "
+                                >
+                                    {obligacion.nombre}
 
+                                    <button
+                                        type="button"
+                                        onClick={() =>
+                                            eliminarObligacion(obligacion.id)
+                                        }
+                                        className="
+                    flex
+                    items-center
+                    justify-center
+                    rounded-full
+                    hover:bg-sky-200
+                    transition-colors
+                "
+                                        title="Eliminar obligación"
+                                    >
+                                        <X size={15} />
+                                    </button>
+                                </span>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* SIN OBLIGACIONES */}
+                    {obligacionesSeleccionadas.length === 0 && (
+                        <div className="
+    flex
+    flex-col
+    items-center
+    justify-center
+    mt-4
+    p-6
+    border
+    border-dotted
+    border-slate-300
+    rounded-lg
+    text-center
+">
+                            <Info
+                                size={40}
+                                className="text-slate-400"
+                            />
+
+                            <h1 className="text-sm font-medium text-slate-500 mt-3">
+                                Sin obligaciones fiscales seleccionadas.
+                            </h1>
+
+                            <p className="text-sm text-slate-400 mt-2 max-w-xl">
+                                Seleccione una obligación fiscal del selector y haga clic en el botón{" "}
+                                <b className="font-semibold text-slate-500">
+                                    + Agregar obligación
+                                </b>{" "}
+                                para vincularla al domicilio del establecimiento.
+                            </p>
+                        </div>
+                    )}
+
+                </div>
+            </div>
         </div >
+
     );
 }

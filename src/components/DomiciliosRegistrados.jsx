@@ -5,7 +5,9 @@ import {
     ChevronDown,
     MapPin,
     CalendarDays,
-    Eye
+    Eye,
+    FileText,
+    X
 } from "lucide-react";
 
 export default function DomiciliosRegistrados() {
@@ -13,32 +15,28 @@ export default function DomiciliosRegistrados() {
         {
             id: 1,
             nombreComercial: "ABARROTES LA ECONÓMICA",
-            domicilio: "Av. Universidad 120, Col. Centro, Oaxaca de Juárez, Oaxaca, C.P. 68000",
+            domicilio: "Av. Universidad 120, Col. Centro",
             distrito: "Centro",
-            fechaAlta: "15/01/2026"
+            fechaAlta: "15/01/2026",
+            obligaciones: [
+                "Impuesto al Valor Agregado",
+                "Impuesto Sobre la Renta",
+            ]
         },
         {
             id: 2,
             nombreComercial: "RESTAURANTE EL SABOR OAXAQUEÑO",
-            domicilio: "Calz. Porfirio Díaz 315, Col. Reforma, Oaxaca de Juárez, Oaxaca, C.P. 68050",
+            domicilio: "Calz. Porfirio Díaz 315, Col. Reforma",
             distrito: "Centro",
-            fechaAlta: "28/02/2026"
-        },
-        {
-            id: 3,
-            nombreComercial: "HOTEL CASA OAXACA",
-            domicilio: "Calle García Vigil 407, Col. Centro, Oaxaca de Juárez, Oaxaca, C.P. 68000",
-            distrito: "Centro",
-            fechaAlta: "10/03/2025"
-        },
-        {
-            id: 4,
-            nombreComercial: "SERVICIOS INTEGRALES DEL SUR",
-            domicilio: "Calle Reforma 215, Col. Reforma, Oaxaca de Juárez, Oaxaca, C.P. 68050",
-            distrito: "Centro",
-            fechaAlta: "05/06/2026"
+            fechaAlta: "28/02/2026",
+            obligaciones: [
+                "Impuesto al Valor Agregado",
+                "Impuesto Sobre la Renta",
+                "Impuesto Especial sobre Producción y Servicios",
+            ]
         }
     ];
+    const [establecimientoObligaciones, setEstablecimientoObligaciones] = useState(null);
     const [filtros, setFiltros] = useState({
         nombreComercial: "",
         domicilio: "",
@@ -149,26 +147,25 @@ export default function DomiciliosRegistrados() {
     return (
         <div className="w-full mt-4">
 
-            {/* ENCABEZADO */}
-
-
             {/* TABLA */}
             <div className="
-    bg-white
-    border border-slate-100
-    rounded-2xl
-    shadow-sm
-    overflow-hidden
-">
+                            bg-white
+                            border border-slate-100
+                            rounded-2xl
+                            shadow-sm
+                          
+                        ">
 
                 {/* ENCABEZADOS */}
                 <div className="
-    hidden md:grid
-    grid-cols-[1.3fr_2fr_1fr_1fr_1fr]
-    gap-6
-    px-6 py-4
-    bg-slate-50
+    grid
+    md:grid-cols-[1.3fr_2fr_1fr_1.5fr_1fr_1fr]
+    gap-4 md:gap-6
+    px-6 py-5
     border-b border-slate-100
+    last:border-b-0
+    hover:bg-slate-50
+    transition-colors
 ">
 
                     {/* NOMBRE COMERCIAL */}
@@ -366,6 +363,71 @@ export default function DomiciliosRegistrados() {
                         </div>
                     </div>
 
+                    {/* OBLIGACIONES */}
+                    <div className="">
+                        <button
+                            type="button"
+                            onClick={() => ordenarPor("distrito")}
+                            className="
+                    flex
+                    items-center
+                    gap-2
+                    text-xs
+                    font-semibold
+                    text-slate-500
+                    uppercase
+                    hover:text-sky-700
+                "
+                        >
+                            Obligaciones
+
+                            {orden.campo === "distrito" && (
+                                orden.direccion === "asc"
+                                    ? <ChevronUp size={14} />
+                                    : <ChevronDown size={14} />
+                            )}
+                        </button>
+
+                        <div className="relative mt-2">
+                            <Search
+                                size={15}
+                                className="
+                        absolute
+                        left-3
+                        top-1/2
+                        -translate-y-1/2
+                        text-slate-400
+                    "
+                            />
+
+                            <input
+                                type="text"
+                                value={filtros.distrito}
+                                onChange={(e) =>
+                                    cambiarFiltro(
+                                        "distrito",
+                                        e.target.value
+                                    )
+                                }
+                                placeholder="Buscar..."
+                                className="
+                        w-full
+                        h-9
+                        pl-9
+                        pr-3
+                        text-xs
+                        bg-white
+                        border
+                        border-slate-200
+                        rounded-lg
+                        outline-none
+                        focus:ring-2
+                        focus:ring-sky-500
+                    "
+                            />
+                        </div>
+                    </div>
+
                     {/* FECHA DE ALTA */}
                     <div>
                         <button
@@ -446,7 +508,6 @@ export default function DomiciliosRegistrados() {
 
                 </div>
 
-
                 {/* REGISTROS */}
                 {establecimientosFiltrados.length > 0 ? (
 
@@ -454,15 +515,15 @@ export default function DomiciliosRegistrados() {
                         <div
                             key={establecimiento.id}
                             className="
-        grid
-        md:grid-cols-[1.3fr_2fr_1fr_1fr_1fr]
-        gap-4 md:gap-6
-        px-6 py-5
-        border-b border-slate-100
-        last:border-b-0
-        hover:bg-slate-50
-        transition-colors
-    "
+    grid
+    md:grid-cols-[1.3fr_2fr_1fr_1.5fr_1fr_1fr]
+    gap-4 md:gap-6
+    px-6 py-5
+    border-b border-slate-100
+    last:border-b-0
+    hover:bg-slate-50
+    transition-colors
+"
                         >
 
                             {/* NOMBRE */}
@@ -474,7 +535,6 @@ export default function DomiciliosRegistrados() {
                                     {establecimiento.nombreComercial}
                                 </span>
                             </div>
-
 
                             {/* DOMICILIO */}
                             <div className="flex items-start gap-2">
@@ -498,6 +558,7 @@ export default function DomiciliosRegistrados() {
 
                             </div>
 
+                            {/* DISTRITO */}
                             <div className="
                     flex
                     items-center
@@ -516,6 +577,97 @@ export default function DomiciliosRegistrados() {
                                 </span>
 
                             </div>
+
+                            {/* OBLIGACIONES */}
+                            <div className="relative flex items-center group">
+
+                                <button
+                                    type="button"
+                                    className="
+            inline-flex
+            items-center
+            gap-2
+            px-3
+            py-2
+            rounded-lg
+            bg-sky-50
+            border border-sky-100
+            text-sky-700
+            text-xs
+            font-medium
+            whitespace-nowrap
+            hover:bg-sky-100
+            transition-colors
+        "
+                                >
+                                    <FileText size={15} />
+
+                                    {establecimiento.obligaciones.length}{" "}
+                                    {establecimiento.obligaciones.length === 1
+                                        ? "obligación"
+                                        : "obligaciones"}
+                                </button>
+
+                                {/* TOOLTIP */}
+                                <div
+                                    className="
+            absolute
+            z-50
+            top-full
+            left-0
+            mt-2
+            w-80
+            p-4
+            bg-white
+            border
+            border-slate-200
+            rounded-xl
+            shadow-xl
+
+            opacity-0
+            invisible
+            translate-y-1
+
+            group-hover:opacity-100
+            group-hover:visible
+            group-hover:translate-y-0
+
+            transition-all
+            duration-200
+            ease-out
+        "
+                                >
+                                    <p className="text-sm font-semibold text-slate-700 mb-3">
+                                        Obligaciones fiscales
+                                    </p>
+
+                                    <div className="flex flex-col gap-2">
+                                        {establecimiento.obligaciones.map(
+                                            (obligacion, index) => (
+                                                <span
+                                                    key={index}
+                                                    className="
+                            inline-flex
+                            items-center
+                            px-3
+                            py-2
+                            rounded-lg
+                            bg-sky-50
+                            border border-sky-100
+                            text-sky-700
+                            text-xs
+                            font-medium
+                        "
+                                                >
+                                                    {obligacion}
+                                                </span>
+                                            )
+                                        )}
+                                    </div>
+                                </div>
+
+                            </div>
+
                             {/* FECHA */}
                             <div className="
                     flex
@@ -536,9 +688,8 @@ export default function DomiciliosRegistrados() {
 
                             </div>
 
-
                             {/* VER DOMICILIO */}
-                            <div className="flex items-center">
+                            <div className="flex items-center justify-center">
 
                                 <button
                                     type="button"
@@ -549,11 +700,11 @@ export default function DomiciliosRegistrados() {
             gap-2
             px-3
             py-2
-            rounded-lg
+            rounded-full
             text-sm
             font-medium
             text-sky-700
-            bg-sky-50
+            bg-sky-100
             hover:bg-sky-100
             transition-colors
         "
@@ -584,7 +735,6 @@ export default function DomiciliosRegistrados() {
 
             </div>
 
-
             {/* RESULTADOS */}
             <div className="
                 flex
@@ -607,5 +757,6 @@ export default function DomiciliosRegistrados() {
             </div>
 
         </div>
+
     );
 }
