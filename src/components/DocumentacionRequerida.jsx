@@ -6,7 +6,9 @@ import {
     Trash2
 } from "lucide-react";
 
-export default function DocumentacionRequerida() {
+export default function DocumentacionRequerida(
+    { mostrarDocumentos = true }
+) {
 
     const [documentos, setDocumentos] = useState([
         {
@@ -67,24 +69,28 @@ export default function DocumentacionRequerida() {
     };
 
     return (
-        <div className="bg-white rounded-xl shadow-lg">
+        <div className="bg-white rounded-xl">
 
-            <div className="px-6 py-5 bg-slate-50 rounded-xl">
+            {mostrarDocumentos && (
+                <div className="px-6 py-5 bg-slate-50 rounded-xl">
 
-                <h2 className="text-xl font-semibold text-slate-800">
+                    <h2 className="text-xl font-semibold text-slate-800">
 
-                    Documentación Requerida
+                        Documentación Requerida
 
-                </h2>
+                    </h2>
 
-                <p className="text-sm text-slate-500 mt-1">
+                    <p className="text-sm text-slate-500 mt-1">
 
-                    Adjunte la documentación requerida para integrar el expediente del trámite.
+                        Adjunte la documentación requerida para integrar el expediente del trámite.
 
-                </p>
+                    </p>
 
-            </div>
-            <div className="p-4 flex flex-col gap-4">
+                </div>
+            )
+            }
+
+            <div className="flex flex-col gap-4 pt-3">
 
                 {documentos.map((doc) => (
 
@@ -149,19 +155,19 @@ export default function DocumentacionRequerida() {
                         <div className="px-5 pb-4">
 
                             {!doc.archivo ? (
-                             <label className="block">
+                                <label className="block">
 
-                                <input
-                                            hidden
-                                            type="file"
-                                            accept=".pdf,.png,.jpg,.jpeg"
-                                            onChange={(e) =>
-                                                seleccionarArchivo(doc.id, e.target.files?.[0])
-                                            }
-                                        />
+                                    <input
+                                        hidden
+                                        type="file"
+                                        accept=".pdf,.png,.jpg,.jpeg"
+                                        onChange={(e) =>
+                                            seleccionarArchivo(doc.id, e.target.files?.[0])
+                                        }
+                                    />
 
-                                        <div
-                                            className="
+                                    <div
+                                        className="
                         h-16
                         rounded-lg
                         border-2
@@ -176,59 +182,59 @@ export default function DocumentacionRequerida() {
                         px-4
                         gap-3
                     "
-                                        >
+                                    >
 
-                                            <UploadCloud
-                                                size={22}
-                                                className="text-sky-600 flex-shrink-0"
-                                            />
+                                        <UploadCloud
+                                            size={22}
+                                            className="text-sky-600 flex-shrink-0"
+                                        />
 
-                                            <div>
+                                        <div>
 
-                                                <p className="text-sm font-medium text-slate-700">
+                                            <p className="text-sm font-medium text-slate-700">
 
-                                                    Arrastre un archivo o haga clic para seleccionarlo
+                                                Arrastre un archivo o haga clic para seleccionarlo
 
-                                                </p>
+                                            </p>
 
-                                                <p className="text-xs text-slate-500">
+                                            <p className="text-xs text-slate-500">
 
-                                                    PDF, PNG o JPG
+                                                PDF, PNG o JPG
 
-                                                </p>
-
-                                            </div>
+                                            </p>
 
                                         </div>
 
-                                    </label>
+                                    </div>
 
-                                ) : (
+                                </label>
 
-                                    <div className="rounded-lg border bg-emerald-50 border-emerald-200 p-3">
+                            ) : (
 
-                                        <div className="flex items-center justify-between">
+                                <div className="rounded-lg border bg-emerald-50 border-emerald-200 p-3">
 
-                                            <div>
+                                    <div className="flex items-center justify-between">
 
-                                                <p className="text-sm font-medium text-emerald-700">
+                                        <div>
 
-                                                    Documento cargado correctamente
+                                            <p className="text-sm font-medium text-emerald-700">
 
-                                                </p>
+                                                Documento cargado correctamente
 
-                                                <p className="text-xs text-slate-600">
+                                            </p>
 
-                                                    {doc.archivo.name}
+                                            <p className="text-xs text-slate-600">
 
-                                                </p>
+                                                {doc.archivo.name}
 
-                                            </div>
+                                            </p>
 
-                                            <div className="flex gap-2">
+                                        </div>
 
-                                                <button
-                                                    className="
+                                        <div className="flex gap-2">
+
+                                            <button
+                                                className="
                                 inline-flex
                                 items-center
                                 gap-2
@@ -239,17 +245,17 @@ export default function DocumentacionRequerida() {
                                 text-sm
                                 hover:bg-white
                             "
-                                                >
+                                            >
 
-                                                    <Eye size={16} />
+                                                <Eye size={16} />
 
-                                                    Vista previa
+                                                Vista previa
 
-                                                </button>
+                                            </button>
 
-                                                <button
-                                                    onClick={() => eliminarArchivo(doc.id)}
-                                                    className="
+                                            <button
+                                                onClick={() => eliminarArchivo(doc.id)}
+                                                className="
                                 inline-flex
                                 items-center
                                 gap-2
@@ -261,21 +267,21 @@ export default function DocumentacionRequerida() {
                                 hover:bg-red-100
                                 text-sm
                             "
-                                                >
+                                            >
 
-                                                    <Trash2 size={16} />
+                                                <Trash2 size={16} />
 
-                                                    Eliminar
+                                                Eliminar
 
-                                                </button>
-
-                                            </div>
+                                            </button>
 
                                         </div>
 
                                     </div>
 
-                                )
+                                </div>
+
+                            )
                             }
 
                         </div>
