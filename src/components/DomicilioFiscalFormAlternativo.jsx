@@ -119,7 +119,7 @@ export default function DomicilioFiscal({
     ]);
 
     return (
-        <div className="">
+        <div className={`${className}`}>
             {/* FORMULARIO */}
             <div className="overflow-hidden shadow-md mb-4">
 

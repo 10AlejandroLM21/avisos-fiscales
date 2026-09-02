@@ -10,7 +10,7 @@ import {
     X
 } from "lucide-react";
 
-export default function DomiciliosRegistrados() {
+export default function DomiciliosRegistrados({ className }) {
     const establecimientos = [
         {
             id: 1,
@@ -145,7 +145,7 @@ export default function DomiciliosRegistrados() {
     // }, [busqueda, filtroEstatus]);
 
     return (
-        <div className="w-full mt-4">
+        <div className={`w-full mt-4 ${className}`}>
 
             {/* TABLA */}
             <div className="

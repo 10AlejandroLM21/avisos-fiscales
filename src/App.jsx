@@ -4705,7 +4705,7 @@ export default function AvisosFiscales() {
                               flex
                               items-center
                               justify-between
-                              shadow-sm
+                              shadow-sm 
                           ">
                 <div className="flex justify-between gap-2">
                   <div className="p-3 bg-sky-200 rounded-lg">
@@ -4808,7 +4808,7 @@ export default function AvisosFiscales() {
         ease-in-out
         ${mostrarDomicilios
                       ? "max-h-[1000px] opacity-100 pb-6"
-                      : "max-h-0 opacity-0"
+                      : "max-h-0 opacity-0 overflow-hidden"
                     }
     `}
                 >
@@ -4819,7 +4819,7 @@ export default function AvisosFiscales() {
 
               {/* FORMULARIO */}
               <div className="rounded-lg mb-4 rounded">
-               
+
                 <button className="
                                 w-full
                                 flex
