@@ -140,7 +140,7 @@ export default function AvisosFiscales() {
 
   ];
   const [desplegarCapturaDomicilio, setDesplegarCapturaDomicilio] = useState(false);
-  const [mostrarDomicilios, setMostrarDomicilios] = useState(false);
+  const [mostrarDomicilios, setMostrarDomicilios] = useState(true);
   const [activeStep, setActiveStep] = useState(0);
   const [tipoPersona, setTipoPersona] = useState("");
   const [metodoBusqueda, setMetodoBusqueda] = useState("");
@@ -994,6 +994,8 @@ export default function AvisosFiscales() {
   const [representanteEjecutor, setRepresentanteEjecutor] = useState(null);
 
   const [tipoCambio, setTipoCambio] = useState({});
+  const [mostrarDatosContacto, setMostrarDatosContacto] = useState(true);
+  const [mostrarDocumentacion, setMostrarDocumentacion] = useState(false);
 
   useEffect(() => {
 
@@ -1783,6 +1785,7 @@ export default function AvisosFiscales() {
                           </div>
                         </div>
                       </div>
+
                     </section>
                   )}
                   {tipoPersona === "moral" && (
@@ -3573,6 +3576,7 @@ export default function AvisosFiscales() {
                 <div className="bg-white rounded-xl shadow-md overflow-hidden mt-4">
 
                   <div className="flex items-center gap-4 p-5 justify-between bg-slate-50">
+
                     <div className="flex gap-4 ">
                       <div className="w-11 h-11 rounded-xl bg-sky-100 flex items-center justify-center">
                         <MapPin className="text-sky-600" size={22} />
@@ -3588,6 +3592,7 @@ export default function AvisosFiscales() {
                         </p>
                       </div>
                     </div>
+
                     <button
                       className="
                   inline-flex items-center gap-2
@@ -3731,11 +3736,9 @@ export default function AvisosFiscales() {
 
                 </div>
 
-
-
-
               </div>
-              <DocumentacionRequerida />
+
+              <DocumentacionRequerida mostrarDocumentos={false} />
 
             </div>
           )
@@ -4686,15 +4689,10 @@ export default function AvisosFiscales() {
 
             <div className="space-y-6">
               <HeaderModulo
-
                 titulo="Apertura de Establecimientos o Locales"
-
                 descripcion="Registre la apertura de establecimientos o locales vinculados al contribuyente conforme a la información proporcionada."
-
                 icono="Store"
-
                 color="emerald"
-
               />
 
               {/* RESUMEN DE ESTABLECIMIENTOS */}
@@ -4747,9 +4745,8 @@ export default function AvisosFiscales() {
 
               </div>
 
-              {/* OBLIGACION */}
-
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+              {/* TABLA DE DOMICILIOS */}
+              <div className="flex flex-col bg-white rounded-xl shadow-sm">
 
                 {/* ENCABEZADO */}
                 <button
@@ -4757,6 +4754,7 @@ export default function AvisosFiscales() {
                   onClick={() => setMostrarDomicilios(!mostrarDomicilios)}
                   className="
         w-full
+        h-full
         flex
         items-center
         justify-between
@@ -4767,6 +4765,7 @@ export default function AvisosFiscales() {
         hover:bg-slate-100
         transition-colors
         bg-slate-100
+        rounded-lg
     "
                 >
                   <div className="flex items-center justify-content gap-3">
@@ -4804,7 +4803,6 @@ export default function AvisosFiscales() {
                 <div
                   className={`
         px-6
-        overflow-hidden
         transition-all
         duration-700
         ease-in-out
@@ -4820,19 +4818,21 @@ export default function AvisosFiscales() {
               </div>
 
               {/* FORMULARIO */}
-              <div className="bg-white rounded-xl shadow-sm overflow-hidden">
+              <div className="rounded-lg mb-4 rounded">
+               
                 <button className="
-        w-full
-        flex
-        items-center
-        justify-between
-        px-6
-        py-5
-        text-left
-        bg-white
-        hover:bg-slate-100
-        transition-colors
-        bg-slate-100"
+                                w-full
+                                flex
+                                items-center
+                                justify-between
+                                px-6
+                                py-5
+                                text-left
+                                bg-white
+                                hover:bg-slate-100
+                                transition-colors
+                                bg-slate-100 rounded shadow-md
+                                "
                   onClick={() => {
                     setDesplegarCapturaDomicilio(!desplegarCapturaDomicilio)
                   }}>
@@ -4848,7 +4848,7 @@ export default function AvisosFiscales() {
                     <div className="flex flex-col">
 
                       <h4 className="font-semibold text-slate-700">
-                        Datos del Establecimiento
+                        Datos del Nuevo Establecimiento
                       </h4>
 
                       <p className="text-sm text-slate-500 mt-1">
@@ -4870,15 +4870,293 @@ export default function AvisosFiscales() {
 
                 {/* DATOS GENERALES */}
                 <div className={
-                  `transition-all
+                  `overflow-hidden
+                  transition-all
                 duration-700
                 ease-in-out
-                ${desplegarCapturaDomicilio ? "max-h-[2000px] opacity-100" : "max-h-0 opacity-0"}
+                ${desplegarCapturaDomicilio ? " max-h-[2200px] opacity-100" : "max-h-0 opacity-0"}
                 `}>
                   <DomicilioFiscalForm2
                     onGuardar={() => { }}
                     onCancelar={() => { }}
                   />
+                </div>
+
+              </div>
+
+              {/* DATOS DE CONTACTO */}
+              <div className="rounded-lg mb-4 rounded shadow-md overflow-hidden">
+
+                {/* Encabezado */}
+                <button
+                  onClick={() => setMostrarDatosContacto(!mostrarDatosContacto)}
+                  className="
+                            w-full bg-white hover:bg-slate-100 flex items-center justify-between
+                            px-6 py-5 text-left
+                            transition-colors
+                           "
+                >
+                  <div className="flex items-center justify-content gap-3">
+                    <span className="bg-blue-100 rounded-lg">
+
+                      <Smartphone
+                        size={20}
+                        className="text-sky-700 m-3"
+                      />
+
+                    </span>
+
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Datos de contacto
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Capture la información de contacto del contribuyente.
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <ChevronDown
+                    size={20}
+                    className={`
+                              text-slate-500
+                              transition-transform
+                              duration-700
+                              ease-in-out
+                        ${mostrarDatosContacto ? "rotate-180" : ""}`}
+                  />
+
+                </button>
+
+                {/* Contenido */}
+                <div className={`
+                          px-6
+                          bg-white
+                          overflow-hidden
+                          transition-all
+                          duration-700
+                          ease-in-out
+                          ${mostrarDatosContacto
+                    ? "max-h-[1000px] opacity-100 pb-6"
+                    : "max-h-0 opacity-0"
+                  }
+    `}>
+                  {/* Campos */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6">
+
+                    {/* Correo electrónico */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Correo electrónico <span className="text-red-500">*</span>
+                      </label>
+
+                      <input
+                        type="email"
+                        maxLength={100}
+                        placeholder="usuario@dominio.extensión"
+                        className="
+                                    w-full h-11 px-3
+                                    border border-slate-300
+                                    rounded-lg
+                                    text-sm text-slate-700
+                                    outline-none
+                                    focus:border-sky-500
+                                    focus:ring-2 focus:ring-sky-100
+                                  "
+                      />
+
+                      <p className="text-xs text-slate-400">
+                        Máximo 100 caracteres.
+                      </p>
+                    </div>
+
+                    {/* Correo electrónico alternativo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Correo electrónico alternativo
+                      </label>
+
+                      <input
+                        type="email"
+                        maxLength={100}
+                        placeholder="usuario@dominio.extensión"
+                        className="
+          w-full h-11 px-3
+          border border-slate-300
+          rounded-lg
+          text-sm text-slate-700
+          outline-none
+          focus:border-sky-500
+          focus:ring-2 focus:ring-sky-100
+        "
+                      />
+
+                      <p className="text-xs text-slate-400">
+                        Máximo 100 caracteres.
+                      </p>
+                    </div>
+
+                    {/* Teléfono fijo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Teléfono fijo <span className="text-red-500">*</span>
+                      </label>
+
+                      <input
+                        type="tel"
+                        maxLength={10}
+                        inputMode="numeric"
+                        placeholder="Ingrese 10 dígitos"
+                        className="
+          w-full h-11 px-3
+          border border-slate-300
+          rounded-lg
+          text-sm text-slate-700
+          outline-none
+          focus:border-sky-500
+          focus:ring-2 focus:ring-sky-100
+        "
+                      />
+
+                      <p className="text-xs text-slate-400">
+                        Ingrese únicamente números. Máximo 10 caracteres.
+                      </p>
+                    </div>
+
+                    {/* Teléfono alternativo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Teléfono alternativo <span className="text-red-500">*</span>
+                      </label>
+
+                      <div className="flex gap-2">
+
+                        {/* Tipo de teléfono */}
+                        <select
+                          className="
+            h-11
+            w-40
+            px-3
+            border border-slate-300
+            rounded-lg
+            bg-white
+            text-sm text-slate-700
+            outline-none
+            focus:border-sky-500
+            focus:ring-2 focus:ring-sky-100
+          "
+                        >
+                          <option value="">
+                            Tipo
+                          </option>
+
+                          <option value="fijo">
+                            Teléfono fijo
+                          </option>
+
+                          <option value="movil">
+                            Teléfono móvil
+                          </option>
+                        </select>
+
+                        {/* Número */}
+                        <input
+                          type="tel"
+                          maxLength={10}
+                          inputMode="numeric"
+                          placeholder="Ingrese 10 dígitos"
+                          className="
+            flex-1
+            h-11 px-3
+            border border-slate-300
+            rounded-lg
+            text-sm text-slate-700
+            outline-none
+            focus:border-sky-500
+            focus:ring-2 focus:ring-sky-100
+          "
+                        />
+
+                      </div>
+
+                      <p className="text-xs text-slate-400">
+                        Ingrese únicamente números. Máximo 10 caracteres.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              {/* DOCUMENTACIÓN REQUERIDA */}
+              <div className=" bg-white rounded-lg shadow-md rounded overflow-hidden">
+
+                {/* Encabezado */}
+                <button
+                  type="button"
+                  onClick={() => setMostrarDocumentacion(!mostrarDocumentacion)}
+                  className="
+                            w-full
+                            flex
+                            items-center
+                            justify-between
+                            px-6
+                            py-5
+                            text-left
+                            bg-white
+                            hover:bg-slate-100
+                            transition-colors
+                            bg-slate-100
+                        "
+                >
+                  <div className="flex items-center justify-content gap-3">
+                    <span className="bg-blue-100 rounded-lg">
+                      <Building2
+                        size={20}
+                        className="text-sky-700 m-3"
+                      />
+                    </span>
+
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Documentación Requerida
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Capture la información de contacto del contribuyente.
+                      </p>
+                    </div>
+
+                  </div>
+
+                  <ChevronDown
+                    size={20}
+                    className={`
+                              text-slate-500
+                              transition-transform
+                              duration-700
+                              ease-in-out
+                        ${mostrarDocumentacion ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {/* Contenido */}
+                <div className={`
+                          px-6
+                          overflow-hidden
+                          transition-all
+                          duration-700
+                          ease-in-out
+                          ${mostrarDocumentacion
+                    ? "max-h-[1000px] opacity-100 pb-6"
+                    : "max-h-0 opacity-0"
+                  }
+    `}>
+                  {/* Campos */}
+                  <DocumentacionRequerida mostrarDocumentos={false} />
+
+
                 </div>
 
 
