@@ -4718,11 +4718,11 @@ export default function AvisosFiscales() {
 
                   <div className="flex flex-col">
                     <p className="font-semibold">
-                      Resumen de Establecimientos registrados
+                      Establecimientos o locales registrados
                     </p>
 
                     <p className="text-sm text-slate-400 mt-1">
-                      Total de establecimientos asociados al contribuyente
+                      Número de establecimientos asociados al contribuyente
                     </p>
                   </div>
                 </div>
@@ -4779,11 +4779,10 @@ export default function AvisosFiscales() {
 
                     <div>
                       <h3 className="font-semibold text-slate-800">
-                        Establecimientos registrados
+                        Aperturas de establecimientos o locales registrados
                       </h3>
                       <p className="text-sm text-slate-500 mt-1">
-                        Consulte los domicilios asociados al contribuyente.
-                      </p>
+                        Consulte los domicilios de los establecimientos o locales vigentes e identifique que no se encuentre dado de alta el domicilio del establecimiento o local a presentar                      </p>
                     </div>
 
                   </div>
@@ -4849,12 +4848,11 @@ export default function AvisosFiscales() {
                     <div className="flex flex-col">
 
                       <h4 className="font-semibold text-slate-700">
-                        Datos del Nuevo Establecimiento
+                        Nueva apertura de establecimiento o local
                       </h4>
 
                       <p className="text-sm text-slate-500 mt-1">
-                        Capture la información del establecimiento o local.
-                      </p>
+                        Capture los datos del domicilio del establecimiento o local                      </p>
 
                     </div>
                   </div>
@@ -4912,8 +4910,7 @@ export default function AvisosFiscales() {
                         Datos de contacto
                       </h3>
                       <p className="text-sm text-slate-500 mt-1">
-                        Capture la información de contacto del contribuyente.
-                      </p>
+                        Verifica y actualiza los datos de contacto del contribuyente                      </p>
                     </div>
 
                   </div>
@@ -5202,11 +5199,11 @@ export default function AvisosFiscales() {
 
                   <div className="flex flex-col">
                     <p className="font-semibold">
-                      Resumen de Establecimientos registrados
+                      Establecimientos o locales registrados
                     </p>
 
                     <p className="text-sm text-slate-400 mt-1">
-                      Total de establecimientos asociados al contribuyente
+                      Número de establecimientos asociados al contribuyente
                     </p>
                   </div>
                 </div>
@@ -5264,11 +5261,10 @@ export default function AvisosFiscales() {
 
                     <div>
                       <h3 className="font-semibold text-slate-800">
-                        Establecimientos registrados
+                        Aperturas de establecimientos o locales registrados
                       </h3>
                       <p className="text-sm text-slate-500 mt-1">
-                        Consulte los domicilios asociados al contribuyente.
-                      </p>
+                        Consulte los domicilios de los establecimientos o locales vigentes e identifique el domicilio del establecimiento o local para cierre                      </p>
                     </div>
 
                   </div>

@@ -313,8 +313,7 @@ export default function DomicilioFiscal({
                         </h4>
 
                         <p className="text-sm text-slate-500 mt-1">
-                            Seleccione las obligaciones fiscales que desea vincular al domicilio del establecimiento.
-                            <b>  Puede seleccionar una o más obligaciones fiscales.  </b>
+                            Seleccione el o los impuestos, vinculados al domicilio del establecimiento o local
                         </p>
 
                     </div>

@@ -15,25 +15,78 @@ export default function DomiciliosRegistrados({ className }) {
         {
             id: 1,
             nombreComercial: "ABARROTES LA ECONÓMICA",
-            domicilio: "Av. Universidad 120, Col. Centro",
+            domicilio: "Avenida Universidad 120 Local 3, Colonia Centro, Oaxaca de Juárez, Oaxaca de Juárez, 68000, Valles Centrales",
             distrito: "Centro",
             fechaAlta: "15/01/2026",
+
             obligaciones: [
                 "Impuesto al Valor Agregado",
                 "Impuesto Sobre la Renta",
-            ]
+            ],
+
+            // Datos del domicilio
+            codigoPostal: "68000",
+            tipoAmbito: "Urbano",
+            region: "Valles Centrales",
+            municipio: "Oaxaca de Juárez",
+            localidad: "Oaxaca de Juárez",
+            tipoAsentamiento: "Colonia",
+            nombreAsentamiento: "Centro",
+            tipoInmueble: "Local Comercial",
+            tipoVialidad: "Avenida",
+            nombreVialidad: "Universidad",
+            numeroExterior: "120",
+            numeroInterior: "Local 3",
+            entreVialidad: "Av. Independencia",
+            yVialidad: "Calle Hidalgo",
+
+            caracteristicas:
+                "Local comercial destinado a la venta de productos de abarrotes.",
+
+            referencias:
+                "Frente a la plaza comercial y a un costado de una sucursal bancaria.",
+
+            latitud: 17.0608,
+            longitud: -96.7253
         },
+
         {
             id: 2,
             nombreComercial: "RESTAURANTE EL SABOR OAXAQUEÑO",
-            domicilio: "Calz. Porfirio Díaz 315, Col. Reforma",
+            domicilio: "Calzada Porfirio Díaz 315 Local A, Colonia Reforma, Oaxaca de Juárez, Oaxaca de Juárez, 68050, Valles Centrales",
             distrito: "Centro",
             fechaAlta: "28/02/2026",
+
             obligaciones: [
                 "Impuesto al Valor Agregado",
                 "Impuesto Sobre la Renta",
                 "Impuesto Especial sobre Producción y Servicios",
-            ]
+            ],
+
+            // Datos del domicilio
+            codigoPostal: "68050",
+            tipoAmbito: "Urbano",
+            region: "Valles Centrales",
+            municipio: "Oaxaca de Juárez",
+            localidad: "Oaxaca de Juárez",
+            tipoAsentamiento: "Colonia",
+            nombreAsentamiento: "Reforma",
+            tipoInmueble: "Local Comercial",
+            tipoVialidad: "Calzada",
+            nombreVialidad: "Porfirio Díaz",
+            numeroExterior: "315",
+            numeroInterior: "Local A",
+            entreVialidad: "Calle Jazmines",
+            yVialidad: "Calle Belisario Domínguez",
+
+            caracteristicas:
+                "Establecimiento destinado a la preparación y venta de alimentos y bebidas.",
+
+            referencias:
+                "Ubicado frente a un parque y cerca de una zona comercial.",
+
+            latitud: 17.0734,
+            longitud: -96.7162
         }
     ];
     const [establecimientoObligaciones, setEstablecimientoObligaciones] = useState(null);
@@ -159,15 +212,17 @@ export default function DomiciliosRegistrados({ className }) {
                 {/* ENCABEZADOS */}
                 <div className="
     grid
-    md:grid-cols-[1.3fr_2fr_1fr_1.5fr_1fr_1fr]
-    gap-4 md:gap-6
-    px-6 py-5
-    border-b border-slate-100
+    md:grid-cols-7
+    gap-4
+    md:gap-6
+    px-6
+    py-5
+    border-b
+    border-slate-100
     last:border-b-0
     hover:bg-slate-50
     transition-colors
 ">
-
                     {/* NOMBRE COMERCIAL */}
                     <div>
                         <button
@@ -211,6 +266,70 @@ export default function DomiciliosRegistrados({ className }) {
                                 onChange={(e) =>
                                     cambiarFiltro(
                                         "nombreComercial",
+                                        e.target.value
+                                    )
+                                }
+                                placeholder="Buscar..."
+                                className="
+                        w-full
+                        h-9
+                        pl-9
+                        pr-3
+                        text-xs
+                        bg-white
+                        border
+                        border-slate-200
+                        rounded-lg
+                        outline-none
+                        focus:ring-2
+                        focus:ring-sky-500
+                    "
+                            />
+                        </div>
+                    </div>
+
+                    <div>
+                        <button
+                            type="button"
+                            onClick={() => ordenarPor("domicilio")}
+                            className="
+                    flex
+                    items-center
+                    gap-2
+                    text-xs
+                    font-semibold
+                    text-slate-500
+                    uppercase
+                    hover:text-sky-700
+                "
+                        >
+                            Tipo de ambito
+
+                            {orden.campo === "domicilio" && (
+                                orden.direccion === "asc"
+                                    ? <ChevronUp size={14} />
+                                    : <ChevronDown size={14} />
+                            )}
+                        </button>
+
+                        <div className="relative mt-2">
+                            <Search
+                                size={15}
+                                className="
+                        absolute
+                        left-3
+                        top-1/2
+                        -translate-y-1/2
+                        text-slate-400
+                    "
+                            />
+
+                            <input
+                                type="text"
+                                value={filtros.domicilio}
+                                onChange={(e) =>
+                                    cambiarFiltro(
+                                        "domicilio",
                                         e.target.value
                                     )
                                 }
@@ -444,7 +563,7 @@ export default function DomiciliosRegistrados({ className }) {
                     hover:text-sky-700
                 "
                         >
-                            Fecha de alta
+                            Fecha del aviso
 
                             {orden.campo === "fechaAlta" && (
                                 orden.direccion === "asc"
@@ -494,15 +613,15 @@ export default function DomiciliosRegistrados({ className }) {
                     </div>
 
                     {/* VER DOMICILIO*/}
-                    <div className="flex items-center justify-center">
+                    <div className="flex items-center justify-center items-centeer">
                         <span className="
                                 text-xs
                                 font-semibold
                                 text-slate-500
                                 uppercase
-                                
+                                text-center 
                             ">
-                           Acciones
+                            Domicilio del establecimiento
                         </span>
                     </div>
 
@@ -516,7 +635,7 @@ export default function DomiciliosRegistrados({ className }) {
                             key={establecimiento.id}
                             className="
     grid
-    md:grid-cols-[1.3fr_2fr_1fr_1.5fr_1fr_1fr]
+md:grid-cols-7
     gap-4 md:gap-6
     px-6 py-5
     border-b border-slate-100
@@ -536,25 +655,84 @@ export default function DomiciliosRegistrados({ className }) {
                                 </span>
                             </div>
 
+                            {/* TIPO DE AMBITO */}
+                            <div className="
+                    flex
+                    items-center
+                    gap-2
+                    text-sm
+                    text-slate-600
+                ">
+
+                                <CalendarDays
+                                    size={17}
+                                    className="text-slate-400"
+                                />
+
+                                <span>
+                                    {establecimiento.tipoAmbito}
+                                </span>
+
+                            </div>
+
                             {/* DOMICILIO */}
-                            <div className="flex items-start gap-2">
+                            <div className="relative group flex items-start gap-2 min-w-0">
 
                                 <MapPin
                                     size={17}
                                     className="
-                            text-slate-400
-                            mt-0.5
-                            shrink-0
-                        "
+            text-slate-400
+            mt-0.5
+            shrink-0
+        "
                                 />
 
-                                <span className="
-                        text-sm
-                        text-slate-600
-                        leading-6
-                    ">
+                                {/* Domicilio truncado */}
+                                <span
+                                    className="
+            text-sm text-slate-600 line-clamp-4
+            cursor-pointer
+            hover:text-sky-700
+            transition-colors
+        "
+                                >
                                     {establecimiento.domicilio}
                                 </span>
+
+                                {/* Tooltip */}
+                                <div
+                                    className="
+            absolute
+            z-50
+            left-0
+            top-full
+            mt-2
+            w-80
+            p-3
+            bg-white
+            border
+            border-slate-200
+            rounded-xl
+            shadow-xl
+            opacity-0
+            invisible
+            translate-y-1
+            group-hover:opacity-100
+            group-hover:visible
+            group-hover:translate-y-0
+            transition-all
+            duration-200
+            ease-out
+        "
+                                >
+                                    <p className="text-xs font-semibold text-slate-700 mb-1">
+                                        Domicilio
+                                    </p>
+
+                                    <p className="text-sm text-slate-600 leading-5">
+                                        {establecimiento.domicilio}
+                                    </p>
+                                </div>
 
                             </div>
 
@@ -688,7 +866,7 @@ export default function DomiciliosRegistrados({ className }) {
 
                             </div>
 
-                            {/* VER DOMICILIO */}
+                            {/* DOMICILIO ESTABLECIMIENTO */}
                             <div className="flex items-center justify-center">
 
                                 <button
@@ -735,28 +913,6 @@ export default function DomiciliosRegistrados({ className }) {
                 )}
 
             </div>
-
-            {/* RESULTADOS */}
-            <div className="
-                flex
-                items-center
-                justify-between
-                mt-4
-                text-sm
-                text-slate-500
-            ">
-                <span>
-                    {establecimientosFiltrados.length} establecimientos encontrados
-                </span>
-
-                <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={16} />
-                    <span>
-                        Filtros aplicados
-                    </span>
-                </div>
-            </div>
-
         </div>
 
     );
