@@ -4696,56 +4696,6 @@ export default function AvisosFiscales() {
                 color="emerald"
               />
 
-              {/* RESUMEN DE ESTABLECIMIENTOS */}
-              <div className="
-                              bg-white
-                              border
-                              border-slate-200
-                              rounded-xl
-                              p-5
-                              flex
-                              items-center
-                              justify-between
-                              shadow-sm 
-                          ">
-                <div className="flex justify-between gap-2">
-                  <div className="p-3 bg-sky-200 rounded-lg">
-                    <Building
-                      size={20}
-                      className="text-sky-700"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <p className="font-semibold">
-                      Establecimientos o locales registrados
-                    </p>
-
-                    <p className="text-sm text-slate-400 mt-1">
-                      Número de establecimientos asociados al contribuyente
-                    </p>
-                  </div>
-                </div>
-
-
-                <div className="
-            min-w-14
-            h-14
-            px-4
-            rounded-xl
-            bg-sky-100
-            text-sky-700
-            flex
-            items-center
-            justify-center
-            text-xl
-            font-bold
-        ">
-                  {establecimientos.length}
-                </div>
-
-              </div>
-
               {/* TABLA DE DOMICILIOS */}
               <div className="flex flex-col bg-white rounded-xl shadow-sm">
 
@@ -4777,10 +4727,27 @@ export default function AvisosFiscales() {
                       />
                     </div>
 
-                    <div>
-                      <h3 className="font-semibold text-slate-800">
-                        Aperturas de establecimientos o locales registrados
-                      </h3>
+                    <div className="flex flex-col">
+                      <div className="flex gap-3  items-center">
+                        <h3 className="font-semibold text-slate-800">
+                          Establecimientos o locales registrados
+                        </h3>
+                        <span className="
+            min-w-12
+            px-4
+            rounded-xl
+            bg-sky-100
+            text-sky-700
+            flex
+            items-center
+            justify-center
+            text-sm
+            font-semibold
+        ">
+                         Total de establecimientos asociados al contribuyente: {establecimientos.length}
+                        </span>
+                      </div>
+
                       <p className="text-sm text-slate-500 mt-1">
                         Consulte los domicilios de los establecimientos o locales vigentes e identifique que no se encuentre dado de alta el domicilio del establecimiento o local a presentar                      </p>
                     </div>
@@ -5177,56 +5144,6 @@ export default function AvisosFiscales() {
                 color="emerald"
               />
 
-              {/* RESUMEN DE ESTABLECIMIENTOS */}
-              <div className="
-                              bg-white
-                              border
-                              border-slate-200
-                              rounded-xl
-                              p-5
-                              flex
-                              items-center
-                              justify-between
-                              shadow-sm 
-                          ">
-                <div className="flex justify-between gap-2">
-                  <div className="p-3 bg-sky-200 rounded-lg">
-                    <Building
-                      size={20}
-                      className="text-sky-700"
-                    />
-                  </div>
-
-                  <div className="flex flex-col">
-                    <p className="font-semibold">
-                      Establecimientos o locales registrados
-                    </p>
-
-                    <p className="text-sm text-slate-400 mt-1">
-                      Número de establecimientos asociados al contribuyente
-                    </p>
-                  </div>
-                </div>
-
-
-                <div className="
-            min-w-14
-            h-14
-            px-4
-            rounded-xl
-            bg-sky-100
-            text-sky-700
-            flex
-            items-center
-            justify-center
-            text-xl
-            font-bold
-        ">
-                  {establecimientos.length}
-                </div>
-
-              </div>
-
               {/* TABLA DE DOMICILIOS */}
               <div className="flex flex-col bg-white rounded-xl shadow-sm">
 
@@ -5268,7 +5185,21 @@ export default function AvisosFiscales() {
                     </div>
 
                   </div>
-
+                  <div className="
+            min-w-14
+            h-14
+            px-4
+            rounded-xl
+            bg-sky-100
+            text-sky-700
+            flex
+            items-center
+            justify-center
+            text-xl
+            font-bold
+        ">
+                    {establecimientos.length}
+                  </div>
                   <ChevronDown
                     size={20}
                     className={`

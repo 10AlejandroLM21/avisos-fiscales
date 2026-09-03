@@ -296,6 +296,7 @@ export default function DomicilioFiscal({
 
             {/* OBLIGACIONES FISCALES */}
             <div className="flex flex-col rounded-lg p-5 shadow-lg bg-white gap-4">
+          
                 {/* Header */}
                 <div className="flex items-center gap-2">
 
@@ -317,6 +318,7 @@ export default function DomicilioFiscal({
                         </p>
 
                     </div>
+
                 </div>
 
                 <div className="rounded-xl border-slate-200">
@@ -371,6 +373,7 @@ export default function DomicilioFiscal({
                             + Asociar obligación
                         </button>
                     </div>
+                    
                     {/* OBLIGACIONES SELECCIONADAS */}
                     {obligacionesSeleccionadas.length > 0 && (
                         <div className="

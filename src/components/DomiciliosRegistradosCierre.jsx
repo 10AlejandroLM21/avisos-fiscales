@@ -1027,10 +1027,6 @@ export default function DomiciliosRegistradosCierre({ className }) {
 
                         {/* CÓDIGO POSTAL */}
                         <section>
-                            <h3 className="font-medium text-slate-700 mb-4">
-                                Búsqueda por Código Postal
-                            </h3>
-
                             <div className="grid md:grid-cols-3 gap-4">
                                 <div>
                                     <label className="block text-sm mb-2 text-slate-600">

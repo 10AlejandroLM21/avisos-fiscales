@@ -621,7 +621,7 @@ export default function DomiciliosRegistrados({ className }) {
                                 uppercase
                                 text-center 
                             ">
-                            Domicilio del establecimiento
+                            Ver información
                         </span>
                     </div>
 
