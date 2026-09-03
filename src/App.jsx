@@ -28,6 +28,7 @@ import ObligacionesSuspender from "./components/ObligacionesRegistradas";
 import CampoFecha from "./components/CampoFecha";
 import ReanudacionDeActividades from "./Views/ReanudacionDeActividades";
 import DomiciliosRegistrados from "./components/DomiciliosRegistrados";
+import DomiciliosRegistradosCierre from "./components/DomiciliosRegistradosCierre";
 import CampoTextArea from "./components/CampoTextArea";
 import {
   Search,
@@ -4804,7 +4805,7 @@ export default function AvisosFiscales() {
                   className={`
         px-6
         transition-all
-        duration-700
+        duration-800
         ease-in-out
         ${mostrarDomicilios
                       ? "max-h-[1000px] opacity-100 pb-6"
@@ -4871,7 +4872,7 @@ export default function AvisosFiscales() {
                 {/* DATOS GENERALES */}
                 <div className={
                   `overflow-hidden
-                  transition-all
+                transition-all
                 duration-700
                 ease-in-out
                 ${desplegarCapturaDomicilio ? " max-h-[2200px] opacity-100" : "max-h-0 opacity-0"}
@@ -5171,232 +5172,415 @@ export default function AvisosFiscales() {
         {
           selectedRow === "Cierre de Establecimientos o Locales" &&
           activeStep === 4 && (
-            <div>
+            <div className="space-y-6">
               <HeaderModulo
-
                 titulo="Cierre de Establecimientos o Locales"
-
-                descripcion="Registre el cierre de establecimientos o locales vinculados al contribuyente conforme a la información proporcionada."
-
+                descripcion="Registre la apertura de establecimientos o locales vinculados al contribuyente conforme a la información proporcionada."
                 icono="Store"
-
-                color="red"
-
+                color="emerald"
               />
-              <div className="bg-white rounded-xl  shadow-sm p-6 mb-6 mt-5">
 
-                <h3 className="text-lg font-semibold text-slate-800 mb-2">
-                  Selección de Obligación Fiscal
-                </h3>
+              {/* RESUMEN DE ESTABLECIMIENTOS */}
+              <div className="
+                              bg-white
+                              border
+                              border-slate-200
+                              rounded-xl
+                              p-5
+                              flex
+                              items-center
+                              justify-between
+                              shadow-sm 
+                          ">
+                <div className="flex justify-between gap-2">
+                  <div className="p-3 bg-sky-200 rounded-lg">
+                    <Building
+                      size={20}
+                      className="text-sky-700"
+                    />
+                  </div>
 
-                <p className="text-slate-500 mb-5">
-                  Seleccione la obligación fiscal asociada al establecimiento que desea cerrar.
-                </p>
+                  <div className="flex flex-col">
+                    <p className="font-semibold">
+                      Resumen de Establecimientos registrados
+                    </p>
 
-                <div className="grid md:grid-cols-2 xl:grid-cols-3 gap-4">
-                  {[
-                    "Impuesto Sobre Nóminas",
-                    "Impuesto Sobre Hospedaje",
-                    "Impuesto Cedular"
-                  ].map((obligacion) => (
-                    <button
-                      key={obligacion}
-                      type="button"
-                      onClick={() => setObligacionSeleccionada(obligacion)}
-                      className={`
-                p-5 rounded-xl border-2 text-left transition-all
-                ${obligacionSeleccionada === obligacion
-                          ? "border-sky-700 bg-sky-50"
-                          : "border-slate-200 hover:border-sky-500 hover:bg-sky-50"
-                        }
-            `}
-                    >
-                      <div className="flex items-center justify-between gap-3">
-                        <h4 className="font-semibold text-slate-800">
-                          {obligacion}
-                        </h4>
+                    <p className="text-sm text-slate-400 mt-1">
+                      Total de establecimientos asociados al contribuyente
+                    </p>
+                  </div>
+                </div>
 
-                        <span className="px-2.5 py-1 rounded-full text-xs font-semibold bg-emerald-100 text-emerald-700">
-                          VIGENTE
-                        </span>
-                      </div>
 
-                      <p className="text-sm text-slate-500 mt-2">
-                        Ver establecimientos registrados
-                      </p>
-                    </button>
-                  ))}
+                <div className="
+            min-w-14
+            h-14
+            px-4
+            rounded-xl
+            bg-sky-100
+            text-sky-700
+            flex
+            items-center
+            justify-center
+            text-xl
+            font-bold
+        ">
+                  {establecimientos.length}
                 </div>
 
               </div>
-              {
-                obligacionSeleccionada && (
 
-                  <div className="bg-white rounded-xl  shadow-sm p-6">
+              {/* TABLA DE DOMICILIOS */}
+              <div className="flex flex-col bg-white rounded-xl shadow-sm">
 
-                    <div className="mb-6">
+                {/* ENCABEZADO */}
+                <button
+                  type="button"
+                  onClick={() => setMostrarDomicilios(!mostrarDomicilios)}
+                  className="
+        w-full
+        h-full
+        flex
+        items-center
+        justify-between
+        px-6
+        py-5
+        text-left
+        bg-white
+        hover:bg-slate-100
+        transition-colors
+        bg-slate-100
+        rounded-lg
+    "  >
+                  {/* TItulo e icono */}
+                  <div className="flex items-center justify-content gap-3">
 
-                      <h3 className="text-lg font-semibold text-slate-800">
-                        Establecimientos Registrados
+                    <div className="p-3 bg-blue-200 rounded-lg">
+                      <Building
+                        size={20}
+                        className="text-blue-700"
+                      />
+                    </div>
+
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Establecimientos registrados
                       </h3>
-
-                      <p className="text-slate-500 mt-1">
-                        Seleccione el establecimiento que desea cerrar.
+                      <p className="text-sm text-slate-500 mt-1">
+                        Consulte los domicilios asociados al contribuyente.
                       </p>
-
-                    </div>
-                    <div className="space-y-4">
-
-                      {establecimientos.map((item) => (
-
-                        <CardEstablecimiento
-                          key={item.id}
-                          establecimiento={item}
-                          seleccionado={establecimientoSeleccionado?.id === item.id}
-                          onSeleccionar={() => {
-                            setEstablecimientoPendiente(item);
-                            setModalConfirmacion(true);
-                          }}
-                          onVer={() => {
-                            setEstablecimientoDetalle(item);
-                            setOpenDetalle(true);
-                          }}
-                        />
-
-                      ))}
-
                     </div>
 
-                    {openDetalle && (
+                  </div>
 
-                      <ModalFormulario
-                        abierto={openDetalle}
-                        onClose={() => setOpenDetalle(false)}
-                        titulo="Domicilio del Establecimiento"
-                        descripcion="Consulte la información correspondiente al domicilio del establecimiento seleccionado."
-                        icono={<Home className="text-white" size={28} />}
-                        textoBoton="Cerrar"
-                      >
+                  <ChevronDown
+                    size={20}
+                    className={`
+            text-slate-500
+            transition-transform
+            duration-700
+            ease-in-out
+            ${mostrarDomicilios ? "rotate-180" : ""}
+        `}
+                  />
+                </button>
 
-                        <DetalleDomicilio
-                          domicilio={establecimientoSeleccionado}
-                        />
-
-                      </ModalFormulario>
-
-                    )
+                {/* CONTENIDO DESPLEGABLE */}
+                <div
+                  className={`
+        grid
+       px-6
+        transition-all
+        duration-700
+        ease-in-out
+        ${mostrarDomicilios
+                      ? "grid-rows-[1fr] opacity-100 pb-6"
+                      : "grid-rows-[0fr] opacity-0 overflow-hidden"
                     }
+    `}
+                >
+                  <DomiciliosRegistradosCierre className={`${mostrarDomicilios ? "mt-4" : "min-h-0 mt-0"}`} />
+                </div>
 
-                    {modalConfirmacion && (
+              </div>
 
-                      <div className="fixed inset-0 z-50 bg-black/40 backdrop-blur-sm flex items-center justify-center">
+              {/* DATOS DE CONTACTO */}
+              <div className="rounded-lg mb-4 rounded shadow-md overflow-hidden">
+                {/* Encabezado */}
+                <button
+                  onClick={() => setMostrarDatosContacto(!mostrarDatosContacto)}
+                  className="
+                            w-full bg-white hover:bg-slate-100 flex items-center justify-between
+                            px-6 py-5 text-left
+                            transition-colors
+                           "
+                >
+                  <div className="flex items-center justify-content gap-3">
+                    <span className="bg-blue-100 rounded-lg">
 
-                        <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md overflow-hidden">
+                      <Smartphone
+                        size={20}
+                        className="text-sky-700 m-3"
+                      />
 
-                          {/* Header */}
+                    </span>
 
-                          <div className="px-6 py-5 -b bg-red-50 flex items-center gap-3">
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Datos de contacto
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Capture la información de contacto del contribuyente.
+                      </p>
+                    </div>
 
-                            <div className="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center">
+                  </div>
 
-                              <Building2
-                                className="text-red-600"
-                                size={24}
-                              />
+                  <ChevronDown
+                    size={20}
+                    className={`
+                              text-slate-500
+                              transition-transform
+                              duration-700
+                              ease-in-out
+                        ${mostrarDatosContacto ? "rotate-180" : ""}`}
+                  />
 
-                            </div>
+                </button>
 
-                            <div>
+                {/* Contenido */}
+                <div className={`
+                          px-6
+                          bg-white
+                          overflow-hidden
+                          transition-all
+                          duration-700
+                          ease-in-out
+                          ${mostrarDatosContacto
+                    ? "max-h-[1000px] opacity-100 pb-6"
+                    : "max-h-0 opacity-0"
+                  }
+    `}>
+                  {/* Campos */}
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6">
 
-                              <h3 className="font-semibold text-slate-800">
-                                Confirmar selección
-                              </h3>
+                    {/* Correo electrónico */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Correo electrónico <span className="text-red-500">*</span>
+                      </label>
 
-                              <p className="text-sm text-slate-500">
-                                Verifique la información antes de continuar.
-                              </p>
+                      <input
+                        type="email"
+                        maxLength={100}
+                        placeholder="usuario@dominio.extensión"
+                        className="
+                                    w-full h-11 px-3
+                                    border border-slate-300
+                                    rounded-lg
+                                    text-sm text-slate-700
+                                    outline-none
+                                    focus:border-sky-500
+                                    focus:ring-2 focus:ring-sky-100
+                                  "
+                      />
 
-                            </div>
+                      <p className="text-xs text-slate-400">
+                        Máximo 100 caracteres.
+                      </p>
+                    </div>
 
-                          </div>
+                    {/* Correo electrónico alternativo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Correo electrónico alternativo
+                      </label>
 
-                          {/* Contenido */}
+                      <input
+                        type="email"
+                        maxLength={100}
+                        placeholder="usuario@dominio.extensión"
+                        className="
+          w-full h-11 px-3
+          border border-slate-300
+          rounded-lg
+          text-sm text-slate-700
+          outline-none
+          focus:border-sky-500
+          focus:ring-2 focus:ring-sky-100
+        "
+                      />
 
-                          <div className="px-6 py-6">
+                      <p className="text-xs text-slate-400">
+                        Máximo 100 caracteres.
+                      </p>
+                    </div>
 
-                            <p className="text-slate-700 text-center text-lg font-medium">
+                    {/* Teléfono fijo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Teléfono fijo <span className="text-red-500">*</span>
+                      </label>
 
-                              ¿DESEA SELECCIONAR ESTE ESTABLECIMIENTO?
+                      <input
+                        type="tel"
+                        maxLength={10}
+                        inputMode="numeric"
+                        placeholder="Ingrese 10 dígitos"
+                        className="
+          w-full h-11 px-3
+          border border-slate-300
+          rounded-lg
+          text-sm text-slate-700
+          outline-none
+          focus:border-sky-500
+          focus:ring-2 focus:ring-sky-100
+        "
+                      />
 
-                            </p>
+                      <p className="text-xs text-slate-400">
+                        Ingrese únicamente números. Máximo 10 caracteres.
+                      </p>
+                    </div>
 
-                            {establecimientoPendiente && (
+                    {/* Teléfono alternativo */}
+                    <div className="flex flex-col gap-2">
+                      <label className="text-sm font-medium text-slate-700">
+                        Teléfono alternativo <span className="text-red-500">*</span>
+                      </label>
 
-                              <div className="mt-6 rounded-xl  bg-slate-50 p-4">
+                      <div className="flex gap-2">
 
-                                <p className="text-xs uppercase text-slate-500">
-                                  Nombre del Establecimiento
-                                </p>
+                        {/* Tipo de teléfono */}
+                        <select
+                          className="
+            h-11
+            w-40
+            px-3
+            border border-slate-300
+            rounded-lg
+            bg-white
+            text-sm text-slate-700
+            outline-none
+            focus:border-sky-500
+            focus:ring-2 focus:ring-sky-100
+          "
+                        >
+                          <option value="">
+                            Tipo
+                          </option>
 
-                                <p className="font-semibold text-slate-800">
-                                  {establecimientoPendiente.nombre}
-                                </p>
+                          <option value="fijo">
+                            Teléfono fijo
+                          </option>
 
-                                <p className="text-xs uppercase text-slate-500 mt-4">
-                                  Domicilio
-                                </p>
+                          <option value="movil">
+                            Teléfono móvil
+                          </option>
+                        </select>
 
-                                <p className="text-slate-700">
-                                  {establecimientoPendiente.domicilio}
-                                </p>
-
-                              </div>
-
-                            )}
-
-                          </div>
-
-                          {/* Footer */}
-
-                          <div className="-t bg-slate-50 px-6 py-4 flex justify-end gap-3">
-
-                            <button
-                              type="button"
-                              onClick={() => {
-                                setModalConfirmacion(false);
-                                setEstablecimientoPendiente(null);
-                              }}
-                              className="px-5 py-2.5 rounded-lg  hover:bg-slate-100"
-                            >
-                              No
-                            </button>
-
-                            <button
-                              type="button"
-                              onClick={() => {
-
-                                setEstablecimientoSeleccionado(establecimientoPendiente);
-                                setModalConfirmacion(false);
-
-                                setEstablecimientoPendiente(null);
-
-                              }}
-                              className="px-5 py-2.5 rounded-lg bg-red-700 hover:bg-red-800 text-white"
-                            >
-                              Sí
-                            </button>
-
-                          </div>
-
-                        </div>
+                        {/* Número */}
+                        <input
+                          type="tel"
+                          maxLength={10}
+                          inputMode="numeric"
+                          placeholder="Ingrese 10 dígitos"
+                          className="
+            flex-1
+            h-11 px-3
+            border border-slate-300
+            rounded-lg
+            text-sm text-slate-700
+            outline-none
+            focus:border-sky-500
+            focus:ring-2 focus:ring-sky-100
+          "
+                        />
 
                       </div>
 
-                    )}
+                      <p className="text-xs text-slate-400">
+                        Ingrese únicamente números. Máximo 10 caracteres.
+                      </p>
+                    </div>
+
+                  </div>
+                </div>
+
+              </div>
+
+              {/* DOCUMENTACIÓN REQUERIDA */}
+              <div className=" bg-white rounded-lg shadow-md rounded overflow-hidden">
+
+                {/* Encabezado */}
+                <button
+                  type="button"
+                  onClick={() => setMostrarDocumentacion(!mostrarDocumentacion)}
+                  className="
+                            w-full
+                            flex
+                            items-center
+                            justify-between
+                            px-6
+                            py-5
+                            text-left
+                            bg-white
+                            hover:bg-slate-100
+                            transition-colors
+                            bg-slate-100
+                        "
+                >
+                  <div className="flex items-center justify-content gap-3">
+                    <span className="bg-blue-100 rounded-lg">
+                      <Building2
+                        size={20}
+                        className="text-sky-700 m-3"
+                      />
+                    </span>
+
+                    <div>
+                      <h3 className="font-semibold text-slate-800">
+                        Documentación Requerida
+                      </h3>
+                      <p className="text-sm text-slate-500 mt-1">
+                        Capture la información de contacto del contribuyente.
+                      </p>
+                    </div>
+
                   </div>
 
-                )
-              }
+                  <ChevronDown
+                    size={20}
+                    className={`
+                              text-slate-500
+                              transition-transform
+                              duration-700
+                              ease-in-out
+                        ${mostrarDocumentacion ? "rotate-180" : ""}`}
+                  />
+                </button>
+
+                {/* Contenido */}
+                <div className={`
+                          px-6
+                          overflow-hidden
+                          transition-all
+                          duration-700
+                          ease-in-out
+                          ${mostrarDocumentacion
+                    ? "max-h-[1000px] opacity-100 pb-6"
+                    : "max-h-0 opacity-0"
+                  }
+    `}>
+                  {/* Campos */}
+                  <DocumentacionRequerida mostrarDocumentos={false} />
+
+
+                </div>
+
+
+              </div>
+
             </div>
           )
         }

@@ -7,10 +7,12 @@ import {
     CalendarDays,
     Eye,
     FileText,
-    X
+    X,
+    Check,
+    Copy
 } from "lucide-react";
 
-export default function DomiciliosRegistrados({ className }) {
+export default function DomiciliosRegistradosCierre({ className }) {
     const establecimientos = [
         {
             id: 1,
@@ -18,22 +20,77 @@ export default function DomiciliosRegistrados({ className }) {
             domicilio: "Av. Universidad 120, Col. Centro",
             distrito: "Centro",
             fechaAlta: "15/01/2026",
+
             obligaciones: [
                 "Impuesto al Valor Agregado",
                 "Impuesto Sobre la Renta",
-            ]
+            ],
+
+            // Datos del domicilio
+            codigoPostal: "68000",
+            tipoAmbito: "Urbano",
+            region: "Valles Centrales",
+            municipio: "Oaxaca de Juárez",
+            localidad: "Oaxaca de Juárez",
+            tipoAsentamiento: "Colonia",
+            nombreAsentamiento: "Centro",
+            tipoInmueble: "Local Comercial",
+
+            tipoVialidad: "Avenida",
+            nombreVialidad: "Universidad",
+            numeroExterior: "120",
+            numeroInterior: "Local 3",
+            entreVialidad: "Av. Independencia",
+            yVialidad: "Calle Hidalgo",
+
+            caracteristicas:
+                "Local comercial destinado a la venta de productos de abarrotes.",
+
+            referencias:
+                "Frente a la plaza comercial y a un costado de una sucursal bancaria.",
+
+            latitud: 17.0608,
+            longitud: -96.7253
         },
+
         {
             id: 2,
             nombreComercial: "RESTAURANTE EL SABOR OAXAQUEÑO",
             domicilio: "Calz. Porfirio Díaz 315, Col. Reforma",
             distrito: "Centro",
             fechaAlta: "28/02/2026",
+
             obligaciones: [
                 "Impuesto al Valor Agregado",
                 "Impuesto Sobre la Renta",
                 "Impuesto Especial sobre Producción y Servicios",
-            ]
+            ],
+
+            // Datos del domicilio
+            codigoPostal: "68050",
+            tipoAmbito: "Urbano",
+            region: "Valles Centrales",
+            municipio: "Oaxaca de Juárez",
+            localidad: "Oaxaca de Juárez",
+            tipoAsentamiento: "Colonia",
+            nombreAsentamiento: "Reforma",
+            tipoInmueble: "Local Comercial",
+
+            tipoVialidad: "Calzada",
+            nombreVialidad: "Porfirio Díaz",
+            numeroExterior: "315",
+            numeroInterior: "Local A",
+            entreVialidad: "Calle Jazmines",
+            yVialidad: "Calle Belisario Domínguez",
+
+            caracteristicas:
+                "Establecimiento destinado a la preparación y venta de alimentos y bebidas.",
+
+            referencias:
+                "Ubicado frente a un parque y cerca de una zona comercial.",
+
+            latitud: 17.0734,
+            longitud: -96.7162
         }
     ];
     const [establecimientoObligaciones, setEstablecimientoObligaciones] = useState(null);
@@ -119,7 +176,7 @@ export default function DomiciliosRegistrados({ className }) {
     const [filtroEstatus, setFiltroEstatus] = useState("TODOS");
     const [filtroFecha, setFiltroFecha] = useState("TODOS");
 
-
+    const [domicilioSeleccionado, setDomicilioSeleccionado] = useState(null);
 
     // const establecimientosFiltrados = useMemo(() => {
 
@@ -145,7 +202,7 @@ export default function DomiciliosRegistrados({ className }) {
     // }, [busqueda, filtroEstatus]);
 
     return (
-        <div className={`w-full mt-4 ${className}`}>
+        <div className={`w-full ${className}`}>
 
             {/* TABLA */}
             <div className="
@@ -153,7 +210,6 @@ export default function DomiciliosRegistrados({ className }) {
                             border border-slate-100
                             rounded-2xl
                             shadow-sm
-                          
                         ">
 
                 {/* ENCABEZADOS */}
@@ -502,7 +558,7 @@ export default function DomiciliosRegistrados({ className }) {
                                 uppercase
                                 
                             ">
-                           Acciones
+                            Acciones
                         </span>
                     </div>
 
@@ -688,8 +744,8 @@ export default function DomiciliosRegistrados({ className }) {
 
                             </div>
 
-                            {/* VER DOMICILIO */}
-                            <div className="flex items-center justify-center">
+                            {/* ACCIONES */}
+                            <div className="flex items-center justify-center gap-3">
 
                                 <button
                                     type="button"
@@ -704,14 +760,34 @@ export default function DomiciliosRegistrados({ className }) {
         bg-sky-100
         hover:bg-sky-200
         transition-colors
-        w-[30px]
-        h-[30px]
+        w-[40px]
+        h-[40px]
     "
                                 >
                                     <Eye
-                                        size={18}
+                                        size={20}
                                         className="text-sky-700"
                                     />
+                                </button>
+
+                                <button
+                                    type="button"
+                                    onClick={() => setDomicilioSeleccionado(establecimiento)}
+                                    className={`
+        flex
+        items-center
+        justify-center
+        w-8
+        h-8
+        rounded-full
+        transition-colors
+        ${domicilioSeleccionado?.id === establecimiento.id
+                                            ? "bg-sky-600 text-white"
+                                            : "bg-sky-100 text-sky-700 hover:bg-sky-200"
+                                        }
+    `}
+                                >
+                                    <Check size={18} />
                                 </button>
 
                             </div>
@@ -736,26 +812,255 @@ export default function DomiciliosRegistrados({ className }) {
 
             </div>
 
-            {/* RESULTADOS */}
-            <div className="
-                flex
-                items-center
-                justify-between
-                mt-4
-                text-sm
-                text-slate-500
-            ">
-                <span>
-                    {establecimientosFiltrados.length} establecimientos encontrados
-                </span>
+            {domicilioSeleccionado && (
+                <div className="bg-white rounded-xl shadow-md overflow-hidden mt-4">
 
-                <div className="flex items-center gap-2">
-                    <SlidersHorizontal size={16} />
-                    <span>
-                        Filtros aplicados
-                    </span>
+                    {/* ENCABEZADO */}
+                    <div className="flex items-center gap-4 p-5 bg-slate-50">
+
+                        <div className="w-11 h-11 rounded-xl bg-sky-100 flex items-center justify-center">
+                            <MapPin className="text-sky-600" size={22} />
+                        </div>
+
+                        <div className="text-left">
+                            <h3 className="font-semibold text-slate-800">
+                                Domicilio Fiscal
+                            </h3>
+
+                            <p className="text-sm text-slate-500">
+                                Información del domicilio fiscal seleccionado
+                            </p>
+                        </div>
+
+                    </div>
+
+                    <div className="p-6 space-y-8">
+
+                        {/* CÓDIGO POSTAL */}
+                        <section>
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Búsqueda por Código Postal
+                            </h3>
+
+                            <div className="grid md:grid-cols-3 gap-4">
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Código Postal
+                                    </label>
+
+                                    <div className="w-full rounded-lg px-3 py-2 bg-slate-50 border border-slate-200 text-slate-700">
+                                        {domicilioSeleccionado.codigoPostal || "—"}
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* DATOS GENERALES */}
+                        <section>
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Datos Generales del Domicilio
+                            </h3>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Tipo de Ámbito
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.tipoAmbito || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Región
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.region || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Distrito
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.distrito || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Municipio
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.municipio || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Localidad
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.localidad || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Tipo de Asentamiento
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.tipoAsentamiento || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Nombre de Asentamiento
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.nombreAsentamiento || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Tipo de Inmueble
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.tipoInmueble || "—"}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+
+                        {/* UBICACIÓN */}
+                        <section>
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Ubicación del Domicilio
+                            </h3>
+
+                            <div className="grid md:grid-cols-2 gap-4">
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Tipo de Vialidad
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.tipoVialidad || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Nombre de Vialidad
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.nombreVialidad || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Número Exterior
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.numeroExterior || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Número Interior
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.numeroInterior || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Entre Vialidad
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.entreVialidad || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Y Vialidad
+                                    </label>
+                                    <div className="campo-lectura">
+                                        {domicilioSeleccionado.yVialidad || "—"}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+
+                        {/* INFORMACIÓN COMPLEMENTARIA */}
+                        <section>
+                            <h3 className="font-medium text-slate-700 mb-4">
+                                Información Complementaria
+                            </h3>
+
+                            <div className="space-y-4">
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Características del domicilio
+                                    </label>
+
+                                    <div className="w-full min-h-[80px] rounded-lg px-3 py-2 bg-slate-50 border border-slate-200 text-slate-700">
+                                        {domicilioSeleccionado.caracteristicas || "—"}
+                                    </div>
+                                </div>
+
+                                <div>
+                                    <label className="block text-sm mb-2 text-slate-600">
+                                        Referencias adicionales
+                                    </label>
+
+                                    <div className="w-full min-h-[80px] rounded-lg px-3 py-2 bg-slate-50 border border-slate-200 text-slate-700">
+                                        {domicilioSeleccionado.referencias || "—"}
+                                    </div>
+                                </div>
+
+                            </div>
+                        </section>
+
+                        {/* GEOLOCALIZACIÓN */}
+                        <section>
+
+                            <div className="flex items-center gap-2 mb-4">
+                                <MapPin size={18} />
+                                <h3 className="font-medium text-slate-700">
+                                    Geolocalización
+                                </h3>
+                            </div>
+
+                            <div className="
+                    h-80
+                    rounded-xl
+                    bg-slate-100
+                    flex
+                    items-center
+                    justify-center
+                    text-slate-500
+                ">
+                                Google Maps
+                            </div>
+
+                        </section>
+
+                    </div>
                 </div>
-            </div>
+            )}
 
         </div>
 
