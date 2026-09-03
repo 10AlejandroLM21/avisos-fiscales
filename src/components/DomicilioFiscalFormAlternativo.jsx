@@ -368,7 +368,7 @@ export default function DomicilioFiscal({
         transition-colors
     "
                         >
-                            + Agregar obligación
+                            + Asociar obligación
                         </button>
                     </div>
                     {/* OBLIGACIONES SELECCIONADAS */}
@@ -453,7 +453,7 @@ export default function DomicilioFiscal({
                             <p className="text-sm text-slate-400 mt-2 max-w-xl">
                                 Seleccione una obligación fiscal del selector y haga clic en el botón{" "}
                                 <b className="font-semibold text-slate-500">
-                                    + Agregar obligación
+                                    + Asociar obligación
                                 </b>{" "}
                                 para vincularla al domicilio del establecimiento.
                             </p>
