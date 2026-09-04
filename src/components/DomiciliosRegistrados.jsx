@@ -287,7 +287,8 @@ export default function DomiciliosRegistrados({ className }) {
                             />
                         </div>
                     </div>
-
+                    
+                    {/* TIPO DE AMBITO */}
                     <div>
                         <button
                             type="button"

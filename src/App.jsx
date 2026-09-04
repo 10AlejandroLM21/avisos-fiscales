@@ -4705,65 +4705,136 @@ export default function AvisosFiscales() {
                   onClick={() => setMostrarDomicilios(!mostrarDomicilios)}
                   className="
         w-full
-        h-full
         flex
         items-center
-        justify-between
-        px-6
-        py-5
         text-left
         bg-white
-        hover:bg-slate-100
+        hover:bg-slate-50
         transition-colors
-        bg-slate-100
-        rounded-lg
+        rounded-xl
     "
                 >
-                  <div className="flex items-center justify-content gap-3">
-                    <div className="p-3 bg-blue-200 rounded-lg">
-                      <Building
-                        size={20}
-                        className="text-blue-700"
-                      />
-                    </div>
+                  <div className="
+        flex
+        items-center
+        w-full
+        px-5
+        py-4
+    ">
 
-                    <div className="flex flex-col">
-                      <div className="flex gap-3  items-center">
-                        <h3 className="font-semibold text-slate-800">
-                          Establecimientos o locales registrados
-                        </h3>
-                        <span className="
-            min-w-12
-            px-4
-            rounded-xl
-            bg-sky-100
-            text-sky-700
+                    {/* ICONO + TÍTULO + DESCRIPCIÓN */}
+                    <div className="
             flex
             items-center
-            justify-center
-            text-sm
-            font-semibold
+            gap-4
+            flex-1
+            min-w-0
         ">
-                         Total de establecimientos asociados al contribuyente: {establecimientos.length}
-                        </span>
+
+                      <div className="
+                w-11
+                h-11
+                rounded-xl
+                bg-blue-100
+                flex
+                items-center
+                justify-center
+                shrink-0
+            ">
+                        <Building
+                          size={21}
+                          className="text-blue-700"
+                        />
                       </div>
 
-                      <p className="text-sm text-slate-500 mt-1">
-                        Consulte los domicilios de los establecimientos o locales vigentes e identifique que no se encuentre dado de alta el domicilio del establecimiento o local a presentar                      </p>
+                      <div className="flex-1 min-w-0">
+
+                        <h3 className="
+                    font-semibold
+                    text-slate-800
+                ">
+                          Establecimientos o locales registrados
+                        </h3>
+
+                        <p className="
+                    text-sm
+                    text-slate-500
+                    mt-1
+                    leading-5
+                ">
+                          Consulte los domicilios de los establecimientos o locales
+                          vigentes e identifique que no se encuentre dado de alta el
+                          domicilio del establecimiento o local a presentar.
+                        </p>
+
+                      </div>
+
                     </div>
 
-                  </div>
 
-                  <ChevronDown
-                    size={20}
-                    className={`
-            text-slate-500
-            transition-transform
-            duration-700
-            ease-in-out
-            ${mostrarDomicilios ? "rotate-180" : ""}
-        `}
-                  />
+                    {/* CONTADOR */}
+                    <div
+                      className={`
+                flex
+                items-center
+                justify-center
+                gap-2
+                shrink-0
+                overflow-hidden
+                transition-all
+                duration-700
+                ease-in-out
+                ${mostrarDomicilios
+                          ? "w-0 mx-0 opacity-0"
+                          : "w-[280px] mx-8 opacity-100"
+                        }
+            `}
+                    >
+
+                      <span className="
+                text-xs
+                text-slate-500
+                text-center
+                leading-4
+                w-[180px]
+            ">
+                        Total de establecimientos
+                        asociados al contribuyente
+                      </span>
+
+                      <span className="
+                flex
+                items-center
+                justify-center
+                min-w-[34px]
+                h-8
+                px-2
+                rounded-lg
+                bg-sky-100
+                text-sky-700
+                text-sm
+                font-semibold
+            ">
+                        {establecimientos.length}
+                      </span>
+
+                    </div>
+
+
+                    {/* FLECHA */}
+                    <ChevronDown
+                      size={20}
+                      className={`
+                text-slate-500
+                shrink-0
+                transition-transform
+                duration-700
+                ease-in-out
+                ${mostrarDomicilios ? "rotate-180" : ""}
+            `}
+                    />
+
+                  </div>
                 </button>
 
                 {/* CONTENIDO DESPLEGABLE */}
@@ -5153,63 +5224,134 @@ export default function AvisosFiscales() {
                   onClick={() => setMostrarDomicilios(!mostrarDomicilios)}
                   className="
         w-full
-        h-full
         flex
         items-center
-        justify-between
-        px-6
-        py-5
         text-left
         bg-white
-        hover:bg-slate-100
+        hover:bg-slate-50
         transition-colors
-        bg-slate-100
-        rounded-lg
-    "  >
-                  {/* TItulo e icono */}
-                  <div className="flex items-center justify-content gap-3">
-
-                    <div className="p-3 bg-blue-200 rounded-lg">
-                      <Building
-                        size={20}
-                        className="text-blue-700"
-                      />
-                    </div>
-
-                    <div>
-                      <h3 className="font-semibold text-slate-800">
-                        Aperturas de establecimientos o locales registrados
-                      </h3>
-                      <p className="text-sm text-slate-500 mt-1">
-                        Consulte los domicilios de los establecimientos o locales vigentes e identifique el domicilio del establecimiento o local para cierre                      </p>
-                    </div>
-
-                  </div>
+        rounded-xl
+    "
+                >
                   <div className="
-            min-w-14
-            h-14
-            px-4
-            rounded-xl
-            bg-sky-100
-            text-sky-700
+        flex
+        items-center
+        w-full
+        px-5
+        py-4
+    ">
+
+                    {/* ICONO + TÍTULO + DESCRIPCIÓN */}
+                    <div className="
             flex
             items-center
-            justify-center
-            text-xl
-            font-bold
+            gap-4
+            flex-1
+            min-w-0
         ">
-                    {establecimientos.length}
+
+                      <div className="
+                w-11
+                h-11
+                rounded-xl
+                bg-blue-100
+                flex
+                items-center
+                justify-center
+                shrink-0
+            ">
+                        <Building
+                          size={21}
+                          className="text-blue-700"
+                        />
+                      </div>
+
+                      <div className="flex-1 min-w-0">
+
+                        <h3 className="
+                    font-semibold
+                    text-slate-800
+                ">
+                          Establecimientos o locales registrados
+                        </h3>
+
+                        <p className="
+                    text-sm
+                    text-slate-500
+                    mt-1
+                    leading-5
+                ">
+                          Consulte los domicilios de los establecimientos o locales vigentes e identifique el domicilio del establecimiento o local para cierre
+                        </p>
+
+                      </div>
+
+                    </div>
+
+
+                    {/* CONTADOR */}
+                    <div
+                      className={`
+                flex
+                items-center
+                justify-center
+                gap-2
+                shrink-0
+                overflow-hidden
+                transition-all
+                duration-700
+                ease-in-out
+                ${mostrarDomicilios
+                          ? "w-0 mx-0 opacity-0"
+                          : "w-[280px] mx-8 opacity-100"
+                        }
+            `}
+                    >
+
+                      <span className="
+                text-xs
+                text-slate-500
+                text-center
+                leading-4
+                w-[180px]
+            ">
+                        Total de establecimientos
+                        asociados al contribuyente
+                      </span>
+
+                      <span className="
+                flex
+                items-center
+                justify-center
+                min-w-[34px]
+                h-8
+                px-2
+                rounded-lg
+                bg-sky-100
+                text-sky-700
+                text-sm
+                font-semibold
+            ">
+                        {establecimientos.length}
+                      </span>
+
+                    </div>
+
+
+                    {/* FLECHA */}
+                    <ChevronDown
+                      size={20}
+                      className={`
+                text-slate-500
+                shrink-0
+                transition-transform
+                duration-700
+                ease-in-out
+                ${mostrarDomicilios ? "rotate-180" : ""}
+            `}
+                    />
+
                   </div>
-                  <ChevronDown
-                    size={20}
-                    className={`
-            text-slate-500
-            transition-transform
-            duration-700
-            ease-in-out
-            ${mostrarDomicilios ? "rotate-180" : ""}
-        `}
-                  />
                 </button>
 
                 {/* CONTENIDO DESPLEGABLE */}
