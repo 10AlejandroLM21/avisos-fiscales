@@ -4815,7 +4815,7 @@ export default function AvisosFiscales() {
                 text-sm
                 font-semibold
             ">
-                        {establecimientos.length}
+                        {establecimientos.length-1}
                       </span>
 
                     </div>
@@ -5332,7 +5332,7 @@ export default function AvisosFiscales() {
                 text-sm
                 font-semibold
             ">
-                        {establecimientos.length}
+                        {establecimientos.length-1}
                       </span>
 
                     </div>
