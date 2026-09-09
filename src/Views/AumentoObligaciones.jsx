@@ -5,7 +5,7 @@ import {
     ClipboardList,
     Info
 } from "lucide-react";
-
+import HeaderModulo from "../components/HeaderModulo";
 const obligacionesDisponibles = [
     "Impuesto Sobre la Renta",
     "Impuesto al Valor Agregado",
@@ -29,7 +29,7 @@ export default function ObligacionesFiscales() {
             id: 1,
             obligacion: "IMPUESTO SOBRE EROGACIONES POR REMUNERACIONES AL TRABAJO PERSONAL",
             fechaInicioOperaciones: "01/01/2026",
-            trabajadores: true ,
+            trabajadores: true,
             actividades: [
                 {
                     id: 1,
@@ -323,7 +323,16 @@ export default function ObligacionesFiscales() {
     return (
 
         <div className="w-full">
+            {/* Header */}
+            <HeaderModulo
 
+                titulo="Aumento de obligaciones fiscales"
+
+                // descripcion="Consulte el domicilio fiscal actual y los datos del nuevo domicilio fiscal"
+
+                icono="ReceiptText"
+
+            />
             {/*Secciòn Agregar obligaciòn fiscal */}
             <div className="shadow-md sm:rounded-lg sm:border sm:border-gray-200 bg-white mt-4">
 
@@ -341,12 +350,12 @@ export default function ObligacionesFiscales() {
                         {/* Título y descripción */}
                         <div>
                             <h3 className="text-base font-semibold text-gray-900">
-                                Obligaciones fiscales
+                                Aumentar obligación fiscal
                             </h3>
 
                             <p className="mt-1 text-sm text-gray-500">
-                                Seleccione las obligaciones fiscales y agregue las
-                                actividades económicas correspondientes.
+                                Seleccione la obligación fiscal que desea incorporar al contribuyente 
+                                y registre las actividades económicas asociadas a la misma.
                             </p>
                         </div>
 
@@ -450,7 +459,7 @@ export default function ObligacionesFiscales() {
                     <div className="space-y-5">
 
                         {obligaciones.map((obligacion) => {
-                            const tienetrabajadores =obligacion.trabajadores
+                            const tienetrabajadores = obligacion.trabajadores
                             return (
                                 <div
                                     key={obligacion.id}
@@ -1001,6 +1010,7 @@ export default function ObligacionesFiscales() {
                 </div>
 
             </div>
+
         </div>
     );
 }
