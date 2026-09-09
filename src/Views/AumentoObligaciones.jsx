@@ -1,332 +1,292 @@
-import { useMemo, useState } from "react";
+import { useState } from "react";
 import {
-    Pencil,
-    Trash2,
     Plus,
-    Check,
-    X,
+    Trash2,
+    ClipboardList,
+    Info
 } from "lucide-react";
-import Obligaciones from "../components/Obligaciones";
-import HeaderModulo from "../components/HeaderModulo";
-const AumentoObligaciones = () => {
 
-    const catalogoObligaciones = [
+const obligacionesDisponibles = [
+    "Impuesto Sobre la Renta",
+    "Impuesto al Valor Agregado",
+    "Impuesto Especial sobre Producción y Servicios",
+    "Impuesto sobre Erogaciones",
+];
+
+const actividadesEconomicas = [
+    "Comercio",
+    "Servicios",
+    "Industria",
+    "Construcción",
+    "Servicios profesionales",
+    "Comercio al por menor",
+];
+
+export default function ObligacionesFiscales() {
+
+    const obligacionesActuales = [
         {
             id: 1,
-            nombre: "IMPUESTO SOBRE NÓMINAS",
-            clave: "nominas",
-            requiereTrabajadores: false
-        },
-        {
-            id: 2,
-            nombre: "IMPUESTO SOBRE HOSPEDAJE",
-            clave: "hospedaje",
-            requiereTrabajadores: false
-        },
-        {
-            id: 3,
-            nombre: "IMPUESTO SOBRE EROGACIONES...",
-            clave: "erogaciones",
-            requiereTrabajadores: true
-        },
-        {
-            id: 4,
-            nombre: "EXTRACCIÓN",
-            clave: "extraccion",
-            requiereTrabajadores: false
-        }
-    ];
-    const catalogoActividades = {
-        nominas: [
-            {
-                id: 1,
-                nombre: "Comercio"
-            },
-            {
-                id: 2,
-                nombre: "Servicios"
-            },
-            {
-                id: 3,
-                nombre: "Industria"
-            },
-            {
-                id: 4,
-                nombre: "Construcción"
-            },
-            {
-                id: 5,
-                nombre: "Transporte"
-            }
-        ],
-
-        hospedaje: [
-            {
-                id: 101,
-                nombre: "Hotel"
-            },
-            {
-                id: 102,
-                nombre: "Motel"
-            },
-            {
-                id: 103,
-                nombre: "Hostal"
-            },
-            {
-                id: 104,
-                nombre: "Cabañas"
-            },
-            {
-                id: 105,
-                nombre: "Casa de huéspedes"
-            }
-        ],
-
-        erogaciones: [
-            {
-                id: 201,
-                nombre: "Comercio"
-            },
-            {
-                id: 202,
-                nombre: "Servicios Profesionales"
-            },
-            {
-                id: 203,
-                nombre: "Industria"
-            },
-            {
-                id: 204,
-                nombre: "Construcción"
-            },
-            {
-                id: 205,
-                nombre: "Educación"
-            },
-            {
-                id: 206,
-                nombre: "Salud"
-            }
-        ],
-        extraccion: [
-            {
-                id: 301,
-                nombre: "Extracción de minerales"
-            },
-            {
-                id: 302,
-                nombre: "Extracción de materiales pétreos"
-            },
-            {
-                id: 303,
-                nombre: "Extracción de arena y grava"
-            },
-            {
-                id: 304,
-                nombre: "Extracción de piedra"
-            },
-            {
-                id: 305,
-                nombre: "Extracción de arcilla"
-            },
-            {
-                id: 306,
-                nombre: "Extracción de otros minerales no metálicos"
-            }
-        ]
-    };
-
-    const [formActividad, setFormActividad] = useState({
-        obligacionId: "",
-        actividadId: "",
-        porcentaje: "",
-        trabajadoresTemporales: "",
-        trabajadoresPermanentes: "",
-    });
-
-    const obligacionSeleccionada = catalogoObligaciones.find(
-        o => o.id === Number(formActividad.obligacionId)
-    );
-    const [obligaciones, setObligaciones] = useState([
-        {
-            id: 1,
-            clave: "nominas",
-            nombre: "IMPUESTO SOBRE NÓMINAS",
-            estatus: "Activo",
-            requiereTrabajadores: false,
+            obligacion: "IMPUESTO SOBRE EROGACIONES POR REMUNERACIONES AL TRABAJO PERSONAL",
+            fechaInicioOperaciones: "01/01/2026",
+            trabajadores: true ,
             actividades: [
                 {
                     id: 1,
-                    nombre: "Comercio",
-                    porcentaje: 10,
-                    trabajadoresTemporales: 5,
-                    trabajadoresPermanentes: 15,
-                    fechaOperaciones: "24/10/2026"
+                    actividadEconomica: "Servicios profesionales",
+                    porcentaje: "60%",
+                    trabajadoresTemporales: 3,
+                    trabajadoresPermanentes: 8,
                 },
                 {
                     id: 2,
-                    nombre: "Servicios",
-                    porcentaje: 20,
-                    trabajadoresTemporales: 3,
-                    trabajadoresPermanentes: 10,
-                    fechaOperaciones: "24/10/2026"
+                    actividadEconomica: "Comercio al por menor",
+                    porcentaje: "40%",
+                    trabajadoresTemporales: 2,
+                    trabajadoresPermanentes: 5,
                 },
-
             ],
-            actividadesAgregadas: []
         },
+
         {
             id: 2,
-            clave: "hospedaje",
-            nombre: "IMPUESTO SOBRE HOSPEDAJE",
-            requiereTrabajadores: false,
-            estatus: "Activo",
+            obligacion: "DIVERSIONES Y ESPECTACULOS PUBLICOS",
+            fechaInicioOperaciones: "15/02/2026",
+            trabajadores: false,
             actividades: [
                 {
                     id: 3,
-                    nombre: "Hotel",
-                    porcentaje: 20,
-                    fechaOperaciones: "24/10/2026"
-
-                }
+                    actividadEconomica: "Comercio al por menor",
+                    porcentaje: "100%",
+                    trabajadoresTemporales: null,
+                    trabajadoresPermanentes: null,
+                },
             ],
-            actividadesAgregadas: []
-        }
-        // ,
-        // {
-        //     id: 3,
-        //     clave: "erogaciones",
-        //     nombre: "IMPUESTO SOBRE EROGACIONES...",
-        //     requiereTrabajadores: true,
-        //     estatus: "Activo",
-        //     actividades: [
-        //         {
-        //             id: 1,
-        //             nombre: "Comercio",
-        //             porcentaje: 30,
-        //             trabajadoresTemporales: 5,
-        //             trabajadoresPermanentes: 15,
-        //             fechaOperaciones: "24/10/2026"
-        //         },
-        //         {
-        //             id: 2,
-        //             nombre: "Servicios",
-        //             porcentaje: 20,
-        //             trabajadoresTemporales: 3,
-        //             trabajadoresPermanentes: 10,
-        //             fechaOperaciones: "24/10/2026"
-        //         }
-        //     ],
-        //     actividadesAgregadas: []
-        // }
-    ]);
-    const actividadesDisponibles = obligacionSeleccionada
-        ? catalogoActividades[obligacionSeleccionada.clave] ?? []
-        : [];
+        },
+    ];
 
-    // Actividad que se está editando
-    // Formulario de edición
-    const [formEditar, setFormEditar] = useState({
-        porcentaje: "",
-        trabajadoresTemporales: "",
-        trabajadoresPermanentes: "",
+
+    // =====================================================
+    // OBLIGACIONES A MODIFICAR
+    // Parte de las obligaciones actuales del contribuyente
+    // =====================================================
+
+    const [obligaciones, setObligaciones] = useState(() => {
+
+        return obligacionesActuales.map((obligacion) => ({
+            id: obligacion.id,
+            nombre: obligacion.obligacion,
+            fechaInicio: obligacion.fechaInicioOperaciones,
+            trabajadores: obligacion.trabajadores,
+            registros: obligacion.actividades.map((actividad) => ({
+                id: actividad.id,
+
+                // Actividad ya vinculada a la obligación
+                actividadEconomica: actividad.actividadEconomica,
+
+                // Porcentaje ya registrado
+                participacion: actividad.porcentaje.replace("%", ""),
+
+                // Solo aplica para Erogaciones
+                trabajadoresTemporales:
+                    actividad.trabajadoresTemporales,
+
+                trabajadoresPermanentes:
+                    actividad.trabajadoresPermanentes,
+
+                // Fecha perteneciente a la obligación
+                fechaInicio:
+                    obligacion.fechaInicioOperaciones,
+            })),
+        }));
+
     });
 
-    // Validaciones
-    const [errores, setErrores] = useState({});
+    const [obligacionSeleccionada, setObligacionSeleccionada] =
+        useState("");
 
-    const requiereTrabajadores =
-        obligacionSeleccionada?.requiereTrabajadores ?? false;
-    const handleChange = (campo, valor) => {
+    const [siguienteObligacionId, setSiguienteObligacionId] =
+        useState(1);
 
-        setFormActividad(prev => ({
-            ...prev,
-            [campo]: valor
-        }));
+    const [siguienteRegistroId, setSiguienteRegistroId] =
+        useState(1);
 
-    };
-    const seleccionarObligacion = (id) => {
-        setFormActividad({
-            obligacionId: id,
-            actividadId: "",
-            porcentaje: "",
-            trabajadoresTemporales: "",
-            trabajadoresPermanentes: ""
-        });
 
-    };
-    const seleccionarActividad = (id) => {
-        setFormActividad(prev => ({
+    // =====================================================
+    // AGREGAR OBLIGACIÓN
+    // =====================================================
 
-            ...prev,
-            actividadId: id,
-            porcentaje: "",
-            trabajadoresTemporales: "",
-            trabajadoresPermanentes: ""
-
-        }));
-
-    };
     const agregarObligacion = () => {
 
-        if (!formActividad.obligacionId) return false;
-        if (!formActividad.actividadId) return false;
-        if (!formActividad.porcentaje) return false;
+        if (!obligacionSeleccionada) {
+            return;
+        }
 
-        const fechaActual = new Date().toLocaleDateString("es-MX", {
-            day: "2-digit",
-            month: "2-digit",
-            year: "numeric"
-        });
-
-        const actividad = actividadesDisponibles.find(
-            a => a.id === Number(formActividad.actividadId)
+        const existe = obligaciones.some(
+            (obligacion) =>
+                obligacion.nombre === obligacionSeleccionada
         );
 
-        if (!actividad) return false;
-
-        setObligaciones(prev => {
-
-            const indice = prev.findIndex(
-                o => o.id === Number(formActividad.obligacionId)
+        if (existe) {
+            alert(
+                "La obligación fiscal ya fue agregada."
             );
 
-            // La obligación todavía no existe
-            if (indice === -1) {
+            return;
+        }
 
-                const catalogo = catalogoObligaciones.find(
-                    o => o.id === Number(formActividad.obligacionId)
-                );
+        const nuevaObligacion = {
 
-                return [
-                    ...prev,
-                    {
-                        ...catalogo,
-                        actividades: [],
-                        actividadesAgregadas: [
-                            {
-                                ...actividad,
-                                porcentaje: Number(formActividad.porcentaje),
-                                fechaOperaciones: fechaActual,
-                                trabajadoresTemporales: Number(
-                                    formActividad.trabajadoresTemporales || 0
-                                ),
-                                trabajadoresPermanentes: Number(
-                                    formActividad.trabajadoresPermanentes || 0
-                                )
-                            }
-                        ]
-                    }
-                ];
-            }
+            id: siguienteObligacionId,
 
-            // La obligación ya existe
-            return prev.map(obligacion => {
+            nombre: obligacionSeleccionada,
+
+            fechaInicio: "",
+
+            registros: [],
+
+        };
+
+        setObligaciones((actuales) => [
+            ...actuales,
+            nuevaObligacion,
+        ]);
+
+        setSiguienteObligacionId(
+            (id) => id + 1
+        );
+
+        setObligacionSeleccionada("");
+    };
+    // =====================================================
+    // AGREGAR REGISTRO
+    // =====================================================
+
+    const agregarRegistro = (idObligacion) => {
+
+        const obligacion =
+            obligaciones.find(
+                (item) =>
+                    item.id === idObligacion
+            );
+
+        if (!obligacion) {
+            return;
+        }
+
+        const esErogaciones =
+            obligacion.nombre ===
+            "Impuesto sobre Erogaciones";
+
+
+        const nuevoRegistro = {
+
+            id: siguienteRegistroId,
+
+            actividadEconomica: "",
+
+            participacion: "",
+
+            trabajadoresTemporales:
+                esErogaciones ? 0 : null,
+
+            trabajadoresPermanentes:
+                esErogaciones ? 0 : null,
+
+            fechaInicio:
+                obligacion.fechaInicio,
+
+        };
+
+
+        setObligaciones((actuales) =>
+
+            actuales.map((obligacion) => {
 
                 if (
                     obligacion.id !==
-                    Number(formActividad.obligacionId)
+                    idObligacion
+                ) {
+                    return obligacion;
+                }
+
+                return {
+
+                    ...obligacion,
+
+                    registros: [
+                        ...obligacion.registros,
+                        nuevoRegistro,
+                    ],
+
+                };
+
+            })
+
+        );
+
+
+        setSiguienteRegistroId(
+            (id) => id + 1
+        );
+    };
+
+    // =====================================================
+    // ACTUALIZAR REGISTRO
+    // =====================================================
+
+    const actualizarRegistro = (
+        idObligacion,
+        idRegistro,
+        campo,
+        valor
+    ) => {
+
+        setObligaciones((actuales) =>
+            actuales.map((obligacion) => {
+
+                if (obligacion.id !== idObligacion) {
+                    return obligacion;
+                }
+
+                return {
+                    ...obligacion,
+
+                    registros:
+                        obligacion.registros.map(
+                            (registro) => {
+
+                                if (
+                                    registro.id !== idRegistro
+                                ) {
+                                    return registro;
+                                }
+
+                                return {
+                                    ...registro,
+                                    [campo]: valor,
+                                };
+                            }
+                        ),
+                };
+            })
+        );
+    };
+
+    // =====================================================
+    // ELIMINAR REGISTRO
+    // =====================================================
+
+    const eliminarRegistro = (
+        idObligacion,
+        idRegistro
+    ) => {
+
+        setObligaciones((actuales) =>
+            actuales.map((obligacion) => {
+
+                if (
+                    obligacion.id !== idObligacion
                 ) {
                     return obligacion;
                 }
@@ -334,927 +294,713 @@ const AumentoObligaciones = () => {
                 return {
                     ...obligacion,
 
-                    actividadesAgregadas: [
-                        ...obligacion.actividadesAgregadas,
-
-                        {
-                            ...actividad,
-                            porcentaje: Number(formActividad.porcentaje),
-                            fechaOperaciones: fechaActual,
-                            trabajadoresTemporales: Number(
-                                formActividad.trabajadoresTemporales || 0
-                            ),
-                            trabajadoresPermanentes: Number(
-                                formActividad.trabajadoresPermanentes || 0
-                            )
-                        }
-                    ]
+                    registros:
+                        obligacion.registros.filter(
+                            (registro) =>
+                                registro.id !== idRegistro
+                        ),
                 };
-
-            });
-
-        });
-
-        return true;
-    };
-    const agregarActividad = () => {
-
-        if (!formActividad.obligacionId) return;
-        if (!formActividad.actividadId) return;
-        if (!formActividad.porcentaje) return;
-
-        const actividad = actividadesDisponibles.find(
-
-            a => a.id === Number(formActividad.actividadId)
-
-        );
-
-        if (!actividad) return;
-
-        setObligaciones(prev =>
-
-            prev.map(obligacion => {
-
-                if (obligacion.id !== Number(formActividad.obligacionId))
-                    return obligacion;
-
-                const existe = obligacion.actividadesAgregadas.some(
-
-                    a => a.id === actividad.id
-
-                );
-
-                if (existe) {
-
-                    alert("La actividad ya existe.");
-
-                    return obligacion;
-
-                }
-
-                return {
-
-                    ...obligacion,
-
-                    actividadesAgregadas: [
-
-                        ...obligacion.actividadesAgregadas,
-
-                        {
-
-                            ...actividad,
-
-                            porcentaje: Number(formActividad.porcentaje),
-
-                            trabajadoresTemporales:
-                                requiereTrabajadores
-                                    ? Number(formActividad.trabajadoresTemporales)
-                                    : null,
-
-                            trabajadoresPermanentes:
-                                requiereTrabajadores
-                                    ? Number(formActividad.trabajadoresPermanentes)
-                                    : null
-
-                        }
-
-                    ]
-
-                };
-
             })
-
         );
-
-        setFormActividad(prev => ({
-
-            ...prev,
-
-            actividadId: "",
-
-            porcentaje: "",
-
-            trabajadoresTemporales: "",
-
-            trabajadoresPermanentes: ""
-
-        }));
-
     };
 
-    const formularioValido = formActividad.obligacionId && formActividad.actividadId && formActividad.porcentaje &&
-        (
-            !requiereTrabajadores ||
+    // =====================================================
+    // ELIMINAR OBLIGACIÓN
+    // =====================================================
 
-            (
-                formActividad.trabajadoresTemporales !== "" &&
-                formActividad.trabajadoresPermanentes !== ""
+    const eliminarObligacion = (
+        idObligacion
+    ) => {
+
+        setObligaciones((actuales) =>
+            actuales.filter(
+                (obligacion) =>
+                    obligacion.id !== idObligacion
             )
         );
-
-    const [actividadEditando, setActividadEditando] = useState(null);
-
-
-    const editarActividad = (obligacion, actividad) => {
-
-        setActividadEditando({
-            obligacionId: obligacion.id,
-            actividadId: actividad.id,
-            agregado: actividad.agregado
-        });
-
-        setFormEditar({
-            porcentaje: actividad.porcentaje,
-            trabajadoresTemporales:
-                actividad.trabajadoresTemporales ?? "",
-            trabajadoresPermanentes:
-                actividad.trabajadoresPermanentes ?? ""
-        });
-
     };
-
-    const cancelarEdicion = () => {
-
-        setActividadEditando(null);
-
-        setFormEditar({
-            porcentaje: "",
-            trabajadoresTemporales: "",
-            trabajadoresPermanentes: ""
-        });
-
-    };
-
-    const guardarEdicion = () => {
-
-        if (!actividadEditando) return;
-
-        setObligaciones(prev =>
-
-            prev.map(obligacion => {
-
-                if (obligacion.id !== actividadEditando.obligacionId)
-                    return obligacion;
-
-                const actualizar = (actividad) => {
-
-                    if (actividad.id !== actividadEditando.actividadId)
-                        return actividad;
-
-                    return {
-
-                        ...actividad,
-
-                        porcentaje: Number(formEditar.porcentaje),
-
-                        trabajadoresTemporales:
-                            obligacion.requiereTrabajadores
-                                ? Number(formEditar.trabajadoresTemporales)
-                                : null,
-
-                        trabajadoresPermanentes:
-                            obligacion.requiereTrabajadores
-                                ? Number(formEditar.trabajadoresPermanentes)
-                                : null
-
-                    };
-
-                };
-
-                return {
-
-                    ...obligacion,
-
-                    actividades: obligacion.actividades.map(actualizar),
-
-                    actividadesAgregadas:
-                        obligacion.actividadesAgregadas.map(actualizar)
-
-                };
-
-            })
-
-        );
-
-        cancelarEdicion();
-
-    };
-    const eliminarActividad = (obligacionId, actividadId) => {
-
-        setObligaciones(prev =>
-
-            prev.map(obligacion => {
-
-                if (obligacion.id !== obligacionId)
-                    return obligacion;
-
-                return {
-
-                    ...obligacion,
-
-                    actividadesAgregadas:
-                        obligacion.actividadesAgregadas.filter(
-                            actividad => actividad.id !== actividadId
-                        )
-
-                };
-
-            })
-
-        );
-
-    };
-    const obtenerTotalPorObligacion = (obligacion) => {
-
-        const actividades = [
-            ...(obligacion.actividades ?? []),
-            ...(obligacion.actividadesAgregadas ?? [])
-        ];
-
-        return actividades.reduce(
-
-            (total, actividad) =>
-                total + Number(actividad.porcentaje),
-
-            0
-
-        );
-
-    };
-    const obligacionCompleta = (obligacion) => {
-
-        return obtenerTotalPorObligacion(obligacion) === 100;
-
-    };
-    const todasLasObligacionesCompletas = obligaciones.every(
-
-        obligacionCompleta
-
-    );
-    const obligacionesDisponibles = catalogoObligaciones.filter(
-        ecatalogo => !obligaciones.some(obligacion => obligacion.id === ecatalogo.id)
-    );
-    const [conAgregados, setConAgregados] = useState(false);
 
     return (
-        <div className="space-y-6">
 
-            <HeaderModulo titulo="Aumento de obligaciones"
-                icono="FilePlus2" />
+        <div className="w-full">
 
-            {!conAgregados && (
-                <Obligaciones obligaciones={obligaciones} />
+            {/*Secciòn Agregar obligaciòn fiscal */}
+            <div className="shadow-md sm:rounded-lg sm:border sm:border-gray-200 bg-white mt-4">
 
-            )
-            }
+                {/* Header */}
+                <div className="p-4 bg-slate-100">
 
-            {/*======================================
-    AGREGAR ACTIVIDAD ECONÓMICA
-======================================*/}
+                    {/* Header */}
+                    <div className="flex items-start gap-4">
 
-            <section className="bg-white rounded-2xl shadow-lg border border-gray-200 overflow-hidden">
+                        {/* Icono */}
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                            <Plus size={20} strokeWidth={2} />
+                        </div>
 
-                {/* Encabezado */}
+                        {/* Título y descripción */}
+                        <div>
+                            <h3 className="text-base font-semibold text-gray-900">
+                                Obligaciones fiscales
+                            </h3>
 
-                <div className="border-b bg-gray-50 px-8 py-6">
+                            <p className="mt-1 text-sm text-gray-500">
+                                Seleccione las obligaciones fiscales y agregue las
+                                actividades económicas correspondientes.
+                            </p>
+                        </div>
 
-                    <h2 className="text-xl font-bold text-slate-800">
-                        Aumentar obligación fiscal
-                    </h2>
-
-                    <p className="text-sm text-slate-500 mt-2">
-                        Seleccione la obligación fiscal que desea incorporar al
-                        contribuyente y registre las actividades económicas asociadas a la misma.
-                    </p>
+                    </div>
 
                 </div>
 
-                <div className="p-8">
+                {/* Contenido */}
+                <div className="p-6">
+                    {/* =================================================
+          AGREGAR OBLIGACIÓN
+      ================================================= */}
 
-                    {/* ===================== */}
-                    {/* Obligación Fiscal */}
-                    {/* ===================== */}
-
-                    <div className="mb-8">
-
-                        <label className="block text-sm font-semibold text-slate-700 mb-2">
-                            Obligación Fiscal
-                        </label>
+                    <div className="mb-6 flex items-center gap-2">
 
                         <select
-                            className="
-                    w-full
-                    rounded-xl
-                    border
-                    border-gray-300
-                    px-4
-                    py-3
-                    bg-white
-                    focus:outline-none
-                    focus:ring-2
-                    focus:ring-sky-500
-                    focus:border-sky-500
-                    transition
-                "
-                            value={formActividad.obligacionId}
+                            value={obligacionSeleccionada}
                             onChange={(e) =>
-                                seleccionarObligacion(e.target.value)
+                                setObligacionSeleccionada(
+                                    e.target.value
+                                )
                             }
+                            className="
+            h-10
+            w-[360px]
+            rounded-lg
+            border
+            border-gray-300
+            bg-white
+            px-3
+            text-sm
+            text-gray-700
+            outline-none
+            transition
+            focus:border-blue-500
+            focus:ring-2
+            focus:ring-blue-100
+          "
                         >
 
                             <option value="">
-                                Seleccione una obligación fiscal...
+                                Seleccione obligación fiscal...
                             </option>
 
-                            {obligacionesDisponibles.map((obligacion) => (
+                            {obligacionesDisponibles.map(
+                                (obligacion) => (
 
-                                <option
-                                    key={obligacion.id}
-                                    value={obligacion.id}
-                                >
-                                    {obligacion.nombre}
-                                </option>
+                                    <option
+                                        key={obligacion}
+                                        value={obligacion}
+                                    >
+                                        {obligacion}
+                                    </option>
 
-                            ))}
+                                )
+                            )}
 
                         </select>
 
-                    </div>
 
-                    <div className="grid grid-cols-12 gap-6 items-end">
+                        <button
+                            type="button"
+                            onClick={agregarObligacion}
+                            disabled={!obligacionSeleccionada}
+                            className="
+            flex
+            h-10
+            w-10
+            items-center
+            justify-center
+            rounded-full
+            border
+            border-blue-200
+            bg-blue-600
+            text-white
+            shadow-sm
+            transition-all
+            duration-200
+            hover:bg-blue-700
+            hover:shadow
+            active:scale-95
+            disabled:cursor-not-allowed
+            disabled:opacity-40
+          "
+                            title="Agregar obligación fiscal"
+                        >
 
-                        {/* Actividad */}
-
-                        <div className="col-span-4">
-
-                            <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Actividad Económica
-                            </label>
-
-                            <select
-                                disabled={!obligacionSeleccionada}
-                                value={formActividad.actividadId}
-                                onChange={(e) =>
-                                    seleccionarActividad(e.target.value)
-                                }
-                                className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-gray-300
-                        px-4
-                        py-3
-                        bg-white
-                        disabled:bg-gray-100
-                        disabled:text-gray-400
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-sky-500
-                        transition
-                    "
-                            >
-
-                                <option value="">
-                                    Seleccione...
-                                </option>
-
-                                {actividadesDisponibles.map((actividad) => (
-
-                                    <option
-                                        key={actividad.id}
-                                        value={actividad.id}
-                                    >
-                                        {actividad.nombre}
-                                    </option>
-
-                                ))}
-
-                            </select>
-
-                        </div>
-
-                        {/* Porcentaje */}
-
-                        <div className="col-span-2">
-
-                            <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                Participación (%)
-                            </label>
-
-                            <input type="number"
-                                min={1}
-                                max={100}
-                                disabled={!formActividad.actividadId}
-                                value={formActividad.porcentaje}
-                                onChange={(e) =>
-                                    handleChange("porcentaje", e.target.value)
-                                }
-                                className="
-                        w-full
-                        rounded-xl
-                        border
-                        border-gray-300
-                        px-4
-                        py-3
-                        disabled:bg-gray-100
-                        disabled:text-gray-400
-                        focus:outline-none
-                        focus:ring-2
-                        focus:ring-sky-500
-                    "
+                            <Plus
+                                size={19}
+                                strokeWidth={2}
                             />
 
-                        </div>
+                        </button>
 
-                        {/* Trabajadores Temporales */}
+                    </div>
 
-                        {requiereTrabajadores && (
+                    {/* =================================================
+          OBLIGACIONES
+      ================================================= */}
 
-                            <div className="col-span-2">
+                    <div className="space-y-5">
 
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Trab. Temporales
-                                </label>
-
-                                <input
-                                    type="number"
-                                    min={0}
-                                    disabled={!formActividad.porcentaje}
-                                    value={formActividad.trabajadoresTemporales}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            "trabajadoresTemporales",
-                                            e.target.value
-                                        )
-                                    }
+                        {obligaciones.map((obligacion) => {
+                            const tienetrabajadores =obligacion.trabajadores
+                            return (
+                                <div
+                                    key={obligacion.id}
                                     className="
-                            w-full
-                            rounded-xl
-                            border
-                            border-gray-300
-                            px-4
-                            py-3
-                            disabled:bg-gray-100
-                            focus:outline-none
-                            focus:ring-2
-                            focus:ring-sky-500
+                                        overflow-hidden
+                                        rounded-xl
+                                        border
+                                        border-gray-200
+                                        bg-white
+                                    "
+                                >
+
+                                    {/* =========================================
+                  ENCABEZADO OBLIGACIÓN
+              ========================================= */}
+
+                                    <div
+                                        className="
+                  flex
+                  items-center
+                  justify-between
+                  border-b
+                  border-indigo-200
+                  bg-indigo-50
+                  px-5
+                  py-4
+                "
+                                    >
+
+                                        <div>
+
+                                            <span
+                                                className="
+                      block
+                      text-[11px]
+                      font-bold
+                      uppercase
+                      tracking-wider
+                      text-indigo-600
+                    "
+                                            >
+                                                Obligación fiscal
+                                            </span>
+
+                                            <span
+                                                className="
+                      mt-1
+                      block
+                      text-base
+                      font-semibold
+                      text-indigo-950
+                    "
+                                            >
+                                                {obligacion.nombre}
+                                            </span>
+
+                                        </div>
+
+
+                                        <div className="flex items-center gap-2">
+
+                                            {/* AGREGAR REGISTRO */}
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    agregarRegistro(
+                                                        obligacion.id
+                                                    )
+                                                }
+                                                className="
+                      flex
+                      h-9
+                      w-9
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-blue-200
+                      bg-white
+                      text-blue-600
+                      shadow-sm
+                      transition-all
+                      duration-200
+                      hover:border-blue-500
+                      hover:bg-blue-50
+                      hover:shadow
+                      active:scale-95
+                    "
+                                                title="Agregar registro"
+                                            >
+
+                                                <Plus
+                                                    size={18}
+                                                    strokeWidth={2}
+                                                />
+
+                                            </button>
+
+
+                                            {/* ELIMINAR OBLIGACIÓN */}
+
+                                            <button
+                                                type="button"
+                                                onClick={() =>
+                                                    eliminarObligacion(
+                                                        obligacion.id
+                                                    )
+                                                }
+                                                className="
+                      flex
+                      h-9
+                      w-9
+                      items-center
+                      justify-center
+                      rounded-full
+                      border
+                      border-gray-200
+                      bg-white
+                      text-gray-400
+                      shadow-sm
+                      transition-all
+                      duration-200
+                      hover:border-red-200
+                      hover:bg-red-50
+                      hover:text-red-600
+                      hover:shadow
+                      active:scale-95
+                    "
+                                                title="Eliminar obligación"
+                                            >
+
+                                                <Trash2
+                                                    size={17}
+                                                    strokeWidth={2}
+                                                />
+
+                                            </button>
+
+                                        </div>
+
+                                    </div>
+
+
+                                    {/* =========================================
+                  TABLA DE REGISTROS
+              ========================================= */}
+
+                                    <div className="overflow-x-auto">
+
+                                        <table className="w-full min-w-[900px]">
+
+                                            <thead>
+
+                                                <tr
+                                                    className="
+                        border-b
+                        border-gray-200
+                        bg-gray-50
+                      "
+                                                >
+
+                                                    <th
+                                                        className="
+                          px-4
+                          py-3
+                          text-left
+                          text-xs
+                          font-semibold
+                          text-gray-600
                         "
-                                />
+                                                    >
+                                                        Actividad económica
+                                                    </th>
 
-                            </div>
-
-                        )}
-
-                        {/* Trabajadores Permanentes */}
-
-                        {requiereTrabajadores && (
-
-                            <div className="col-span-2">
-
-                                <label className="block text-sm font-semibold text-slate-700 mb-2">
-                                    Trab. Permanentes
-                                </label>
-
-                                <input
-                                    type="number"
-                                    min={0}
-                                    disabled={!formActividad.porcentaje}
-                                    value={formActividad.trabajadoresPermanentes}
-                                    onChange={(e) =>
-                                        handleChange(
-                                            "trabajadoresPermanentes",
-                                            e.target.value
-                                        )
-                                    }
-                                    className="
-                            w-full
-                            rounded-xl
-                            border
-                            border-gray-300
-                            px-4
-                            py-3
-                            disabled:bg-gray-100
-                            focus:outline-none
-                            focus:ring-2
-                            focus:ring-sky-500
+                                                    <th
+                                                        className="
+                          px-4
+                          py-3
+                          text-left
+                          text-xs
+                          font-semibold
+                          text-gray-600
                         "
-                                />
+                                                    >
+                                                        % participación
+                                                    </th>
 
-                            </div>
+                                                    {tienetrabajadores && (
+                                                        <>
+                                                            <th
+                                                                className="
+                px-4
+                py-3
+                text-left
+                text-xs
+                font-semibold
+                text-gray-600
+            "
+                                                            >
+                                                                Trab. temp.
+                                                            </th>
 
-                        )}
+                                                            <th
+                                                                className="
+                px-4
+                py-3
+                text-left
+                text-xs
+                font-semibold
+                text-gray-600
+            "
+                                                            >
+                                                                Trab. perm.
+                                                            </th>
+                                                        </>
+                                                    )}
 
-                        {/* Botón */}
+                                                    <th
+                                                        className="
+                          px-4
+                          py-3
+                          text-left
+                          text-xs
+                          font-semibold
+                          text-gray-600
+                        "
+                                                    >
+                                                        Fecha inicio de operaciones
+                                                    </th>
 
-                        <div className={requiereTrabajadores ? "col-span-2" : "col-span-6"}>
+                                                    <th
+                                                        className="
+                          w-16
+                          px-4
+                          py-3
+                          text-center
+                          text-xs
+                          font-semibold
+                          text-gray-600
+                        "
+                                                    >
+                                                        Eliminar
+                                                    </th>
 
-                            <button
-                                onClick={() => {
+                                                </tr>
 
-                                    const agregado = agregarObligacion();
+                                            </thead>
 
-                                    if (agregado) {
-                                        setConAgregados(true);
-                                    }
+                                            <tbody>
 
-                                }}
-                                disabled={!formularioValido}
-                                className="
+                                                {/* SIN REGISTROS */}
+
+                                                {obligacion.registros.length === 0 && (
+
+                                                    <tr>
+
+                                                        <td
+                                                            colSpan={6}
+                                                            className="
+                            px-4
+                            py-8
+                            text-center
+                            text-sm
+                            text-gray-400
+                          "
+                                                        >
+
+                                                            No hay registros para esta
+                                                            obligación.
+
+                                                            <br />
+
+                                                            <span className="text-xs">
+
+                                                                Presione el botón +
+
+                                                                para agregar una actividad
+                                                                económica.
+
+                                                            </span>
+
+                                                        </td>
+
+                                                    </tr>
+
+                                                )}
+
+
+                                                {/* REGISTROS */}
+
+                                                {obligacion.registros.map(
+                                                    (registro) => (
+
+                                                        <tr
+                                                            key={registro.id}
+                                                            className="
+                            border-b
+                            border-gray-100
+                            last:border-b-0
+                            hover:bg-gray-50
+                          "
+                                                        >
+
+                                                            {/* ACTIVIDAD ECONÓMICA */}
+
+                                                            <td className="px-4 py-3">
+
+                                                                <select
+                                                                    value={registro.actividadEconomica}
+                                                                    onChange={(e) =>
+                                                                        actualizarRegistro(
+                                                                            obligacion.id,
+                                                                            registro.id,
+                                                                            "actividadEconomica",
+                                                                            e.target.value
+                                                                        )
+                                                                    }
+                                                                    className="
         w-full
-        h-12
-        rounded-xl
-        bg-sky-600
-        hover:bg-sky-700
-        text-white
-        font-semibold
-        shadow-md
-        hover:shadow-lg
-        transition-all
-        duration-200
-        disabled:bg-gray-300
-        disabled:shadow-none
-        disabled:cursor-not-allowed
+        rounded-md
+        border
+        border-gray-300
+        bg-white
+        px-2.5
+        py-2
+        text-sm
+        outline-none
+        focus:border-blue-500
+        focus:ring-2
+        focus:ring-blue-100
     "
-                            >
-                                + Agregar Actividad
-                            </button>
+                                                                >
+                                                                    <option value="">
+                                                                        Seleccione...
+                                                                    </option>
 
-                        </div>
+                                                                    {[
+                                                                        ...new Set([
+                                                                            ...obligacion.registros
+                                                                                .map((item) => item.actividadEconomica)
+                                                                                .filter(Boolean),
+
+                                                                            ...actividadesEconomicas,
+                                                                        ]),
+                                                                    ].map((actividad) => (
+                                                                        <option
+                                                                            key={actividad}
+                                                                            value={actividad}
+                                                                        >
+                                                                            {actividad}
+                                                                        </option>
+                                                                    ))}
+                                                                </select>
+
+                                                            </td>
+
+
+                                                            {/* % PARTICIPACIÓN */}
+
+                                                            <td className="px-4 py-3">
+
+                                                                <input
+                                                                    type="number"
+                                                                    min="0"
+                                                                    max="100"
+                                                                    value={
+                                                                        registro.participacion
+                                                                    }
+                                                                    onChange={(e) =>
+                                                                        actualizarRegistro(
+                                                                            obligacion.id,
+                                                                            registro.id,
+                                                                            "participacion",
+                                                                            e.target.value
+                                                                        )
+                                                                    }
+                                                                    placeholder="%"
+                                                                    className="
+                                w-28
+                                rounded-md
+                                border
+                                border-gray-300
+                                px-2.5
+                                py-2
+                                text-sm
+                                outline-none
+                                focus:border-blue-500
+                                focus:ring-2
+                                focus:ring-blue-100
+                              "
+                                                                />
+
+                                                            </td>
+
+
+                                                            {tienetrabajadores && (
+                                                                <>
+                                                                    {/* =================================
+            TRABAJADORES TEMPORALES
+        ================================= */}
+
+                                                                    <td className="px-4 py-3">
+
+                                                                        <input
+                                                                            type="number"
+                                                                            min="0"
+                                                                            value={registro.trabajadoresTemporales}
+                                                                            onChange={(e) =>
+                                                                                actualizarRegistro(
+                                                                                    obligacion.id,
+                                                                                    registro.id,
+                                                                                    "trabajadoresTemporales",
+                                                                                    Number(e.target.value)
+                                                                                )
+                                                                            }
+                                                                            className="
+                    w-24
+                    rounded-md
+                    border
+                    border-gray-300
+                    px-2.5
+                    py-2
+                    text-sm
+                    outline-none
+                    focus:border-blue-500
+                    focus:ring-2
+                    focus:ring-blue-100
+                "
+                                                                        />
+
+                                                                    </td>
+
+
+                                                                    {/* =================================
+            TRABAJADORES PERMANENTES
+        ================================= */}
+
+                                                                    <td className="px-4 py-3">
+
+                                                                        <input
+                                                                            type="number"
+                                                                            min="0"
+                                                                            value={registro.trabajadoresPermanentes}
+                                                                            onChange={(e) =>
+                                                                                actualizarRegistro(
+                                                                                    obligacion.id,
+                                                                                    registro.id,
+                                                                                    "trabajadoresPermanentes",
+                                                                                    Number(e.target.value)
+                                                                                )
+                                                                            }
+                                                                            className="
+                    w-24
+                    rounded-md
+                    border
+                    border-gray-300
+                    px-2.5
+                    py-2
+                    text-sm
+                    outline-none
+                    focus:border-blue-500
+                    focus:ring-2
+                    focus:ring-blue-100
+                "
+                                                                        />
+
+                                                                    </td>
+                                                                </>
+                                                            )}
+
+                                                            {/* FECHA INICIO */}
+
+
+                                                            <td className="px-4 py-3">
+                                                                {obligacion.fechaInicio}
+                                                            </td>
+
+                                                            {/* ELIMINAR REGISTRO */}
+
+                                                            <td
+                                                                className="
+                              px-4
+                              py-3
+                              text-center
+                            "
+                                                            >
+
+                                                                <button
+                                                                    type="button"
+                                                                    onClick={() =>
+                                                                        eliminarRegistro(
+                                                                            obligacion.id,
+                                                                            registro.id
+                                                                        )
+                                                                    }
+                                                                    className="
+                                inline-flex
+                                h-8
+                                w-8
+                                items-center
+                                justify-center
+                                rounded-full
+                                border
+                                border-gray-200
+                                bg-white
+                                text-gray-400
+                                shadow-sm
+                                transition-all
+                                duration-200
+                                hover:border-red-200
+                                hover:bg-red-50
+                                hover:text-red-600
+                                hover:shadow
+                                active:scale-95
+                              "
+                                                                    title="Eliminar registro"
+                                                                >
+
+                                                                    <Trash2
+                                                                        size={16}
+                                                                        strokeWidth={2}
+                                                                    />
+
+                                                                </button>
+
+                                                            </td>
+
+                                                        </tr>
+
+                                                    )
+                                                )}
+
+                                            </tbody>
+
+                                        </table>
+
+                                    </div>
+
+                                </div>
+
+                            )
+                        }
+                        )}
 
                     </div>
 
                 </div>
 
-            </section>
-            {/*======================================
-          RESUMEN DE OBLIGACIONES
-      ======================================*/}
-
-            {conAgregados && (
-                <section>
-
-                    <div className="bg-white rounded-lg shadow-xl">
-
-                        <div className="border-b px-6 py-4 flex justify-between items-center">
-
-                            <div>
-
-                                <h2 className="text-lg font-semibold">
-                                    Resumen de Obligaciones
-                                </h2>
-
-                                <p className="text-sm text-gray-500">
-                                    Consulte las actividades económicas asociadas a las obligaciones fiscales del contribuyente.
-                                </p>
-
-                            </div>
-
-                        </div>
-                        <div className="p-4">
-                            <div className="overflow-hidden rounded-lg">
-
-                                <table className="min-w-full divide-y divide-gray-200">
-
-                                    <thead className="bg-slate-100 border-b border-slate-200">
-
-                                        <tr>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Obligación Fiscal
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Actividad Económica
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                %
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Trab. Temp.
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Trab. Perm.
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Tipo
-                                            </th>
-                                            <th className="px-5 py-4 text-xs font-bold uppercase tracking-wider text-slate-700 text-center">
-                                                Fecha de Inicio de Operaciones
-                                            </th>
-
-                                            <th className="px-5 py-4 text-left text-xs font-bold uppercase tracking-wider text-slate-700">
-                                                Acciones
-                                            </th>
-
-                                        </tr>
-
-                                    </thead>
-
-                                    <tbody className="divide-y divide-gray-100">
-
-                                        {obligaciones.map((obligacion) => {
-
-                                            const actividades = [
-
-                                                ...obligacion.actividades.map(a => ({
-                                                    ...a, agregado: false
-                                                })),
-
-                                                ...obligacion.actividadesAgregadas.map(a => ({
-                                                    ...a, agregado: true
-                                                }))
-
-                                            ];
-                                            return actividades.map((actividad) => (
-
-                                                <tr
-                                                    key={`${obligacion.id}-${actividad.id}-${actividad.agregado}`}
-                                                    className="
-        hover:bg-sky-50
-        transition-all
-        duration-200
-        even:bg-gray-50/40
-    "
-                                                >
-
-                                                    {/* Obligación */}
-
-                                                    <td className="px-4 py-3 font-medium">
-
-                                                        {obligacion.nombre}
-
-                                                    </td>
-
-                                                    {/* Actividad */}
-
-                                                    <td className="px-4 py-3">
-
-                                                        {actividad.nombre}
-
-                                                    </td>
-
-                                                    {/* Porcentaje */}
-
-                                                    <td className="px-4 py-3 text-center">
-
-                                                        {actividadEditando?.actividadId === actividad.id ? (
-
-                                                            <input
-                                                                type="number"
-                                                                className="w-20 border rounded p-1 text-center"
-                                                                value={formEditar.porcentaje}
-                                                                onChange={(e) =>
-                                                                    setFormEditar(prev => ({
-                                                                        ...prev,
-                                                                        porcentaje: e.target.value
-                                                                    }))
-                                                                }
-                                                            />
-
-                                                        ) : (
-
-                                                            `${actividad.porcentaje}%`
-
-                                                        )}
-
-                                                    </td>
-
-                                                    {/* Trabajadores Temporales */}
-
-                                                    <td className="px-4 py-3 text-center">
-
-                                                        {obligacion.requiereTrabajadores ? (
-                                                            actividadEditando?.actividadId === actividad.id ? (
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-20 border rounded p-1 text-center"
-                                                                    value={formEditar.trabajadoresTemporales}
-                                                                    onChange={(e) =>
-                                                                        setFormEditar(prev => ({
-                                                                            ...prev,
-                                                                            trabajadoresTemporales: e.target.value
-                                                                        }))
-                                                                    }
-                                                                />
-                                                            ) : (
-                                                                actividad.trabajadoresTemporales
-                                                            )
-                                                        ) : (
-                                                            "—"
-                                                        )}
-
-                                                    </td>
-
-                                                    {/* Trabajadores Permanentes */}
-
-                                                    <td className="px-4 py-3 text-center">
-
-                                                        {obligacion.requiereTrabajadores ? (
-                                                            actividadEditando?.actividadId === actividad.id ? (
-                                                                <input
-                                                                    type="number"
-                                                                    className="w-20 border rounded p-1 text-center"
-                                                                    value={formEditar.trabajadoresPermanentes}
-                                                                    onChange={(e) =>
-                                                                        setFormEditar(prev => ({
-                                                                            ...prev,
-                                                                            trabajadoresPermanentes: e.target.value
-                                                                        }))
-                                                                    }
-                                                                />
-                                                            ) : (
-                                                                actividad.trabajadoresPermanentes
-                                                            )
-                                                        ) : (
-                                                            "—"
-                                                        )}
-
-                                                    </td>
-
-                                                    {/* Tipo */}
-
-                                                    <td className="px-4 py-3 text-center">
-
-                                                        <span
-                                                            className={`
-px-3
-py-1
-rounded-full
-text-xs
-font-semibold
-shadow-sm
-${actividad.agregado
-                                                                    ? "bg-emerald-100 text-emerald-700 border border-emerald-200"
-                                                                    : "bg-slate-100 text-slate-600 border border-slate-200"
-                                                                  }
-`}
-                                                        >
-
-                                                            {actividad.agregado
-                                                                ? "Agregada"
-                                                                : "Existente"}
-
-                                                        </span>
-
-                                                    </td>
-
-                                                    {/* Acciones */}
-                                                    <td className="text-center">
-                                                        {actividad.fechaOperaciones}
-                                                    </td>
-                                                    <td>
-
-                                                        {actividadEditando?.actividadId === actividad.id ? (
-
-                                                            <div className="flex justify-center gap-2">
-                                                                <button
-                                                                    onClick={guardarEdicion}
-                                                                    className="
-        flex
-        items-center
-        gap-2
-        rounded-lg
-        bg-emerald-600
-        hover:bg-emerald-700
-        text-white
-        px-3
-        py-2
-        text-sm
-        transition
-    "
-                                                                >
-                                                                    <Check size={16} />
-                                                                    Guardar
-                                                                </button>
-
-                                                                <button
-                                                                    onClick={cancelarEdicion}
-                                                                    className="
-        flex
-        items-center
-        gap-2
-        rounded-lg
-        bg-gray-500
-        hover:bg-gray-600
-        text-white
-        px-3
-        py-2
-        text-sm
-        transition
-    "
-                                                                >
-                                                                    <X size={16} />
-                                                                    Cancelar
-                                                                </button>
-
-                                                            </div>
-
-                                                        ) : (
-
-                                                            <div className="flex justify-center gap-2">
-
-                                                                <button
-                                                                    onClick={() => editarActividad(obligacion, actividad)}
-                                                                    className="
-        flex
-        items-center
-        gap-2
-        rounded-lg
-        bg-blue-600
-        hover:bg-blue-700
-        text-white
-        px-3
-        py-2
-        text-sm
-        transition
-    "
-                                                                >
-                                                                    <Pencil size={16} />
-                                                                    Editar
-                                                                </button>
-
-                                                                {actividad.agregado && (
-                                                                    <button
-                                                                        onClick={() =>
-                                                                            eliminarActividad(
-                                                                                obligacion.id,
-                                                                                actividad.id
-                                                                            )
-                                                                        }
-                                                                        className="
-        flex
-        items-center
-        gap-2
-        rounded-lg
-        bg-red-600
-        hover:bg-red-700
-        text-white
-        px-3
-        py-2
-        text-sm
-        transition
-    "
-                                                                    >
-                                                                        <Trash2 size={16} />
-                                                                        Eliminar
-                                                                    </button>
-
-                                                                )}
-
-                                                            </div>
-
-                                                        )}
-
-                                                    </td>
-
-                                                </tr>
-
-                                            ));
-
-                                        })}
-
-                                    </tbody>
-
-                                </table>
-
-                            </div>
-                        </div>
-
-                        {/* <span
-                        className={`px-3 py-1 rounded-full text-sm font-medium ${total === 100
-                            ? "bg-green-100 text-green-700"
-                            : "bg-red-100 text-red-700"
-                            }`}
-                    >
-
-                        {total}%
-
-
-                    </span> */}
-                    </div>
-
-                </section>
-            )}
-
-
-            {/*======================================
-          NAVEGACIÓN
-      ======================================*/}
-
-            <section>
-
-                {/* Botón Regresar */}
-
-                {/* Botón Siguiente */}
-
-            </section>
-
+            </div>
         </div>
     );
-};
-
-export default AumentoObligaciones;
+}
