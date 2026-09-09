@@ -30,6 +30,7 @@ export default function ObligacionesFiscales() {
             obligacion: "IMPUESTO SOBRE EROGACIONES POR REMUNERACIONES AL TRABAJO PERSONAL",
             fechaInicioOperaciones: "01/01/2026",
             trabajadores: true,
+            fijo: true,
             actividades: [
                 {
                     id: 1,
@@ -53,6 +54,7 @@ export default function ObligacionesFiscales() {
             obligacion: "DIVERSIONES Y ESPECTACULOS PUBLICOS",
             fechaInicioOperaciones: "15/02/2026",
             trabajadores: false,
+            fijo: true,
             actividades: [
                 {
                     id: 3,
@@ -78,6 +80,7 @@ export default function ObligacionesFiscales() {
             nombre: obligacion.obligacion,
             fechaInicio: obligacion.fechaInicioOperaciones,
             trabajadores: obligacion.trabajadores,
+            fijo: true,
             registros: obligacion.actividades.map((actividad) => ({
                 id: actividad.id,
 
@@ -319,6 +322,16 @@ export default function ObligacionesFiscales() {
             )
         );
     };
+    const porcentaje = 75;
+
+    const colorBarra =
+        porcentaje < 100
+            ? "bg-yellow-500"
+            : porcentaje === 100
+                ? "bg-green-500"
+                : "bg-red-500";
+
+    const porcentajeVisual = Math.min(porcentaje, 100);
 
     return (
 
@@ -333,6 +346,313 @@ export default function ObligacionesFiscales() {
                 icono="ReceiptText"
 
             />
+               <div className="shadow-sm sm:rounded-lg sm:border sm:border-gray-200 bg-white mt-4">
+
+                <div className="p-6">
+
+                    {/* =================================================
+            HEADER
+        ================================================= */}
+
+                    <div className="flex items-start gap-4">
+
+                        {/* ICONO */}
+                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
+
+                            <ClipboardList
+                                size={20}
+                                strokeWidth={2}
+                            />
+
+                        </div>
+
+                        {/* TÍTULO */}
+                        <div>
+
+                            <h3 className="text-base font-semibold text-gray-900">
+                                Obligaciones fiscales actuales
+                            </h3>
+
+                            <p className="mt-1 text-sm text-gray-500">
+                                Consulte las obligaciones fiscales vigentes y
+                                las actividades económicas asociadas al contribuyente.
+                            </p>
+
+                        </div>
+
+                    </div>
+
+
+                    {/* =================================================
+            CONTENIDO
+        ================================================= */}
+
+                    <div className="mt-6">
+
+                        {obligacionesActuales.length === 0 ? (
+
+                            /* =========================================
+                               SIN OBLIGACIONES
+                            ========================================= */
+
+                            <div className="flex items-center gap-3 rounded-lg border border-blue-100 bg-blue-50 px-4 py-4">
+
+                                <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full bg-white text-blue-600">
+
+                                    <Info
+                                        size={18}
+                                        strokeWidth={2}
+                                    />
+
+                                </div>
+
+                                <div>
+
+                                    <p className="text-sm font-medium text-blue-900">
+                                        El contribuyente no cuenta con obligaciones fiscales registradas
+                                    </p>
+
+                                </div>
+
+                            </div>
+
+                        ) : (
+
+                            /* =========================================
+                               TABLA
+                            ========================================= */
+
+                            <div className="overflow-hidden rounded-lg border border-gray-200">
+
+                                <div className="overflow-x-auto">
+
+                                    <table className="w-full min-w-[950px]">
+
+                                        <thead>
+
+                                            <tr className="border-b border-gray-200 bg-gray-50">
+
+                                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                    Obligaciòn Fiscal
+                                                </th>
+                                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                    Actividad económica
+                                                </th>
+
+                                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                    Porcentaje
+                                                </th>
+
+                                                <>
+                                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                        Trabajadores temporales
+                                                    </th>
+
+                                                    <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                        Trabajadores permanentes
+                                                    </th>
+                                                </>
+
+
+                                                <th className="px-4 py-3 text-left text-xs font-semibold text-gray-600">
+                                                    Fecha inicio de operaciones
+                                                </th>
+
+
+
+                                            </tr>
+
+                                        </thead>
+
+
+                                        <tbody>
+
+                                            {obligacionesActuales.map((obligacion) => (
+
+                                                <>
+                                                    {/* =====================================
+                                                FILAS DE ACTIVIDADES
+                                            ===================================== */}
+
+                                                    {obligacion.actividades.map(
+                                                        (actividad, index) => (
+
+                                                            <tr
+                                                                key={actividad.id}
+                                                                className="
+                                                            border-b
+                                                            border-gray-100
+                                                            last:border-b-0
+                                                            hover:bg-gray-50
+                                                        "
+                                                            >
+
+                                                                {/* =================================
+                                                            OBLIGACIÓN
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3 align-top">
+
+                                                                    {index === 0 ? (
+
+                                                                        <div className="flex items-center gap-2">
+
+                                                                            <span
+                                                                                className="
+                                                                            inline-flex
+                                                                            rounded-md
+                                                                            bg-gray-100
+                                                                            px-2.5
+                                                                            py-1.5
+                                                                            text-xs
+                                                                            font-semibold
+                                                                            text-gray-700
+                                                                        "
+                                                                            >
+                                                                                {obligacion.obligacion}
+                                                                            </span>
+
+                                                                        </div>
+
+                                                                    ) : (
+
+                                                                        <span className="text-gray-300">
+                                                                            —
+                                                                        </span>
+
+                                                                    )}
+
+                                                                </td>
+
+
+                                                                {/* =================================
+                                                            ACTIVIDAD ECONÓMICA
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3">
+
+                                                                    <span className="text-sm text-gray-700">
+                                                                        {actividad.actividadEconomica}
+                                                                    </span>
+
+                                                                </td>
+
+                                                                {/* =================================
+                                                            PORCENTAJE
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3">
+
+                                                                    <span
+                                                                        className="
+                                                                    inline-flex
+                                                                    rounded-full
+                                                                    bg-blue-50
+                                                                    px-2.5
+                                                                    py-1
+                                                                    text-xs
+                                                                    font-medium
+                                                                    text-blue-700
+                                                                "
+                                                                    >
+                                                                        {actividad.porcentaje}
+                                                                    </span>
+
+                                                                </td>
+
+
+                                                                {/* =================================
+                                                            TRABAJADORES TEMPORALES
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3">
+
+                                                                    {actividad.trabajadoresTemporales !== null ? (
+
+                                                                        <span className="text-sm text-gray-700">
+                                                                            {actividad.trabajadoresTemporales}
+                                                                        </span>
+
+                                                                    ) : (
+
+                                                                        <span className="text-xs text-gray-400">
+                                                                            No aplica
+                                                                        </span>
+
+                                                                    )}
+
+                                                                </td>
+
+
+                                                                {/* =================================
+                                                            TRABAJADORES PERMANENTES
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3">
+
+                                                                    {actividad.trabajadoresPermanentes !== null ? (
+
+                                                                        <span className="text-sm text-gray-700">
+                                                                            {actividad.trabajadoresPermanentes}
+                                                                        </span>
+
+                                                                    ) : (
+
+                                                                        <span className="text-xs text-gray-400">
+                                                                            No aplica
+                                                                        </span>
+
+                                                                    )}
+
+                                                                </td>
+
+                                                                {/* =================================
+                                                            FECHA INICIO
+                                                        ================================= */}
+
+                                                                <td className="px-4 py-3">
+
+                                                                    {index === 0 ? (
+
+                                                                        <span className="text-sm text-gray-700">
+                                                                            {obligacion.fechaInicioOperaciones}
+                                                                        </span>
+
+                                                                    ) : (
+
+                                                                        <span className="text-gray-300">
+                                                                            —
+                                                                        </span>
+
+                                                                    )}
+
+                                                                </td>
+
+                                                            </tr>
+
+                                                        )
+                                                    )}
+
+                                                </>
+                                            )
+                                            )}
+
+                                        </tbody>
+
+                                    </table>
+
+                                </div>
+
+                            </div>
+
+                        )}
+
+                    </div>
+
+                </div>
+
+            </div>
+
             {/*Secciòn Agregar obligaciòn fiscal */}
             <div className="shadow-md sm:rounded-lg sm:border sm:border-gray-200 bg-white mt-4">
 
@@ -354,7 +674,7 @@ export default function ObligacionesFiscales() {
                             </h3>
 
                             <p className="mt-1 text-sm text-gray-500">
-                                Seleccione la obligación fiscal que desea incorporar al contribuyente 
+                                Seleccione la obligación fiscal que desea incorporar al contribuyente
                                 y registre las actividades económicas asociadas a la misma.
                             </p>
                         </div>
@@ -362,7 +682,31 @@ export default function ObligacionesFiscales() {
                     </div>
 
                 </div>
+                <div className="w-full px-6 py-3">
+                    <div className="flex items-center justify-between mb-1">
+                        <span className="text-sm font-medium text-gray-700">
+                            Porcentaje acumulado
+                        </span>
 
+                        <span
+                            className={`text-sm font-semibold ${porcentaje < 100
+                                ? "text-yellow-600"
+                                : porcentaje === 100
+                                    ? "text-green-600"
+                                    : "text-red-600"
+                                }`}
+                        >
+                            {porcentaje}%
+                        </span>
+                    </div>
+
+                    <div className="w-full h-2.5 bg-gray-200 rounded-full overflow-hidden">
+                        <div
+                            className={`h-full rounded-full transition-all duration-300 ${colorBarra}`}
+                            style={{ width: `${porcentajeVisual}%` }}
+                        />
+                    </div>
+                </div>
                 {/* Contenido */}
                 <div className="p-6">
                     {/* =================================================
@@ -561,15 +905,15 @@ export default function ObligacionesFiscales() {
 
 
                                             {/* ELIMINAR OBLIGACIÓN */}
-
-                                            <button
-                                                type="button"
-                                                onClick={() =>
-                                                    eliminarObligacion(
-                                                        obligacion.id
-                                                    )
-                                                }
-                                                className="
+                                            {!obligacion.fijo && (
+                                                <button
+                                                    type="button"
+                                                    onClick={() =>
+                                                        eliminarObligacion(
+                                                            obligacion.id
+                                                        )
+                                                    }
+                                                    className="
                       flex
                       h-9
                       w-9
@@ -589,16 +933,18 @@ export default function ObligacionesFiscales() {
                       hover:shadow
                       active:scale-95
                     "
-                                                title="Eliminar obligación"
-                                            >
+                                                    title="Eliminar obligación"
+                                                >
 
-                                                <Trash2
-                                                    size={17}
-                                                    strokeWidth={2}
-                                                />
+                                                    <Trash2
+                                                        size={17}
+                                                        strokeWidth={2}
+                                                    />
 
-                                            </button>
+                                                </button>
+                                            )
 
+                                            }
                                         </div>
 
                                     </div>
@@ -947,16 +1293,17 @@ export default function ObligacionesFiscales() {
                               text-center
                             "
                                                             >
+                                                                {!obligacion.fijo && (
 
-                                                                <button
-                                                                    type="button"
-                                                                    onClick={() =>
-                                                                        eliminarRegistro(
-                                                                            obligacion.id,
-                                                                            registro.id
-                                                                        )
-                                                                    }
-                                                                    className="
+                                                                    <button
+                                                                        type="button"
+                                                                        onClick={() =>
+                                                                            eliminarRegistro(
+                                                                                obligacion.id,
+                                                                                registro.id
+                                                                            )
+                                                                        }
+                                                                        className="
                                 inline-flex
                                 h-8
                                 w-8
@@ -976,16 +1323,16 @@ export default function ObligacionesFiscales() {
                                 hover:shadow
                                 active:scale-95
                               "
-                                                                    title="Eliminar registro"
-                                                                >
+                                                                        title="Eliminar registro"
+                                                                    >
 
-                                                                    <Trash2
-                                                                        size={16}
-                                                                        strokeWidth={2}
-                                                                    />
+                                                                        <Trash2
+                                                                            size={16}
+                                                                            strokeWidth={2}
+                                                                        />
 
-                                                                </button>
-
+                                                                    </button>
+                                                                )}
                                                             </td>
 
                                                         </tr>
