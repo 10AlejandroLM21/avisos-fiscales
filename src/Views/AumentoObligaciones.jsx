@@ -46,7 +46,7 @@ const obligacionesDisponibles = [
     "Impuesto Sobre la Renta",
     "Impuesto al Valor Agregado",
     "Impuesto Especial sobre Producción y Servicios",
-    "Impuesto sobre Erogaciones",
+    
 ];
 
 const actividadesEconomicas = [
