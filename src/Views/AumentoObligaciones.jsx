@@ -1,44 +1,44 @@
 import { useState, useEffect, useRef } from "react";
 import {
-  Search,
-  Users,
-  User,
-  FileText,
-  Briefcase,
-  CheckCircle,
-  Building2,
-  Smartphone,
-  BookUser,
-  Pencil,
-  Trash2,
-  AlertTriangle,
-  Home,
-  Copy,
-  ArrowRight,
-  FilePenLine,
-  ClipboardList,
-  UserRound,
-  FileBadge,
-  ScrollText,
-  Upload,
-  UserPlus,
-  X,
-  Save,
-  CircleCheckBig,
-  CircleX,
-  ArrowLeft,
-  CheckCircle2,
-  Eye,
-  BadgeCheck,
-  Check,
-  MapPinned,
-  CalendarDays,
-  ChevronDown,
-  ChevronRight,
-  MapPin,
-  BriefcaseBusiness,
-  Building,
-  Plus
+    Search,
+    Users,
+    User,
+    FileText,
+    Briefcase,
+    CheckCircle,
+    Building2,
+    Smartphone,
+    BookUser,
+    Pencil,
+    Trash2,
+    AlertTriangle,
+    Home,
+    Copy,
+    ArrowRight,
+    FilePenLine,
+    ClipboardList,
+    UserRound,
+    FileBadge,
+    ScrollText,
+    Upload,
+    UserPlus,
+    X,
+    Save,
+    CircleCheckBig,
+    CircleX,
+    ArrowLeft,
+    CheckCircle2,
+    Eye,
+    BadgeCheck,
+    Check,
+    MapPinned,
+    CalendarDays,
+    ChevronDown,
+    ChevronRight,
+    MapPin,
+    BriefcaseBusiness,
+    Building,
+    Plus
 } from "lucide-react";
 import HeaderModulo from "../components/HeaderModulo";
 import DocumentacionRequerida from "../components/DocumentacionRequerida";
@@ -59,8 +59,8 @@ const actividadesEconomicas = [
 ];
 
 export default function ObligacionesFiscales() {
-  const [mostrarDatosContacto, setMostrarDatosContacto] = useState(true);
-  const [mostrarDocumentacion, setMostrarDocumentacion] = useState(false);
+    const [mostrarDatosContacto, setMostrarDatosContacto] = useState(true);
+    const [mostrarDocumentacion, setMostrarDocumentacion] = useState(false);
     const obligacionesActuales = [
         {
             id: 1,
@@ -414,7 +414,7 @@ export default function ObligacionesFiscales() {
             window.removeEventListener("scroll", handleScroll);
         };
     }, [tipoOperacion]);
-
+    const [seccionAbierta, setSeccionAbierta] = useState(true);
     return (
 
         <div className="w-full">
@@ -428,49 +428,39 @@ export default function ObligacionesFiscales() {
                 icono="ReceiptText"
 
             />
-            <div className="shadow-sm sm:rounded-lg sm:border sm:border-gray-200 bg-white mt-4">
+            {/* OBligaciones actuales */}
+            <div className="bg-white mt-6 rounded-lg shadow-md">
 
-                <div className="p-6">
-
-                    {/* =================================================
-            HEADER
-        ================================================= */}
-
-                    <div className="flex items-start gap-4">
-
-                        {/* ICONO */}
-                        <div className="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-blue-50 text-blue-600">
-
-                            <ClipboardList
-                                size={20}
-                                strokeWidth={2}
-                            />
-
+                <button
+                    type="button"
+                    onClick={() => setSeccionAbierta(!seccionAbierta)}
+                    className="flex w-full items-center justify-between px-6 py-6 text-left bg-slate-100"
+                >
+                    <div className="flex items-start gap-3">
+                        <div className="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-blue-100 text-blue-600">
+                            <ClipboardList size={18} strokeWidth={2} />
                         </div>
 
-                        {/* TÍTULO */}
                         <div>
-
-                            <h3 className="text-base font-semibold text-gray-900">
+                            <h3 className="text-sm font-semibold text-gray-900">
                                 Obligaciones fiscales actuales
                             </h3>
 
-                            <p className="mt-1 text-sm text-gray-500">
-                                Consulte las obligaciones fiscales vigentes y
-                                las actividades económicas asociadas al contribuyente.
+                            <p className="mt-1 text-xs text-gray-500">
+                                Consulte las obligaciones fiscales vigentes y las actividades económicas asociadas al contribuyente.
                             </p>
-
                         </div>
-
                     </div>
 
+                    <ChevronDown
+                        size={18}
+                        className={`text-gray-500 transition-transform duration-200 ${seccionAbierta ? "rotate-180" : ""
+                            }`}
+                    />
+                </button>
 
-                    {/* =================================================
-            CONTENIDO
-        ================================================= */}
-
-                    <div className="mt-6">
-
+                {seccionAbierta && (
+                    <div className="border-t border-gray-200 px-6 py-4">
                         {obligacionesActuales.length === 0 ? (
 
                             /* =========================================
@@ -545,7 +535,6 @@ export default function ObligacionesFiscales() {
                                             </tr>
 
                                         </thead>
-
 
                                         <tbody>
 
@@ -728,11 +717,8 @@ export default function ObligacionesFiscales() {
                             </div>
 
                         )}
-
                     </div>
-
-                </div>
-
+                )}
             </div>
 
             {/* =================================================
@@ -2401,52 +2387,55 @@ export default function ObligacionesFiscales() {
                 </div>
             )}
 
-              {/* DATOS DE CONTACTO */}
-              <div className="rounded-lg mb-4 rounded shadow-md overflow-hidden">
+            {tipoOperacion && (
+                <div>
 
-                {/* Encabezado */}
-                <button
-                  onClick={() => setMostrarDatosContacto(!mostrarDatosContacto)}
-                  className="
+                    {/* DATOS DE CONTACTO */}
+                    < div className="rounded-lg mb-4 rounded shadow-md overflow-hidden mt-4">
+
+                        {/* Encabezado */}
+                        <button
+                            onClick={() => setMostrarDatosContacto(!mostrarDatosContacto)}
+                            className="
                             w-full bg-white hover:bg-slate-100 flex items-center justify-between
                             px-6 py-5 text-left
                             transition-colors
                            "
-                >
-                  <div className="flex items-center justify-content gap-3">
-                    <span className="bg-blue-100 rounded-lg">
+                        >
+                            <div className="flex items-center justify-content gap-3">
+                                <span className="bg-blue-100 rounded-lg">
 
-                      <Smartphone
-                        size={20}
-                        className="text-sky-700 m-3"
-                      />
+                                    <Smartphone
+                                        size={20}
+                                        className="text-sky-700 m-3"
+                                    />
 
-                    </span>
+                                </span>
 
-                    <div>
-                      <h3 className="font-semibold text-slate-800">
-                        Datos de contacto
-                      </h3>
-                      <p className="text-sm text-slate-500 mt-1">
-                        Verifica y actualiza los datos de contacto del contribuyente                      </p>
-                    </div>
+                                <div>
+                                    <h3 className="font-semibold text-slate-800">
+                                        Datos de contacto
+                                    </h3>
+                                    <p className="text-sm text-slate-500 mt-1">
+                                        Verifica y actualiza los datos de contacto del contribuyente                      </p>
+                                </div>
 
-                  </div>
+                            </div>
 
-                  <ChevronDown
-                    size={20}
-                    className={`
+                            <ChevronDown
+                                size={20}
+                                className={`
                               text-slate-500
                               transition-transform
                               duration-700
                               ease-in-out
                         ${mostrarDatosContacto ? "rotate-180" : ""}`}
-                  />
+                            />
 
-                </button>
+                        </button>
 
-                {/* Contenido */}
-                <div className={`
+                        {/* Contenido */}
+                        <div className={`
                           px-6
                           bg-white
                           overflow-hidden
@@ -2454,24 +2443,24 @@ export default function ObligacionesFiscales() {
                           duration-700
                           ease-in-out
                           ${mostrarDatosContacto
-                    ? "max-h-[1000px] opacity-100 pb-6"
-                    : "max-h-0 opacity-0"
-                  }
+                                ? "max-h-[1000px] opacity-100 pb-6"
+                                : "max-h-0 opacity-0"
+                            }
     `}>
-                  {/* Campos */}
-                  <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6">
+                            {/* Campos */}
+                            <div className="grid grid-cols-1 md:grid-cols-2 gap-5 p-6">
 
-                    {/* Correo electrónico */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Correo electrónico <span className="text-red-500">*</span>
-                      </label>
+                                {/* Correo electrónico */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Correo electrónico <span className="text-red-500">*</span>
+                                    </label>
 
-                      <input
-                        type="email"
-                        maxLength={100}
-                        placeholder="usuario@dominio.extensión"
-                        className="
+                                    <input
+                                        type="email"
+                                        maxLength={100}
+                                        placeholder="usuario@dominio.extensión"
+                                        className="
                                     w-full h-11 px-3
                                     border border-slate-300
                                     rounded-lg
@@ -2480,24 +2469,24 @@ export default function ObligacionesFiscales() {
                                     focus:border-sky-500
                                     focus:ring-2 focus:ring-sky-100
                                   "
-                      />
+                                    />
 
-                      <p className="text-xs text-slate-400">
-                        Máximo 100 caracteres.
-                      </p>
-                    </div>
+                                    <p className="text-xs text-slate-400">
+                                        Máximo 100 caracteres.
+                                    </p>
+                                </div>
 
-                    {/* Correo electrónico alternativo */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Correo electrónico alternativo
-                      </label>
+                                {/* Correo electrónico alternativo */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Correo electrónico alternativo
+                                    </label>
 
-                      <input
-                        type="email"
-                        maxLength={100}
-                        placeholder="usuario@dominio.extensión"
-                        className="
+                                    <input
+                                        type="email"
+                                        maxLength={100}
+                                        placeholder="usuario@dominio.extensión"
+                                        className="
           w-full h-11 px-3
           border border-slate-300
           rounded-lg
@@ -2506,25 +2495,25 @@ export default function ObligacionesFiscales() {
           focus:border-sky-500
           focus:ring-2 focus:ring-sky-100
         "
-                      />
+                                    />
 
-                      <p className="text-xs text-slate-400">
-                        Máximo 100 caracteres.
-                      </p>
-                    </div>
+                                    <p className="text-xs text-slate-400">
+                                        Máximo 100 caracteres.
+                                    </p>
+                                </div>
 
-                    {/* Teléfono fijo */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Teléfono fijo <span className="text-red-500">*</span>
-                      </label>
+                                {/* Teléfono fijo */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Teléfono fijo <span className="text-red-500">*</span>
+                                    </label>
 
-                      <input
-                        type="tel"
-                        maxLength={10}
-                        inputMode="numeric"
-                        placeholder="Ingrese 10 dígitos"
-                        className="
+                                    <input
+                                        type="tel"
+                                        maxLength={10}
+                                        inputMode="numeric"
+                                        placeholder="Ingrese 10 dígitos"
+                                        className="
           w-full h-11 px-3
           border border-slate-300
           rounded-lg
@@ -2533,24 +2522,24 @@ export default function ObligacionesFiscales() {
           focus:border-sky-500
           focus:ring-2 focus:ring-sky-100
         "
-                      />
+                                    />
 
-                      <p className="text-xs text-slate-400">
-                        Ingrese únicamente números. Máximo 10 caracteres.
-                      </p>
-                    </div>
+                                    <p className="text-xs text-slate-400">
+                                        Ingrese únicamente números. Máximo 10 caracteres.
+                                    </p>
+                                </div>
 
-                    {/* Teléfono alternativo */}
-                    <div className="flex flex-col gap-2">
-                      <label className="text-sm font-medium text-slate-700">
-                        Teléfono alternativo <span className="text-red-500">*</span>
-                      </label>
+                                {/* Teléfono alternativo */}
+                                <div className="flex flex-col gap-2">
+                                    <label className="text-sm font-medium text-slate-700">
+                                        Teléfono alternativo <span className="text-red-500">*</span>
+                                    </label>
 
-                      <div className="flex gap-2">
+                                    <div className="flex gap-2">
 
-                        {/* Tipo de teléfono */}
-                        <select
-                          className="
+                                        {/* Tipo de teléfono */}
+                                        <select
+                                            className="
             h-11
             w-40
             px-3
@@ -2562,27 +2551,27 @@ export default function ObligacionesFiscales() {
             focus:border-sky-500
             focus:ring-2 focus:ring-sky-100
           "
-                        >
-                          <option value="">
-                            Tipo
-                          </option>
+                                        >
+                                            <option value="">
+                                                Tipo
+                                            </option>
 
-                          <option value="fijo">
-                            Teléfono fijo
-                          </option>
+                                            <option value="fijo">
+                                                Teléfono fijo
+                                            </option>
 
-                          <option value="movil">
-                            Teléfono móvil
-                          </option>
-                        </select>
+                                            <option value="movil">
+                                                Teléfono móvil
+                                            </option>
+                                        </select>
 
-                        {/* Número */}
-                        <input
-                          type="tel"
-                          maxLength={10}
-                          inputMode="numeric"
-                          placeholder="Ingrese 10 dígitos"
-                          className="
+                                        {/* Número */}
+                                        <input
+                                            type="tel"
+                                            maxLength={10}
+                                            inputMode="numeric"
+                                            placeholder="Ingrese 10 dígitos"
+                                            className="
             flex-1
             h-11 px-3
             border border-slate-300
@@ -2592,28 +2581,28 @@ export default function ObligacionesFiscales() {
             focus:border-sky-500
             focus:ring-2 focus:ring-sky-100
           "
-                        />
+                                        />
 
-                      </div>
+                                    </div>
 
-                      <p className="text-xs text-slate-400">
-                        Ingrese únicamente números. Máximo 10 caracteres.
-                      </p>
+                                    <p className="text-xs text-slate-400">
+                                        Ingrese únicamente números. Máximo 10 caracteres.
+                                    </p>
+                                </div>
+
+                            </div>
+                        </div>
+
                     </div>
 
-                  </div>
-                </div>
+                    {/* DOCUMENTACIÓN REQUERIDA */}
+                    <div className=" bg-white rounded-lg shadow-md rounded overflow-hidden">
 
-              </div>
-
-              {/* DOCUMENTACIÓN REQUERIDA */}
-              <div className=" bg-white rounded-lg shadow-md rounded overflow-hidden">
-
-                {/* Encabezado */}
-                <button
-                  type="button"
-                  onClick={() => setMostrarDocumentacion(!mostrarDocumentacion)}
-                  className="
+                        {/* Encabezado */}
+                        <button
+                            type="button"
+                            onClick={() => setMostrarDocumentacion(!mostrarDocumentacion)}
+                            className="
                             w-full
                             flex
                             items-center
@@ -2626,57 +2615,60 @@ export default function ObligacionesFiscales() {
                             transition-colors
                             bg-slate-100
                         "
-                >
-                  <div className="flex items-center justify-content gap-3">
-                    <span className="bg-blue-100 rounded-lg">
-                      <Building2
-                        size={20}
-                        className="text-sky-700 m-3"
-                      />
-                    </span>
+                        >
+                            <div className="flex items-center justify-content gap-3">
+                                <span className="bg-blue-100 rounded-lg">
+                                    <Building2
+                                        size={20}
+                                        className="text-sky-700 m-3"
+                                    />
+                                </span>
 
-                    <div>
-                      <h3 className="font-semibold text-slate-800">
-                        Documentación Requerida
-                      </h3>
-                      <p className="text-sm text-slate-500 mt-1">
-                        Capture la información de contacto del contribuyente.
-                      </p>
-                    </div>
+                                <div>
+                                    <h3 className="font-semibold text-slate-800">
+                                        Documentación Requerida
+                                    </h3>
+                                    <p className="text-sm text-slate-500 mt-1">
+                                        Capture la información de contacto del contribuyente.
+                                    </p>
+                                </div>
 
-                  </div>
+                            </div>
 
-                  <ChevronDown
-                    size={20}
-                    className={`
+                            <ChevronDown
+                                size={20}
+                                className={`
                               text-slate-500
                               transition-transform
                               duration-700
                               ease-in-out
                         ${mostrarDocumentacion ? "rotate-180" : ""}`}
-                  />
-                </button>
+                            />
+                        </button>
 
-                {/* Contenido */}
-                <div className={`
+                        {/* Contenido */}
+                        <div className={`
                           px-6
                           overflow-hidden
                           transition-all
                           duration-700
                           ease-in-out
                           ${mostrarDocumentacion
-                    ? "max-h-[1000px] opacity-100 pb-6"
-                    : "max-h-0 opacity-0"
-                  }
+                                ? "max-h-[1000px] opacity-100 pb-6"
+                                : "max-h-0 opacity-0"
+                            }
     `}>
-                  {/* Campos */}
-                  <DocumentacionRequerida mostrarDocumentos={false} />
+                            {/* Campos */}
+                            <DocumentacionRequerida mostrarDocumentos={false} />
 
 
-                </div>
+                        </div>
 
 
-              </div>
-        </div>
+                    </div>
+                </div >
+            )
+            }
+        </div >
     );
 }
